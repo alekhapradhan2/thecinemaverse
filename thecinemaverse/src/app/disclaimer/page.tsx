@@ -18,8 +18,8 @@ import {
 import { buildMeta } from "@/lib/seo";
 
 export const metadata: Metadata = buildMeta({
-  title: "Disclaimer – Ollypedia",
-  description: "Read Ollypedia's disclaimer regarding content accuracy, box office data, copyright, and external links.",
+  title: "Disclaimer – The Cinema Verse",
+  description: "Read The Cinema Verse's disclaimer regarding content accuracy, box office data, copyright, and external links.",
   url: "/disclaimer",
 });
 
@@ -30,7 +30,7 @@ const SECTIONS = [
     icon: Info,
     title: "General Information",
     body: [
-      "The information provided on Ollypedia is for general informational and entertainment purposes only. We are an independent encyclopedia covering Odia cinema and are not affiliated with any production house, studio, or distributor unless explicitly stated.",
+      "The information provided on The Cinema Verse is for general informational and entertainment purposes only. We are an independent encyclopedia covering hindi cinema and are not affiliated with any production house, studio, or distributor unless explicitly stated.",
       "While we strive to keep information accurate and up to date, we make no representations or warranties of any kind, express or implied, about the completeness, reliability, or accuracy of any content on this website.",
     ],
   },
@@ -48,14 +48,14 @@ const SECTIONS = [
     icon: BarChart3,
     title: "Box Office Data",
     body: [
-      "All box office figures published on Ollypedia are compiled from publicly available industry sources and our independent research. These figures are estimates and may differ — sometimes significantly — from official numbers disclosed by producers, distributors, or production houses.",
-      "Ollypedia updates collection data progressively as new figures become available, which means numbers shown for recent releases may change over time as more reports come in.",
+      "All box office figures published on The Cinema Verse are compiled from publicly available industry sources and our independent research. These figures are estimates and may differ — sometimes significantly — from official numbers disclosed by producers, distributors, or production houses.",
+      "The Cinema Verse updates collection data progressively as new figures become available, which means numbers shown for recent releases may change over time as more reports come in.",
     ],
     callout: {
       tone: "amber",
       text: (
         <>
-          Box office data is approximate and unofficial. <strong className="text-amber-300">Ollypedia</strong> makes
+          Box office data is approximate and unofficial. <strong className="text-amber-300">The Cinema Verse</strong> makes
           no claims about the authenticity of these figures and accepts no liability for decisions made based on
           them.
         </>
@@ -67,7 +67,7 @@ const SECTIONS = [
     icon: MessageSquare,
     title: "User-Generated Content & Reviews",
     body: [
-      "Reviews, ratings, and comments submitted by users represent the personal opinions of those individuals and do not reflect the views of Ollypedia. We do not verify, endorse, or take responsibility for the accuracy of user-submitted content.",
+      "Reviews, ratings, and comments submitted by users represent the personal opinions of those individuals and do not reflect the views of The Cinema Verse. We do not verify, endorse, or take responsibility for the accuracy of user-submitted content.",
       "We reserve the right to moderate, edit, or remove any user-submitted content that violates our community standards or applicable law, without prior notice.",
     ],
   },
@@ -76,8 +76,8 @@ const SECTIONS = [
     icon: Copyright,
     title: "Copyright & Intellectual Property",
     body: [
-      "All movie posters, stills, trailers, songs, and promotional artwork featured on Ollypedia are the property of their respective copyright holders — including production houses, music labels, and distributors. We use such material under fair use for the purposes of commentary, criticism, news reporting, and education.",
-      "If you are a copyright owner and believe content on Ollypedia has been used inappropriately, please contact us at hello@ollypedia.in and we will review and respond promptly.",
+      "All movie posters, stills, trailers, songs, and promotional artwork featured on The Cinema Verse are the property of their respective copyright holders — including production houses, music labels, and distributors. We use such material under fair use for the purposes of commentary, criticism, news reporting, and education.",
+      "If you are a copyright owner and believe content on The Cinema Verse has been used inappropriately, please contact us at hello@thecinemaverse.in and we will review and respond promptly.",
     ],
   },
   {
@@ -85,7 +85,7 @@ const SECTIONS = [
     icon: Youtube,
     title: "YouTube Embedded Videos",
     body: [
-      "Ollypedia embeds publicly available YouTube videos for movie trailers and songs. These videos remain hosted on YouTube and are subject to YouTube's own Terms of Service and Community Guidelines.",
+      "The Cinema Verse embeds publicly available YouTube videos for movie trailers and songs. These videos remain hosted on YouTube and are subject to YouTube's own Terms of Service and Community Guidelines.",
       "We are not responsible for the availability, content, or removal of embedded videos, as these are controlled entirely by YouTube and the respective content owners.",
     ],
   },
@@ -102,8 +102,8 @@ const SECTIONS = [
     icon: Megaphone,
     title: "Advertising",
     body: [
-      "Ollypedia may display advertisements through Google AdSense and other third-party advertising networks. These networks may use cookies to serve ads based on your prior visits to this and other websites.",
-      "The presence of an advertisement on Ollypedia does not constitute an endorsement of the advertiser, its products, or its services by Ollypedia.",
+      "The Cinema Verse may display advertisements through Google AdSense and other third-party advertising networks. These networks may use cookies to serve ads based on your prior visits to this and other websites.",
+      "The presence of an advertisement on The Cinema Verse does not constitute an endorsement of the advertiser, its products, or its services by The Cinema Verse.",
     ],
   },
   {
@@ -111,7 +111,7 @@ const SECTIONS = [
     icon: ShieldQuestion,
     title: "No Professional or Financial Advice",
     body: [
-      "Nothing on Ollypedia, including box office figures, verdicts, or trend analysis, should be construed as financial, investment, or professional advice of any kind. Any reliance you place on such information is strictly at your own risk.",
+      "Nothing on The Cinema Verse, including box office figures, verdicts, or trend analysis, should be construed as financial, investment, or professional advice of any kind. Any reliance you place on such information is strictly at your own risk.",
     ],
   },
   {
@@ -119,7 +119,7 @@ const SECTIONS = [
     icon: Scale,
     title: "Limitation of Liability",
     body: [
-      "To the fullest extent permitted by law, Ollypedia and its operators shall not be liable for any direct, indirect, incidental, or consequential loss or damage arising from your use of, or reliance on, this website or its content.",
+      "To the fullest extent permitted by law, The Cinema Verse and its operators shall not be liable for any direct, indirect, incidental, or consequential loss or damage arising from your use of, or reliance on, this website or its content.",
     ],
   },
   {
@@ -158,15 +158,15 @@ export default function DisclaimerPage() {
 
         {/* ── Header ──────────────────────────────────────────────────── */}
         <div className="mb-8 sm:mb-10">
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-500 mb-3 flex items-center gap-2">
-            <span className="w-5 h-px bg-orange-500/60" aria-hidden="true" />
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-500 mb-3 flex items-center gap-2">
+            <span className="w-5 h-px bg-brand-500/60" aria-hidden="true" />
             Legal
           </h3>
           <h1 className="font-display text-3xl sm:text-4xl font-black text-white mb-3">
             Disclaimer
           </h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
-            Ollypedia is an independent Odia cinema encyclopedia. This page explains how we source our
+            The Cinema Verse is an independent hindi cinema encyclopedia. This page explains how we source our
             content, the limits of our box office data, and how copyright and third-party material are
             handled across the site.
           </p>
@@ -186,7 +186,7 @@ export default function DisclaimerPage() {
               <a
                 key={link.id}
                 href={`#${link.id}`}
-                className="text-[11px] text-gray-500 hover:text-orange-400 border border-[#1e1e1e] hover:border-orange-500/30 px-2.5 py-1 rounded-full transition-colors"
+                className="text-[11px] text-gray-500 hover:text-brand-400 border border-[#1e1e1e] hover:border-brand-500/30 px-2.5 py-1 rounded-full transition-colors"
               >
                 {link.label}
               </a>
@@ -206,7 +206,7 @@ export default function DisclaimerPage() {
               >
                 <div className="flex items-center gap-2.5 mb-3">
                   <span
-                    className="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center flex-shrink-0"
+                    className="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-400 flex items-center justify-center flex-shrink-0"
                     aria-hidden="true"
                   >
                     <Icon className="w-4 h-4" />
@@ -237,13 +237,13 @@ export default function DisclaimerPage() {
                 {section.id === "contact" && (
                   <p className="text-gray-500 text-[13px] sm:text-sm leading-relaxed">
                     For any questions regarding this disclaimer, please{" "}
-                    <Link href="/contact" className="text-orange-400 hover:text-orange-300 transition-colors">
+                    <Link href="/contact" className="text-brand-400 hover:text-brand-300 transition-colors">
                       contact us
                     </Link>{" "}
                     or email{" "}
                     <a
                       href="mailto:alekhpradhan3305@gmail.com"
-                      className="text-orange-400 hover:text-orange-300 transition-colors"
+                      className="text-brand-400 hover:text-brand-300 transition-colors"
                     >
                       alekhpradhan3305@gmail.com
                     </a>
@@ -259,19 +259,19 @@ export default function DisclaimerPage() {
         <div className="mt-10 pt-6 border-t border-[#1c1c1c] flex flex-wrap gap-x-4 gap-y-2">
           <Link
             href="/privacy"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Privacy Policy
           </Link>
           <Link
             href="/terms-and-conditions"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Terms &amp; Conditions
           </Link>
           <Link
             href="/contact"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Contact Us
           </Link>

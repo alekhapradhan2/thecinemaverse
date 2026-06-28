@@ -1,12 +1,12 @@
 // app/blog/feed.xml/route.ts
-// Serve an RSS 2.0 feed for the latest 20 Ollywood blog posts.
-// Add <link rel="alternate" type="application/rss+xml" title="Ollypedia Blog" href="/blog/feed.xml">
+// Serve an RSS 2.0 feed for the latest 20 bollywood blog posts.
+// Add <link rel="alternate" type="application/rss+xml" title="The Cinema Verse Blog" href="/blog/feed.xml">
 // to your root layout's <head> so browsers and crawlers discover it automatically.
 
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
 
-const SITE_URL = "https://ollypedia.in";
+const SITE_URL = "https://thecinemaverse.in";
 const FEED_URL = `${SITE_URL}/blog/feed.xml`;
 
 function escapeXml(str: string): string {
@@ -37,7 +37,7 @@ export async function GET() {
       const pubDate  = new Date(b.createdAt).toUTCString();
       const title    = escapeXml(b.title ?? "");
       const excerpt  = escapeXml(b.excerpt ?? "");
-      const author   = escapeXml(b.author ?? "Ollypedia");
+      const author   = escapeXml(b.author ?? "The Cinema Verse");
       const category = escapeXml(b.category ?? "");
       const image    = b.coverImage ? `<enclosure url="${escapeXml(b.coverImage)}" type="image/jpeg" length="0"/>` : "";
       const tags     = (b.tags ?? [])
@@ -50,7 +50,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${excerpt}</description>
-      <author>noreply@ollypedia.in (${author})</author>
+      <author>noreply@thecinemaverse.in (${author})</author>
       <category>${category}</category>
       ${tags}
       <pubDate>${pubDate}</pubDate>
@@ -66,16 +66,16 @@ export async function GET() {
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
   <channel>
-    <title>Ollypedia Blog — Odia Cinema News &amp; Reviews</title>
+    <title>The Cinema Verse Blog — Hindi Cinema News &amp; Reviews</title>
     <link>${SITE_URL}/blog</link>
-    <description>In-depth movie reviews, actor profiles, top lists, song breakdowns and news from Odia cinema — updated every week.</description>
+    <description>In-depth movie reviews, actor profiles, top lists, song breakdowns and news from hindi cinema — updated every week.</description>
     <language>en-in</language>
-    <copyright>Copyright ${new Date().getFullYear()} Ollypedia</copyright>
+    <copyright>Copyright ${new Date().getFullYear()} The Cinema Verse</copyright>
     <lastBuildDate>${mostRecent}</lastBuildDate>
     <ttl>600</ttl>
     <image>
       <url>${SITE_URL}/logo.png</url>
-      <title>Ollypedia Blog</title>
+      <title>The Cinema Verse Blog</title>
       <link>${SITE_URL}/blog</link>
     </image>
     <atom:link href="${FEED_URL}" rel="self" type="application/rss+xml"/>

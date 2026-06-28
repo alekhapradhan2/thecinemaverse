@@ -77,7 +77,7 @@ export function BlogSearch({ initialQuery = "" }: BlogSearchProps) {
         {/* Icon */}
         <div className="absolute left-3 flex items-center pointer-events-none z-10">
           {isPending ? (
-            <Loader2 className="w-4 h-4 text-orange-400 animate-spin" />
+            <Loader2 className="w-4 h-4 text-brand-400 animate-spin" />
           ) : (
             <Search className="w-4 h-4 text-zinc-500" />
           )}
@@ -93,7 +93,7 @@ export function BlogSearch({ initialQuery = "" }: BlogSearchProps) {
           aria-label="Search articles"
           autoComplete="off"
           spellCheck="false"
-          className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+          className="w-full pl-9 pr-9 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
         />
 
         {/* Clear button */}

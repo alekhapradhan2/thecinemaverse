@@ -33,8 +33,8 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
   }
 
   const pillBase = "px-3 py-1.5 text-xs font-medium rounded-full border transition-all cursor-pointer";
-  const pillActive = "bg-orange-500/20 border-orange-500/50 text-orange-400";
-  const pillIdle   = "bg-transparent border-[#2a2a2a] text-gray-400 hover:border-orange-500/30 hover:text-orange-400";
+  const pillActive = "bg-brand-500/20 border-brand-500/50 text-brand-400";
+  const pillIdle   = "bg-transparent border-[#2a2a2a] text-gray-400 hover:border-brand-500/30 hover:text-brand-400";
 
   return (
     <div className="mb-8 space-y-4">
@@ -88,7 +88,7 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
         <select
           value={active.sort || "latest"}
           onChange={(e) => update("sort", e.target.value)}
-          className="text-xs bg-[#1a1a1a] border border-[#2a2a2a] text-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-orange-500/50"
+          className="text-xs bg-[#1a1a1a] border border-[#2a2a2a] text-gray-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-brand-500/50"
         >
           <option value="latest">Latest First</option>
           <option value="oldest">Oldest First</option>
@@ -103,7 +103,7 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
           <button
             onClick={() => gotoPage(active.page - 1)}
             disabled={active.page <= 1}
-            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-orange-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-brand-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -114,8 +114,8 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
               className={clsx(
                 "w-8 h-8 text-xs rounded-lg border transition-all",
                 p === active.page
-                  ? "bg-orange-500 border-orange-500 text-white font-bold"
-                  : "border-[#2a2a2a] text-gray-400 hover:border-orange-500/40 hover:text-white"
+                  ? "bg-brand-500 border-brand-500 text-white font-bold"
+                  : "border-[#2a2a2a] text-gray-400 hover:border-brand-500/40 hover:text-white"
               )}
             >
               {p}
@@ -124,7 +124,7 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
           <button
             onClick={() => gotoPage(active.page + 1)}
             disabled={active.page >= totalPages}
-            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-orange-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-brand-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <ChevronRight className="w-4 h-4" />
           </button>

@@ -35,7 +35,7 @@ function verdictColor(verdict: string) {
 function CardLoadingOverlay() {
   return (
     <div className="absolute inset-0 z-20 flex items-center justify-center gap-2 bg-black/80 backdrop-blur-[2px] rounded-[inherit]">
-      <Loader2 className="w-4 h-4 text-orange-400 animate-spin" />
+      <Loader2 className="w-4 h-4 text-brand-400 animate-spin" />
       <span className="text-xs font-medium text-gray-300">Opening...</span>
     </div>
   );
@@ -64,7 +64,7 @@ export function MovieCard({ movie, variant = "portrait" }: MovieCardProps) {
           <Image src={image} alt={movie.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
         </div>
         <div className="flex-1 min-w-0 py-1">
-          <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-orange-400 transition-colors">
+          <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-brand-400 transition-colors">
             {movie.title}
           </h3>
           <div className="flex flex-wrap gap-1 mt-1.5">
@@ -75,7 +75,7 @@ export function MovieCard({ movie, variant = "portrait" }: MovieCardProps) {
           <div className="flex items-center gap-3 mt-2">
             <span className="flex items-center gap-1 text-xs text-gray-500">
                 <Calendar className="w-3 h-3" />
-                <span className={displayDate === "TBA" ? "text-orange-400 font-semibold" : ""}>
+                <span className={displayDate === "TBA" ? "text-brand-400 font-semibold" : ""}>
                   {displayDate}
                 </span>
               </span>
@@ -131,12 +131,12 @@ export function MovieCard({ movie, variant = "portrait" }: MovieCardProps) {
         </div>
 
         <div className="p-3">
-          <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-orange-400 transition-colors font-display">
+          <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-brand-400 transition-colors font-display">
             {movie.title}
           </h3>
           <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
               <Calendar className="w-3 h-3" />
-              <span className={displayDate === "TBA" ? "text-orange-400 font-semibold" : ""}>
+              <span className={displayDate === "TBA" ? "text-brand-400 font-semibold" : ""}>
                 {displayDate}
               </span>
             </p>

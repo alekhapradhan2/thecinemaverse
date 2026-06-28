@@ -21,7 +21,7 @@ interface Review {
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
-// This always hits Ollypedia's own /api/movies/[id]/review route (same Next.js
+// This always hits The Cinema Verse's own /api/movies/[id]/review route (same Next.js
 // app, talks to MongoDB directly via connectDB()). It must stay same-origin —
 // it was previously built from NEXT_PUBLIC_API_URL, which points at the
 // separate Express backend used for other endpoints. That backend has no
@@ -236,7 +236,7 @@ function ShareModal({
     const shareText =
       `${starEmoji} ${displayStars}/5 — ${movieTitle || "Movie Review"}\n\n` +
       `"${review.text}"\n\n` +
-      `— ${review.user || "Anonymous"} on Ollypedia\n${url}`;
+      `— ${review.user || "Anonymous"} on The Cinema Verse\n${url}`;
 
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
@@ -262,12 +262,12 @@ function ShareModal({
       // ── Portrait card: 600 × 780 ──
       // Layout (top → bottom):
       //   [4px gold bar]
-      //   [Header: favicon + OLLYPEDIA wordmark | MY REVIEW badge]   ~86px
+      //   [Header: favicon + THE CINEMA VERSE wordmark | MY REVIEW badge]   ~86px
       //   [1px divider]
       //   [ROW: poster(left 160×224) | title + stars(right)]         ~244px
       //   [1px divider]
       //   [Quote box full-width]                                      ~dynamic
-      //   [Footer: ollypedia.in]                                      ~44px
+      //   [Footer: thecinemaverse.in]                                      ~44px
       //   [4px gold bar]
 
       const CARD_W = 600;
@@ -412,11 +412,11 @@ function ShareModal({
       ctx.fillStyle = "#f59e0b";
       ctx.font = "bold 19px 'Georgia', serif";
       ctx.letterSpacing = "1.5px";
-      ctx.fillText("OLLYPEDIA", WM_X, LOGO_Y + 26);
+      ctx.fillText("THE CINEMA VERSE", WM_X, LOGO_Y + 26);
       ctx.letterSpacing = "0px";
       ctx.fillStyle = "rgba(245,158,11,0.45)";
       ctx.font = "10.5px 'Georgia', serif";
-      ctx.fillText("Your Odia Cinema Universe", WM_X, LOGO_Y + 40);
+      ctx.fillText("Your Hindi Cinema Universe", WM_X, LOGO_Y + 40);
 
       // MY REVIEW badge (right)
       ctx.font = "bold 9.5px 'Georgia', serif";
@@ -565,7 +565,7 @@ ry += lines.length * lineHeight + 12;
       // Attribution
       ctx.fillStyle = "rgba(255,255,255,0.3)";
       ctx.font = "12px 'Georgia', serif";
-      ctx.fillText(`— ${review.user || "Anonymous"} · ollypedia.in`, BOX_X + BOX_PAD + 6, BOX_Y + BOX_H - 14);
+      ctx.fillText(`— ${review.user || "Anonymous"} · thecinemaverse.in`, BOX_X + BOX_PAD + 6, BOX_Y + BOX_H - 14);
 
       curY += BOX_H + 16;
       divider(curY); curY += DIV;
@@ -574,7 +574,7 @@ ry += lines.length * lineHeight + 12;
       ctx.fillStyle = "rgba(245,158,11,0.38)";
       ctx.font = "11.5px 'Georgia', serif";
       ctx.textAlign = "center";
-      ctx.fillText("ollypedia.in  ·  Your Odia Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
+      ctx.fillText("thecinemaverse.in  ·  Your Hindi Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
       ctx.textAlign = "left";
 
       // ── Export PNG ──
@@ -582,7 +582,7 @@ ry += lines.length * lineHeight + 12;
         if (!blob) return;
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
-        a.download = `${(movieTitle || "review").replace(/\s+/g, "-").toLowerCase()}-ollypedia-review.png`;
+        a.download = `${(movieTitle || "review").replace(/\s+/g, "-").toLowerCase()}-thecinemaverse-review.png`;
         a.click();
         URL.revokeObjectURL(a.href);
       }, "image/png");
@@ -637,7 +637,7 @@ ry += lines.length * lineHeight + 12;
           padding: "16px 22px 12px",
           borderBottom: "1px solid rgba(245,158,11,.1)",
         }}>
-          {/* Ollypedia Logo */}
+          {/* The Cinema Verse Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <div style={{
               width: 32, height: 32,
@@ -655,13 +655,13 @@ ry += lines.length * lineHeight + 12;
                 letterSpacing: "0.04em",
                 color: "#f59e0b",
                 lineHeight: 1.1,
-              }}>OLLYPEDIA</div>
+              }}>THE CINEMA VERSE</div>
               <div style={{
                 fontSize: "0.55rem",
                 color: "rgba(245,158,11,.45)",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-              }}>Your Odia Cinema Universe</div>
+              }}>Your Hindi Cinema Universe</div>
             </div>
           </div>
 
@@ -784,7 +784,7 @@ ry += lines.length * lineHeight + 12;
               <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="rgba(245,158,11,.4)" strokeWidth={2}>
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
               </svg>
-              {review.user || "Anonymous"} &nbsp;·&nbsp; ollypedia.in
+              {review.user || "Anonymous"} &nbsp;·&nbsp; thecinemaverse.in
             </p>
           </div>
         </div>
@@ -801,10 +801,10 @@ ry += lines.length * lineHeight + 12;
           justifyContent: "space-between",
         }}>
           <div style={{ fontSize: "0.68rem", color: "rgba(245,158,11,.5)" }}>
-            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>ollypedia.in</strong>
+            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>thecinemaverse.in</strong>
           </div>
           <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,.2)", letterSpacing: "0.06em" }}>
-            ODIA CINEMA UNIVERSE
+            hindi cinema UNIVERSE
           </div>
         </div>
 

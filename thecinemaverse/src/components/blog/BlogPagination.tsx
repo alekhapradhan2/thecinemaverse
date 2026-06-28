@@ -58,7 +58,7 @@ export function BlogPagination({
           href={buildPageUrl(currentPage - 1, query, category)}
           rel="prev"
           aria-label="Previous page"
-          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-gray-400 border border-white/10 hover:border-orange-500/50 hover:text-white transition-all"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-gray-400 border border-white/10 hover:border-brand-500/50 hover:text-white transition-all"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
           Prev
@@ -91,8 +91,8 @@ export function BlogPagination({
             aria-current={p === currentPage ? "page" : undefined}
             className={`w-9 h-9 flex items-center justify-center rounded-lg text-xs font-bold transition-all border ${
               p === currentPage
-                ? "bg-orange-500 border-orange-500 text-white shadow-lg shadow-orange-500/20"
-                : "border-white/10 text-gray-400 hover:border-orange-500/50 hover:text-white"
+                ? "bg-brand-500 border-brand-500 text-white shadow-lg shadow-brand-500/20"
+                : "border-white/10 text-gray-400 hover:border-brand-500/50 hover:text-white"
             }`}
           >
             {p}
@@ -106,7 +106,7 @@ export function BlogPagination({
           href={buildPageUrl(currentPage + 1, query, category)}
           rel="next"
           aria-label="Next page"
-          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-gray-400 border border-white/10 hover:border-orange-500/50 hover:text-white transition-all"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-gray-400 border border-white/10 hover:border-brand-500/50 hover:text-white transition-all"
         >
           Next
           <ChevronRight className="w-3.5 h-3.5" />

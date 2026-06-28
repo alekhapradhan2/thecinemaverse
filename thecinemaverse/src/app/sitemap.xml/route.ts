@@ -242,11 +242,11 @@ export async function GET() {
   }
 
   // ── Evergreen guide pages (add once created) ──────────────────────────────
-  //  /blog/odia-guides/odia-movies
-  //  /blog/odia-guides/history-of-ollywood
-  //  /blog/odia-guides/top-10-odia-movies
-  //  /blog/odia-guides/best-odia-songs
-  //  /blog/odia-guides/odia-actors
+  //  /blog/bollywood-guides/bollywood-movies
+  //  /blog/bollywood-guides/history-of-bollywood
+  //  /blog/bollywood-guides/top-10-bollywood-movies
+  //  /blog/bollywood-guides/best-bollywood-songs
+  //  /blog/bollywood-guides/bollywood-actors
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

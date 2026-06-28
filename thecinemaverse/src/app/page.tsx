@@ -20,13 +20,13 @@ import { TRIVIA_EMOJIS } from "@/lib/trivia-constants";
 export const revalidate = 600;
 
 export const metadata: Metadata = buildMeta({
-  title: `${SITE_NAME} – The Odia Film Encyclopedia`,
+  title: `${SITE_NAME} – The Hindi Film Encyclopedia`,
   description:
-    "Ollypedia is Odisha's most comprehensive Odia film database. Discover latest Ollywood movies, songs, actor biographies, box office collection, reviews and Odia film blogs.",
+    "The Cinema Verse is Odisha's most comprehensive hindi film database. Discover latest bollywood movies, songs, actor biographies, box office collection, reviews and hindi film blogs.",
   keywords: [
-    "Odia movies 2025", "Ollywood", "Odia cinema", "Odia films", "Babushaan",
-    "Elina Samantray", "Odia actor", "Odia songs", "Odia movie reviews",
-    "Ollywood box office", "Odia film blog",
+    "hindi movies 2025", "bollywood", "hindi cinema", "hindi films", "Babushaan",
+    "Elina Samantray", "bollywood actor", "bollywood songs", "hindi movie reviews",
+    "bollywood box office", "hindi film blog",
   ],
   url: "/",
 });
@@ -204,7 +204,7 @@ async function getHomeData() {
     return 0;                                  // both TBA: keep order
   });
 
-  // ── This Month in Ollywood ──────────────────────────────────
+  // ── This Month in bollywood ──────────────────────────────────
   const thisMonthReleased = (allMovies as any[])
     .filter((m) => isThisMonth(m.releaseDate) && m.releaseDate && new Date(m.releaseDate) <= _now)
     .sort((a: any, b: any) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime());
@@ -235,35 +235,35 @@ async function getHomeData() {
     });
 
   // ── Did You Know — trivia extracted from synopses ─────────────
-  // Static Ollywood facts always shown (guaranteed content)
+  // Static bollywood facts always shown (guaranteed content)
   const staticTrivia: TriviaCard[] = [
     {
-      fact:   "Odia cinema, known as Ollywood, traces its roots to 1936 when the first Odia film 'Sita Bibaha' was released — making it one of India's oldest regional film industries.",
-      source: "About Ollywood",
+      fact:   "Hindi cinema, known as Bollywood, traces its roots to 1913 when Dadasaheb Phalke's silent film 'Raja Harishchandra' was released — marking the birth of Indian cinema.",
+      source: "About Bollywood",
       href:   "/movies",
       emoji:  TRIVIA_EMOJIS[0],
     },
     {
-      fact:   "The Odia film industry is headquartered in Bhubaneswar, Odisha's capital, and produces 40–60 films every year for audiences across Odisha and the diaspora.",
-      source: "Ollywood Industry",
+      fact:   "The Hindi film industry is headquartered in Mumbai, Maharashtra (formerly Bombay), producing hundreds of films annually for global audiences.",
+      source: "Bollywood Industry",
       href:   "/movies",
       emoji:  TRIVIA_EMOJIS[1],
     },
     {
-      fact:   "Babushaan Mohanty holds the record for multiple consecutive Blockbuster hits in Ollywood and is widely regarded as one of the biggest stars in contemporary Odia cinema.",
-      source: "Cast Profiles",
-      href:   "/cast",
+      fact:   "In 1931, 'Alam Ara' directed by Ardeshir Irani became the first Indian sound film (talkie), paving the way for Bollywood's signature musical style.",
+      source: "Film Milestones",
+      href:   "/movies",
       emoji:  TRIVIA_EMOJIS[2],
     },
     {
-      fact:   "Odia films with devotional themes set at the Jagannath Temple in Puri have historically performed exceptionally well at the box office, drawing massive audiences across Odisha.",
-      source: "Ollywood Box Office",
+      fact:   "Bollywood films like 'Dangal', 'Jawan', and 'Pathaan' hold global box office records, drawing millions of viewers across international markets.",
+      source: "Bollywood Box Office",
       href:   "/box-office",
       emoji:  TRIVIA_EMOJIS[3],
     },
     {
-      fact:   "The Ollywood music industry is as big as the films — many Odia movie songs become independent hits on YouTube, often crossing millions of views before the film even releases.",
-      source: "Odia Songs",
+      fact:   "The Bollywood music industry is massive — legendary playback singers and composers like A.R. Rahman, Kishore Kumar, and Lata Mangeshkar have defined generations of music.",
+      source: "Bollywood Music",
       href:   "/songs",
       emoji:  TRIVIA_EMOJIS[4],
     },
@@ -280,7 +280,7 @@ async function getHomeData() {
     .slice(0, 8)
     .map((m: any, i: number) => {
       // Extract a clean first sentence (up to 180 chars) from synopsis
-      const raw = String(m.synopsis || "").replace(/\(.*?\)/g, "").trim(); // strip parens like (Odia: ...)
+      const raw = String(m.synopsis || "").replace(/\(.*?\)/g, "").trim(); // strip parens like (bollywood: ...)
       const sentMatch = raw.match(/^[^.!?]{40,180}[.!?]/);
       const fact = sentMatch
         ? sentMatch[0].trim()
@@ -324,13 +324,13 @@ export default async function HomePage() {
         <HeroCarousel movies={heroMovies} />
       ) : (
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 via-[#0a0a0a] to-[#0a0a0a]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-900/20 via-[#0a0a0a] to-[#0a0a0a]" />
           <div className="relative z-10 text-center px-4">
             <h1 className="font-display text-5xl md:text-7xl font-black text-white leading-none mb-4">
-              Discover <span className="text-orange-500">Odia</span> Cinema
+              Discover <span className="text-brand-500">bollywood</span> Cinema
             </h1>
             <p className="text-gray-300 text-lg mb-6">
-              Your ultimate guide to Ollywood — movies, actors, songs, and more.
+              Your ultimate guide to bollywood — movies, actors, songs, and more.
             </p>
             <Link href="/movies" className="btn-primary inline-flex items-center gap-2">
               <Film className="w-4 h-4" /> Explore Movies
@@ -344,13 +344,13 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-[#1f1f1f]">
             {[
-              { icon: Film,      label: "Odia Movies",   value: "500+"  },
+              { icon: Film,      label: "Hindi Movies",   value: "500+"  },
               { icon: Users,     label: "Cast Profiles",  value: "1000+" },
-              { icon: Music,     label: "Odia Songs",    value: "5000+" },
+              { icon: Music,     label: "bollywood Songs",    value: "5000+" },
               { icon: BookOpen,  label: "Blog Articles", value: "100+"  },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-3 sm:py-4">
-                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 flex-shrink-0" />
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-500 flex-shrink-0" />
                 <div>
                   <p className="text-base sm:text-lg font-bold text-white font-display">{value}</p>
                   <p className="text-[10px] sm:text-xs text-gray-500">{label}</p>
@@ -365,10 +365,10 @@ export default async function HomePage() {
 
         {/* ══ LATEST RELEASES ══ */}
         {latestMovies.length > 0 && (
-          <section aria-label="Latest Odia movie releases">
+          <section aria-label="Latest hindi movie releases">
             <SectionHeader
               title="Latest Releases"
-              subtitle="Newest Odia films from Ollywood"
+              subtitle="Newest hindi films from bollywood"
               href="/movies"
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
@@ -378,8 +378,8 @@ export default async function HomePage() {
             </div>
             <div className="mt-6 text-center">
               <Link href="/movies"
-                className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">
-                View all Odia movies <ChevronRight className="w-4 h-4" />
+                className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 text-sm font-semibold transition-colors">
+                View all hindi movies <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
           </section>
@@ -387,10 +387,10 @@ export default async function HomePage() {
 
         {/* ══ BOX OFFICE COLLECTION ══ */}
         {boxOfficeMovies.length > 0 && (
-          <section aria-label="Odia movie box office collection">
+          <section aria-label="hindi movie box office collection">
             <SectionHeader
               title="Box Office Collection"
-              subtitle="Latest Odia film box office figures & verdicts"
+              subtitle="Latest hindi film box office figures & verdicts"
               href="/box-office"
             />
 
@@ -413,7 +413,7 @@ export default async function HomePage() {
 
                 return (
                   <Link href={`/box-office/${m.slug || m._id}`}
-                    className="lg:col-span-3 group relative rounded-2xl overflow-hidden bg-[#111] border border-[#1f1f1f] hover:border-orange-500/40 transition-all block">
+                    className="lg:col-span-3 group relative rounded-2xl overflow-hidden bg-[#111] border border-[#1f1f1f] hover:border-brand-500/40 transition-all block">
 
                     {/* Poster banner */}
                     <div className="relative h-40 sm:h-52 w-full overflow-hidden">
@@ -424,7 +424,7 @@ export default async function HomePage() {
                           fill className="object-cover group-hover:scale-105 transition-transform duration-500 brightness-50"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-orange-900/30 to-[#111]" />
+                        <div className="w-full h-full bg-gradient-to-br from-brand-900/30 to-[#111]" />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
@@ -444,11 +444,11 @@ export default async function HomePage() {
 
                       {/* Title overlay */}
                       <div className="absolute bottom-0 left-0 right-0 p-5">
-                        <p className="text-xs text-orange-400 font-semibold mb-1">
+                        <p className="text-xs text-brand-400 font-semibold mb-1">
                           {m.releaseDate ? new Date(m.releaseDate).toLocaleDateString("en-IN", { day:"numeric", month:"short", year:"numeric" }) : ""}
                           {(m.genre || []).length > 0 && ` · ${(m.genre as string[]).slice(0,2).join(", ")}`}
                         </p>
-                        <h2 className="font-display text-lg sm:text-xl lg:text-2xl font-bold text-white leading-snug group-hover:text-orange-300 transition-colors">
+                        <h2 className="font-display text-lg sm:text-xl lg:text-2xl font-bold text-white leading-snug group-hover:text-brand-300 transition-colors">
                           {m.title}
                         </h2>
                       </div>
@@ -473,7 +473,7 @@ export default async function HomePage() {
                       <div className="px-5 py-4 border-t border-[#1f1f1f]">
                         <div className="flex items-center justify-between mb-3">
                           <p className="text-[10px] text-gray-500 uppercase tracking-widest">Day-wise Net Collection</p>
-                          <p className="text-[10px] text-gray-500">Total: <span className="text-orange-400 font-semibold">{fmtINR(totalNet)}</span></p>
+                          <p className="text-[10px] text-gray-500">Total: <span className="text-brand-400 font-semibold">{fmtINR(totalNet)}</span></p>
                         </div>
                         <div className="space-y-2">
                           {days.slice(0, 5).map((d: any) => {
@@ -486,7 +486,7 @@ export default async function HomePage() {
                                 </span>
                                 <div className="flex-1 h-5 bg-[#1a1a1a] rounded-full overflow-hidden">
                                   <div
-                                    className="h-full rounded-full bg-gradient-to-r from-orange-600 to-orange-400 transition-all"
+                                    className="h-full rounded-full bg-gradient-to-r from-brand-600 to-brand-400 transition-all"
                                     style={{ width: `${pct}%` }}
                                   />
                                 </div>
@@ -505,7 +505,7 @@ export default async function HomePage() {
 
                     <div className="px-5 py-3 border-t border-[#1f1f1f] flex items-center justify-between">
                       <span className="text-xs text-gray-500">{days.length} days tracked · Gross: {fmtINR(totalGross)}</span>
-                      <span className="text-xs text-orange-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-xs text-brand-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                         Full box office data <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
@@ -526,7 +526,7 @@ export default async function HomePage() {
 
                   return (
                     <Link key={String(m._id)} href={`/box-office/${m.slug || m._id}`}
-                      className="group flex gap-3 bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl p-3 transition-all items-center">
+                      className="group flex gap-3 bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-3 transition-all items-center">
 
                       {/* Poster */}
                       <div className="relative w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-[#1a1a1a]">
@@ -541,7 +541,7 @@ export default async function HomePage() {
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors line-clamp-1 leading-snug">
+                        <h3 className="text-sm font-bold text-white group-hover:text-brand-300 transition-colors line-clamp-1 leading-snug">
                           {m.title}
                         </h3>
                         <p className="text-[11px] text-gray-500 mt-0.5">
@@ -554,25 +554,25 @@ export default async function HomePage() {
                             {m.verdict}
                           </span>
                           {totalNet > 0 && (
-                            <span className="text-xs text-orange-300 font-bold">{fmtINR(totalNet)}</span>
+                            <span className="text-xs text-brand-300 font-bold">{fmtINR(totalNet)}</span>
                           )}
                           <span className="text-[10px] text-gray-600">{dayCount}d</span>
                         </div>
                       </div>
 
-                      <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-orange-400 flex-shrink-0 transition-colors" />
+                      <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-brand-400 flex-shrink-0 transition-colors" />
                     </Link>
                   );
                 })}
 
                 {/* View all CTA */}
                 <Link href="/box-office"
-                  className="flex items-center justify-between rounded-xl bg-gradient-to-br from-orange-500/10 to-transparent border border-orange-500/20 hover:border-orange-500/50 px-4 py-3 group transition-all mt-auto">
+                  className="flex items-center justify-between rounded-xl bg-gradient-to-br from-brand-500/10 to-transparent border border-brand-500/20 hover:border-brand-500/50 px-4 py-3 group transition-all mt-auto">
                   <div>
                     <p className="text-white font-bold text-sm">View All Box Office</p>
                     <p className="text-gray-500 text-xs mt-0.5">Day-wise collection tracker</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-orange-400 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-4 h-4 text-brand-400 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
 
@@ -618,10 +618,10 @@ export default async function HomePage() {
           };
 
           return (
-            <section aria-label="Currently running Odia movies at box office">
+            <section aria-label="Currently running hindi movies at box office">
               <SectionHeader
                 title="Currently Running"
-                subtitle="Odia films live at the box office right now"
+                subtitle="hindi films live at the box office right now"
                 href="/box-office"
               />
 
@@ -631,9 +631,9 @@ export default async function HomePage() {
                 {weekTop && (
                   <Link
                     href={`/box-office/${weekTop.slug || weekTop._id}`}
-                    className="group lg:col-span-1 relative overflow-hidden rounded-2xl border border-orange-500/20
-                      bg-gradient-to-br from-orange-500/10 via-[#111] to-[#0f0f0f]
-                      hover:border-orange-500/50 transition-all p-4 flex flex-col justify-between min-h-[200px]"
+                    className="group lg:col-span-1 relative overflow-hidden rounded-2xl border border-brand-500/20
+                      bg-gradient-to-br from-brand-500/10 via-[#111] to-[#0f0f0f]
+                      hover:border-brand-500/50 transition-all p-4 flex flex-col justify-between min-h-[200px]"
                   >
                     {/* bg poster faint */}
                     {(weekTop.posterUrl || weekTop.thumbnailUrl) && (
@@ -652,8 +652,8 @@ export default async function HomePage() {
                       {/* Badge */}
                       <div className="flex items-center gap-1.5 mb-3">
                         <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest
-                          text-orange-400 bg-orange-500/10 border border-orange-500/20 rounded-full px-2.5 py-0.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse inline-block" />
+                          text-brand-400 bg-brand-500/10 border border-brand-500/20 rounded-full px-2.5 py-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse inline-block" />
                           🔥 This Week&apos;s Top
                         </span>
                       </div>
@@ -670,7 +670,7 @@ export default async function HomePage() {
                           </div>
                         )}
                         <div className="min-w-0">
-                          <h3 className="font-black text-base text-white group-hover:text-orange-400
+                          <h3 className="font-black text-base text-white group-hover:text-brand-400
                             transition-colors leading-tight line-clamp-2 mb-1">
                             {weekTop.title}
                           </h3>
@@ -679,7 +679,7 @@ export default async function HomePage() {
                               ? new Date(weekTop.releaseDate).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
                               : ""}
                           </p>
-                          <p className="text-2xl font-black text-orange-400 leading-none">
+                          <p className="text-2xl font-black text-brand-400 leading-none">
                             {fmtINR(weekTop._weekNet || weekTop._totalNet)}
                           </p>
                           <p className="text-[10px] text-gray-600 mt-0.5">
@@ -703,14 +703,14 @@ export default async function HomePage() {
                           </span>
                         )}
                       </div>
-                      <span className="text-xs text-orange-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-xs text-brand-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                         Full data <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
 
                     {/* Watermark */}
-                    <div className="absolute bottom-4 right-5 text-orange-500/10 text-6xl font-black
-                      pointer-events-none select-none group-hover:text-orange-500/20 transition-colors">
+                    <div className="absolute bottom-4 right-5 text-brand-500/10 text-6xl font-black
+                      pointer-events-none select-none group-hover:text-brand-500/20 transition-colors">
                       #1
                     </div>
                   </Link>
@@ -729,7 +729,7 @@ export default async function HomePage() {
                           key={String(m._id)}
                           href={`/box-office/${m.slug || m._id}`}
                           className="group flex items-center gap-3 bg-[#111] border border-[#1f1f1f]
-                            hover:border-orange-500/30 rounded-xl p-3 transition-all"
+                            hover:border-brand-500/30 rounded-xl p-3 transition-all"
                         >
                           {/* Poster */}
                           <div className="relative w-11 h-[60px] rounded-lg overflow-hidden flex-shrink-0 bg-[#1a1a1a]">
@@ -744,7 +744,7 @@ export default async function HomePage() {
 
                           {/* Info */}
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-white group-hover:text-orange-300
+                            <p className="text-sm font-bold text-white group-hover:text-brand-300
                               transition-colors line-clamp-1 leading-snug">
                               {m.title}
                             </p>
@@ -755,7 +755,7 @@ export default async function HomePage() {
                               {days > 0 ? ` · ${days}d` : ""}
                             </p>
                             <div className="flex items-center gap-2 mt-1.5">
-                              <span className="text-xs font-bold text-orange-400">
+                              <span className="text-xs font-bold text-brand-400">
                                 {fmtINR(m._totalNet)}
                               </span>
                               {m.verdict && !["Released","Upcoming"].includes(m.verdict) && (
@@ -767,7 +767,7 @@ export default async function HomePage() {
                             </div>
                           </div>
 
-                          <ChevronRight className="w-3.5 h-3.5 text-gray-700 group-hover:text-orange-400
+                          <ChevronRight className="w-3.5 h-3.5 text-gray-700 group-hover:text-brand-400
                             flex-shrink-0 transition-colors" />
                         </Link>
                       );
@@ -777,14 +777,14 @@ export default async function HomePage() {
                   <Link
                     href="/box-office"
                     className="sm:col-span-2 flex items-center justify-between rounded-xl
-                      bg-gradient-to-br from-orange-500/8 to-transparent border border-orange-500/20
-                      hover:border-orange-500/50 px-4 py-3 group transition-all"
+                      bg-gradient-to-br from-brand-500/8 to-transparent border border-brand-500/20
+                      hover:border-brand-500/50 px-4 py-3 group transition-all"
                   >
                     <div>
                       <p className="text-white font-bold text-sm">See Full Box Office Report</p>
                       <p className="text-gray-500 text-xs mt-0.5">Day-wise net &amp; gross for all films</p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-orange-400 group-hover:translate-x-1 transition-transform" />
+                    <ChevronRight className="w-4 h-4 text-brand-400 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
 
@@ -803,25 +803,25 @@ export default async function HomePage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             {BLOG_CATEGORIES.map((cat) => (
               <Link key={cat.label} href={cat.href}
-                className="group flex items-center gap-2 sm:gap-3 bg-[#111] border border-[#1f1f1f] hover:border-orange-500/40 hover:bg-orange-500/5 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 transition-all">
+                className="group flex items-center gap-2 sm:gap-3 bg-[#111] border border-[#1f1f1f] hover:border-brand-500/40 hover:bg-brand-500/5 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 transition-all">
                 <span className="text-lg sm:text-xl">{cat.emoji}</span>
-                <span className="text-xs sm:text-sm font-semibold text-gray-300 group-hover:text-orange-300 transition-colors leading-tight">
+                <span className="text-xs sm:text-sm font-semibold text-gray-300 group-hover:text-brand-300 transition-colors leading-tight">
                   {cat.label}
                 </span>
-                <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-600 group-hover:text-orange-400 ml-auto transition-colors flex-shrink-0" />
+                <ChevronRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-gray-600 group-hover:text-brand-400 ml-auto transition-colors flex-shrink-0" />
               </Link>
             ))}
           </div>
         </section>
 
-        {/* ══ THIS MONTH IN OLLYWOOD ══ */}
+        {/* ══ THIS MONTH IN BOLLYWOOD ══ */}
         {thisMonthAll.length > 0 && (() => {
           const monthName = _now.toLocaleDateString("en-IN", { month: "long" });
           const year      = _now.getFullYear();
           return (
-            <section aria-label={`Odia movies releasing in ${monthName} ${year}`}>
+            <section aria-label={`hindi movies releasing in ${monthName} ${year}`}>
               <SectionHeader
-                title={`This Month in Ollywood`}
+                title={`This Month in bollywood`}
                 subtitle={`${monthName} ${year} releases — what's out and what's coming`}
                 href="/movies"
               />
@@ -829,7 +829,7 @@ export default async function HomePage() {
               {/* Timeline */}
               <div className="relative">
                 {/* Vertical line */}
-                <div className="absolute left-[18px] sm:left-[22px] top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/40 via-orange-500/20 to-transparent" />
+                <div className="absolute left-[18px] sm:left-[22px] top-0 bottom-0 w-px bg-gradient-to-b from-brand-500/40 via-brand-500/20 to-transparent" />
 
                 <div className="space-y-3">
                   {thisMonthAll.map((m: any, i: number) => {
@@ -855,18 +855,18 @@ export default async function HomePage() {
                         {/* Timeline dot */}
                         <div className={`absolute left-[12px] sm:left-[16px] w-[13px] h-[13px] rounded-full border-2 flex-shrink-0 transition-all
                           ${isToday
-                            ? "bg-orange-500 border-orange-400 shadow-[0_0_8px_#f97316]"
+                            ? "bg-brand-500 border-brand-400 shadow-[0_0_8px_#f97316]"
                             : released
-                              ? "bg-orange-500/70 border-orange-500/50"
-                              : "bg-[#1a1a1a] border-[#333] group-hover:border-orange-500/50"
+                              ? "bg-brand-500/70 border-brand-500/50"
+                              : "bg-[#1a1a1a] border-[#333] group-hover:border-brand-500/50"
                           }`}
                         />
 
                         {/* Card */}
                         <div className={`flex-1 flex items-center gap-3 rounded-xl px-3 py-2.5 border transition-all
                           ${released
-                            ? "bg-[#111] border-[#1f1f1f] hover:border-orange-500/30"
-                            : "bg-[#0d0d0d] border-[#181818] border-dashed hover:border-orange-500/20"
+                            ? "bg-[#111] border-[#1f1f1f] hover:border-brand-500/30"
+                            : "bg-[#0d0d0d] border-[#181818] border-dashed hover:border-brand-500/20"
                           }`}
                         >
                           {/* Poster */}
@@ -879,15 +879,15 @@ export default async function HomePage() {
                           {/* Info */}
                           <div className="flex-1 min-w-0">
                             <p className={`text-sm font-bold leading-snug line-clamp-1 transition-colors
-                              ${released ? "text-white group-hover:text-orange-400" : "text-gray-400 group-hover:text-gray-200"}`}>
+                              ${released ? "text-white group-hover:text-brand-400" : "text-gray-400 group-hover:text-gray-200"}`}>
                               {m.title}
                             </p>
                             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                              <span className={`text-[10px] font-medium ${released ? "text-orange-400" : "text-gray-600"}`}>
+                              <span className={`text-[10px] font-medium ${released ? "text-brand-400" : "text-gray-600"}`}>
                                 {dateLabel}
                               </span>
                               {isToday && (
-                                <span className="text-[9px] font-black uppercase tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/20 rounded-full px-1.5 py-0.5 animate-pulse">
+                                <span className="text-[9px] font-black uppercase tracking-widest text-brand-400 bg-brand-500/10 border border-brand-500/20 rounded-full px-1.5 py-0.5 animate-pulse">
                                   Today!
                                 </span>
                               )}
@@ -903,7 +903,7 @@ export default async function HomePage() {
                             </div>
                           </div>
 
-                          <ChevronRight className="w-3.5 h-3.5 text-gray-700 group-hover:text-orange-400 flex-shrink-0 transition-colors" />
+                          <ChevronRight className="w-3.5 h-3.5 text-gray-700 group-hover:text-brand-400 flex-shrink-0 transition-colors" />
                         </div>
                       </Link>
                     );
@@ -916,7 +916,7 @@ export default async function HomePage() {
 
         {/* ══ DISCOVER + DID YOU KNOW — 2 col grid ══ */}
         {(randomMoviePool.length > 0 || triviaCards.length > 0) && (
-          <section aria-label="Discover Odia movies and Ollywood trivia">
+          <section aria-label="Discover hindi movies and bollywood trivia">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
               {randomMoviePool.length > 0 && (
                 <RandomMoviePicker movies={randomMoviePool} currentYear={currentYear} />
@@ -930,10 +930,10 @@ export default async function HomePage() {
 
         {/* ══ UPCOMING MOVIES ══ */}
         {upcomingMovies.length > 0 && (
-          <section aria-label="Upcoming Odia movies">
+          <section aria-label="Upcoming hindi movies">
             <SectionHeader
               title="Upcoming Movies"
-              subtitle="Odia films releasing soon — mark your calendar"
+              subtitle="hindi films releasing soon — mark your calendar"
               href="/movies?verdict=Upcoming"
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
@@ -946,10 +946,10 @@ export default async function HomePage() {
 
         {/* ══ BLOG — LATEST ARTICLES GRID ══ */}
         {latestBlogs.length > 0 && (
-          <section aria-label="Latest Odia cinema blog posts">
+          <section aria-label="Latest hindi cinema blog posts">
             <SectionHeader
               title="Latest from the Blog"
-              subtitle="In-depth reviews, cast spotlights and Ollywood stories"
+              subtitle="In-depth reviews, cast spotlights and bollywood stories"
               href="/blog"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -959,7 +959,7 @@ export default async function HomePage() {
             </div>
             <div className="mt-8 text-center">
               <Link href="/blog"
-                className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-black font-bold px-6 py-3 rounded-xl transition-colors text-sm">
+                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400 text-black font-bold px-6 py-3 rounded-xl transition-colors text-sm">
                 <BookOpen className="w-4 h-4" /> Read All Blog Articles
               </Link>
             </div>
@@ -968,18 +968,18 @@ export default async function HomePage() {
 
         {/* ══ BLOCKBUSTER / TOP MOVIES (SEO + AdSense filler) ══ */}
         {topMovies.length > 0 && (
-          <section aria-label="Blockbuster and superhit Odia movies">
+          <section aria-label="Blockbuster and superhit hindi movies">
             <SectionHeader
               title="Blockbuster Hits"
-              subtitle="Top-performing Odia films of recent years"
+              subtitle="Top-performing hindi films of recent years"
               href="/movies"
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
               {topMovies.map((m: any, i: number) => (
                 <Link key={String(m._id)} href={`/movie/${m.slug || m._id}`}
-                  className="group relative bg-[#111] border border-[#1f1f1f] hover:border-orange-500/40 rounded-xl overflow-hidden transition-all">
+                  className="group relative bg-[#111] border border-[#1f1f1f] hover:border-brand-500/40 rounded-xl overflow-hidden transition-all">
                   {/* Rank badge */}
-                  <div className="absolute top-2 left-2 z-10 w-7 h-7 bg-orange-500 text-black text-xs font-black rounded-full flex items-center justify-center">
+                  <div className="absolute top-2 left-2 z-10 w-7 h-7 bg-brand-500 text-black text-xs font-black rounded-full flex items-center justify-center">
                     {i + 1}
                   </div>
                   {(m.posterUrl || m.thumbnailUrl) ? (
@@ -988,12 +988,12 @@ export default async function HomePage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                     </div>
                   ) : (
-                    <div className="h-40 sm:h-52 bg-orange-500/5 flex items-center justify-center">
-                      <Clapperboard className="w-10 h-10 text-orange-500/20" />
+                    <div className="h-40 sm:h-52 bg-brand-500/5 flex items-center justify-center">
+                      <Clapperboard className="w-10 h-10 text-brand-500/20" />
                     </div>
                   )}
                   <div className="p-3">
-                    <h3 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors line-clamp-1">{m.title}</h3>
+                    <h3 className="text-sm font-bold text-white group-hover:text-brand-300 transition-colors line-clamp-1">{m.title}</h3>
                     <div className="flex items-center justify-between mt-1">
                       <span className="text-xs text-gray-500">{m.releaseDate ? new Date(m.releaseDate).getFullYear() : ""}</span>
                       <span className="text-xs font-bold text-green-400">{m.verdict}</span>
@@ -1005,36 +1005,35 @@ export default async function HomePage() {
           </section>
         )}
 
-        {/* ══ SEO RICH CONTENT — About Ollywood ══ */}
+        {/* ══ SEO RICH CONTENT — About bollywood ══ */}
         <section
-          aria-label="About Odia cinema Ollywood"
+          aria-label="About hindi cinema bollywood"
           className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-12"
         >
           <div className="max-w-4xl">
             <div className="flex items-center gap-2 mb-4">
-              <Award className="w-5 h-5 text-orange-500" />
-              <span className="text-orange-500 text-sm font-semibold uppercase tracking-widest">About Ollywood</span>
+              <Award className="w-5 h-5 text-brand-500" />
+              <span className="text-brand-500 text-sm font-semibold uppercase tracking-widest">About bollywood</span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              Celebrating the Rich Heritage of Odia Cinema
+              Celebrating the Rich Heritage of Hindi Cinema
             </h2>
-            <div className="prose-odia space-y-4">
+            <div className="prose-bollywood space-y-4">
               <p>
-                Odia cinema, fondly known as <strong>Ollywood</strong>, is one of India's oldest and most culturally
-                rich regional film industries. With roots tracing back to 1936 when the first Odia film{" "}
-                <em>Sita Bibaha</em> was released, Odia cinema has evolved over nine decades into a vibrant
-                industry that captivates millions of viewers across Odisha and beyond.
+                Hindi cinema, fondly known as <strong>Bollywood</strong>, is one of the largest and most influential
+                film industries in the world. With roots tracing back to 1913 when the silent masterpiece{" "}
+                <em>Raja Harishchandra</em> was released, Hindi cinema has evolved over more than a century into a global
+                powerhouse that captivates millions of viewers worldwide.
               </p>
               <p>
-                The Odia film industry is headquartered in <strong>Bhubaneswar</strong>, the capital of Odisha,
-                producing over 40–60 films annually. Stars like <strong>Babushaan Mohanty</strong>,{" "}
-                <strong>Elina Samantray</strong>, <strong>Sabyasachi Mishra</strong>, and{" "}
-                <strong>Barsha Priyadarshini</strong> have become household names drawing massive box office numbers.
+                The Hindi film industry is headquartered in <strong>Mumbai</strong>, Maharashtra (formerly Bombay),
+                producing hundreds of films annually. Stars like <strong>Shah Rukh Khan</strong>,{" "}
+                <strong>Amitabh Bachchan</strong>, <strong>Deepika Padukone</strong>, and{" "}
+                <strong>Aamir Khan</strong> have become global icons drawing massive box office numbers across the globe.
               </p>
               <p>
-                What makes Odia cinema unique is its deep connection to Odisha's cultural and spiritual identity —
-                from devotional films set at the <strong>Jagannath Temple</strong> in Puri to contemporary thrillers
-                in Bhubaneswar's streets. <strong>Ollypedia</strong> is your complete destination for Odia movie
+                What makes Hindi cinema unique is its iconic blend of drama, romance, action, and spectacular musical sequences.
+                <strong>The Cinema Verse</strong> is your complete destination for Hindi movie
                 reviews, cast details, box office collections, songs, trailers and in-depth blog articles.
               </p>
             </div>
@@ -1046,14 +1045,14 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* ══ WHY OLLYPEDIA — Features Grid ══ */}
-        <section aria-label="What you can find on Ollypedia">
+        {/* ══ WHY THE CINEMA VERSE — Features Grid ══ */}
+        <section aria-label="What you can find on The Cinema Verse">
           <div className="text-center mb-6 sm:mb-10">
             <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white">
-              Everything About <span className="text-orange-500">Odia Cinema</span> in One Place
+              Everything About <span className="text-brand-500">Hindi Cinema</span> in One Place
             </h2>
             <p className="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
-              Ollypedia is the most complete Odia film database covering movies, music, cast and box office.
+              The Cinema Verse is the most complete hindi film database covering movies, music, cast and box office.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
@@ -1061,48 +1060,48 @@ export default async function HomePage() {
               {
                 icon: TrendingUp, color: "orange",
                 title: "Box Office Tracking",
-                desc: "Accurate opening day, first week and total collection data for every Odia film. Day-wise box office numbers updated regularly.",
+                desc: "Accurate opening day, first week and total collection data for every hindi film. Day-wise box office numbers updated regularly.",
                 href: "/movies",
               },
               {
                 icon: Star, color: "yellow",
                 title: "Cast & Crew Profiles",
-                desc: "Detailed biographies of Odia actors, directors, producers and film professionals with their complete filmography.",
+                desc: "Detailed biographies of bollywood actors, directors, producers and film professionals with their complete filmography.",
                 href: "/cast",
               },
               {
                 icon: Music, color: "green",
                 title: "Songs & Music",
-                desc: "Every song from every Odia film — with YouTube videos, lyrics, singer and music director credits.",
+                desc: "Every song from every hindi film — with YouTube videos, lyrics, singer and music director credits.",
                 href: "/songs",
               },
               {
                 icon: BookOpen, color: "blue",
                 title: "In-Depth Blog Articles",
-                desc: "Expert reviews, cast spotlights, top 10 lists, behind-the-scenes stories and opinion pieces about Ollywood.",
+                desc: "Expert reviews, cast spotlights, top 10 lists, behind-the-scenes stories and opinion pieces about bollywood.",
                 href: "/blog",
               },
               {
                 icon: Mic2, color: "purple",
-                title: "Odia Film Reviews",
-                desc: "Read and write honest public reviews for any Odia movie. Rating system helps you decide what to watch next.",
+                title: "Hindi Film Reviews",
+                desc: "Read and write honest public reviews for any hindi movie. Rating system helps you decide what to watch next.",
                 href: "/movies",
               },
               {
                 icon: Trophy, color: "orange",
                 title: "Verdicts & Ratings",
-                desc: "Blockbuster, Super Hit, Hit, Average, Flop — clear verdicts for every released Odia film based on box office performance.",
+                desc: "Blockbuster, Super Hit, Hit, Average, Flop — clear verdicts for every released hindi film based on box office performance.",
                 href: "/movies",
               },
             ].map(({ icon: Icon, title, desc, href }) => (
               <Link key={title} href={href}
-                className="group bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl p-4 sm:p-6 transition-all hover:-translate-y-0.5">
-                <div className="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-orange-500/20 transition-colors">
-                  <Icon className="w-5 h-5 text-orange-500" />
+                className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-4 sm:p-6 transition-all hover:-translate-y-0.5">
+                <div className="w-10 h-10 bg-brand-500/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-brand-500/20 transition-colors">
+                  <Icon className="w-5 h-5 text-brand-500" />
                 </div>
                 <h3 className="font-display font-bold text-white text-lg mb-2">{title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
-                <div className="flex items-center gap-1 mt-4 text-orange-400 text-xs font-semibold group-hover:gap-2 transition-all">
+                <div className="flex items-center gap-1 mt-4 text-brand-400 text-xs font-semibold group-hover:gap-2 transition-all">
                   Explore <ChevronRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
@@ -1111,43 +1110,43 @@ export default async function HomePage() {
         </section>
 
         {/* ══ FAQ — AdSense / SEO section ══ */}
-        <section aria-label="Frequently asked questions about Odia cinema" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-10">
+        <section aria-label="Frequently asked questions about hindi cinema" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-10">
           <div className="flex items-center gap-2 mb-5 sm:mb-8">
-            <div className="w-1 h-6 bg-orange-500 rounded-full" />
+            <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 className="font-display text-lg sm:text-2xl font-bold text-white">
-              Frequently Asked Questions — Odia Cinema
+              Frequently Asked Questions — Hindi Cinema
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {[
               {
-                q: "What is Ollywood?",
-                a: "Ollywood is the popular name for the Odia language film industry based in Bhubaneswar, Odisha. It is one of India's oldest regional film industries, producing 40–60 Odia films every year.",
+                q: "What is Bollywood?",
+                a: "Bollywood is the popular term for the Hindi-language film industry based in Mumbai, Maharashtra. It is one of the largest centers of film production in the world, producing hundreds of films every year.",
               },
               {
-                q: "Who are the top actors in Odia cinema?",
-                a: "Popular Odia actors include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, Elina Samantray, Barsha Priyadarshini and Jhilik Bhattacharjee, among many others.",
+                q: "Who are the top actors in Hindi cinema?",
+                a: "Popular Bollywood actors include legends like Amitabh Bachchan and Shah Rukh Khan, along with stars like Salman Khan, Aamir Khan, Ranbir Kapoor, Deepika Padukone, and Alia Bhatt.",
               },
               {
-                q: "Where can I read Odia movie reviews?",
-                a: "Ollypedia publishes in-depth Odia movie reviews, audience ratings, box office analysis and cast spotlights. Visit our Blog section for the latest articles.",
+                q: "Where can I read Hindi movie reviews?",
+                a: "The Cinema Verse publishes in-depth Hindi movie reviews, audience ratings, box office analysis, and cast spotlights. Visit our Blog section for the latest articles.",
               },
               {
-                q: "What is the box office collection of recent Odia films?",
-                a: "Ollypedia tracks day-wise net and gross box office collection for all major Odia films. Visit the Box Office section for updated figures.",
+                q: "What is the box office collection of recent Hindi films?",
+                a: "The Cinema Verse tracks day-wise net and gross box office collection for all major Hindi films. Visit the Box Office section for updated figures.",
               },
               {
-                q: "How can I find songs from an Odia movie?",
-                a: "Every Odia film's song list with YouTube videos, lyrics, singers, lyricists and music directors is available on Ollypedia's Songs section.",
+                q: "How can I find songs from a Hindi movie?",
+                a: "Every Hindi film's song list with YouTube videos, lyrics, singers, lyricists, and music directors is available on The Cinema Verse's Songs section.",
               },
               {
-                q: "What does 'Blockbuster', 'Hit' and 'Flop' mean for Odia films?",
-                a: "These verdicts are based on a film's box office performance relative to its budget and screen count. Ollypedia displays the final verdict for each released Odia film on its movie page.",
+                q: "What does 'Blockbuster', 'Hit' and 'Flop' mean for Hindi films?",
+                a: "These verdicts are based on a film's box office performance relative to its budget and screen count. The Cinema Verse displays the final verdict for each released Hindi film on its movie page.",
               },
             ].map(({ q, a }) => (
               <div key={q} className="border-b border-[#1f1f1f] pb-5 last:border-0">
                 <h3 className="font-bold text-white text-sm mb-2 flex items-start gap-2">
-                  <span className="text-orange-500 mt-0.5 flex-shrink-0">Q.</span>
+                  <span className="text-brand-500 mt-0.5 flex-shrink-0">Q.</span>
                   {q}
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed pl-5">{a}</p>
@@ -1157,15 +1156,15 @@ export default async function HomePage() {
         </section>
 
         {/* ══ EXPLORE CTA BANNER ══ */}
-        <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-orange-900/40 via-[#111] to-[#111] border border-orange-500/20 p-6 sm:p-10 md:p-14 text-center">
+        <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-brand-900/40 via-[#111] to-[#111] border border-brand-500/20 p-6 sm:p-10 md:p-14 text-center">
           <div className="absolute inset-0 opacity-5"
             style={{ backgroundImage: "radial-gradient(circle at 50% 50%, #f97316 0%, transparent 70%)" }} />
           <div className="relative z-10">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3">
-              Your Gateway to <span className="text-orange-400">Ollywood</span>
+              Your Gateway to <span className="text-brand-400">bollywood</span>
             </h2>
             <p className="text-gray-300 text-sm sm:text-base max-w-xl mx-auto mb-5 sm:mb-8">
-              Explore the complete world of Odia cinema — from classic films to today's blockbusters,
+              Explore the complete world of hindi cinema — from classic films to today's blockbusters,
               from song lyrics to box office collections.
             </p>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
@@ -1179,7 +1178,7 @@ export default async function HomePage() {
                 <Users className="w-4 h-4" /> Cast Profiles
               </Link>
               <Link href="/songs" className="btn-outline inline-flex items-center gap-2">
-                <Music className="w-4 h-4" /> Odia Songs
+                <Music className="w-4 h-4" /> bollywood Songs
               </Link>
             </div>
           </div>

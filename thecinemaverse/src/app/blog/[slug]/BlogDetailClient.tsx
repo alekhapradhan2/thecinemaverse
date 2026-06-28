@@ -111,8 +111,8 @@ const catStyle = (cat?: string) => {
 
 // ─── Keyword highlight ────────────────────────────────────────────────────────
 const ACCENT_COLORS = ["text-gold", "text-purple", "text-green", "text-pink", "text-blue"];
-const ODIA_KEYWORDS = [
-  "Ollywood","Odia","Odisha","Bhubaneswar","Cuttack","blockbuster","superhit","hit",
+const bollywood_KEYWORDS = [
+  "bollywood","bollywood","Odisha","Bhubaneswar","Cuttack","blockbuster","superhit","hit",
   "director","producer","cinematography","soundtrack","music director","choreography",
   "debut","award","release","theatre","cast","crew",
   "action","drama","romance","comedy","thriller","family","historical","devotional",
@@ -120,7 +120,7 @@ const ODIA_KEYWORDS = [
   "box office","collection","first day","opening day","first week","verdict",
   "net collection","gross collection","total collection","hit or flop",
   "actor","actress","singer","lyricist","story","screenplay","dialogue",
-  "OTT","streaming","digital release","theatre release","Ollypedia",
+  "OTT","streaming","digital release","theatre release","The Cinema Verse",
   "review","rating","worth watching","public review","story","plot","climax",
   "emotional","powerful","entertaining","must watch","super hit",
 ];
@@ -135,7 +135,7 @@ const ACCENT_CSS: Record<string, string> = {
 function HighlightedPara({ text }: { text: string }) {
   type Seg = { text: string; color: string | null };
   let segments: Seg[] = [{ text, color: null }];
-  ODIA_KEYWORDS.forEach((kw, ki) => {
+  bollywood_KEYWORDS.forEach((kw, ki) => {
     const colorKey = ACCENT_COLORS[ki % ACCENT_COLORS.length];
     const regex = new RegExp(`(${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
     const next: Seg[] = [];
@@ -274,10 +274,10 @@ function plainTextToHtml(raw: string): string {
   const topic = titleMatch ? titleMatch.replace(/<\/?h[23][^>]*>/g, "").split(/[–—|]/)[0].trim() : "this film";
   if (faqItems.length === 0) {
     faqItems.push(
-      { q: `What is ${topic} about?`, a: `${topic} is an Odia (Ollywood) production covered in depth on Ollypedia — including story, cast, music and more.` },
+      { q: `What is ${topic} about?`, a: `${topic} is an bollywood (bollywood) production covered in depth on The Cinema Verse — including story, cast, music and more.` },
       { q: `Is ${topic} worth watching?`, a: `Read the full review and audience ratings on this page to decide if ${topic} is worth your time.` },
-      { q: `Who is in the cast of ${topic}?`, a: `The complete cast and crew details of ${topic} are available on the movie page on Ollypedia.` },
-      { q: `Where can I find more articles about ${topic}?`, a: `Ollypedia publishes reviews, box office reports and cast spotlights for all Odia films.` },
+      { q: `Who is in the cast of ${topic}?`, a: `The complete cast and crew details of ${topic} are available on the movie page on The Cinema Verse.` },
+      { q: `Where can I find more articles about ${topic}?`, a: `The Cinema Verse publishes reviews, box office reports and cast spotlights for all hindi films.` },
     );
   }
 
@@ -625,7 +625,7 @@ export default function BlogDetailClient({
     const hostname = window.location.hostname;
     if (hostname === "localhost" || hostname === "127.0.0.1") return;
 
-    const sessionKey = `ollypedia_viewed_${post.slug}`;
+    const sessionKey = `thecinemaverse_viewed_${post.slug}`;
     if (sessionStorage.getItem(sessionKey)) return;
 
     // Wait 2 seconds — only count if user actually reads, not instant bounces
@@ -889,13 +889,13 @@ export default function BlogDetailClient({
                 background: "var(--bg3)", border: "1px solid var(--border)", borderRadius: 12,
               }}>
                 <p style={{ fontSize: ".83rem", color: "rgba(255,255,255,.55)", lineHeight: 1.85, margin: 0 }}>
-                  The <strong style={{ color: "var(--text)" }}>{post.movieTitle} Odia movie</strong> has been
-                  covered extensively on Ollypedia. If you are looking for{" "}
+                  The <strong style={{ color: "var(--text)" }}>{post.movieTitle} hindi movie</strong> has been
+                  covered extensively on The Cinema Verse. If you are looking for{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} movie review</em>,{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} story</em>,{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} cast and crew</em>, or the{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} box office collection</em>,
-                  {" "}you will find all of it on Ollypedia — Odisha&apos;s complete Odia cinema database.
+                  {" "}you will find all of it on The Cinema Verse — Odisha&apos;s complete hindi cinema database.
                 </p>
               </div>
             )}
@@ -921,7 +921,7 @@ export default function BlogDetailClient({
                         style={{ color: "var(--gold)", fontWeight: 600, textDecoration: "none" }}>
                         {post.movieTitle} box office collection
                       </a>
-                      {" "}on Ollypedia.</>
+                      {" "}on The Cinema Verse.</>
                   )}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
@@ -1002,7 +1002,7 @@ export default function BlogDetailClient({
                 {([
                   ["Published",  fmtDate(post.createdAt)],
                   post.updatedAt && post.updatedAt !== post.createdAt ? ["Updated", fmtDate(post.updatedAt)] : null,
-                  ["Author",     post.author || "OllyPedia Editorial"],
+                  ["Author",     post.author || "The Cinema Verse Editorial"],
                   ["Category",   post.category || "General"],
                   ["Read Time",  `${post.readTime || 3} min`],
                   ["Views",      (post.views || 0).toLocaleString()],
@@ -1029,25 +1029,25 @@ export default function BlogDetailClient({
                 <div style={{ padding: "10px 14px" }}>
                   {post.movieTitle ? (
                     <>
-                      <FaqItem q={`What is ${post.movieTitle} Odia movie about?`}
-                        a={post.excerpt || (post.content?.slice(0, 220).replace(/\n/g, " ").trim() + "…") || `${post.movieTitle} is an Odia film.`} />
+                      <FaqItem q={`What is ${post.movieTitle} hindi movie about?`}
+                        a={post.excerpt || (post.content?.slice(0, 220).replace(/\n/g, " ").trim() + "…") || `${post.movieTitle} is an hindi film.`} />
                       <FaqItem q={`Is ${post.movieTitle} worth watching?`}
-                        a={`Based on user reviews on Ollypedia, you can decide if ${post.movieTitle} is worth watching.`} />
+                        a={`Based on user reviews on The Cinema Verse, you can decide if ${post.movieTitle} is worth watching.`} />
                       <FaqItem q={`Who is in the cast of ${post.movieTitle}?`}
-                        a={`Full cast and crew of ${post.movieTitle} are listed on the movie page on Ollypedia.`} />
+                        a={`Full cast and crew of ${post.movieTitle} are listed on the movie page on The Cinema Verse.`} />
                       <FaqItem q={`Where can I watch ${post.movieTitle} songs?`}
-                        a={`All songs from ${post.movieTitle} including YouTube videos and lyrics are on Ollypedia.`} />
+                        a={`All songs from ${post.movieTitle} including YouTube videos and lyrics are on The Cinema Verse.`} />
                       <FaqItem q={`Where can I find more articles about ${post.movieTitle}?`}
-                        a={`Ollypedia publishes reviews, cast spotlights and box office reports for ${post.movieTitle}.`} />
+                        a={`The Cinema Verse publishes reviews, cast spotlights and box office reports for ${post.movieTitle}.`} />
                     </>
                   ) : (
                     <>
-                      <FaqItem q="What is Ollypedia?"
-                        a="Ollypedia is Odisha’s complete Odia cinema encyclopedia — movies, actors, songs, box office and news." />
-                      <FaqItem q="What kind of articles does Ollypedia publish?"
-                        a="Movie reviews, top 10 lists, actor spotlights, box office reports and Ollywood entertainment news." />
-                      <FaqItem q="How can I find reviews for a specific Odia movie?"
-                        a="Search for the movie on Ollypedia’s blog or visit the movie’s dedicated page for ratings and articles." />
+                      <FaqItem q="What is The Cinema Verse?"
+                        a="The Cinema Verse is Odisha’s complete hindi cinema encyclopedia — movies, actors, songs, box office and news." />
+                      <FaqItem q="What kind of articles does The Cinema Verse publish?"
+                        a="Movie reviews, top 10 lists, actor spotlights, box office reports and bollywood entertainment news." />
+                      <FaqItem q="How can I find reviews for a specific hindi movie?"
+                        a="Search for the movie on The Cinema Verse’s blog or visit the movie’s dedicated page for ratings and articles." />
                     </>
                   )}
                 </div>

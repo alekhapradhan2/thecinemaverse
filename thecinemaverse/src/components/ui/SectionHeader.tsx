@@ -18,7 +18,7 @@ export function SectionHeader({ title, subtitle, href, linkLabel = "View All" }:
       {href && (
         <Link
           href={href}
-          className="flex items-center gap-1.5 text-sm text-orange-400 hover:text-orange-300 transition-colors font-medium"
+          className="flex items-center gap-1.5 text-sm text-brand-400 hover:text-brand-300 transition-colors font-medium"
         >
           {linkLabel}
           <ArrowRight className="w-4 h-4" />

@@ -36,42 +36,42 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const year = Number(params.year);
   return buildMeta({
-    title: `Odia Movies ${year} A to Z – Complete Ollywood Films List | Ollypedia`,
-    description: `${year} Odia Movies A to Z full list – Browse all Ollywood films released in ${year} with movie names, directors, release dates, box office collection, cast, songs, and reviews. Complete ${year} Odia movie list.`,
+    title: `Hindi Movies ${year} A to Z – Complete bollywood Films List | The Cinema Verse`,
+    description: `${year} Hindi Movies A to Z full list – Browse all bollywood films released in ${year} with movie names, directors, release dates, box office collection, cast, songs, and reviews. Complete ${year} hindi movie list.`,
     keywords: [
       // A-to-Z / list variants
-      `Odia movies ${year} A to Z`,
-      `A to Z Odia movies`,
-      `${year} Odia movies list`,
-      `${year} Odia films list`,
-      `Odia movies list ${year}`,
-      `Ollywood movies ${year} list`,
-      `all Odia movies ${year}`,
-      `complete list of Odia movies ${year}`,
-      `Odia movies ${year} full list`,
+      `hindi movies ${year} A to Z`,
+      `A to Z hindi movies`,
+      `${year} hindi movies list`,
+      `${year} hindi films list`,
+      `hindi movies list ${year}`,
+      `bollywood movies ${year} list`,
+      `all hindi movies ${year}`,
+      `complete list of hindi movies ${year}`,
+      `hindi movies ${year} full list`,
       // Core year keywords
-      `Odia movies ${year}`,
-      `Ollywood ${year}`,
-      `Odia films ${year}`,
-      `Odia cinema ${year}`,
-      `new Odia movies ${year}`,
+      `hindi movies ${year}`,
+      `bollywood ${year}`,
+      `hindi films ${year}`,
+      `hindi cinema ${year}`,
+      `new hindi movies ${year}`,
       // Box office
-      `Ollywood box office ${year}`,
-      `Odia movie box office collection ${year}`,
-      `${year} Ollywood blockbuster`,
-      `${year} Odia hit movies`,
+      `bollywood box office ${year}`,
+      `hindi movie box office collection ${year}`,
+      `${year} bollywood blockbuster`,
+      `${year} bollywood hit movies`,
       // Cast & crew
-      `Ollywood director ${year}`,
-      `Odia movie release date ${year}`,
-      `${year} Odia movie cast`,
+      `bollywood director ${year}`,
+      `hindi movie release date ${year}`,
+      `${year} hindi movie cast`,
       // Upcoming
-      `upcoming Odia movies ${year}`,
-      `new Ollywood movies ${year}`,
-      `${year} Odia movies TBA`,
-      // Generic Ollywood
-      `Ollywood films`,
-      `Odia film industry`,
-      `Odia cinema`,
+      `upcoming hindi movies ${year}`,
+      `new bollywood movies ${year}`,
+      `${year} hindi movies TBA`,
+      // Generic bollywood
+      `bollywood films`,
+      `hindi film industry`,
+      `hindi cinema`,
     ],
     url: `/movies/year/${year}`,
   });
@@ -85,7 +85,7 @@ function MovieListJsonLd({ movies, year }: { movies: any[]; year: number }) {
     item: {
       "@type": "Movie",
       name: m.title,
-      url: `https://ollypedia.com/movie/${m.slug}`,
+      url: `https://thecinemaverse.com/movie/${m.slug}`,
       datePublished: m.releaseDate,
       director: m.director
         ? { "@type": "Person", name: m.director }
@@ -96,9 +96,9 @@ function MovieListJsonLd({ movies, year }: { movies: any[]; year: number }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Odia Movies ${year}`,
-    description: `Complete list of Ollywood (Odia) films released in ${year}`,
-    url: `https://ollypedia.com/movies/year/${year}`,
+    name: `Hindi Movies ${year}`,
+    description: `Complete list of bollywood (bollywood) films released in ${year}`,
+    url: `https://thecinemaverse.com/movies/year/${year}`,
     numberOfItems: movies.length,
     itemListElement: itemList,
   };
@@ -116,15 +116,15 @@ function WebPageJsonLd({ year, total }: { year: number; total: number }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `Odia Movies ${year} – Complete A to Z Ollywood Films List`,
-    description: `Full list of ${total} Odia movies released in ${year}. Browse all Ollywood films with director, release date, box office verdict, cast and songs.`,
-    url: `https://ollypedia.com/movies/year/${year}`,
+    name: `Hindi Movies ${year} – Complete A to Z bollywood Films List`,
+    description: `Full list of ${total} hindi movies released in ${year}. Browse all bollywood films with director, release date, box office verdict, cast and songs.`,
+    url: `https://thecinemaverse.com/movies/year/${year}`,
     inLanguage: "en-IN",
-    isPartOf: { "@type": "WebSite", name: "Ollypedia", url: "https://ollypedia.com" },
+    isPartOf: { "@type": "WebSite", name: "The Cinema Verse", url: "https://thecinemaverse.com" },
     about: {
       "@type": "Thing",
-      name: "Ollywood",
-      description: "Odia-language film industry based in Odisha, India",
+      name: "bollywood",
+      description: "bollywood-language film industry based in Odisha, India",
     },
     dateModified: new Date().toISOString(),
   };
@@ -142,9 +142,9 @@ function BreadcrumbJsonLd({ year }: { year: number }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://ollypedia.com" },
-      { "@type": "ListItem", position: 2, name: "Movies", item: "https://ollypedia.com/movies" },
-      { "@type": "ListItem", position: 3, name: `Odia Movies ${year}`, item: `https://ollypedia.com/movies/year/${year}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverse.com" },
+      { "@type": "ListItem", position: 2, name: "Movies", item: "https://thecinemaverse.com/movies" },
+      { "@type": "ListItem", position: 3, name: `Hindi Movies ${year}`, item: `https://thecinemaverse.com/movies/year/${year}` },
     ],
   };
   return (
@@ -274,7 +274,7 @@ async function getTopCastByYear(movies: any[], limit = 12) {
   return ordered;
 }
 const VERDICT_CONFIG: Record<string, { color: string; icon: React.ElementType }> = {
-  Blockbuster: { color: "text-orange-400 bg-orange-500/15 border-orange-500/30", icon: Flame },
+  Blockbuster: { color: "text-brand-400 bg-brand-500/15 border-brand-500/30", icon: Flame },
   Superhit:    { color: "text-yellow-400 bg-yellow-500/15 border-yellow-500/30", icon: Star  },
   Hit:         { color: "text-green-400  bg-green-500/15  border-green-500/30",  icon: TrendingUp },
   Average:     { color: "text-blue-400   bg-blue-500/15   border-blue-500/30",   icon: Zap   },
@@ -338,12 +338,12 @@ export default async function MoviesByYearPage({
         ══════════════════════════════════════════════════════════ */}
         <section
           className="relative overflow-hidden bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] border-b border-[#1f1f1f]"
-          aria-label={`Odia movies from ${year}`}
+          aria-label={`hindi movies from ${year}`}
         >
           {/* Decorative glows */}
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/6 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-600/4 rounded-full blur-2xl" />
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/6 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-brand-600/4 rounded-full blur-2xl" />
             <div className="absolute inset-0"
               style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #f9731608 0%, transparent 60%)" }} />
           </div>
@@ -352,36 +352,36 @@ export default async function MoviesByYearPage({
 
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-xs text-gray-500 mb-5 flex-wrap" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+              <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
               <ChevronRight className="w-3 h-3" />
-              <Link href="/movies" className="hover:text-orange-400 transition-colors">Movies</Link>
+              <Link href="/movies" className="hover:text-brand-400 transition-colors">Movies</Link>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-orange-400 font-medium">Movies of {year}</span>
+              <span className="text-brand-400 font-medium">Movies of {year}</span>
             </nav>
 
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 bg-orange-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 text-orange-500" />
+                  <div className="w-10 h-10 bg-brand-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-5 h-5 text-brand-500" />
                   </div>
                   {/* H1 — primary SEO heading */}
                   <h1 className="font-display text-3xl md:text-4xl font-black text-white leading-tight">
-                    Odia Movies {year} – A to Z Ollywood Films List
+                    Hindi Movies {year} – A to Z bollywood Films List
                   </h1>
                 </div>
                 <p className="text-gray-400 text-sm md:text-base max-w-2xl leading-relaxed">
                   {year === currentYear
-                    ? `Complete A to Z list of all Odia (Ollywood) movies released in ${year}. Every ${year} Odia film listed with movie name, director, and release date — updated regularly as new films hit theatres.`
-                    : `Complete A to Z list of all Odia (Ollywood) movies released in ${year}. Find every Ollywood film from ${year} with director names, release dates, box office verdict, cast details, and reviews.`}
+                    ? `Complete A to Z list of all bollywood (bollywood) movies released in ${year}. Every ${year} hindi film listed with movie name, director, and release date — updated regularly as new films hit theatres.`
+                    : `Complete A to Z list of all bollywood (bollywood) movies released in ${year}. Find every bollywood film from ${year} with director names, release dates, box office verdict, cast details, and reviews.`}
                 </p>
               </div>
 
               {/* Movie count pill */}
               <div className="flex items-center gap-2 bg-[#111] border border-[#1f1f1f] rounded-xl px-5 py-3 self-start md:self-auto flex-shrink-0">
-                <Film className="w-4 h-4 text-orange-500" />
+                <Film className="w-4 h-4 text-brand-500" />
                 <span className="text-2xl font-black text-white font-display">{total}</span>
-                <span className="text-xs text-gray-500 leading-tight">Odia<br />films</span>
+                <span className="text-xs text-gray-500 leading-tight">bollywood<br />films</span>
               </div>
             </div>
 
@@ -392,13 +392,13 @@ export default async function MoviesByYearPage({
                 <Link
                   key={yr}
                   href={`/movies/year/${yr}`}
-                  aria-label={`Odia movies of ${yr}`}
+                  aria-label={`hindi movies of ${yr}`}
                   aria-current={yr === year ? "page" : undefined}
                   className={[
                     "px-3 py-1 rounded-lg text-xs font-semibold transition-all",
                     yr === year
-                      ? "bg-orange-500 text-white shadow-md shadow-orange-500/25"
-                      : "bg-[#141414] border border-[#222] text-gray-400 hover:border-orange-500/40 hover:text-orange-400",
+                      ? "bg-brand-500 text-white shadow-md shadow-brand-500/25"
+                      : "bg-[#141414] border border-[#222] text-gray-400 hover:border-brand-500/40 hover:text-brand-400",
                   ].join(" ")}
                 >
                   {yr}
@@ -441,13 +441,13 @@ export default async function MoviesByYearPage({
           ══════════════════════════════════════════════════════ */}
           <section aria-labelledby="movies-table-heading">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-orange-500/15 rounded-lg flex items-center justify-center">
-                <Clapperboard className="w-4 h-4 text-orange-500" />
+              <div className="w-8 h-8 bg-brand-500/15 rounded-lg flex items-center justify-center">
+                <Clapperboard className="w-4 h-4 text-brand-500" />
               </div>
               <div>
                 <h2 id="movies-table-heading" className="font-display text-lg font-bold text-white">
                   {total > 0
-                    ? `${total} Odia Films Released in ${year}`
+                    ? `${total} Hindi Films Released in ${year}`
                     : `No Movies Found for ${year}`}
                 </h2>
                 {total > 0 && (
@@ -469,7 +469,7 @@ export default async function MoviesByYearPage({
                 </p>
                 <Link
                   href="/movies"
-                  className="px-5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold rounded-xl transition-colors"
+                  className="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold rounded-xl transition-colors"
                 >
                   Browse All Movies
                 </Link>
@@ -481,7 +481,7 @@ export default async function MoviesByYearPage({
                   <table
                     className="w-full min-w-[480px] text-sm"
                     role="table"
-                    aria-label={`Odia movies list ${year}`}
+                    aria-label={`hindi movies list ${year}`}
                   >
                     <thead>
                       <tr className="border-b border-[#1f1f1f] bg-[#111]">
@@ -526,8 +526,8 @@ export default async function MoviesByYearPage({
                             <td className="px-2 sm:px-4 py-3 align-top">
                               <Link
                                 href={`/movie/${movie.slug}`}
-                                className="font-semibold text-white hover:text-orange-400 transition-colors inline-flex items-start gap-1 group/link"
-                                title={`${movie.title} – Odia Movie ${year}`}
+                                className="font-semibold text-white hover:text-brand-400 transition-colors inline-flex items-start gap-1 group/link"
+                                title={`${movie.title} – Hindi Movie ${year}`}
                               >
                                 <span className="leading-snug">{movie.title}</span>
                                 <ExternalLink className="w-3 h-3 mt-0.5 opacity-0 group-hover/link:opacity-50 transition-opacity flex-shrink-0" />
@@ -567,11 +567,11 @@ export default async function MoviesByYearPage({
                 {/* Table footer */}
                 <div className="px-4 py-3 bg-[#111] border-t border-[#1a1a1a] flex items-center justify-between">
                   <p className="text-xs text-gray-600">
-                    Showing <span className="text-gray-400 font-semibold">{total}</span> Odia films from {year}
+                    Showing <span className="text-gray-400 font-semibold">{total}</span> hindi films from {year}
                   </p>
                   <Link
                     href="/movies"
-                    className="text-xs text-orange-400 hover:text-orange-300 font-semibold transition-colors flex items-center gap-1"
+                    className="text-xs text-brand-400 hover:text-brand-300 font-semibold transition-colors flex items-center gap-1"
                   >
                     View all years <ChevronRight className="w-3 h-3" />
                   </Link>
@@ -591,8 +591,8 @@ export default async function MoviesByYearPage({
               {prevYear && (
                 <Link
                   href={`/movies/year/${prevYear}`}
-                  aria-label={`Odia movies of ${prevYear}`}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111] border border-[#222] text-sm font-semibold text-gray-400 hover:text-orange-400 hover:border-orange-500/30 transition-all group"
+                  aria-label={`hindi movies of ${prevYear}`}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111] border border-[#222] text-sm font-semibold text-gray-400 hover:text-brand-400 hover:border-brand-500/30 transition-all group"
                 >
                   <ChevronRight className="w-4 h-4 rotate-180 group-hover:-translate-x-0.5 transition-transform" />
                   {prevYear} Films
@@ -602,7 +602,7 @@ export default async function MoviesByYearPage({
 
             <Link
               href="/movies"
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-orange-500/10 border border-orange-500/20 text-sm font-semibold text-orange-400 hover:bg-orange-500/20 transition-all"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-brand-500/10 border border-brand-500/20 text-sm font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
             >
               <Film className="w-3.5 h-3.5" />
               All Movies
@@ -612,8 +612,8 @@ export default async function MoviesByYearPage({
               {nextYear && (
                 <Link
                   href={`/movies/year/${nextYear}`}
-                  aria-label={`Odia movies of ${nextYear}`}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111] border border-[#222] text-sm font-semibold text-gray-400 hover:text-orange-400 hover:border-orange-500/30 transition-all group"
+                  aria-label={`hindi movies of ${nextYear}`}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#111] border border-[#222] text-sm font-semibold text-gray-400 hover:text-brand-400 hover:border-brand-500/30 transition-all group"
                 >
                   {nextYear} Films
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -635,23 +635,23 @@ export default async function MoviesByYearPage({
                   id="seo-overview-heading"
                   className="font-display text-lg font-bold text-white flex items-center gap-2"
                 >
-                  <BookOpen className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Odia Movies {year} – Complete Ollywood Overview
+                  <BookOpen className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Hindi Movies {year} – Complete bollywood Overview
                 </h2>
                 <div className="space-y-3 text-sm text-gray-400 leading-relaxed">
                   <p>
                     The year <strong className="text-gray-200">{year}</strong> is a landmark chapter
-                    in <strong className="text-gray-200">Odia cinema</strong>, also known as{" "}
-                    <strong className="text-gray-200">Ollywood</strong>. A total of{" "}
-                    <strong className="text-gray-200">{total} Odia films</strong> were produced and
+                    in <strong className="text-gray-200">hindi cinema</strong>, also known as{" "}
+                    <strong className="text-gray-200">bollywood</strong>. A total of{" "}
+                    <strong className="text-gray-200">{total} hindi films</strong> were produced and
                     released in {year}, spanning a wide range of genres including action, romance,
                     family drama, comedy, mythology, thriller, and social issue-based narratives.
-                    These films were shot predominantly in the Odia language and released across
-                    Odisha and among Odia-speaking audiences globally.
+                    These films were shot predominantly in the bollywood language and released across
+                    Odisha and among bollywood-speaking audiences globally.
                   </p>
                   <p>
-                    Odia cinema has its roots dating back to 1936 with the release of{" "}
-                    <em>Sita Bibaha</em>, the first Odia-language film. Over the decades, Ollywood
+                    hindi cinema has its roots dating back to 1936 with the release of{" "}
+                    <em>Sita Bibaha</em>, the first bollywood-language film. Over the decades, bollywood
                     has grown into a thriving regional film industry, producing commercially
                     successful and critically acclaimed films each year. The {year} slate reflects
                     that continued growth, with films targeting multiplex audiences as well as
@@ -659,10 +659,10 @@ export default async function MoviesByYearPage({
                   </p>
                   {(verdictCounts["Blockbuster"] || verdictCounts["Superhit"] || verdictCounts["Hit"]) && (
                     <p>
-                      In terms of box office performance, the {year} Ollywood season saw{" "}
+                      In terms of box office performance, the {year} bollywood season saw{" "}
                       {[
                         verdictCounts["Blockbuster"] && (
-                          <strong key="bb" className="text-orange-400">
+                          <strong key="bb" className="text-brand-400">
                             {verdictCounts["Blockbuster"]} Blockbuster{verdictCounts["Blockbuster"] > 1 ? "s" : ""}
                           </strong>
                         ),
@@ -683,22 +683,22 @@ export default async function MoviesByYearPage({
                           if (i < arr.length - 1) acc.push(i === arr.length - 2 ? " and " : ", ");
                           return acc;
                         }, [])}{" "}
-                      — demonstrating the strong appetite of Odia audiences for quality regional
+                      — demonstrating the strong appetite of bollywood audiences for quality regional
                       content. These successes helped boost confidence among producers and
-                      distributors to invest further in the Ollywood ecosystem.
+                      distributors to invest further in the bollywood ecosystem.
                     </p>
                   )}
                   {verdictCounts["Upcoming"] > 0 && (
                     <p>
-                      Additionally, <strong className="text-sky-400">{verdictCounts["Upcoming"]} upcoming Odia films</strong>{" "}
+                      Additionally, <strong className="text-sky-400">{verdictCounts["Upcoming"]} upcoming hindi films</strong>{" "}
                       are currently in production or post-production, with release dates yet to be
                       officially announced. These films are expected to release in theatres soon —
-                      stay tuned to Ollypedia for the latest updates on cast, crew, trailers, and
+                      stay tuned to The Cinema Verse for the latest updates on cast, crew, trailers, and
                       release date announcements.
                     </p>
                   )}
                   <p>
-                    Each movie listed in the table above has a dedicated page on Ollypedia featuring
+                    Each movie listed in the table above has a dedicated page on The Cinema Verse featuring
                     the complete cast and crew, synopsis, songs, trailer, box office collection, and
                     audience reviews. Click any movie name to explore the full details.
                   </p>
@@ -708,49 +708,49 @@ export default async function MoviesByYearPage({
               {/* ══════════════════════════════════════════════════════════
                   KEYWORD TAGS — visible to Google, subtle on-page
               ══════════════════════════════════════════════════════ */}
-              <section aria-label={`Search tags for Odia movies ${year}`} className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl px-5 py-4">
+              <section aria-label={`Search tags for hindi movies ${year}`} className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl px-5 py-4">
                 <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mb-3">Related Searches</p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    `Odia Movies ${year}`,
-                    `${year} Odia Movies A to Z`,
-                    `Ollywood ${year}`,
-                    `${year} Odia Films List`,
-                    `New Odia Movies ${year}`,
-                    `Upcoming Odia Movies ${year}`,
-                    `${year} Ollywood Blockbuster`,
-                    `${year} Odia Hit Movies`,
-                    `Odia Movies ${year} Full List`,
-                    `${year} Ollywood Box Office`,
-                    `${year} Odia Movie Cast`,
-                    `${year} Odia Movie Release Date`,
-                    `Best Odia Movies ${year}`,
-                    `Latest Odia Movies ${year}`,
-                    `All Odia Movies ${year}`,
-                    `${year} Odia Movie Download`,
-                    `${year} Odia Movie Watch Online`,
-                    `Odia Cinema ${year}`,
-                    `Ollywood Films ${year}`,
-                    `${year} Odia Romantic Movies`,
-                    `${year} Odia Action Movies`,
-                    `${year} Odia Comedy Movies`,
-                    `${year} Odia Family Movies`,
-                    `Odia Movie Director ${year}`,
-                    `Odia Film Industry ${year}`,
+                    `Hindi Movies ${year}`,
+                    `${year} Hindi Movies A to Z`,
+                    `bollywood ${year}`,
+                    `${year} Hindi Films List`,
+                    `New Hindi Movies ${year}`,
+                    `Upcoming Hindi Movies ${year}`,
+                    `${year} bollywood Blockbuster`,
+                    `${year} bollywood Hit Movies`,
+                    `Hindi Movies ${year} Full List`,
+                    `${year} bollywood Box Office`,
+                    `${year} Hindi Movie Cast`,
+                    `${year} Hindi Movie Release Date`,
+                    `Best Hindi Movies ${year}`,
+                    `Latest Hindi Movies ${year}`,
+                    `All Hindi Movies ${year}`,
+                    `${year} Hindi Movie Download`,
+                    `${year} Hindi Movie Watch Online`,
+                    `Hindi Cinema ${year}`,
+                    `bollywood Films ${year}`,
+                    `${year} bollywood Romantic Movies`,
+                    `${year} bollywood Action Movies`,
+                    `${year} bollywood Comedy Movies`,
+                    `${year} bollywood Family Movies`,
+                    `Hindi Movie Director ${year}`,
+                    `Hindi Film Industry ${year}`,
                     `Babushaan Mohanty Movies ${year}`,
                     `Sabyasachi Mishra Movies ${year}`,
                     `Elina Samantray Movies ${year}`,
-                    `Ollywood Blockbuster ${year}`,
-                    `Aao NXT Odia Movies ${year}`,
-                    `Kanccha Lannka Odia Movies ${year}`,
-                    `Tarang Plus Odia Movies ${year}`,
-                    `Odia Films ${year} IMDb`,
-                    `${year} Odia Mythological Movies`,
-                    `${year} Odia Thriller Movies`,
+                    `bollywood Blockbuster ${year}`,
+                    `Aao NXT Hindi Movies ${year}`,
+                    `Kanccha Lannka Hindi Movies ${year}`,
+                    `Tarang Plus Hindi Movies ${year}`,
+                    `Hindi Films ${year} IMDb`,
+                    `${year} bollywood Mythological Movies`,
+                    `${year} bollywood Thriller Movies`,
                     `Sarthak Music ${year}`,
-                    `${year} Ollywood Superhit`,
-                    `Odia Movie Trailer ${year}`,
-                    `${year} Odia Film Songs`,
+                    `${year} bollywood Superhit`,
+                    `Hindi Movie Trailer ${year}`,
+                    `${year} Hindi Film Songs`,
                   ].map((tag) => (
                     <span
                       key={tag}
@@ -774,8 +774,8 @@ export default async function MoviesByYearPage({
                     id="verdict-breakdown-heading"
                     className="font-display text-lg font-bold text-white flex items-center gap-2 mb-4"
                   >
-                    <Award className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                    {year} Ollywood Box Office Verdict Breakdown
+                    <Award className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                    {year} bollywood Box Office Verdict Breakdown
                   </h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-5">
                     {Object.entries(verdictCounts)
@@ -797,7 +797,7 @@ export default async function MoviesByYearPage({
                       })}
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Out of <strong className="text-gray-300">{total} Odia movies in {year}</strong>,
+                    Out of <strong className="text-gray-300">{total} hindi movies in {year}</strong>,
                     the box office verdicts above reflect audience turnout and theatrical collection
                     across Odisha. Blockbuster and Superhit films typically run for 4–8 weeks in
                     theatres, while Average and Flop films have shorter runs. Upcoming films have
@@ -807,46 +807,46 @@ export default async function MoviesByYearPage({
               )}
 
               {/* ══════════════════════════════════════════════════════════
-                  SECTION 3 — ABOUT OLLYWOOD
+                  SECTION 3 — ABOUT BOLLYWOOD
               ══════════════════════════════════════════════════════ */}
               <section
-                aria-labelledby="about-ollywood-heading"
+                aria-labelledby="about-bollywood-heading"
                 className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-2xl p-6 md:p-8 space-y-3"
               >
                 <h2
-                  id="about-ollywood-heading"
+                  id="about-bollywood-heading"
                   className="font-display text-lg font-bold text-white flex items-center gap-2"
                 >
-                  <Globe className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  About Ollywood – Odia Film Industry
+                  <Globe className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  About bollywood – Hindi Film Industry
                 </h2>
                 <div className="space-y-3 text-sm text-gray-400 leading-relaxed">
                   <p>
-                    <strong className="text-gray-200">Ollywood</strong> is the colloquial name for
-                    the <strong className="text-gray-200">Odia-language film industry</strong> based
+                    <strong className="text-gray-200">bollywood</strong> is the colloquial name for
+                    the <strong className="text-gray-200">bollywood-language film industry</strong> based
                     in <strong className="text-gray-200">Bhubaneswar and Cuttack</strong>, Odisha,
                     India. The industry produces over 30–50 films annually and has a dedicated
-                    audience base of over 45 million Odia speakers in Odisha as well as Odia
+                    audience base of over 45 million bollywood speakers in Odisha as well as bollywood
                     diaspora communities across India and abroad.
                   </p>
                   <p>
-                    Ollywood films are primarily exhibited in single-screen and multiplex theatres
+                    bollywood films are primarily exhibited in single-screen and multiplex theatres
                     across Odisha, with major centres in Bhubaneswar, Cuttack, Berhampur,
-                    Sambalpur, Rourkela, and Balasore. Popular Ollywood stars include actors such
+                    Sambalpur, Rourkela, and Balasore. Popular bollywood stars include actors such
                     as Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, Elina Samantray,
                     Sivani Sangita, and Archita Sahu, among many others.
                   </p>
                   <p>
-                    Major Odia film production houses active in {year} include Ollywood studios and
-                    independent producers who collaborate with dedicated Odia OTT platforms —{" "}
+                    Major hindi film production houses active in {year} include bollywood studios and
+                    independent producers who collaborate with dedicated bollywood OTT platforms —{" "}
                     <strong className="text-gray-200">Aao NXT</strong>,{" "}
                     <strong className="text-gray-200">Kanccha Lannka</strong>, and{" "}
                     <strong className="text-gray-200">Tarang Plus</strong> — for digital releases
                     following their theatrical run.
                   </p>
                   <p>
-                    <strong className="text-gray-200">Ollypedia</strong> is the most comprehensive
-                    online encyclopedia for Odia cinema, covering every film from{" "}
+                    <strong className="text-gray-200">The Cinema Verse</strong> is the most comprehensive
+                    online encyclopedia for hindi cinema, covering every film from{" "}
                     {Math.min(...VALID_YEARS)} to {Math.max(...VALID_YEARS)} with detailed
                     information on cast, crew, songs, trailers, box office performance, and audience
                     reviews — all in one place.
@@ -865,8 +865,8 @@ export default async function MoviesByYearPage({
                   id="faq-heading"
                   className="font-display text-lg font-bold text-white flex items-center gap-2 mb-5"
                 >
-                  <HelpCircle className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Frequently Asked Questions – Odia Movies {year}
+                  <HelpCircle className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Frequently Asked Questions – Hindi Movies {year}
                 </h2>
 
                 {/* FAQ JSON-LD for Google rich results */}
@@ -879,98 +879,98 @@ export default async function MoviesByYearPage({
                       mainEntity: [
                         {
                           "@type": "Question",
-                          name: `What is the A to Z list of Odia movies in ${year}?`,
+                          name: `What is the A to Z list of hindi movies in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `The complete A to Z list of ${year} Odia movies includes all ${total} Ollywood films released in ${year}, listed with movie name, director, release date, and box office verdict. The full list is available on Ollypedia.`,
+                            text: `The complete A to Z list of ${year} hindi movies includes all ${total} bollywood films released in ${year}, listed with movie name, director, release date, and box office verdict. The full list is available on The Cinema Verse.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `How many Odia movies were released in ${year}?`,
+                          name: `How many hindi movies were released in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `A total of ${total} Odia (Ollywood) movies were released in ${year}. These films span a range of genres including action, romance, drama, comedy, mythology, and thriller.`,
+                            text: `A total of ${total} bollywood (bollywood) movies were released in ${year}. These films span a range of genres including action, romance, drama, comedy, mythology, and thriller.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Which is the best Odia movie of ${year}?`,
+                          name: `Which is the best hindi movie of ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `The best Odia movies of ${year} include films that earned Blockbuster and Superhit verdicts at the box office. Visit Ollypedia's ${year} Odia movies list to see all films ranked by performance.`,
+                            text: `The best hindi movies of ${year} include films that earned Blockbuster and Superhit verdicts at the box office. Visit The Cinema Verse's ${year} hindi movies list to see all films ranked by performance.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `What are the new Odia movies releasing in ${year}?`,
+                          name: `What are the new hindi movies releasing in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `New Odia movies releasing in ${year} are updated regularly on Ollypedia. Several upcoming Ollywood films have TBA release dates. Visit the ${year} Odia movies page on Ollypedia for the latest announcements.`,
+                            text: `New hindi movies releasing in ${year} are updated regularly on The Cinema Verse. Several upcoming bollywood films have TBA release dates. Visit the ${year} hindi movies page on The Cinema Verse for the latest announcements.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Which is the biggest Odia blockbuster of ${year}?`,
+                          name: `Which is the biggest bollywood blockbuster of ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Ollypedia tracks box office verdicts for all ${year} Odia films. Visit individual movie pages on Ollypedia to check which films earned the Blockbuster verdict in ${year}.`,
+                            text: `The Cinema Verse tracks box office verdicts for all ${year} hindi films. Visit individual movie pages on The Cinema Verse to check which films earned the Blockbuster verdict in ${year}.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Where can I watch Odia movies of ${year} online?`,
+                          name: `Where can I watch hindi movies of ${year} online?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `${year} Odia movies are available to stream on Odia OTT platforms including Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) following their theatrical release. Check individual movie pages on Ollypedia for streaming availability.`,
+                            text: `${year} hindi movies are available to stream on bollywood OTT platforms including Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) following their theatrical release. Check individual movie pages on The Cinema Verse for streaming availability.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Which upcoming Odia movies are releasing in ${year}?`,
+                          name: `Which upcoming hindi movies are releasing in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Several Odia films are upcoming in ${year} with TBA (To Be Announced) release dates. Visit Ollypedia's ${year} Odia movies page for the latest list of upcoming Ollywood films with their announced cast and directors.`,
+                            text: `Several hindi films are upcoming in ${year} with TBA (To Be Announced) release dates. Visit The Cinema Verse's ${year} hindi movies page for the latest list of upcoming bollywood films with their announced cast and directors.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `What is Ollywood?`,
+                          name: `What is bollywood?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Ollywood is the informal name for the Odia-language film industry based in Odisha, India. It produces films primarily in the Odia language for audiences in Odisha and the global Odia diaspora.`,
+                            text: `bollywood is the informal name for the bollywood-language film industry based in Odisha, India. It produces films primarily in the bollywood language for audiences in Odisha and the global bollywood diaspora.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Which OTT platform has the most ${year} Odia movies?`,
+                          name: `Which OTT platform has the most ${year} hindi movies?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `The dedicated Odia OTT platforms for ${year} Ollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in Odia content and carry the most complete catalogues of ${year} Odia films.`,
+                            text: `The dedicated bollywood OTT platforms for ${year} bollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in bollywood content and carry the most complete catalogues of ${year} hindi films.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `Who are the top Ollywood actors of ${year}?`,
+                          name: `Who are the top bollywood actors of ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Leading Ollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey.`,
+                            text: `Leading bollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `What genres are popular in ${year} Odia cinema?`,
+                          name: `What genres are popular in ${year} hindi cinema?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `The most popular genres in ${year} Odia cinema are action, romance, family drama, and comedy. Mythological, thriller, and social-issue films are also widely produced in Ollywood.`,
+                            text: `The most popular genres in ${year} hindi cinema are action, romance, family drama, and comedy. Mythological, thriller, and social-issue films are also widely produced in bollywood.`,
                           },
                         },
                         {
                           "@type": "Question",
-                          name: `How many Odia films were Blockbusters in ${year}?`,
+                          name: `How many hindi films were Blockbusters in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Ollypedia tracks the box office verdict for every ${year} Odia film. Visit the ${year} Odia movies page on Ollypedia to see the exact count of Blockbuster, Superhit, Hit, Average, and Flop verdicts for that year.`,
+                            text: `The Cinema Verse tracks the box office verdict for every ${year} hindi film. Visit the ${year} hindi movies page on The Cinema Verse to see the exact count of Blockbuster, Superhit, Hit, Average, and Flop verdicts for that year.`,
                           },
                         },
                       ],
@@ -981,52 +981,52 @@ export default async function MoviesByYearPage({
                 <div className="space-y-4">
                   {[
                     {
-                      q: `What is the A to Z list of Odia movies in ${year}?`,
-                      a: `The complete A to Z list of ${year} Odia movies is available in the table above. All ${total} Ollywood films released in ${year} are listed alphabetically by title, along with their director, release date, and box office verdict.`,
+                      q: `What is the A to Z list of hindi movies in ${year}?`,
+                      a: `The complete A to Z list of ${year} hindi movies is available in the table above. All ${total} bollywood films released in ${year} are listed alphabetically by title, along with their director, release date, and box office verdict.`,
                     },
                     {
-                      q: `How many Odia movies were released in ${year}?`,
-                      a: `A total of ${total} Odia (Ollywood) movies were released in ${year}, spanning genres like action, romance, family drama, comedy, mythology, and thriller. The full list with release dates and directors is available in the table above.`,
+                      q: `How many hindi movies were released in ${year}?`,
+                      a: `A total of ${total} bollywood (bollywood) movies were released in ${year}, spanning genres like action, romance, family drama, comedy, mythology, and thriller. The full list with release dates and directors is available in the table above.`,
                     },
                     {
-                      q: `Which is the best Odia movie of ${year}?`,
-                      a: `The best Odia movies of ${year} are determined by box office performance and audience ratings. Ollypedia tracks verdicts like Blockbuster, Superhit, and Hit for all ${year} Odia films. Click any movie in the list above to see its full ratings, reviews, and verdict.`,
+                      q: `Which is the best hindi movie of ${year}?`,
+                      a: `The best hindi movies of ${year} are determined by box office performance and audience ratings. The Cinema Verse tracks verdicts like Blockbuster, Superhit, and Hit for all ${year} hindi films. Click any movie in the list above to see its full ratings, reviews, and verdict.`,
                     },
                     {
-                      q: `Which is the biggest Odia blockbuster of ${year}?`,
-                      a: `Ollypedia tracks box office verdicts for all ${year} Odia films. Click on any movie name in the table above to see its full box office collection, verdict, and audience response.`,
+                      q: `Which is the biggest bollywood blockbuster of ${year}?`,
+                      a: `The Cinema Verse tracks box office verdicts for all ${year} hindi films. Click on any movie name in the table above to see its full box office collection, verdict, and audience response.`,
                     },
                     {
-                      q: `What are the new Odia movies releasing in ${year}?`,
-                      a: `New Odia movies releasing in ${year} are listed at the top of the table above, with upcoming films marked "TBA" for release date. Ollypedia updates the ${year} Odia movies list regularly as new films are announced and released.`,
+                      q: `What are the new hindi movies releasing in ${year}?`,
+                      a: `New hindi movies releasing in ${year} are listed at the top of the table above, with upcoming films marked "TBA" for release date. The Cinema Verse updates the ${year} hindi movies list regularly as new films are announced and released.`,
                     },
                     {
-                      q: `Where can I watch Odia movies of ${year} online?`,
-                      a: `Most ${year} Odia movies are available to stream on dedicated Odia OTT platforms — Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) — after their theatrical run. Individual movie pages on Ollypedia include direct streaming links where available.`,
+                      q: `Where can I watch hindi movies of ${year} online?`,
+                      a: `Most ${year} hindi movies are available to stream on dedicated bollywood OTT platforms — Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) — after their theatrical run. Individual movie pages on The Cinema Verse include direct streaming links where available.`,
                     },
                     {
-                      q: `Which upcoming Odia movies are releasing in ${year}?`,
-                      a: `Several Odia films have TBA (To Be Announced) release dates in ${year}. These are shown at the top of the table above marked as "Upcoming". Ollypedia updates this list regularly as official release dates are announced.`,
+                      q: `Which upcoming hindi movies are releasing in ${year}?`,
+                      a: `Several hindi films have TBA (To Be Announced) release dates in ${year}. These are shown at the top of the table above marked as "Upcoming". The Cinema Verse updates this list regularly as official release dates are announced.`,
                     },
                     {
-                      q: `What is Ollywood?`,
-                      a: `Ollywood is the name for the Odia-language film industry based in Bhubaneswar and Cuttack, Odisha. It produces 30–50 films annually for Odia-speaking audiences across India and the global diaspora.`,
+                      q: `What is bollywood?`,
+                      a: `bollywood is the name for the bollywood-language film industry based in Bhubaneswar and Cuttack, Odisha. It produces 30–50 films annually for bollywood-speaking audiences across India and the global diaspora.`,
                     },
                     {
-                      q: `Which OTT platform has the most ${year} Odia movies?`,
-                      a: `The dedicated Odia OTT platforms for ${year} Ollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in Odia content and carry the most complete catalogues of ${year} Odia films. Visit individual movie pages on Ollypedia for direct streaming links.`,
+                      q: `Which OTT platform has the most ${year} hindi movies?`,
+                      a: `The dedicated bollywood OTT platforms for ${year} bollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in bollywood content and carry the most complete catalogues of ${year} hindi films. Visit individual movie pages on The Cinema Verse for direct streaming links.`,
                     },
                     {
-                      q: `Who are the top Ollywood actors of ${year}?`,
-                      a: `Leading Ollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra, among others. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey. See all cast details on individual movie pages on Ollypedia.`,
+                      q: `Who are the top bollywood actors of ${year}?`,
+                      a: `Leading bollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra, among others. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey. See all cast details on individual movie pages on The Cinema Verse.`,
                     },
                     {
-                      q: `What genres are popular in ${year} Odia cinema?`,
-                      a: `The most popular genres in ${year} Odia cinema include action, romance, family drama, and comedy. Mythological, thriller, and social-issue films also have strong followings. The full ${year} Odia movies list on Ollypedia is filterable by genre.`,
+                      q: `What genres are popular in ${year} hindi cinema?`,
+                      a: `The most popular genres in ${year} hindi cinema include action, romance, family drama, and comedy. Mythological, thriller, and social-issue films also have strong followings. The full ${year} hindi movies list on The Cinema Verse is filterable by genre.`,
                     },
                     {
-                      q: `How many Odia films were Blockbusters in ${year}?`,
-                      a: `Ollypedia tracks the box office verdict — Blockbuster, Superhit, Hit, Average, or Flop — for every ${year} Odia film. See the verdict breakdown section above for the exact number of ${year} Ollywood Blockbusters and Superhits.`,
+                      q: `How many hindi films were Blockbusters in ${year}?`,
+                      a: `The Cinema Verse tracks the box office verdict — Blockbuster, Superhit, Hit, Average, or Flop — for every ${year} hindi film. See the verdict breakdown section above for the exact number of ${year} bollywood Blockbusters and Superhits.`,
                     },
                   ].map(({ q, a }, i) => (
                     <details
@@ -1056,23 +1056,23 @@ export default async function MoviesByYearPage({
                   id="browse-years-heading"
                   className="font-display text-base font-bold text-white flex items-center gap-2 mb-4"
                 >
-                  <Sparkles className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Explore Odia Movies by Year
+                  <Sparkles className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Explore Hindi Movies by Year
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                  Ollypedia covers the complete history of Ollywood films from{" "}
+                  The Cinema Verse covers the complete history of bollywood films from{" "}
                   {Math.min(...VALID_YEARS)} to {Math.max(...VALID_YEARS)}. Browse any year below to
-                  see the full list of Odia movies with directors, release dates, and box office verdicts.
+                  see the full list of hindi movies with directors, release dates, and box office verdicts.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {VALID_YEARS.filter((yr) => yr !== year).map((yr) => (
                     <Link
                       key={yr}
                       href={`/movies/year/${yr}`}
-                      title={`Odia movies released in ${yr}`}
-                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-orange-500/40 hover:text-orange-400 transition-all"
+                      title={`hindi movies released in ${yr}`}
+                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-brand-500/40 hover:text-brand-400 transition-all"
                     >
-                      Odia Movies {yr}
+                      Hindi Movies {yr}
                     </Link>
                   ))}
                 </div>
@@ -1089,30 +1089,30 @@ export default async function MoviesByYearPage({
                   id="browse-genre-heading"
                   className="font-display text-base font-bold text-white flex items-center gap-2 mb-4"
                 >
-                  <Film className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Browse {year} Odia Movies by Genre
+                  <Film className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Browse {year} Hindi Movies by Genre
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                  Ollywood produces films across every genre. Filter {year} Odia movies by genre to find the exact type of film you are looking for.
+                  bollywood produces films across every genre. Filter {year} hindi movies by genre to find the exact type of film you are looking for.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { label: `${year} Odia Action Movies`,    href: `/movies/genre/action`    },
-                    { label: `${year} Odia Romance Movies`,   href: `/movies/genre/romance`   },
-                    { label: `${year} Odia Comedy Movies`,    href: `/movies/genre/comedy`    },
-                    { label: `${year} Odia Drama Movies`,     href: `/movies/genre/drama`     },
-                    { label: `${year} Odia Family Movies`,    href: `/movies/genre/family`    },
-                    { label: `${year} Odia Thriller Movies`,  href: `/movies/genre/thriller`  },
-                    { label: `${year} Odia Mythological Films`, href: `/movies/genre/mythological` },
-                    { label: `${year} Odia Horror Movies`,   href: `/movies/genre/horror`    },
-                    { label: `${year} Odia Social Films`,    href: `/movies/genre/social`    },
-                    { label: `${year} Odia Devotional Films`, href: `/movies/genre/devotional` },
+                    { label: `${year} bollywood Action Movies`,    href: `/movies/genre/action`    },
+                    { label: `${year} bollywood Romance Movies`,   href: `/movies/genre/romance`   },
+                    { label: `${year} bollywood Comedy Movies`,    href: `/movies/genre/comedy`    },
+                    { label: `${year} bollywood Drama Movies`,     href: `/movies/genre/drama`     },
+                    { label: `${year} bollywood Family Movies`,    href: `/movies/genre/family`    },
+                    { label: `${year} bollywood Thriller Movies`,  href: `/movies/genre/thriller`  },
+                    { label: `${year} bollywood Mythological Films`, href: `/movies/genre/mythological` },
+                    { label: `${year} bollywood Horror Movies`,   href: `/movies/genre/horror`    },
+                    { label: `${year} bollywood Social Films`,    href: `/movies/genre/social`    },
+                    { label: `${year} bollywood Devotional Films`, href: `/movies/genre/devotional` },
                   ].map(({ label, href }) => (
                     <Link
                       key={label}
                       href={href}
                       title={label}
-                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-orange-500/40 hover:text-orange-400 transition-all"
+                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-brand-500/40 hover:text-brand-400 transition-all"
                     >
                       {label}
                     </Link>
@@ -1121,7 +1121,7 @@ export default async function MoviesByYearPage({
               </section>
 
               {/* ══════════════════════════════════════════════════════════
-                  SECTION 7 — POPULAR OLLYWOOD ACTORS & ACTRESSES
+                  SECTION 7 — POPULAR BOLLYWOOD ACTORS & ACTRESSES
               ══════════════════════════════════════════════════ */}
               {topCast.length > 0 && (
               <section
@@ -1132,11 +1132,11 @@ export default async function MoviesByYearPage({
                   id="popular-stars-heading"
                   className="font-display text-base font-bold text-white flex items-center gap-2 mb-2"
                 >
-                  <Star className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Popular Ollywood Stars in {year}
+                  <Star className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Popular bollywood Stars in {year}
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                  Leading cast members who appeared in the most {year} Ollywood films. Click a name to see their full profile and filmography on Ollypedia.
+                  Leading cast members who appeared in the most {year} bollywood films. Click a name to see their full profile and filmography on The Cinema Verse.
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                   {topCast.map((member: any) => {
@@ -1145,10 +1145,10 @@ export default async function MoviesByYearPage({
                       <Link
                         key={String(member._id)}
                         href={`/cast/${String(member._id)}`}
-                        title={`${member.name} – Ollywood ${role}`}
-                        className="flex flex-col px-3 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#111] hover:border-orange-500/30 hover:bg-[#161616] transition-all group"
+                        title={`${member.name} – bollywood ${role}`}
+                        className="flex flex-col px-3 py-2.5 rounded-xl border border-[#1f1f1f] bg-[#111] hover:border-brand-500/30 hover:bg-[#161616] transition-all group"
                       >
-                        <span className="text-xs font-semibold text-gray-300 group-hover:text-orange-400 transition-colors leading-snug">
+                        <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors leading-snug">
                           {member.name}
                         </span>
                         <span className="text-[10px] text-gray-600 mt-0.5">{role}</span>
@@ -1170,28 +1170,28 @@ export default async function MoviesByYearPage({
                   id="ott-heading"
                   className="font-display text-base font-bold text-white flex items-center gap-2 mb-2"
                 >
-                  <Globe className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  Watch {year} Odia Movies Online – OTT Platforms
+                  <Globe className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  Watch {year} Hindi Movies Online – OTT Platforms
                 </h2>
                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                  After their theatrical run, most {year} Odia movies are available to stream on popular OTT platforms. Here is where you can watch Ollywood films online:
+                  After their theatrical run, most {year} hindi movies are available to stream on popular OTT platforms. Here is where you can watch bollywood films online:
                 </p>
                 <div className="space-y-2 text-sm text-gray-400 leading-relaxed">
                   {[
                     {
                       platform: "Aao NXT",
                       url: "https://aaonxt.com/",
-                      desc: `Aao NXT is a dedicated Odia OTT platform streaming ${year} Ollywood movies, web series, and exclusive Odia content. The go-to destination for Odia digital entertainment.`,
+                      desc: `Aao NXT is a dedicated bollywood OTT platform streaming ${year} bollywood movies, web series, and exclusive bollywood content. The go-to destination for bollywood digital entertainment.`,
                     },
                     {
                       platform: "Kanccha Lannka",
                       url: "https://www.kancchalannka.com/",
-                      desc: `Kanccha Lannka is a popular Odia streaming platform featuring ${year} Ollywood releases, classic Odia films, and original Odia content not available elsewhere.`,
+                      desc: `Kanccha Lannka is a popular bollywood streaming platform featuring ${year} bollywood releases, classic hindi films, and original bollywood content not available elsewhere.`,
                     },
                     {
                       platform: "Tarang Plus",
                       url: "https://tarangplus.in/",
-                      desc: `Tarang Plus is the official OTT platform of Tarang TV, offering ${year} Odia movies, Odia serials, and live TV. One of the most trusted names in Odia digital streaming.`,
+                      desc: `Tarang Plus is the official OTT platform of Tarang TV, offering ${year} hindi movies, bollywood serials, and live TV. One of the most trusted names in bollywood digital streaming.`,
                     },
                   ].map(({ platform, url, desc }) => (
                     <a
@@ -1199,19 +1199,19 @@ export default async function MoviesByYearPage({
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      title={`Watch Odia movies on ${platform}`}
-                      className="flex gap-3 p-3 rounded-xl bg-[#111] border border-[#1a1a1a] hover:border-orange-500/30 hover:bg-[#161616] transition-all group"
+                      title={`Watch hindi movies on ${platform}`}
+                      className="flex gap-3 p-3 rounded-xl bg-[#111] border border-[#1a1a1a] hover:border-brand-500/30 hover:bg-[#161616] transition-all group"
                     >
-                      <ExternalLink className="w-4 h-4 text-orange-500 flex-shrink-0 mt-0.5 group-hover:text-orange-400" />
+                      <ExternalLink className="w-4 h-4 text-brand-500 flex-shrink-0 mt-0.5 group-hover:text-brand-400" />
                       <div>
-                        <span className="text-gray-200 font-semibold group-hover:text-orange-400 transition-colors">{platform} ↗</span>
+                        <span className="text-gray-200 font-semibold group-hover:text-brand-400 transition-colors">{platform} ↗</span>
                         <p className="text-gray-500 text-xs mt-0.5">{desc}</p>
                       </div>
                     </a>
                   ))}
                 </div>
                 <p className="text-xs text-gray-600 mt-3">
-                  Availability varies by title. Visit individual movie pages on Ollypedia for direct streaming links where available.
+                  Availability varies by title. Visit individual movie pages on The Cinema Verse for direct streaming links where available.
                 </p>
               </section>
 
@@ -1226,11 +1226,11 @@ export default async function MoviesByYearPage({
                   id="year-compare-heading"
                   className="font-display text-base font-bold text-white flex items-center gap-2 mb-2"
                 >
-                  <TrendingUp className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                  How Does {year} Compare to Other Ollywood Years?
+                  <TrendingUp className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                  How Does {year} Compare to Other bollywood Years?
                 </h2>
                 <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                  The Odia film industry has grown steadily year on year. In {year}, Ollywood released{" "}
+                  The hindi film industry has grown steadily year on year. In {year}, bollywood released{" "}
                   <strong className="text-gray-200">{total} films</strong> — spanning action, romance,
                   drama, comedy, and more. Compare with recent years:
                 </p>
@@ -1239,10 +1239,10 @@ export default async function MoviesByYearPage({
                     <Link
                       key={yr}
                       href={`/movies/year/${yr}`}
-                      title={`Compare ${year} vs ${yr} Odia movies`}
-                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-orange-500/40 hover:text-orange-400 transition-all"
+                      title={`Compare ${year} vs ${yr} hindi movies`}
+                      className="px-3.5 py-2 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-brand-500/40 hover:text-brand-400 transition-all"
                     >
-                      {yr} Odia Movies
+                      {yr} Hindi Movies
                     </Link>
                   ))}
                 </div>

@@ -28,16 +28,16 @@ const ROLE_ICON: Record<string, string> = {
 
 // SEO descriptions per role — boosts AdSense content quality signals
 const ROLE_SEO: Record<string, { title: string; description: string }> = {
-  Actor:           { title: "Odia Actors",          description: "Browse complete profiles of Odia film actors starring in Ollywood movies." },
-  Actress:         { title: "Odia Actresses",        description: "Discover leading Odia actresses and their filmographies in Ollywood cinema." },
-  Director:        { title: "Ollywood Directors",    description: "Explore Odia film directors who have shaped the story of Ollywood." },
-  Singer:          { title: "Odia Singers",          description: "Find Odia playback singers and their hit songs from Ollywood films." },
-  "Music Director":{ title: "Music Directors",       description: "Discover music directors behind the best Odia film soundtracks." },
-  Producer:        { title: "Ollywood Producers",    description: "Browse producers who have backed Odia films and shaped the industry." },
-  Lyricist:        { title: "Odia Lyricists",        description: "Find lyricists who wrote the memorable songs of Odia cinema." },
-  Cinematographer: { title: "Cinematographers",      description: "Explore the cinematographers behind the visual storytelling of Ollywood." },
-  Choreographer:   { title: "Choreographers",        description: "Browse dance choreographers from Odia films and their career highlights." },
-  Editor:          { title: "Film Editors",          description: "Discover editors who brought Odia films to life in post-production." },
+  Actor:           { title: "bollywood Actors",          description: "Browse complete profiles of hindi film actors starring in bollywood movies." },
+  Actress:         { title: "bollywood Actresses",        description: "Discover leading bollywood actresses and their filmographies in bollywood cinema." },
+  Director:        { title: "bollywood Directors",    description: "Explore hindi film directors who have shaped the story of bollywood." },
+  Singer:          { title: "bollywood Singers",          description: "Find bollywood playback singers and their hit songs from bollywood films." },
+  "Music Director":{ title: "Music Directors",       description: "Discover music directors behind the best hindi film soundtracks." },
+  Producer:        { title: "bollywood Producers",    description: "Browse producers who have backed hindi films and shaped the industry." },
+  Lyricist:        { title: "bollywood Lyricists",        description: "Find lyricists who wrote the memorable songs of hindi cinema." },
+  Cinematographer: { title: "Cinematographers",      description: "Explore the cinematographers behind the visual storytelling of bollywood." },
+  Choreographer:   { title: "Choreographers",        description: "Browse dance choreographers from hindi films and their career highlights." },
+  Editor:          { title: "Film Editors",          description: "Discover editors who brought hindi films to life in post-production." },
 };
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -71,11 +71,11 @@ export async function generateMetadata({
   const seo = type ? ROLE_SEO[type] : null;
   return buildMeta({
     title: seo
-      ? `${seo.title} – Ollywood Directory | Ollypedia`
-      : "Odia Actors, Actresses & Crew – Complete Ollywood Cast Directory | Ollypedia",
+      ? `${seo.title} – bollywood Directory | The Cinema Verse`
+      : "bollywood Actors, Actresses & Crew – Complete bollywood Cast Directory | The Cinema Verse",
     description: seo
-      ? `${seo.description} View complete filmographies, biographies and career highlights on Ollypedia.`
-      : "Explore the complete directory of Odia film actors, actresses, directors, singers and crew. Browse profiles with filmographies and career stats of Ollywood celebrities.",
+      ? `${seo.description} View complete filmographies, biographies and career highlights on The Cinema Verse.`
+      : "Explore the complete directory of hindi film actors, actresses, directors, singers and crew. Browse profiles with filmographies and career stats of bollywood celebrities.",
     url: type ? `/cast?type=${type}` : "/cast",
   });
 }
@@ -146,7 +146,7 @@ function CastSection({
             {title}
           </h2>
           {tag && (
-            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-orange-950 text-orange-400 flex-shrink-0">
+            <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-950 text-brand-400 flex-shrink-0">
               {tag}
             </span>
           )}
@@ -157,7 +157,7 @@ function CastSection({
         {viewAllHref && (
           <Link
             href={viewAllHref}
-            className="flex-shrink-0 text-[11px] font-bold text-orange-400 no-underline border border-orange-900 px-3 py-1 rounded-lg hover:bg-orange-950 transition-colors whitespace-nowrap"
+            className="flex-shrink-0 text-[11px] font-bold text-brand-400 no-underline border border-brand-900 px-3 py-1 rounded-lg hover:bg-brand-950 transition-colors whitespace-nowrap"
           >
             View All →
           </Link>
@@ -188,21 +188,21 @@ function CastSchema({ type, total }: { type?: string; total: number }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home",        item: "https://ollypedia.in" },
-      { "@type": "ListItem", position: 2, name: "Cast & Crew", item: "https://ollypedia.in/cast" },
-      ...(type ? [{ "@type": "ListItem", position: 3, name: `${type}s`, item: `https://ollypedia.in/cast?type=${type}` }] : []),
+      { "@type": "ListItem", position: 1, name: "Home",        item: "https://thecinemaverse.in" },
+      { "@type": "ListItem", position: 2, name: "Cast & Crew", item: "https://thecinemaverse.in/cast" },
+      ...(type ? [{ "@type": "ListItem", position: 3, name: `${type}s`, item: `https://thecinemaverse.in/cast?type=${type}` }] : []),
     ],
   };
 
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: type ? `Odia ${type}s in Ollywood` : "Ollywood Cast & Crew Directory",
+    name: type ? `bollywood ${type}s in bollywood` : "bollywood Cast & Crew Directory",
     description: type
-      ? `Complete list of Odia ${type}s in Ollywood cinema`
-      : "Complete directory of actors, actresses, directors and crew in Odia cinema",
+      ? `Complete list of bollywood ${type}s in bollywood cinema`
+      : "Complete directory of actors, actresses, directors and crew in hindi cinema",
     numberOfItems: total,
-    url: type ? `https://ollypedia.in/cast?type=${type}` : "https://ollypedia.in/cast",
+    url: type ? `https://thecinemaverse.in/cast?type=${type}` : "https://thecinemaverse.in/cast",
   };
 
   return (
@@ -246,7 +246,7 @@ export default async function CastPage({
                 itemScope itemType="https://schema.org/BreadcrumbList"
               >
                 <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
-                  <a href="/" itemProp="item" className="hover:text-orange-400 transition-colors">
+                  <a href="/" itemProp="item" className="hover:text-brand-400 transition-colors">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -254,11 +254,11 @@ export default async function CastPage({
                 <span aria-hidden className="text-zinc-700">/</span>
                 <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
                   {type ? (
-                    <a href="/cast" itemProp="item" className="hover:text-orange-400 transition-colors">
+                    <a href="/cast" itemProp="item" className="hover:text-brand-400 transition-colors">
                       <span itemProp="name">Cast & Crew</span>
                     </a>
                   ) : (
-                    <span itemProp="name" className="text-orange-400">Cast & Crew</span>
+                    <span itemProp="name" className="text-brand-400">Cast & Crew</span>
                   )}
                   <meta itemProp="position" content="2" />
                 </li>
@@ -266,7 +266,7 @@ export default async function CastPage({
                   <>
                     <span aria-hidden className="text-zinc-700">/</span>
                     <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
-                      <span itemProp="name" className="text-orange-400">{type}s</span>
+                      <span itemProp="name" className="text-brand-400">{type}s</span>
                       <meta itemProp="position" content="3" />
                     </li>
                   </>
@@ -279,14 +279,14 @@ export default async function CastPage({
               <div>
                 <h1 className="text-3xl md:text-4xl font-black text-white leading-tight mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                   {type
-                    ? <>{ROLE_ICON[type] || "🎭"} <span className="text-orange-400">{type}s</span></>
-                    : <>Cast <span className="text-orange-400">&amp;</span> Crew</>
+                    ? <>{ROLE_ICON[type] || "🎭"} <span className="text-brand-400">{type}s</span></>
+                    : <>Cast <span className="text-brand-400">&amp;</span> Crew</>
                   }
                 </h1>
                 <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
                   {seo
                     ? seo.description
-                    : "Complete directory of Odia film actors, actresses, directors, singers and crew from Ollywood."
+                    : "Complete directory of hindi film actors, actresses, directors, singers and crew from bollywood."
                   }
                 </p>
                 <div className="flex items-center gap-2 mt-3">
@@ -294,7 +294,7 @@ export default async function CastPage({
                     {data.total.toLocaleString()} profiles
                   </span>
                   {type && (
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-orange-950 border border-orange-900 text-orange-400">
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-brand-950 border border-brand-900 text-brand-400">
                       {type}s only
                     </span>
                   )}
@@ -317,7 +317,7 @@ export default async function CastPage({
                 href="/cast"
                 className={`px-4 py-2.5 text-xs font-black whitespace-nowrap no-underline border-b-2 transition-colors ${
                   !type
-                    ? "text-orange-400 border-orange-400"
+                    ? "text-brand-400 border-brand-400"
                     : "text-zinc-500 border-transparent hover:text-zinc-300"
                 }`}
               >
@@ -329,7 +329,7 @@ export default async function CastPage({
                   href={`/cast?type=${r}`}
                   className={`px-4 py-2.5 text-xs font-black whitespace-nowrap no-underline border-b-2 transition-colors ${
                     type === r
-                      ? "text-orange-400 border-orange-400"
+                      ? "text-brand-400 border-brand-400"
                       : "text-zinc-500 border-transparent hover:text-zinc-300"
                   }`}
                 >
@@ -354,7 +354,7 @@ export default async function CastPage({
                 <p className="text-zinc-600 text-sm mb-4">We couldn't find any {type}s in our database.</p>
                 <Link
                   href="/cast"
-                  className="inline-block text-xs font-bold px-4 py-2 rounded-lg border border-orange-900 text-orange-400 hover:bg-orange-950 transition-colors no-underline"
+                  className="inline-block text-xs font-bold px-4 py-2 rounded-lg border border-brand-900 text-brand-400 hover:bg-brand-950 transition-colors no-underline"
                 >
                   Browse All Cast
                 </Link>
@@ -395,19 +395,19 @@ export default async function CastPage({
               <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
                   <h2 id="about-cast-heading" className="text-lg font-bold text-white mb-3">
-                    About Ollywood Cast &amp; Crew
+                    About bollywood Cast &amp; Crew
                   </h2>
                   <div className="space-y-3 text-zinc-400 text-sm leading-relaxed">
                     <p>
-                      Ollypedia's <strong className="text-zinc-200">Cast &amp; Crew directory</strong> is the most comprehensive
-                      database of <strong className="text-zinc-200">Odia film artists</strong> on the internet. From legendary
-                      actors who defined Ollywood's golden era to rising stars making their mark today, every profile is
+                      The Cinema Verse's <strong className="text-zinc-200">Cast &amp; Crew directory</strong> is the most comprehensive
+                      database of <strong className="text-zinc-200">hindi film artists</strong> on the internet. From legendary
+                      actors who defined bollywood's golden era to rising stars making their mark today, every profile is
                       backed with filmography data, career highlights, and biographical details.
                     </p>
                     <p>
-                      Whether you're looking for celebrated <strong className="text-zinc-200">Odia actors</strong> like
-                      Babushaan Mohanty and Sabyasachi Mishra, iconic <strong className="text-zinc-200">Odia actresses</strong>{" "}
-                      like Elina Samantray and Archita Sahu, or the talented directors and music composers behind Ollywood's
+                      Whether you're looking for celebrated <strong className="text-zinc-200">bollywood actors</strong> like
+                      Babushaan Mohanty and Sabyasachi Mishra, iconic <strong className="text-zinc-200">bollywood actresses</strong>{" "}
+                      like Elina Samantray and Archita Sahu, or the talented directors and music composers behind bollywood's
                       biggest hits — you'll find them all here.
                     </p>
                   </div>
@@ -417,13 +417,13 @@ export default async function CastPage({
                   <h3 className="text-base font-bold text-white mb-3">Browse by Category</h3>
                   <div className="space-y-3 text-zinc-400 text-sm leading-relaxed">
                     <p>
-                      Use the role filters above to explore <strong className="text-zinc-200">Odia directors</strong> who have
-                      shaped the art of Odia storytelling, <strong className="text-zinc-200">playback singers</strong> behind
-                      your favourite Odia songs, and the crew members working behind the scenes.
+                      Use the role filters above to explore <strong className="text-zinc-200">bollywood directors</strong> who have
+                      shaped the art of bollywood storytelling, <strong className="text-zinc-200">playback singers</strong> behind
+                      your favourite bollywood songs, and the crew members working behind the scenes.
                     </p>
                     <p>
                       Each profile includes complete movie listings, role details, and links to related films — making
-                      Ollypedia the go-to resource for everything about <strong className="text-zinc-200">Odia cinema's
+                      The Cinema Verse the go-to resource for everything about <strong className="text-zinc-200">hindi cinema's
                       artists and technicians</strong>.
                     </p>
                   </div>
@@ -431,8 +431,8 @@ export default async function CastPage({
                   {/* Internal links */}
                   <div className="mt-4 flex flex-wrap gap-2">
                     {[
-                      { label: "Odia Actors",    href: "/cast?type=Actor"    },
-                      { label: "Odia Actresses", href: "/cast?type=Actress"  },
+                      { label: "bollywood Actors",    href: "/cast?type=Actor"    },
+                      { label: "bollywood Actresses", href: "/cast?type=Actress"  },
                       { label: "Directors",      href: "/cast?type=Director" },
                       { label: "Singers",        href: "/cast?type=Singer"   },
                       { label: "Blog",           href: "/blog"               },
@@ -440,7 +440,7 @@ export default async function CastPage({
                       <a
                         key={link.href}
                         href={link.href}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 hover:text-orange-400 hover:border-orange-900 transition-all no-underline"
+                        className="text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-800 border border-zinc-700 text-zinc-400 hover:text-brand-400 hover:border-brand-900 transition-all no-underline"
                       >
                         {link.label} →
                       </a>

@@ -61,8 +61,8 @@ export async function generateMetadata({
 
   if (!movie || !song) {
     return buildMeta({
-      title: "Song Not Found – Ollypedia",
-      description: "The requested Odia song could not be found.",
+      title: "Song Not Found – The Cinema Verse",
+      description: "The requested bollywood song could not be found.",
       url: `/songs/${params.movieSlug}/${params.songIndex}`,
     });
   }
@@ -74,12 +74,12 @@ export async function generateMetadata({
     || (song.ytId ? `https://img.youtube.com/vi/${song.ytId}/hqdefault.jpg` : null)
     || movie.posterUrl;
 
-  const title       = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} Odia Song`;
+  const title       = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} bollywood Song`;
   const description = [
-    `Listen to "${song.title}"${singerStr} from the Odia film "${movie.title}"${year ? ` (${year})` : ""}.`,
+    `Listen to "${song.title}"${singerStr} from the hindi film "${movie.title}"${year ? ` (${year})` : ""}.`,
     song.lyrics?.trim() ? " Read the full lyrics." : "",
     song.description ? ` ${song.description.slice(0, 120)}` : "",
-    ` ${mdStr}. Watch on YouTube, explore the full playlist and related Odia songs on Ollypedia.`,
+    ` ${mdStr}. Watch on YouTube, explore the full playlist and related bollywood songs on The Cinema Verse.`,
   ].join("").replace(/\s+/g, " ").trim();
 
   const keywords = [
@@ -90,11 +90,11 @@ export async function generateMetadata({
     song.musicDirector && `${song.musicDirector} music`,
     `${movie.title} songs`,
     `${movie.title} album`,
-    "Odia song",
-    "Ollywood song",
-    "Odia film song",
-    year && `Odia songs ${year}`,
-    ...(movie.genre || []).map((g: string) => `${g} Odia film`),
+    "bollywood song",
+    "bollywood song",
+    "hindi film song",
+    year && `bollywood songs ${year}`,
+    ...(movie.genre || []).map((g: string) => `${g} hindi film`),
   ].filter(Boolean) as string[];
 
   const url = `/songs/${movie.slug}/${idx}`;
@@ -104,7 +104,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://ollypedia.in${url}`,
+      url: `https://thecinemaverse.in${url}`,
       type: "music.song",
       images: thumb ? [{ url: thumb, width: 1280, height: 720, alt: song.title }] : [],
     },
@@ -115,7 +115,7 @@ export async function generateMetadata({
       images: thumb ? [thumb] : [],
     },
     alternates: {
-      canonical: `https://ollypedia.in${url}`,
+      canonical: `https://thecinemaverse.in${url}`,
     },
   };
 }
@@ -145,9 +145,9 @@ export default async function SongDetailPage({
     "@graph": [
       {
         "@type": "MusicRecording",
-        "@id": `https://ollypedia.in/songs/${movie.slug}/${idx}#song`,
+        "@id": `https://thecinemaverse.in/songs/${movie.slug}/${idx}#song`,
         "name": song.title,
-        "description": song.description || `${song.title} is a song from the Odia film ${movie.title}${year ? ` (${year})` : ""}.`,
+        "description": song.description || `${song.title} is a song from the hindi film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
         ...(thumb && { "thumbnailUrl": thumb }),
         ...(song.ytId && {
@@ -169,17 +169,17 @@ export default async function SongDetailPage({
         "track": movie.media.songs.map((s: any, i: number) => ({
           "@type": "MusicRecording",
           "name": s.title,
-          "url": `https://ollypedia.in/songs/${movie.slug}/${i}`,
+          "url": `https://thecinemaverse.in/songs/${movie.slug}/${i}`,
           ...(s.ytId && { "sameAs": `https://www.youtube.com/watch?v=${s.ytId}` }),
         })),
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://ollypedia.in/" },
-          { "@type": "ListItem", "position": 2, "name": "Songs",     "item": "https://ollypedia.in/songs" },
-          { "@type": "ListItem", "position": 3, "name": movie.title, "item": `https://ollypedia.in/movie/${movie.slug}` },
-          { "@type": "ListItem", "position": 4, "name": song.title,  "item": `https://ollypedia.in/songs/${movie.slug}/${idx}` },
+          { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://thecinemaverse.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Songs",     "item": "https://thecinemaverse.in/songs" },
+          { "@type": "ListItem", "position": 3, "name": movie.title, "item": `https://thecinemaverse.in/movie/${movie.slug}` },
+          { "@type": "ListItem", "position": 4, "name": song.title,  "item": `https://thecinemaverse.in/songs/${movie.slug}/${idx}` },
         ],
       },
     ],

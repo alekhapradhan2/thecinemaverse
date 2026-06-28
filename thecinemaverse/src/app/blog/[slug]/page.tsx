@@ -136,17 +136,17 @@ export async function generateMetadata({
   if (!blog) return { robots: { index: false, follow: false } };
 
 // FIXED — uses seoTitle from BoxOfficePanel, falls back gracefully
-const title = blog.seoTitle || `${blog.title} | Ollypedia`;
+const title = blog.seoTitle || `${blog.title} | The Cinema Verse`;
 
 // FIXED — uses seoDesc from BoxOfficePanel, falls back gracefully  
 const description = (
   blog.seoDesc ||
   blog.excerpt ||
   blog.content?.replace(/<[^>]+>/g, "").slice(0, 155) ||
-  `Read ${blog.title} on Ollypedia...`
+  `Read ${blog.title} on The Cinema Verse...`
 );
-  const image     = blog.coverImage || "https://ollypedia.in/default.jpg";
-  const canonical = `https://ollypedia.in/blog/${blog.slug}`;
+  const image     = blog.coverImage || "https://thecinemaverse.in/default.jpg";
+  const canonical = `https://thecinemaverse.in/blog/${blog.slug}`;
 
   // ★ Keyword set — no misspellings (Google ignores <meta keywords>).
   // Focus on real long-tail terms only.
@@ -156,24 +156,24 @@ const description = (
     blog.title,
     movieName,
     movieName && `${movieName} review`,
-    movieName && `${movieName} odia movie`,
-    movieName && `${movieName} odia film`,
-    movieName && `${movieName} ollywood`,
+    movieName && `${movieName} hindi movie`,
+    movieName && `${movieName} hindi film`,
+    movieName && `${movieName} bollywood`,
     movieName && `${movieName} songs`,
     movieName && `${movieName} cast`,
     movieName && `${movieName} box office collection`,
     movieName && `${movieName} story`,
     movieName && `${movieName} ${year}`,
     movieName && `is ${movieName} worth watching`,
-    "Odia movie review",
-    "Ollywood movie review",
-    "Odia film news",
-    "Odia cinema",
-    "Ollywood news",
-    year && `Odia movie ${year}`,
-    year && `Ollywood ${year}`,
+    "hindi movie review",
+    "bollywood movie review",
+    "hindi film news",
+    "hindi cinema",
+    "bollywood news",
+    year && `hindi movie ${year}`,
+    year && `bollywood ${year}`,
     "Odisha film",
-    "Odia movie blog",
+    "hindi movie blog",
     ...(blog.tags || []),
   ].filter(Boolean) as string[];
 
@@ -197,7 +197,7 @@ const description = (
       title,
       description,
       url: canonical,
-      siteName: "Ollypedia",
+      siteName: "The Cinema Verse",
       type: "article",
       publishedTime: blog.createdAt ? new Date(blog.createdAt).toISOString() : undefined,
       modifiedTime:  blog.updatedAt ? new Date(blog.updatedAt).toISOString() : undefined,
@@ -209,7 +209,7 @@ const description = (
       title,
       description,
       images: [image],
-      site: "@ollypedia",
+      site: "@thecinemaverse",
     },
     // ★ Preload cover image for faster LCP
     ...(blog.coverImage && {
@@ -238,13 +238,13 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
         <div className="text-gray-400 text-sm leading-relaxed">
           {blog.excerpt ||
             blog.content?.replace(/<[^>]+>/g, "").slice(0, 200) ||
-            `${blog.title} — Read the full story on Ollypedia, your home for Odia cinema news, reviews, and entertainment.`}
+            `${blog.title} — Read the full story on The Cinema Verse, your home for hindi cinema news, reviews, and entertainment.`}
           {movie && (
             <>
               {" "}This article is related to the{" "}
               {movie.genre?.length ? `${movie.genre[0]} ` : ""}
-              Odia film{" "}
-              <Link href={`/movie/${movie.slug}`} className="text-orange-400 hover:underline font-semibold">
+              hindi film{" "}
+              <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline font-semibold">
                 {movie.title}{movieYear ? ` (${movieYear})` : ""}
               </Link>
               {movie.director && (
@@ -259,7 +259,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
             {blog.category && (
               <Link
                 href={`/blog?category=${encodeURIComponent(blog.category)}`}
-                className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors"
+                className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors"
               >
                 📰 {blog.category}
               </Link>
@@ -268,7 +268,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
               <Link
                 key={tag}
                 href={`/blog?q=${encodeURIComponent(tag)}`}
-                className="text-xs text-gray-500 hover:text-orange-400 bg-[#181818] border border-[#252525] px-2.5 py-1 rounded-full transition-colors"
+                className="text-xs text-gray-500 hover:text-brand-400 bg-[#181818] border border-[#252525] px-2.5 py-1 rounded-full transition-colors"
               >
                 #{tag}
               </Link>
@@ -281,8 +281,8 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
       {movie && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-5">
           <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
-            <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
-            Related Odia Film
+            <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
+            Related Hindi Film
           </h2>
           <Link href={`/movie/${movie.slug}`} className="flex items-center gap-4 group">
             {movie.posterUrl ? (
@@ -292,7 +292,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
                 alt={`${movie.title} poster`}
                 width={64}
                 height={96}
-                className="w-16 h-24 object-cover rounded-lg border border-[#222] group-hover:border-orange-500/40 transition-colors"
+                className="w-16 h-24 object-cover rounded-lg border border-[#222] group-hover:border-brand-500/40 transition-colors"
               />
             ) : (
               <div className="w-16 h-24 bg-[#1a1a1a] rounded-lg border border-[#222] flex items-center justify-center text-2xl">
@@ -300,7 +300,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
               </div>
             )}
             <div>
-              <p className="text-white font-bold text-base group-hover:text-orange-400 transition-colors">
+              <p className="text-white font-bold text-base group-hover:text-brand-400 transition-colors">
                 {movie.title}{movieYear ? ` (${movieYear})` : ""}
               </p>
               {movie.verdict && (
@@ -327,7 +327,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
                     .join(", ")}
                 </p>
               )}
-              <p className="text-orange-400/60 text-xs mt-2 group-hover:text-orange-400 transition-colors">
+              <p className="text-brand-400/60 text-xs mt-2 group-hover:text-brand-400 transition-colors">
                 View Full Movie Page →
               </p>
             </div>
@@ -359,7 +359,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
             .olly-sc-ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#161616; }
           `}</style>
           <h2 className="text-white font-bold text-sm mb-4 flex items-center gap-2">
-            <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
+            <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
             Songs from {movie.title}
           </h2>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(150px, 1fr))", gap:"12px" }}>
@@ -408,17 +408,17 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
       {/* ── Site-wide discovery links ── */}
       <div className="bg-[#0a0a0a] border border-[#181818] rounded-xl p-5">
         <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
-          <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
-          Explore Ollypedia
+          <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
+          Explore The Cinema Verse
         </h2>
         <div className="flex flex-wrap gap-2">
-          <Link href="/blog" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">📰 All Blogs</Link>
-          <Link href="/movies" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">🎬 All Movies</Link>
-          <Link href="/songs" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">🎵 All Songs</Link>
-          <Link href="/blog?category=Reviews" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">⭐ Movie Reviews</Link>
-          <Link href="/blog?category=News" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">🗞️ Odia Cinema News</Link>
-          <Link href="/songs/category/latest" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">🆕 Latest Songs</Link>
-          <Link href="/songs/category/trending" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">🔥 Trending Songs</Link>
+          <Link href="/blog" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">📰 All Blogs</Link>
+          <Link href="/movies" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🎬 All Movies</Link>
+          <Link href="/songs" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🎵 All Songs</Link>
+          <Link href="/blog?category=Reviews" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">⭐ Movie Reviews</Link>
+          <Link href="/blog?category=News" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🗞️ Hindi Cinema News</Link>
+          <Link href="/songs/category/latest" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🆕 Latest Songs</Link>
+          <Link href="/songs/category/trending" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🔥 Trending Songs</Link>
         </div>
       </div>
     </section>
@@ -435,13 +435,13 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
   const CAT_COLORS: Record<string, string> = {
     "Movie Review":    "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
     "Actor Spotlight": "bg-purple-500/15 text-purple-400 border-purple-500/20",
-    "Top 10":          "bg-orange-500/15 text-orange-400 border-orange-500/20",
+    "Top 10":          "bg-brand-500/15 text-brand-400 border-brand-500/20",
     News:              "bg-green-500/15  text-green-400  border-green-500/20",
     Upcoming:          "bg-blue-500/15   text-blue-400   border-blue-500/20",
     General:           "bg-pink-500/15   text-pink-400   border-pink-500/20",
   };
   const catClass = (cat?: string) =>
-    CAT_COLORS[cat || ""] || "bg-orange-500/15 text-orange-400 border-orange-500/20";
+    CAT_COLORS[cat || ""] || "bg-brand-500/15 text-brand-400 border-brand-500/20";
 
   return (
     <section
@@ -451,10 +451,10 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
       <div className="bg-[#0d0d0d] border border-[#1a1a1a] rounded-xl overflow-hidden">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[#1a1a1a]">
           <h2 className="text-white font-bold text-sm flex items-center gap-2">
-            <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
+            <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
             Recent Articles
           </h2>
-          <Link href="/blog" className="text-xs text-orange-400/60 hover:text-orange-400 transition-colors">
+          <Link href="/blog" className="text-xs text-brand-400/60 hover:text-brand-400 transition-colors">
             View all →
           </Link>
         </div>
@@ -483,7 +483,7 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
                   {blogs[0].category}
                 </span>
               )}
-              <h3 className="text-white font-bold text-base leading-snug group-hover:text-orange-400 transition-colors line-clamp-2">
+              <h3 className="text-white font-bold text-base leading-snug group-hover:text-brand-400 transition-colors line-clamp-2">
                 {blogs[0].title}
               </h3>
               {blogs[0].excerpt && (
@@ -521,7 +521,7 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-300 group-hover:text-orange-400 transition-colors line-clamp-2 leading-snug">
+                    <p className="text-sm font-semibold text-gray-300 group-hover:text-brand-400 transition-colors line-clamp-2 leading-snug">
                       {b.title}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
@@ -533,7 +533,7 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
                       <span className="text-[11px] text-gray-600">{fmtDate(b.createdAt)}</span>
                     </div>
                   </div>
-                  <span className="text-gray-700 group-hover:text-orange-400 transition-colors text-sm flex-shrink-0 mt-1">→</span>
+                  <span className="text-gray-700 group-hover:text-brand-400 transition-colors text-sm flex-shrink-0 mt-1">→</span>
                 </Link>
               </li>
             ))}
@@ -555,22 +555,22 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   ]);
 
   const movieYear  = movie?.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
-  const movieCanon = movie ? `https://ollypedia.in/movie/${movie.slug}` : undefined;
+  const movieCanon = movie ? `https://thecinemaverse.in/movie/${movie.slug}` : undefined;
   const songs: any[] = movie?.media?.songs || [];
 
   // ─── FAQ items for JSON-LD ───────────────────────────────────
   const faqItems = blog.movieTitle
     ? [
-        { q: `What is ${blog.movieTitle} Odia movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an Odia (Ollywood) film covered on Ollypedia.` },
-        { q: `Is ${blog.movieTitle} worth watching?`,                  a: `Read the full review and audience ratings for ${blog.movieTitle} on this Ollypedia article.` },
-        { q: `Who is in the cast of ${blog.movieTitle}?`,             a: `Full cast and crew of ${blog.movieTitle} are listed on the movie page on Ollypedia.` },
-        { q: `What is ${blog.movieTitle} box office collection?`,      a: `Day-wise box office collection of ${blog.movieTitle} is tracked on Ollypedia's box office page.` },
-        { q: `Where can I watch songs from ${blog.movieTitle}?`,       a: `All songs from ${blog.movieTitle} with YouTube videos are on Ollypedia.` },
+        { q: `What is ${blog.movieTitle} hindi movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an bollywood (bollywood) film covered on The Cinema Verse.` },
+        { q: `Is ${blog.movieTitle} worth watching?`,                  a: `Read the full review and audience ratings for ${blog.movieTitle} on this The Cinema Verse article.` },
+        { q: `Who is in the cast of ${blog.movieTitle}?`,             a: `Full cast and crew of ${blog.movieTitle} are listed on the movie page on The Cinema Verse.` },
+        { q: `What is ${blog.movieTitle} box office collection?`,      a: `Day-wise box office collection of ${blog.movieTitle} is tracked on The Cinema Verse's box office page.` },
+        { q: `Where can I watch songs from ${blog.movieTitle}?`,       a: `All songs from ${blog.movieTitle} with YouTube videos are on The Cinema Verse.` },
       ]
     : [
-        { q: "What is Ollypedia?",                                     a: "Ollypedia is Odisha's complete Odia cinema encyclopedia — movies, actors, songs, box office and news." },
-        { q: "What kind of articles does Ollypedia publish?",          a: "Movie reviews, top 10 lists, actor spotlights, box office reports and Ollywood entertainment news." },
-        { q: "How can I find reviews for a specific Odia movie?",      a: "Search for the movie on Ollypedia's blog or visit the movie's dedicated page for ratings and articles." },
+        { q: "What is The Cinema Verse?",                                     a: "The Cinema Verse is Odisha's complete hindi cinema encyclopedia — movies, actors, songs, box office and news." },
+        { q: "What kind of articles does The Cinema Verse publish?",          a: "Movie reviews, top 10 lists, actor spotlights, box office reports and bollywood entertainment news." },
+        { q: "How can I find reviews for a specific hindi movie?",      a: "Search for the movie on The Cinema Verse's blog or visit the movie's dedicated page for ratings and articles." },
       ];
 
   // word count for content depth signal
@@ -590,7 +590,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         "description":     blog.excerpt || "",
         "datePublished":   blog.createdAt ? new Date(blog.createdAt).toISOString() : undefined,
         "dateModified":    blog.updatedAt ? new Date(blog.updatedAt).toISOString() : undefined,
-        "image":           blog.coverImage || "https://ollypedia.in/default.jpg",
+        "image":           blog.coverImage || "https://thecinemaverse.in/default.jpg",
         "inLanguage":      "en-IN",
         "articleSection":  blog.category || "Entertainment",
         "wordCount":       wordCount || undefined,
@@ -601,34 +601,34 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         },
         "author": {
           "@type":  "Person",
-          "name":   blog.author || "Ollypedia Editorial Team",
-          "url":    "https://ollypedia.in/about",
+          "name":   blog.author || "The Cinema Verse Editorial Team",
+          "url":    "https://thecinemaverse.in/about",
           // sameAs signals authorship authority to Google
           "sameAs": [
-            "https://www.facebook.com/ollypedia",
-            "https://twitter.com/ollypedia",
-            "https://www.instagram.com/ollypedia",
+            "https://www.facebook.com/thecinemaverse",
+            "https://twitter.com/thecinemaverse",
+            "https://www.instagram.com/thecinemaverse",
           ],
         },
         "publisher": {
           "@type": "Organization",
-          "name":  "Ollypedia",
-          "url":   "https://ollypedia.in",
+          "name":  "The Cinema Verse",
+          "url":   "https://thecinemaverse.in",
           "logo": {
             "@type":  "ImageObject",
-            "url":    "https://ollypedia.in/logo.png",
+            "url":    "https://thecinemaverse.in/logo.png",
             "width":  600,
             "height": 60,
           },
           "sameAs": [
-            "https://www.facebook.com/ollypedia",
-            "https://twitter.com/ollypedia",
-            "https://www.instagram.com/ollypedia",
+            "https://www.facebook.com/thecinemaverse",
+            "https://twitter.com/thecinemaverse",
+            "https://www.instagram.com/thecinemaverse",
           ],
         },
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id":   `https://ollypedia.in/blog/${blog.slug}`,
+          "@id":   `https://thecinemaverse.in/blog/${blog.slug}`,
         },
         ...(movie && {
           "about": {
@@ -648,20 +648,20 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         "keywords": [
           blog.title, movie?.title,
           movie && `${movie.title} review`,
-          movie && `${movie.title} odia`,
-          "Odia movie", "Ollywood", "Odia cinema",
+          movie && `${movie.title} bollywood`,
+          "hindi movie", "bollywood", "hindi cinema",
           ...(blog.tags || []),
         ].filter(Boolean).join(", "),
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://ollypedia.in/" },
-          { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://ollypedia.in/blog" },
+          { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://thecinemaverse.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://thecinemaverse.in/blog" },
           ...(blog.category
-            ? [{ "@type": "ListItem", "position": 3, "name": blog.category, "item": `https://ollypedia.in/blog/category/${toSlug(blog.category)}` }]
+            ? [{ "@type": "ListItem", "position": 3, "name": blog.category, "item": `https://thecinemaverse.in/blog/category/${toSlug(blog.category)}` }]
             : []),
-          { "@type": "ListItem", "position": blog.category ? 4 : 3, "name": blog.title, "item": `https://ollypedia.in/blog/${blog.slug}` },
+          { "@type": "ListItem", "position": blog.category ? 4 : 3, "name": blog.title, "item": `https://thecinemaverse.in/blog/${blog.slug}` },
         ],
       },
       // ★ FAQPage schema — only for non-Box-Office blogs.
@@ -684,7 +684,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         ? [{
             "@type": "Table",
             "about": `${movie.title} Day-wise Box Office Collection`,
-            "url": `https://ollypedia.in/box-office/${movie.slug}`,
+            "url": `https://thecinemaverse.in/box-office/${movie.slug}`,
           }]
         : []),
       // Songs schema
@@ -694,7 +694,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
             "name": `Songs from ${movie?.title}`,
             "itemListElement": songs.slice(0, 10).map((s: any, i: number) => ({
               "@type": "ListItem", "position": i + 1, "name": s.title,
-              "url": `https://ollypedia.in/songs/${movie?.slug}/${i}/${toSlug(s.title) || String(i)}`,
+              "url": `https://thecinemaverse.in/songs/${movie?.slug}/${i}/${toSlug(s.title) || String(i)}`,
             })),
           }]
         : []),
@@ -707,13 +707,13 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   const CAT_COLORS: Record<string, string> = {
     "Movie Review":    "bg-yellow-500/15 text-yellow-400 border-yellow-500/20",
     "Actor Spotlight": "bg-purple-500/15 text-purple-400 border-purple-500/20",
-    "Top 10":          "bg-orange-500/15 text-orange-400 border-orange-500/20",
+    "Top 10":          "bg-brand-500/15 text-brand-400 border-brand-500/20",
     "Box Office":      "bg-green-500/15  text-green-400  border-green-500/20",
     News:              "bg-green-500/15  text-green-400  border-green-500/20",
     Upcoming:          "bg-blue-500/15   text-blue-400   border-blue-500/20",
     General:           "bg-pink-500/15   text-pink-400   border-pink-500/20",
   };
-  const catClass = (cat?: string) => CAT_COLORS[cat || ""] || "bg-orange-500/15 text-orange-400 border-orange-500/20";
+  const catClass = (cat?: string) => CAT_COLORS[cat || ""] || "bg-brand-500/15 text-brand-400 border-brand-500/20";
 
   const sidebarContent = (
     <>
@@ -762,9 +762,9 @@ export default async function BlogPage({ params }: { params: { slug: string } })
               `${blog.movieTitle} songs`,
               `${blog.movieTitle} story`,
             ] : []),
-            "Latest Odia movies 2026",
-            "Ollywood box office collection",
-            "Best Odia films to watch",
+            "Latest hindi movies 2026",
+            "bollywood box office collection",
+            "Best hindi films to watch",
           ].slice(0, 7).map((term, i) => (
             <div key={i} style={{
               display: "flex", alignItems: "center", gap: 8,
@@ -799,20 +799,20 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         </div>
       )}
 
-      {/* About Ollypedia SEO box */}
+      {/* About The Cinema Verse SEO box */}
       <div className="bp-sidebar-box" style={{ marginTop: 0 }}>
-        <div className="bp-sidebar-hd">📖 About Ollypedia</div>
+        <div className="bp-sidebar-hd">📖 About The Cinema Verse</div>
         <div className="bp-sidebar-body" style={{ paddingTop: 10 }}>
           <div style={{ fontSize: ".72rem", color: "rgba(255,255,255,.38)", lineHeight: 1.8, margin: "0 0 10px" }}>
-            Ollypedia is Odisha&apos;s complete Odia cinema database — covering{" "}
-            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>Ollywood movies</Link>,
+            The Cinema Verse is Odisha&apos;s complete hindi cinema database — covering{" "}
+            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>bollywood movies</Link>,
             {" "}actors, songs, box office and news.
             {blog.movieTitle && (
               <>{" "}Explore all{" "}
                 <Link href={`/blog?movie=${encodeURIComponent(blog.movieTitle)}`}
                   style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>
                   {blog.movieTitle} articles
-                </Link>{" "}on Ollypedia.
+                </Link>{" "}on The Cinema Verse.
               </>
             )}
           </div>
@@ -845,10 +845,10 @@ export default async function BlogPage({ params }: { params: { slug: string } })
           }}>O</div>
           <div>
             <div style={{ fontSize: ".76rem", fontWeight: 700, color: "var(--text)" }}>
-              {blog.author || "Ollypedia Editorial Team"}
+              {blog.author || "The Cinema Verse Editorial Team"}
             </div>
             <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.3)", marginTop: 2 }}>
-              Specialists in Odia cinema coverage
+              Specialists in hindi cinema coverage
             </div>
             {blog.createdAt && (
               <div style={{ fontSize: ".62rem", color: "rgba(255,255,255,.22)", marginTop: 4 }}>

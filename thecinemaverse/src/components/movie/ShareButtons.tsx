@@ -1,7 +1,7 @@
 "use client";
 // components/movie/ShareButtons.tsx
 // WhatsApp + X/Twitter + Copy link share bar.
-// Usage: <ShareButtons title="Movie Name (2025) – Odia Movie" url={canonical} />
+// Usage: <ShareButtons title="Movie Name (2025) – Hindi Movie" url={canonical} />
 
 import { useState } from "react";
 
@@ -78,7 +78,7 @@ export function ShareButtons({ title, url }: Props) {
         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
           copied
             ? "border-green-500/40 text-green-400 bg-green-500/8"
-            : "border-[#1f1f1f] bg-[#111] hover:border-orange-500/40 hover:text-orange-400 text-gray-400"
+            : "border-[#1f1f1f] bg-[#111] hover:border-brand-500/40 hover:text-brand-400 text-gray-400"
         }`}
       >
         {copied ? (

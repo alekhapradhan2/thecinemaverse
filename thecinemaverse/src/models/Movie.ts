@@ -44,7 +44,7 @@ const MovieSchema = new Schema(
     director:      { type: String, default: "" },
     producer:      { type: String, default: "" },
     budget:        { type: String, default: "" },
-    language:      { type: String, default: "Odia" },
+    language:      { type: String, default: "bollywood" },
     synopsis:      { type: String, default: "" },
     story:         { type: String, default: "" },         // long-form story (SEO)
     review:        { type: String, default: "" },         // editorial review (SEO)

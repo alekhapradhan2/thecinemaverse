@@ -81,7 +81,7 @@ const VERDICT_STYLE: Record<string, { bg: string; text: string; border: string }
 };
 
 function verdictStyle(v?: string) {
-  return VERDICT_STYLE[v || ""] || { bg: "bg-orange-500/15", text: "text-orange-400", border: "border-orange-500/30" };
+  return VERDICT_STYLE[v || ""] || { bg: "bg-brand-500/15", text: "text-brand-400", border: "border-brand-500/30" };
 }
 
 // ─── Cast / Crew helpers ───────────────────────────────────────────────────
@@ -275,7 +275,7 @@ function getMisspellings(title: string): string[] {
   variants.forEach((v) => {
     if (v && v !== title.toLowerCase() && v.length > 2) {
       result.push(v);
-      result.push(`${v} odia movie`);
+      result.push(`${v} hindi movie`);
     }
   });
   return result;
@@ -307,7 +307,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       ? ` | OTT Release Soon`
       : ""
     : "";
-  const title = `${movie.title}${yearStr} – Cast, Songs & Review${ottTitleSuffix} | Ollypedia`;
+  const title = `${movie.title}${yearStr} – Cast, Songs & Review${ottTitleSuffix} | The Cinema Verse`;
 
   // Dynamic description: weave in OTT info
   const ottDescPart = movie.streamingOn
@@ -322,11 +322,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const description = (
     movie.synopsis
       ? movie.synopsis.slice(0, 130) + ottDescPart
-      : `Complete info about Odia film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on Ollypedia.`
+      : `Complete info about hindi film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on The Cinema Verse.`
   ).slice(0, 160);
 
-  const image     = movie.posterUrl || movie.thumbnailUrl || "https://ollypedia.in/default.jpg";
-  const canonical = `https://ollypedia.in/movie/${movie.slug || movie._id}`;
+  const image     = movie.posterUrl || movie.thumbnailUrl || "https://thecinemaverse.in/default.jpg";
+  const canonical = `https://thecinemaverse.in/movie/${movie.slug || movie._id}`;
 
   // ── OTT keyword matrix ──────────────────────────────────────────────────────
   const ottKw: string[] = movie.streamingOn ? [
@@ -360,12 +360,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     year ? `${movie.title} ${year} ${movie.streamingOn}` : "",
     year ? `${movie.title} ${year} streaming` : "",
     year ? `${movie.title} ${year} digital release` : "",
-    // Odia-specific OTT queries
-    `${movie.title} odia movie ott`,
-    `${movie.title} odia film ott`,
-    `${movie.title} odia movie watch online`,
-    `${movie.title} odia movie streaming`,
-    `${movie.title} odia movie digital release`,
+    // bollywood-specific OTT queries
+    `${movie.title} hindi movie ott`,
+    `${movie.title} hindi film ott`,
+    `${movie.title} hindi movie watch online`,
+    `${movie.title} hindi movie streaming`,
+    `${movie.title} hindi movie digital release`,
     // Status-specific keywords
     ...(isOttLive ? [
       `${movie.title} now streaming`,
@@ -383,11 +383,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       `when will ${movie.title} release on ott`,
       `${movie.title} ott announced`,
     ] : []),
-    // Odia OTT platform generics (helps rank for category searches)
-    `aao nxt odia movies`, `tarang plus odia movies`, `kanccha lannka movies`,
-    `odia movie ott release ${year || ""}`.trim(),
-    `ollywood ott release ${year || ""}`.trim(),
-    `odia film streaming platform`,
+    // bollywood OTT platform generics (helps rank for category searches)
+    `aao nxt hindi movies`, `tarang plus hindi movies`, `kanccha lannka movies`,
+    `hindi movie ott release ${year || ""}`.trim(),
+    `bollywood ott release ${year || ""}`.trim(),
+    `hindi film streaming platform`,
   ].filter(Boolean) as string[] : [
     // No platform yet — rank for "where to watch" queries anyway
     `${movie.title} ott`,
@@ -396,8 +396,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     `${movie.title} ott release date`,
     `${movie.title} where to watch`,
     `${movie.title} digital release date`,
-    `odia movie ott release`,
-    `ollywood ott`,
+    `hindi movie ott release`,
+    `bollywood ott`,
   ];
 
   // ── Core keyword matrix ─────────────────────────────────────────────────────
@@ -406,9 +406,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const keywords = [
     movie.title,
-    `${movie.title} odia movie`,
-    `${movie.title} odia film`,
-    `${movie.title} ollywood`,
+    `${movie.title} hindi movie`,
+    `${movie.title} hindi film`,
+    `${movie.title} bollywood`,
     `${movie.title} review`,
     `${movie.title} songs`,
     `${movie.title} cast`,
@@ -417,22 +417,22 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     `${movie.title} box office collection`,
     `${movie.title} collection`,
     year ? `${movie.title} ${year}` : null,
-    year ? `${movie.title} odia movie ${year}` : null,
+    year ? `${movie.title} hindi movie ${year}` : null,
     year ? `${movie.title} ${year} release` : null,
     directorName ? `${movie.title} directed by ${directorName}` : null,
     directorName ? `${directorName} movie` : null,
-    directorName ? `${directorName} odia film` : null,
+    directorName ? `${directorName} hindi film` : null,
     directorName ? `${directorName} new movie` : null,
     producerName ? `${producerName} production` : null,
-    producerName ? `${producerName} odia film` : null,
-    "Odia movie", "Ollywood", "Odia film", "Odia cinema", "Ollywood movies",
-    year ? `Odia movie ${year}` : null,
-    year ? `Ollywood ${year}` : null,
+    producerName ? `${producerName} hindi film` : null,
+    "hindi movie", "bollywood", "hindi film", "hindi cinema", "bollywood movies",
+    year ? `hindi movie ${year}` : null,
+    year ? `bollywood ${year}` : null,
     `${movie.title} rating`,
     `${movie.title} hit or flop`,
     movie.verdict ? `${movie.title} ${movie.verdict.toLowerCase()}` : null,
-    ...(movie.genre || []).flatMap((g: string) => [`${g} Odia film`, `${g} Ollywood movie`, `Odia ${g} film ${year || ""}`.trim()]),
-    ...(movie.cast || []).slice(0, 5).map((c: any) => c.name).filter(Boolean).flatMap((n: string) => [n, `${n} odia movie`, `${n} new movie`]),
+    ...(movie.genre || []).flatMap((g: string) => [`${g} hindi film`, `${g} bollywood movie`, `bollywood ${g} film ${year || ""}`.trim()]),
+    ...(movie.cast || []).slice(0, 5).map((c: any) => c.name).filter(Boolean).flatMap((n: string) => [n, `${n} hindi movie`, `${n} new movie`]),
     ...getMisspellings(movie.title),
     // OTT keyword matrix
     ...ottKw,
@@ -440,11 +440,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title, description, keywords,
-    metadataBase: new URL("https://ollypedia.in"),
+    metadataBase: new URL("https://thecinemaverse.in"),
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } },
     openGraph: {
-      title, description, url: canonical, siteName: "Ollypedia",
+      title, description, url: canonical, siteName: "The Cinema Verse",
       type: "video.movie",
       images: [{ url: movie.bannerUrl || image, width: 1200, height: 630, alt: movie.title }],
     },
@@ -458,7 +458,7 @@ function buildFaqJsonLd(movie: any, year: string | number, avgRating: number | n
     {
       question: `What is ${movie.title} movie about?`,
       answer: movie.synopsis?.slice(0, 300) ||
-        `${movie.title} is an Odia ${movie.genre?.join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${directorName ? `, directed by ${directorName}` : ""}.`,
+        `${movie.title} is an bollywood ${movie.genre?.join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${directorName ? `, directed by ${directorName}` : ""}.`,
     },
     ...(movie.cast?.length ? [{
       question: `Who is in the cast of ${movie.title}?`,
@@ -466,11 +466,11 @@ function buildFaqJsonLd(movie: any, year: string | number, avgRating: number | n
     }] : []),
     ...(movie.verdict ? [{
       question: `What is the box office verdict of ${movie.title}?`,
-      answer: `${movie.title} was declared a ${movie.verdict} at the Ollywood box office.`,
+      answer: `${movie.title} was declared a ${movie.verdict} at the bollywood box office.`,
     }] : []),
     ...(avgRating !== null ? [{
       question: `Is ${movie.title} worth watching?`,
-      answer: `Based on user reviews on Ollypedia, ${movie.title} has an average rating of ${(avgRating as number).toFixed(1)}/10 from ${movie.reviews?.length} reviews.`,
+      answer: `Based on user reviews on The Cinema Verse, ${movie.title} has an average rating of ${(avgRating as number).toFixed(1)}/10 from ${movie.reviews?.length} reviews.`,
     }] : []),
     ...(songs.length > 0 ? [{
       question: `How many songs does ${movie.title} have?`,
@@ -495,7 +495,7 @@ function buildFaqJsonLd(movie: any, year: string | number, avgRating: number | n
             if (tba) return `${movie.title} is confirmed for OTT release on ${movie.streamingOn}. The exact date has not been announced yet.`;
             return `${movie.title} is available to stream on ${movie.streamingOn}.`;
           })()
-        : `The OTT release date and platform for ${movie.title} have not been officially announced. It may release on Aao NXT, Tarang Plus, or Kanccha Lannka. Follow Ollypedia for updates.`,
+        : `The OTT release date and platform for ${movie.title} have not been officially announced. It may release on Aao NXT, Tarang Plus, or Kanccha Lannka. Follow The Cinema Verse for updates.`,
     },
     {
       question: `When is the OTT release date of ${movie.title}?`,
@@ -530,7 +530,7 @@ function buildAggregateRatingJsonLd(movie: any, avgRating: number) {
     "@context": "https://schema.org",
     "@type": "Movie",
     name: movie.title,
-    url: `https://ollypedia.in/movie/${movie.slug || movie._id}`,
+    url: `https://thecinemaverse.in/movie/${movie.slug || movie._id}`,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: avgRating.toFixed(1),
@@ -546,9 +546,9 @@ function buildAggregateRatingJsonLd(movie: any, avgRating: number) {
 function SectionHeading({ icon: Icon, title, count }: { icon?: any; title: string; count?: number }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <div className="w-1 h-7 bg-orange-500 rounded-full flex-shrink-0" />
+      <div className="w-1 h-7 bg-brand-500 rounded-full flex-shrink-0" />
       <h2 className="font-display text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-        {Icon && <Icon className="w-5 h-5 text-orange-500" />}
+        {Icon && <Icon className="w-5 h-5 text-brand-500" />}
         {title}
         {count !== undefined && (
           <span className="text-gray-500 text-base font-normal">({count})</span>
@@ -562,8 +562,8 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
   if (!value) return null;
   return (
     <div className="flex items-start gap-3 py-3 border-b border-[#1f1f1f] last:border-0">
-      <div className="w-8 h-8 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-        <Icon className="w-4 h-4 text-orange-400" />
+      <div className="w-8 h-8 bg-brand-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+        <Icon className="w-4 h-4 text-brand-400" />
       </div>
       <div className="min-w-0">
         <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{label}</p>
@@ -576,11 +576,11 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
 function StatChip({ label, value, accent = false }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className={`flex items-center gap-2 rounded-lg px-3 py-2 border ${
-      accent ? "bg-orange-500/8 border-orange-500/20" : "bg-[#111] border-[#1f1f1f]"
+      accent ? "bg-brand-500/8 border-brand-500/20" : "bg-[#111] border-[#1f1f1f]"
     }`}>
       <div className="min-w-0">
         <p className="text-[9px] text-gray-600 uppercase tracking-widest leading-none mb-0.5">{label}</p>
-        <p className={`text-xs font-bold truncate leading-snug ${accent ? "text-orange-400" : "text-white"}`}>{value}</p>
+        <p className={`text-xs font-bold truncate leading-snug ${accent ? "text-brand-400" : "text-white"}`}>{value}</p>
       </div>
     </div>
   );
@@ -604,7 +604,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
   const year      = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
   const songs     = movie.media?.songs || [];
   const trailer   = movie.media?.trailer;
-  const canonical = `https://ollypedia.in/movie/${movie.slug || movie._id}`;
+  const canonical = `https://thecinemaverse.in/movie/${movie.slug || movie._id}`;
   const vs        = verdictStyle(movie.verdict);
 
   // Prefer cast-list names, fall back to movie fields
@@ -619,11 +619,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
     .map((m: any) => ({
       "@type": "Person",
       name: m.name,
-      ...(m.castId ? { url: `https://ollypedia.in/cast/${m.castId}` } : {}),
+      ...(m.castId ? { url: `https://thecinemaverse.in/cast/${m.castId}` } : {}),
     }));
   const dirCrewEntry = crewForSchema.find((c: any) => c.role?.toLowerCase().includes("director"));
   const directorPersonObj = directorName
-    ? [{ "@type": "Person", name: directorName, ...(dirCrewEntry?.castId ? { url: `https://ollypedia.in/cast/${dirCrewEntry.castId}` } : {}) }]
+    ? [{ "@type": "Person", name: directorName, ...(dirCrewEntry?.castId ? { url: `https://thecinemaverse.in/cast/${dirCrewEntry.castId}` } : {}) }]
     : [];
 
   const enrichedMovieSchema = {
@@ -634,7 +634,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
     ...(movie.posterUrl || movie.thumbnailUrl ? { image: movie.posterUrl || movie.thumbnailUrl } : {}),
     ...(movie.synopsis ? { description: movie.synopsis.slice(0, 300) } : {}),
     ...(movie.releaseDate ? { datePublished: movie.releaseDate } : {}),
-    inLanguage: movie.language || "Odia",
+    inLanguage: movie.language || "bollywood",
     countryOfOrigin: { "@type": "Country", name: "India" },
     ...(movie.contentRating ? { contentRating: movie.contentRating } : {}),
     ...(movie.genre?.length ? { genre: movie.genre } : {}),
@@ -676,8 +676,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
   const structuredData = [
     enrichedMovieSchema,
     breadcrumbJsonLd([
-      { name: "Home",   url: "https://ollypedia.in/" },
-      { name: "Movies", url: "https://ollypedia.in/movies" },
+      { name: "Home",   url: "https://thecinemaverse.in/" },
+      { name: "Movies", url: "https://thecinemaverse.in/movies" },
       { name: movie.title, url: canonical },
     ]),
     buildFaqJsonLd(movie, year, avgRating, songs, directorName, producerName),
@@ -688,7 +688,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
       name: `Articles about ${movie.title}`,
       itemListElement: blogs.map((b: any, i: number) => ({
         "@type": "ListItem", position: i + 1, name: b.title,
-        url: `https://ollypedia.in/blog/${b.slug}`,
+        url: `https://thecinemaverse.in/blog/${b.slug}`,
       })),
     }] : []),
     ...(songs.length > 0 ? [{
@@ -699,7 +699,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
       track: songs.map((s: any, i: number) => ({
         "@type": "MusicRecording",
         name: s.title,
-        url: `https://ollypedia.in/songs/${movie.slug}/${i}/${toSlug(s.title) || String(i)}`,
+        url: `https://thecinemaverse.in/songs/${movie.slug}/${i}/${toSlug(s.title) || String(i)}`,
         ...(s.singer && { byArtist: { "@type": "Person", name: s.singer } }),
       })),
     }] : []),
@@ -720,7 +720,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
           {(movie.bannerUrl || movie.thumbnailUrl || movie.posterUrl) && (
             <Image
               src={movie.bannerUrl || movie.thumbnailUrl || movie.posterUrl}
-              alt={`${movie.title}${year ? ` ${year}` : ""} – Odia film banner`}
+              alt={`${movie.title}${year ? ` ${year}` : ""} – hindi film banner`}
               fill className="object-cover object-top" priority
             />
           )}
@@ -748,7 +748,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 style={{ aspectRatio: "2/3" }}>
                 <Image
                   src={movie.posterUrl || movie.thumbnailUrl || "/placeholder-movie.svg"}
-                  alt={`${movie.title}${year ? ` (${year})` : ""} Odia movie poster`}
+                  alt={`${movie.title}${year ? ` (${year})` : ""} hindi movie poster`}
                   fill className="object-cover" priority
                   sizes="(max-width: 640px) 96px, (max-width: 768px) 144px, 208px"
                 />
@@ -762,7 +762,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {(movie.genre || []).map((g: string) => (
                   <Link key={g} href={`/movies?genre=${g}`}>
-                    <span className="text-[10px] sm:text-xs font-semibold px-2 sm:px-3 py-0.5 sm:py-1 bg-orange-950 border border-orange-900 text-orange-400 rounded-full hover:bg-orange-900 transition-colors">
+                    <span className="text-[10px] sm:text-xs font-semibold px-2 sm:px-3 py-0.5 sm:py-1 bg-brand-950 border border-brand-900 text-brand-400 rounded-full hover:bg-brand-900 transition-colors">
                       {g}
                     </span>
                   </Link>
@@ -791,7 +791,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               {movie._allProductionNames?.length > 0 && (
                 <div className="inline-flex items-center gap-1.5 mt-1 mb-2 flex-wrap">
                   <span className="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-widest font-medium">A</span>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-[3px] border-l-2 border-orange-500 bg-gradient-to-r from-orange-500/10 to-transparent text-orange-300 text-[10px] sm:text-xs font-semibold tracking-wide">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-[3px] border-l-2 border-brand-500 bg-gradient-to-r from-brand-500/10 to-transparent text-brand-300 text-[10px] sm:text-xs font-semibold tracking-wide">
                     {movie._allProductionNames.length === 1
                       ? movie._allProductionNames[0]
                       : movie._allProductionNames.length === 2
@@ -804,7 +804,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
               {year && (
                 <p className="text-zinc-500 text-xs sm:text-sm md:text-base mb-3">
-                  ({year}) · Odia Film
+                  ({year}) · Hindi Film
                 </p>
               )}
 
@@ -817,7 +817,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   {((movie.interestedYes || 0) + (movie.interestedNo || 0)) > 0 && (
                     <>
                       <div className="flex items-center gap-1.5 bg-[#111] border border-[#1f1f1f] rounded-lg px-2 py-1 sm:px-3 sm:py-1.5">
-                        <Users className="w-3 h-3 sm:w-4 sm:h-4 text-orange-400" />
+                        <Users className="w-3 h-3 sm:w-4 sm:h-4 text-brand-400" />
                         <span className="font-bold text-white text-sm sm:text-base">
                           {(movie.interestedYes || 0).toLocaleString("en-IN")}
                         </span>
@@ -853,9 +853,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   const dirFromCast = getDirectorFromCast(movie.cast || []);
                   const dirName = dirFromCast || movie.director;
                   return dirName ? (
-                    <div className="flex items-center gap-2 rounded-lg px-3 py-2 border border-orange-500/20 bg-orange-500/8">
+                    <div className="flex items-center gap-2 rounded-lg px-3 py-2 border border-brand-500/20 bg-brand-500/8">
                       <div className="min-w-0">
-                        <p className="text-[9px] text-orange-400/70 uppercase tracking-widest leading-none mb-0.5">Director</p>
+                        <p className="text-[9px] text-brand-400/70 uppercase tracking-widest leading-none mb-0.5">Director</p>
                         <p className="text-xs font-bold text-white truncate">{dirName}</p>
                       </div>
                     </div>
@@ -903,7 +903,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               {/* Share buttons + OTT Watch button */}
               <div className="flex flex-wrap items-center gap-2 mt-3">
                 <ShareButtons
-                  title={`${movie.title}${year ? ` (${year})` : ""} – Odia Movie`}
+                  title={`${movie.title}${year ? ` (${year})` : ""} – Hindi Movie`}
                   url={canonical}
                 />
                 {movie.streamingOn && movie.streamingUrl && (
@@ -912,9 +912,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold
-                      bg-orange-500 hover:bg-orange-400 active:bg-orange-600
-                      text-black transition-colors duration-150 shadow-md shadow-orange-900/40
-                      border border-orange-400/30"
+                      bg-brand-500 hover:bg-brand-400 active:bg-brand-600
+                      text-black transition-colors duration-150 shadow-md shadow-brand-900/40
+                      border border-brand-400/30"
                   >
                     <OttLogoImg platform={movie.streamingOn} size="sm" />
                     Watch on {movie.streamingOn}
@@ -923,7 +923,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 {movie.streamingOn && !movie.streamingUrl && (
                   <span
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold
-                      bg-[#111] border border-orange-500/25 text-orange-400 cursor-default"
+                      bg-[#111] border border-brand-500/25 text-brand-400 cursor-default"
                   >
                     <OttLogoImg platform={movie.streamingOn} size="sm" />
                     Coming soon on {movie.streamingOn}
@@ -937,7 +937,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
             {(movie.boxOffice?.opening || movie.boxOffice?.total || movie.boxOfficeDays?.length > 0) && (
               <div className="hidden lg:block bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 self-start">
                 <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <TrendingUp className="w-3.5 h-3.5 text-orange-500" /> Box Office
+                  <TrendingUp className="w-3.5 h-3.5 text-brand-500" /> Box Office
                 </h2>
                 <div className="space-y-0">
                   {[
@@ -961,7 +961,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 )}
                 {movie.slug && (
                   <Link href={`/box-office/${movie.slug}`}
-                    className="mt-3 flex items-center justify-center gap-1.5 text-xs text-orange-400 hover:text-orange-300 transition-colors font-semibold">
+                    className="mt-3 flex items-center justify-center gap-1.5 text-xs text-brand-400 hover:text-brand-300 transition-colors font-semibold">
                     Full box office data <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
                 )}
@@ -973,9 +973,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
           {(movie.boxOffice?.opening || movie.boxOffice?.total || movie.boxOfficeDays?.length > 0) && (
             <div className="lg:hidden mt-1 mb-4 flex items-stretch gap-2 overflow-x-auto pb-1 scrollbar-none">
               {/* TrendingUp icon pill */}
-              <div className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-orange-500/10 border border-orange-500/20 rounded-xl">
-                <TrendingUp className="w-3.5 h-3.5 text-orange-400" />
-                <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest whitespace-nowrap">Box Office</span>
+              <div className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-brand-500/10 border border-brand-500/20 rounded-xl">
+                <TrendingUp className="w-3.5 h-3.5 text-brand-400" />
+                <span className="text-[10px] font-bold text-brand-400 uppercase tracking-widest whitespace-nowrap">Box Office</span>
               </div>
               {/* Stat pills */}
               {[
@@ -997,9 +997,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               {/* Full data link pill */}
               {movie.slug && (
                 <Link href={`/box-office/${movie.slug}`}
-                  className="flex-shrink-0 flex items-center gap-1 px-3 py-2 bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl transition-colors ml-auto">
-                  <span className="text-[10px] font-semibold text-orange-400 whitespace-nowrap">Full data</span>
-                  <ChevronRight className="w-3 h-3 text-orange-400" />
+                  className="flex-shrink-0 flex items-center gap-1 px-3 py-2 bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl transition-colors ml-auto">
+                  <span className="text-[10px] font-semibold text-brand-400 whitespace-nowrap">Full data</span>
+                  <ChevronRight className="w-3 h-3 text-brand-400" />
                 </Link>
               )}
             </div>
@@ -1023,7 +1023,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </h2>
               <InfoRow icon={Calendar}     label="Release Date"  value={fmtDate(movie.releaseDate) || (movie.releaseTBA ? "TBA" : undefined)} />
               <InfoRow icon={Clock}        label="Runtime"       value={movie.runtime} />
-              <InfoRow icon={Globe}        label="Language"      value={movie.language || "Odia"} />
+              <InfoRow icon={Globe}        label="Language"      value={movie.language || "bollywood"} />
               <InfoRow icon={Clapperboard} label="Director"      value={getDirectorFromCast(movie.cast || []) || movie.director} />
               <InfoRow icon={User}         label="Producer"      value={getProducerFromCast(movie.cast || []) || movie.producer} />
               <InfoRow icon={DollarSign}   label="Budget"        value={movie.budget} />
@@ -1075,7 +1075,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 return (
                   <div className={`bg-[#111] border ${status.card} rounded-2xl p-5`}>
                     <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                      <Play className="w-3.5 h-3.5 text-orange-500" /> Streaming
+                      <Play className="w-3.5 h-3.5 text-brand-500" /> Streaming
                     </h2>
 
                     {/* Platform row */}
@@ -1115,7 +1115,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     {(isTBA || isComing) && (
                       <p className="text-center text-[10px] text-gray-600 mt-1 leading-relaxed">
                         {isTBA
-                          ? "Follow Ollypedia for the latest OTT updates"
+                          ? "Follow The Cinema Verse for the latest OTT updates"
                           : "Set a reminder — drops soon!"}
                       </p>
                     )}
@@ -1142,11 +1142,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </h2>
               <div className="flex flex-col gap-1">
                 {[
-                  { label: "Latest Odia Movies",    href: "/movies?sort=latest" },
-                  { label: "Odia Songs",             href: "/songs" },
+                  { label: "Latest Hindi Movies",    href: "/movies?sort=latest" },
+                  { label: "bollywood Songs",             href: "/songs" },
                   { label: "Movie Reviews",          href: "/blog/category/movie-review" },
-                  ...(year ? [{ label: `Odia Movies ${year}`, href: `/movies/year/${year}` }] : []),
-                  ...(movie.genre?.[0] ? [{ label: `${movie.genre[0]} Odia Films`, href: `/movies?genre=${encodeURIComponent(movie.genre[0])}` }] : []),
+                  ...(year ? [{ label: `Hindi Movies ${year}`, href: `/movies/year/${year}` }] : []),
+                  ...(movie.genre?.[0] ? [{ label: `${movie.genre[0]} Hindi Films`, href: `/movies?genre=${encodeURIComponent(movie.genre[0])}` }] : []),
                   ...(directorName ? [{ label: `${directorName} Films`, href: `/movies?director=${encodeURIComponent(directorName)}` }] : []),
                   // Dynamic: top 2 cast members
                   ...((movie.cast || [])
@@ -1155,8 +1155,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     .map((c: any) => ({ label: `${c.name} Movies`, href: `/cast/${c.castId}` }))),
                 ].map((item) => (
                   <Link key={item.href} href={item.href}
-                    className="text-xs text-gray-400 hover:text-orange-400 flex items-center gap-2 py-1.5 transition-colors group border-b border-[#1a1a1a] last:border-0">
-                    <span className="w-1 h-1 rounded-full bg-orange-500/50 group-hover:bg-orange-400 flex-shrink-0 transition-colors" />
+                    className="text-xs text-gray-400 hover:text-brand-400 flex items-center gap-2 py-1.5 transition-colors group border-b border-[#1a1a1a] last:border-0">
+                    <span className="w-1 h-1 rounded-full bg-brand-500/50 group-hover:bg-brand-400 flex-shrink-0 transition-colors" />
                     {item.label}
                     <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -1166,11 +1166,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
             {/* Editorial credit */}
             <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-4 flex items-start gap-3">
-              <div className="w-9 h-9 bg-orange-500/20 rounded-full flex-shrink-0 flex items-center justify-center text-orange-400 text-sm font-black">O</div>
+              <div className="w-9 h-9 bg-brand-500/20 rounded-full flex-shrink-0 flex items-center justify-center text-brand-400 text-sm font-black">O</div>
               <div>
-                <p className="text-xs text-gray-300 font-semibold">Ollypedia Editorial Team</p>
+                <p className="text-xs text-gray-300 font-semibold">The Cinema Verse Editorial Team</p>
                 <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">
-                  Reviewed & verified by our Odia cinema experts
+                  Reviewed & verified by our hindi cinema experts
                 </p>
                 {(movie.updatedAt || year) && (
                   <p className="text-[10px] text-gray-600 mt-1">
@@ -1208,7 +1208,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       { icon: "🎬", label: "Genre",    value: (movie.genre||[]).join(", ") || "Drama" },
                       { icon: "📅", label: "Year",     value: year ? String(year) : null },
                       { icon: "⏱",  label: "Runtime",  value: movie.runtime || null },
-                      { icon: "🌐", label: "Language", value: movie.language || "Odia" },
+                      { icon: "🌐", label: "Language", value: movie.language || "bollywood" },
                     ].filter(f => f.value).map(f => (
                       <div key={f.label} className="flex items-center gap-2 px-4 py-2.5 flex-1 min-w-[120px]">
                         <span className="text-base">{f.icon}</span>
@@ -1223,7 +1223,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   {/* Synopsis body */}
                   <div className="p-6">
                     <div className="flex gap-4">
-                      <div className="w-1 bg-gradient-to-b from-orange-500 to-orange-500/0 rounded-full flex-shrink-0 self-stretch min-h-[40px]" />
+                      <div className="w-1 bg-gradient-to-b from-brand-500 to-brand-500/0 rounded-full flex-shrink-0 self-stretch min-h-[40px]" />
                       <p className="text-gray-200 leading-[1.85] text-[15px] font-light tracking-wide">
                         {movie.synopsis}
                       </p>
@@ -1236,8 +1236,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       <span className="text-[10px] text-gray-600 self-center mr-1">Watch if you like:</span>
                       {(movie.genre as string[]).map((g) => (
                         <Link key={g} href={`/movies?genre=${encodeURIComponent(g)}`}
-                          className="text-[10px] font-semibold text-orange-400/80 hover:text-orange-400
-                            bg-orange-500/8 border border-orange-500/15 px-2 py-0.5 rounded-full transition-colors">
+                          className="text-[10px] font-semibold text-brand-400/80 hover:text-brand-400
+                            bg-brand-500/8 border border-brand-500/15 px-2 py-0.5 rounded-full transition-colors">
                           {g}
                         </Link>
                       ))}
@@ -1253,7 +1253,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               <section aria-label={`${movie.title} full story`}>
                 <SectionHeading icon={BookOpen} title="Story" />
                 <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
-                  <div className="prose-odia" dangerouslySetInnerHTML={{ __html: movie.story }} />
+                  <div className="prose-bollywood" dangerouslySetInnerHTML={{ __html: movie.story }} />
                 </div>
               </section>
             )}
@@ -1265,7 +1265,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 {(() => {
                   const BRAND: Record<string,{bg:string;border:string;text:string;btn:string}> = {
                     "Aao NXT":        {bg:"bg-blue-500/10",    border:"border-blue-500/25",    text:"text-blue-300",    btn:"text-blue-400 bg-blue-500/8 hover:bg-blue-500/15 border-blue-500/20"},
-                    "Tarang Plus":    {bg:"bg-orange-500/10",  border:"border-orange-500/25",  text:"text-orange-300",  btn:"text-orange-400 bg-orange-500/8 hover:bg-orange-500/15 border-orange-500/20"},
+                    "Tarang Plus":    {bg:"bg-brand-500/10",  border:"border-brand-500/25",  text:"text-brand-300",  btn:"text-brand-400 bg-brand-500/8 hover:bg-brand-500/15 border-brand-500/20"},
                     "Kanccha Lannka": {bg:"bg-red-500/10",     border:"border-red-500/25",     text:"text-red-300",     btn:"text-red-400 bg-red-500/8 hover:bg-red-500/15 border-red-500/20"},
                     "SonyLIV":        {bg:"bg-pink-500/10",    border:"border-pink-500/25",    text:"text-pink-300",    btn:"text-pink-400 bg-pink-500/8 hover:bg-pink-500/15 border-pink-500/20"},
                     "Disney+ Hotstar":{bg:"bg-indigo-500/10",  border:"border-indigo-500/25",  text:"text-indigo-300",  btn:"text-indigo-400 bg-indigo-500/8 hover:bg-indigo-500/15 border-indigo-500/20"},
@@ -1345,8 +1345,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                         ) : (isTBA || isComing) ? (
                           <div className="text-center py-2 text-xs text-gray-600">
                             {isTBA
-                              ? "📢 OTT release date not yet announced. Follow Ollypedia for updates."
-                              : `⏳ Streaming begins in ${daysLeft} day${daysLeft !== 1 ? "s" : ""}. Check back on Ollypedia.`}
+                              ? "📢 OTT release date not yet announced. Follow The Cinema Verse for updates."
+                              : `⏳ Streaming begins in ${daysLeft} day${daysLeft !== 1 ? "s" : ""}. Check back on The Cinema Verse.`}
                           </div>
                         ) : null}
                       </div>
@@ -1369,10 +1369,10 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                           <tbody>
                             {crew.map((member: any, i: number) => (
                               <tr key={i} className={`group border-b border-[#1a1a1a] last:border-0
-                                hover:bg-orange-500/3 transition-colors`}>
+                                hover:bg-brand-500/3 transition-colors`}>
                                 {/* Role */}
                                 <td className="px-4 py-2.5 w-[38%] align-middle">
-                                  <span className="text-[10px] font-bold text-orange-400/70 uppercase tracking-widest">
+                                  <span className="text-[10px] font-bold text-brand-400/70 uppercase tracking-widest">
                                     {member.role || member.type || "Crew"}
                                   </span>
                                 </td>
@@ -1388,7 +1388,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                                         fill className="object-cover"
                                       />
                                     </div>
-                                    <span className="text-sm font-semibold text-white group-hover/link:text-orange-400 transition-colors break-words min-w-0">
+                                    <span className="text-sm font-semibold text-white group-hover/link:text-brand-400 transition-colors break-words min-w-0">
                                       {member.name}
                                     </span>
                                   </Link>
@@ -1409,14 +1409,14 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                         <table className="w-full text-sm">
                           <thead>
                             <tr className="border-b border-[#242424] bg-[#0d0d0d]">
-                              <th className="px-4 py-2.5 text-left text-[10px] font-bold text-orange-400/60 uppercase tracking-widest w-[35%]">Actor</th>
+                              <th className="px-4 py-2.5 text-left text-[10px] font-bold text-brand-400/60 uppercase tracking-widest w-[35%]">Actor</th>
                               <th className="px-4 py-2.5 text-left text-[10px] font-bold text-gray-600 uppercase tracking-widest w-[30%]">Role / Type</th>
                               <th className="px-4 py-2.5 text-left text-[10px] font-bold text-gray-600 uppercase tracking-widest">Character</th>
                             </tr>
                           </thead>
                           <tbody>
                             {castOnly.map((member: any, i: number) => (
-                              <tr key={i} className="group border-b border-[#1a1a1a] last:border-0 hover:bg-orange-500/3 transition-colors">
+                              <tr key={i} className="group border-b border-[#1a1a1a] last:border-0 hover:bg-brand-500/3 transition-colors">
                                 {/* Photo + Name */}
                                 <td className="px-4 py-2.5 align-middle">
                                   <Link href={member.castId ? `/cast/${member.castId}` : "#"}
@@ -1429,14 +1429,14 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                                         fill className="object-cover"
                                       />
                                     </div>
-                                    <span className="text-sm font-semibold text-white group-hover/link:text-orange-400 transition-colors break-words min-w-0">
+                                    <span className="text-sm font-semibold text-white group-hover/link:text-brand-400 transition-colors break-words min-w-0">
                                       {member.name}
                                     </span>
                                   </Link>
                                 </td>
                                 {/* Role / Type */}
                                 <td className="px-4 py-2.5 align-middle">
-                                  <span className="text-[10px] font-bold text-orange-400/70 uppercase tracking-widest">
+                                  <span className="text-[10px] font-bold text-brand-400/70 uppercase tracking-widest">
                                     {member.role || member.type || "Actor"}
                                   </span>
                                 </td>
@@ -1481,12 +1481,12 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </section>
             )}
 
-            {/* ── Ollypedia Review ── */}
+            {/* ── The Cinema Verse Review ── */}
             {movie.review && (
-              <section aria-label={`Ollypedia review of ${movie.title}`}>
-                <SectionHeading icon={Award} title="Ollypedia Review" />
+              <section aria-label={`The Cinema Verse review of ${movie.title}`}>
+                <SectionHeading icon={Award} title="The Cinema Verse Review" />
                 <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
-                  <div className="prose-odia" dangerouslySetInnerHTML={{ __html: movie.review }} />
+                  <div className="prose-bollywood" dangerouslySetInnerHTML={{ __html: movie.review }} />
                 </div>
               </section>
             )}
@@ -1499,9 +1499,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
             {isUnreleased ? (
               <section aria-label={`Are you interested in ${movie.title}?`} className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-1 h-6 bg-orange-500 rounded flex-shrink-0" />
+                  <div className="w-1 h-6 bg-brand-500 rounded flex-shrink-0" />
                   <h2 className="text-lg sm:text-xl font-extrabold text-white flex items-center gap-2">
-                    <Users className="w-[18px] h-[18px] text-orange-500" />
+                    <Users className="w-[18px] h-[18px] text-brand-500" />
                     Are You Interested?
                   </h2>
                 </div>
@@ -1524,7 +1524,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
             )}
 
             {/* ══ SEO CONTENT BLOCK ══ */}
-            <section aria-label={`About ${movie.title} Odia film`} className="space-y-5">
+            <section aria-label={`About ${movie.title} hindi film`} className="space-y-5">
 
               {/* About this film — editorial SEO prose */}
               <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
@@ -1533,12 +1533,12 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   <p>
                     <strong className="text-white">{movie.title}</strong> is{" "}
                     {(movie.genre || []).length > 0
-                      ? `a ${(movie.genre as string[]).join(", ")} Odia film`
-                      : "an Odia film"}
+                      ? `a ${(movie.genre as string[]).join(", ")} hindi film`
+                      : "an hindi film"}
                     {year ? ` released in ${year}` : ""}{directorName ? `, directed by ${directorName}` : ""}
                     {producerName ? ` and produced by ${producerName}` : ""}.
-                    {movie.language ? ` The film is in the ${movie.language} language` : " The film is in the Odia language"},
-                    making it a part of the <strong className="text-white">Ollywood film industry</strong> — the Odia language cinema based in Bhubaneswar, Odisha.
+                    {movie.language ? ` The film is in the ${movie.language} language` : " The film is in the bollywood language"},
+                    making it a part of the <strong className="text-white">bollywood film industry</strong> — the bollywood language cinema based in Bhubaneswar, Odisha.
                   </p>
                   {movie.synopsis && (
                     <p>
@@ -1551,7 +1551,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       <strong className="text-white">{movie.verdict}</strong>
                       {movie.boxOffice?.total ? `, grossing a total collection of ${movie.boxOffice.total}` : ""}.
                       {avgRating !== null
-                        ? ` On Ollypedia, the film holds a user rating of ${(avgRating as number).toFixed(1)}/10 based on ${movie.reviews?.length} audience reviews.`
+                        ? ` On The Cinema Verse, the film holds a user rating of ${(avgRating as number).toFixed(1)}/10 based on ${movie.reviews?.length} audience reviews.`
                         : ""}
                     </p>
                   )}
@@ -1560,7 +1560,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       The <strong className="text-white">{movie.title} soundtrack</strong> features{" "}
                       <strong className="text-white">{songs.length} songs</strong>
                       {songs[0]?.singer ? `, including tracks by ${[...new Set(songs.slice(0,3).map((s:any)=>s.singer).filter(Boolean))].join(", ")}` : ""}.
-                      All songs are available to explore on Ollypedia with YouTube videos and full credits.
+                      All songs are available to explore on The Cinema Verse with YouTube videos and full credits.
                     </p>
                   )}
                   {movie.cast?.length > 0 && (
@@ -1581,9 +1581,9 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                         const live = !tba && (!od || new Date(od) <= new Date());
                         const coming = !tba && !!od && new Date(od) > new Date();
                         const fmtD = od && od !== "TBA" ? new Date(od).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "";
-                        if (live) return <><strong className="text-white">{movie.title}</strong> is now available to <strong className="text-white">watch online on {movie.streamingOn}</strong>. Fans can stream the full movie on {movie.streamingOn}{movie.streamingUrl ? <> — <a href={movie.streamingUrl} target="_blank" rel="noopener noreferrer" className="text-orange-400 hover:underline">watch it here</a></> : ""}. This is one of the most searched Odia movies on OTT platforms in {year || "recent years"}.</>;
-                        if (coming) return <><strong className="text-white">{movie.title}</strong> is set to release on <strong className="text-white">{movie.streamingOn}</strong> on <strong className="text-white">{fmtD}</strong>. Fans searching for the OTT release date of {movie.title} can bookmark Ollypedia for the latest updates on its digital streaming availability.</>;
-                        if (tba) return <><strong className="text-white">{movie.title}</strong> is confirmed for <strong className="text-white">OTT release on {movie.streamingOn}</strong>. The exact digital release date has not been announced yet. Ollypedia will update this page as soon as the OTT release date for {movie.title} is confirmed.</>;
+                        if (live) return <><strong className="text-white">{movie.title}</strong> is now available to <strong className="text-white">watch online on {movie.streamingOn}</strong>. Fans can stream the full movie on {movie.streamingOn}{movie.streamingUrl ? <> — <a href={movie.streamingUrl} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">watch it here</a></> : ""}. This is one of the most searched hindi movies on OTT platforms in {year || "recent years"}.</>;
+                        if (coming) return <><strong className="text-white">{movie.title}</strong> is set to release on <strong className="text-white">{movie.streamingOn}</strong> on <strong className="text-white">{fmtD}</strong>. Fans searching for the OTT release date of {movie.title} can bookmark The Cinema Verse for the latest updates on its digital streaming availability.</>;
+                        if (tba) return <><strong className="text-white">{movie.title}</strong> is confirmed for <strong className="text-white">OTT release on {movie.streamingOn}</strong>. The exact digital release date has not been announced yet. The Cinema Verse will update this page as soon as the OTT release date for {movie.title} is confirmed.</>;
                         return null;
                       })()}
                     </p>
@@ -1594,32 +1594,32 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-[#1f1f1f]">
                   {year && (
                     <Link href={`/movies/year/${year}`}
-                      className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-                      📅 Odia Movies {year}
+                      className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+                      📅 Hindi Movies {year}
                     </Link>
                   )}
                   {(movie.genre || []).map((g: string) => (
                     <Link key={g} href={`/movies?genre=${encodeURIComponent(g)}`}
-                      className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+                      className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
                       🎭 {g} Films
                     </Link>
                   ))}
                   <Link href="/movies"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-                    🎬 All Odia Movies
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    🎬 All Hindi Movies
                   </Link>
                   <Link href="/songs"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-                    🎵 Odia Songs
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    🎵 bollywood Songs
                   </Link>
                   <Link href="/box-office"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
                     📊 Box Office
                   </Link>
                   {movie.streamingOn && (
                     <Link href="/movies?filter=ott"
                       className="text-xs text-emerald-400/80 hover:text-emerald-400 bg-emerald-500/8 border border-emerald-500/15 px-2.5 py-1 rounded-full transition-colors">
-                      📺 Odia Movies on OTT
+                      📺 Hindi Movies on OTT
                     </Link>
                   )}
                   {movie.streamingOn && movie.streamingUrl && (
@@ -1633,7 +1633,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
               {/* Did You Know / Trivia */}
               {movie.trivia && (
-                <div className="bg-[#111] border border-orange-500/20 rounded-2xl p-6">
+                <div className="bg-[#111] border border-brand-500/20 rounded-2xl p-6">
                   <SectionHeading title="Did You Know?" />
                   <div className="flex gap-3">
                     <span className="text-2xl flex-shrink-0">💡</span>
@@ -1650,7 +1650,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     {
                       q: `What is ${movie.title} movie about?`,
                       a: movie.synopsis?.slice(0, 250) ||
-                        `${movie.title} is an Odia ${(movie.genre || []).join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${movie.director ? `, directed by ${movie.director}` : ""}.`,
+                        `${movie.title} is an bollywood ${(movie.genre || []).join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${movie.director ? `, directed by ${movie.director}` : ""}.`,
                     },
                     ...(movie.cast?.length ? [{
                       q: `Who are the main cast of ${movie.title}?`,
@@ -1658,7 +1658,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     }] : []),
                     ...(movie.verdict ? [{
                       q: `What is the box office verdict of ${movie.title}?`,
-                      a: `${movie.title} was declared a ${movie.verdict} at the Ollywood box office${movie.boxOffice?.total ? `, collecting a total of ${movie.boxOffice.total}` : ""}.`,
+                      a: `${movie.title} was declared a ${movie.verdict} at the bollywood box office${movie.boxOffice?.total ? `, collecting a total of ${movie.boxOffice.total}` : ""}.`,
                     }] : []),
                     ...(songs.length > 0 ? [{
                       q: `How many songs does ${movie.title} have?`,
@@ -1673,8 +1673,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       a: movie.releaseDate
                         ? `${movie.title} was released on ${new Date(movie.releaseDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}.`
                         : movie.releaseTBA
-                        ? `The release date of ${movie.title} is yet to be announced (TBA). Follow Ollypedia for the latest updates.`
-                        : `Release date information for ${movie.title} is available on Ollypedia.`,
+                        ? `The release date of ${movie.title} is yet to be announced (TBA). Follow The Cinema Verse for the latest updates.`
+                        : `Release date information for ${movie.title} is available on The Cinema Verse.`,
                     },
                     // ── OTT FAQs block ──────────────────────────────────────
                     {
@@ -1688,10 +1688,10 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                             const fmtD = od && od !== "TBA" ? new Date(od).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "";
                             if (live) return `Yes, ${movie.title} is available on OTT. You can watch ${movie.title} online on ${movie.streamingOn}${movie.streamingUrl ? ` at ${movie.streamingUrl}` : ""}. The film is currently streaming and available to watch anytime.`;
                             if (coming) return `Yes, ${movie.title} will be available on ${movie.streamingOn} from ${fmtD}. Mark your calendar for the OTT release of ${movie.title} on ${movie.streamingOn}.`;
-                            if (tba) return `${movie.title} has been confirmed for OTT release on ${movie.streamingOn}. The exact OTT release date of ${movie.title} is yet to be announced. Follow Ollypedia for updates on ${movie.title} OTT release date.`;
+                            if (tba) return `${movie.title} has been confirmed for OTT release on ${movie.streamingOn}. The exact OTT release date of ${movie.title} is yet to be announced. Follow The Cinema Verse for updates on ${movie.title} OTT release date.`;
                             return `${movie.title} is available on ${movie.streamingOn}. Check the platform directly for availability.`;
                           })()
-                        : `OTT release details for ${movie.title} have not been officially announced yet. It may release on Aao NXT (aaonxt.com), Tarang Plus (tarangplus.in), or Kanccha Lannka (kancchalannka.com). Follow Ollypedia for the latest ${movie.title} OTT release date updates.`,
+                        : `OTT release details for ${movie.title} have not been officially announced yet. It may release on Aao NXT (aaonxt.com), Tarang Plus (tarangplus.in), or Kanccha Lannka (kancchalannka.com). Follow The Cinema Verse for the latest ${movie.title} OTT release date updates.`,
                     },
                     {
                       q: `When is ${movie.title} OTT release date?`,
@@ -1704,26 +1704,26 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                             const fmtD = od && od !== "TBA" ? new Date(od).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "";
                             if (live) return `${movie.title} has already released on OTT. It is currently streaming on ${movie.streamingOn}${od && od !== "TBA" ? `, which went live on ${fmtD}` : ""}. You can watch it now online.`;
                             if (coming) return `The OTT release date of ${movie.title} is ${fmtD}. It will be available to stream on ${movie.streamingOn} from ${fmtD}.`;
-                            if (tba) return `The OTT release date of ${movie.title} on ${movie.streamingOn} is yet to be officially announced (TBA). Ollypedia will update this page as soon as the ${movie.title} OTT date is confirmed.`;
-                            return `${movie.title} is available on ${movie.streamingOn}. The exact OTT date information is on Ollypedia.`;
+                            if (tba) return `The OTT release date of ${movie.title} on ${movie.streamingOn} is yet to be officially announced (TBA). The Cinema Verse will update this page as soon as the ${movie.title} OTT date is confirmed.`;
+                            return `${movie.title} is available on ${movie.streamingOn}. The exact OTT date information is on The Cinema Verse.`;
                           })()
-                        : `The OTT release date of ${movie.title} has not been announced yet. The film may stream on platforms like Aao NXT, Tarang Plus, or Kanccha Lannka. Follow Ollypedia for ${movie.title} OTT release date news.`,
+                        : `The OTT release date of ${movie.title} has not been announced yet. The film may stream on platforms like Aao NXT, Tarang Plus, or Kanccha Lannka. Follow The Cinema Verse for ${movie.title} OTT release date news.`,
                     },
                     {
                       q: `On which platform can I watch ${movie.title} online?`,
                       a: movie.streamingOn
                         ? `You can watch ${movie.title} online on ${movie.streamingOn}${movie.streamingUrl ? ` (${movie.streamingUrl})` : ""}. ${movie.streamingOn} is the official OTT platform for ${movie.title} in India.`
-                        : `The official OTT platform for ${movie.title} has not been announced yet. Odia movies typically stream on platforms like Aao NXT, Tarang Plus, Kanccha Lannka, SonyLIV, or ZEE5. Check back on Ollypedia for updates.`,
+                        : `The official OTT platform for ${movie.title} has not been announced yet. hindi movies typically stream on platforms like Aao NXT, Tarang Plus, Kanccha Lannka, SonyLIV, or ZEE5. Check back on The Cinema Verse for updates.`,
                     },
                     {
                       q: `Can I watch ${movie.title} for free online?`,
                       a: movie.streamingOn
                         ? `${movie.title} is available on ${movie.streamingOn}. Please check ${movie.streamingOn}'s subscription plans — some platforms offer a free trial or ad-supported viewing. Visit ${movie.streamingUrl || `the ${movie.streamingOn} platform`} to check current availability and pricing.`
-                        : `${movie.title} has not been officially released on any free OTT platform. Watching from unofficial or pirated sources is illegal. Support Odia cinema by watching from official platforms.`,
+                        : `${movie.title} has not been officially released on any free OTT platform. Watching from unofficial or pirated sources is illegal. Support hindi cinema by watching from official platforms.`,
                     },
                   ].map((faq, i) => (
                     <details key={i} className="group border border-[#1a1a1a] rounded-xl overflow-hidden">
-                      <summary className="cursor-pointer px-4 py-3.5 text-sm font-semibold text-gray-200 list-none flex justify-between items-center gap-3 select-none hover:text-orange-400 hover:bg-[#0d0d0d] transition-all">
+                      <summary className="cursor-pointer px-4 py-3.5 text-sm font-semibold text-gray-200 list-none flex justify-between items-center gap-3 select-none hover:text-brand-400 hover:bg-[#0d0d0d] transition-all">
                         <span>{faq.q}</span>
                         <span className="text-gray-500 group-open:rotate-180 transition-transform duration-200 flex-shrink-0 text-xs">▼</span>
                       </summary>
@@ -1742,7 +1742,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {blogs.map((b: any) => (
                       <Link key={b._id} href={`/blog/${b.slug}`}
-                        className="group flex gap-3 bg-[#0d0d0d] border border-[#1a1a1a] hover:border-orange-500/30 rounded-xl p-3 transition-all">
+                        className="group flex gap-3 bg-[#0d0d0d] border border-[#1a1a1a] hover:border-brand-500/30 rounded-xl p-3 transition-all">
                         {b.coverImage ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={b.coverImage} alt={b.title}
@@ -1753,7 +1753,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                           </div>
                         )}
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-gray-300 group-hover:text-orange-400 transition-colors line-clamp-2 leading-snug">
+                          <p className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors line-clamp-2 leading-snug">
                             {b.title}
                           </p>
                           {b.category && (
@@ -1772,16 +1772,16 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
         {/* ══ RELATED MOVIES ══ */}
         {(related as any[]).length > 0 && (
-          <section className="mt-8 sm:mt-14 pt-8 sm:pt-10 border-t border-[#1f1f1f]" aria-label="Similar Odia movies">
+          <section className="mt-8 sm:mt-14 pt-8 sm:pt-10 border-t border-[#1f1f1f]" aria-label="Similar hindi movies">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-6 bg-orange-500 rounded-full" />
+                <div className="w-1 h-6 bg-brand-500 rounded-full" />
                 <h2 className="font-display font-bold text-2xl text-white">
-                  More {(movie.genre?.[0] || "Odia")} Movies
+                  More {(movie.genre?.[0] || "bollywood")} Movies
                 </h2>
               </div>
               <Link href={movie.genre?.[0] ? `/movies?genre=${movie.genre[0]}` : "/movies"}
-                className="text-xs text-orange-400 hover:text-orange-300 flex items-center gap-1 transition-colors font-semibold">
+                className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1 transition-colors font-semibold">
                 View all <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>

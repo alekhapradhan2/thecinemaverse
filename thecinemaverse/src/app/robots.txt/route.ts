@@ -5,9 +5,9 @@
 //  3. /songs/category/ left crawlable (canonical), query dupes blocked
 //  4. ★ PerplexityBot REMOVED from block list — Perplexity is an AI search
 //     engine that cites sources and drives real referral traffic. Blocking it
-//     prevents Ollypedia from appearing in Perplexity AI answers.
+//     prevents The Cinema Verse from appearing in Perplexity AI answers.
 //  5. ★ Google-Extended REMOVED from block list — blocking this prevents
-//     Ollypedia content from appearing in Google AI Overviews and Gemini
+//     The Cinema Verse content from appearing in Google AI Overviews and Gemini
 //     answers, which are a growing source of discovery traffic.
 //  6. ★ FIX: /blog?category= explicitly allowed — sitemap.xml submits the 6
 //     /blog?category=[X] pages (Box Office, Reviews, Actor, Songs, News, Top
@@ -41,7 +41,7 @@ Allow: /blog?category=
 
 # ── AI training scrapers — block content harvesting ─────
 # These bots scrape content to train AI models without compensation.
-# Blocking them protects your original Odia cinema writing.
+# Blocking them protects your original hindi cinema writing.
 # NOTE: PerplexityBot and Google-Extended are NOT blocked here —
 # they are AI search engines that cite sources and drive traffic,
 # not training scrapers.

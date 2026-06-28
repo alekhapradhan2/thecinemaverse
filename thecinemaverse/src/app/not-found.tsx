@@ -8,7 +8,7 @@ export default function NotFound() {
         <div className="relative mb-8">
           <p className="font-display text-[120px] font-black text-[#1a1a1a] leading-none select-none">404</p>
           <div className="absolute inset-0 flex items-center justify-center">
-            <Film className="w-16 h-16 text-orange-500/40" />
+            <Film className="w-16 h-16 text-brand-500/40" />
           </div>
         </div>
         <h1 className="font-display text-2xl font-bold text-white mb-3">Page Not Found</h1>

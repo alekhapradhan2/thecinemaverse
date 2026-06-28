@@ -41,8 +41,8 @@ export default function ContactPage() {
             { icon: MapPin, label: "Location", value: "Bhubaneswar, Odisha, India" },
           ].map(({ icon: Icon, label, value }) => (
             <div key={label} className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Icon className="w-5 h-5 text-orange-500" />
+              <div className="w-10 h-10 bg-brand-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Icon className="w-5 h-5 text-brand-500" />
               </div>
               <div>
                 <p className="text-xs text-gray-500">{label}</p>
@@ -55,7 +55,7 @@ export default function ContactPage() {
             <p className="text-sm text-gray-400 leading-relaxed">
               We welcome contributions from fans, film researchers, and industry professionals.
               If you have information to add or corrections to suggest, reach out and help us build
-              the best Odia cinema resource.
+              the best hindi cinema resource.
             </p>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function ContactPage() {
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     placeholder="John Doe"
-                    className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500/50"
+                    className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-brand-500/50"
                   />
                 </div>
                 <div>
@@ -92,7 +92,7 @@ export default function ContactPage() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     placeholder="you@example.com"
-                    className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500/50"
+                    className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-brand-500/50"
                   />
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default function ContactPage() {
                 <select
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white focus:outline-none focus:border-orange-500/50"
+                  className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white focus:outline-none focus:border-brand-500/50"
                 >
                   {["General Inquiry", "Report an Error", "Add Movie/Actor", "Advertising", "Partnership", "Other"].map((s) => (
                     <option key={s} value={s}>{s}</option>
@@ -118,7 +118,7 @@ export default function ContactPage() {
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   rows={6}
                   placeholder="Tell us how we can help you…"
-                  className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500/50 resize-none"
+                  className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg text-sm text-white placeholder-gray-600 focus:outline-none focus:border-brand-500/50 resize-none"
                 />
               </div>
 

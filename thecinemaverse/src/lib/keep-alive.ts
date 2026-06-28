@@ -1,4 +1,4 @@
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL; // e.g. https://ollypedia.onrender.com
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL; // e.g. https://thecinemaverse.onrender.com
 
 export function startKeepAlive() {
   if (!SITE_URL) return;

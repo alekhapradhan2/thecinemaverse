@@ -93,12 +93,12 @@ export default function RandomMoviePicker({
         gap-3 px-5 sm:px-8 pt-5 pb-4 border-b border-[#1a1a1a]">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Sparkles className="w-4 h-4 text-orange-500" />
-            <span className="text-orange-500 text-xs font-bold uppercase tracking-widest">Discover</span>
+            <Sparkles className="w-4 h-4 text-brand-500" />
+            <span className="text-brand-500 text-xs font-bold uppercase tracking-widest">Discover</span>
           </div>
           <h2 className="text-lg sm:text-xl font-black text-white leading-tight">Feeling Lucky?</h2>
           <p className="text-gray-500 text-xs mt-0.5">
-            We'll pick a random Odia film — recent ones get priority.
+            We'll pick a random hindi film — recent ones get priority.
           </p>
         </div>
 
@@ -108,8 +108,8 @@ export default function RandomMoviePicker({
           className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm
             transition-all duration-200 flex-shrink-0 self-start sm:self-center
             ${spinning
-              ? "bg-orange-500/20 text-orange-400 border border-orange-500/30 cursor-wait"
-              : "bg-orange-500 hover:bg-orange-400 active:scale-95 text-black shadow-lg shadow-orange-500/20"
+              ? "bg-brand-500/20 text-brand-400 border border-brand-500/30 cursor-wait"
+              : "bg-brand-500 hover:bg-brand-400 active:scale-95 text-black shadow-lg shadow-brand-500/20"
             }`}
         >
           <RefreshCw className={`w-4 h-4 ${spinning ? "animate-spin" : ""}`} />
@@ -125,7 +125,7 @@ export default function RandomMoviePicker({
           <div className="w-full text-center py-3">
             <p className="text-3xl mb-2">🎬</p>
             <p className="text-gray-600 text-sm">
-              Priority: <span className="text-orange-500/70">{recentCount} recent films</span>
+              Priority: <span className="text-brand-500/70">{recentCount} recent films</span>
               <span className="text-gray-700"> · {movies.length} total</span>
             </p>
           </div>
@@ -170,7 +170,7 @@ export default function RandomMoviePicker({
               {/* Poster */}
               <Link href={url} className="flex-shrink-0 group/poster">
                 <div className="relative w-20 h-[110px] sm:w-24 sm:h-[132px] rounded-xl overflow-hidden
-                  shadow-xl ring-1 ring-white/10 group-hover/poster:ring-orange-500/40 transition-all">
+                  shadow-xl ring-1 ring-white/10 group-hover/poster:ring-brand-500/40 transition-all">
                   <Image
                     src={picked.posterUrl}
                     alt={picked.title}
@@ -184,7 +184,7 @@ export default function RandomMoviePicker({
               <div className="flex-1 min-w-0">
                 <Link href={url} className="group/title">
                   <h3 className="text-base sm:text-lg font-black text-white
-                    group-hover/title:text-orange-400 transition-colors leading-snug line-clamp-2 mb-1">
+                    group-hover/title:text-brand-400 transition-colors leading-snug line-clamp-2 mb-1">
                     {picked.title}
                   </h3>
                 </Link>
@@ -210,7 +210,7 @@ export default function RandomMoviePicker({
 
                 <div className="flex flex-wrap gap-2">
                   <Link href={url}
-                    className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400
+                    className="inline-flex items-center gap-1.5 bg-brand-500 hover:bg-brand-400
                       text-black text-xs font-bold px-3 py-1.5 rounded-lg transition-colors">
                     <ExternalLink className="w-3 h-3" /> View Movie
                   </Link>
@@ -232,7 +232,7 @@ export default function RandomMoviePicker({
         <span className="text-[10px] text-gray-700">
           {recentCount} recent · {movies.length - recentCount} older
         </span>
-        <span className="text-[10px] text-gray-700">Ollypedia</span>
+        <span className="text-[10px] text-gray-700">The Cinema Verse</span>
       </div>
     </div>
   );

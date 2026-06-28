@@ -9,10 +9,10 @@ import { Calendar, Newspaper } from "lucide-react";
 export const revalidate = 600;
 
 export const metadata: Metadata = buildMeta({
-  title: "Odia Film News – Latest Ollywood Updates",
+  title: "Hindi Film News – Latest bollywood Updates",
   description:
-    "Stay updated with the latest news from Odia film industry (Ollywood). Get breaking news, film announcements, actor interviews, and box office updates.",
-  keywords: ["Odia film news", "Ollywood news", "Odia cinema news", "Odia movie updates"],
+    "Stay updated with the latest news from hindi film industry (bollywood). Get breaking news, film announcements, actor interviews, and box office updates.",
+  keywords: ["hindi film news", "bollywood news", "hindi cinema news", "hindi movie updates"],
   url: "/news",
 });
 
@@ -40,15 +40,15 @@ export default async function NewsPage({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <SectionHeader
-        title="Odia Film News"
-        subtitle="Latest updates from Ollywood"
+        title="Hindi Film News"
+        subtitle="Latest updates from bollywood"
       />
 
       <div className="mb-8 p-5 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <p className="text-gray-400 text-sm leading-relaxed">
-          Get the latest news and updates from the Odia film industry. From new movie announcements and casting
-          news to box office results and celebrity interviews — Ollypedia keeps you connected with everything
-          happening in Ollywood.
+          Get the latest news and updates from the hindi film industry. From new movie announcements and casting
+          news to box office results and celebrity interviews — The Cinema Verse keeps you connected with everything
+          happening in bollywood.
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default async function NewsPage({
                   </p>
                 )}
                 <div className="flex items-center gap-3 text-xs text-gray-500">
-                  {item.movieTitle && <span className="text-orange-400">📽 {item.movieTitle}</span>}
+                  {item.movieTitle && <span className="text-brand-400">📽 {item.movieTitle}</span>}
                   <span className="flex items-center gap-1">
                     <Calendar className="w-3 h-3" />
                     {new Date(item.createdAt).toLocaleDateString("en-IN", {

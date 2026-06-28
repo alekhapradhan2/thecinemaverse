@@ -19,7 +19,7 @@ const BlogSchema = new Schema(
     coverImage: { type: String, default: "" },
     movieId:    { type: Schema.Types.ObjectId, ref: "Movie" },
     movieTitle: { type: String, default: "" },
-    author:     { type: String, default: "Ollypedia Team" },
+    author:     { type: String, default: "The Cinema Verse Team" },
     published:  { type: Boolean, default: false },
     featured:   { type: Boolean, default: false },
     views:      { type: Number, default: 0 },

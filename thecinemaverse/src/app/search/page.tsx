@@ -12,8 +12,8 @@ import Image from "next/image";
 
 export async function generateMetadata({ searchParams }: { searchParams: { q?: string } }): Promise<Metadata> {
   return buildMeta({
-    title: searchParams.q ? `Search results for "${searchParams.q}"` : "Search Odia Movies, Actors & More",
-    description: "Search Ollypedia's database of Odia movies, actors, directors, songs, and blog articles.",
+    title: searchParams.q ? `Search results for "${searchParams.q}"` : "Search Hindi Movies, Actors & More",
+    description: "Search The Cinema Verse's database of hindi movies, actors, directors, songs, and blog articles.",
     url: "/search",
   });
 }
@@ -44,7 +44,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <div className="mb-8">
         <h1 className="section-title mb-2">
-          {q ? `Results for "${q}"` : "Search Ollypedia"}
+          {q ? `Results for "${q}"` : "Search The Cinema Verse"}
         </h1>
         {q && <p className="text-gray-500 text-sm">{total} results found</p>}
       </div>
@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
       {!q && (
         <div className="text-center py-20">
           <Search className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <p className="text-gray-400 text-lg mb-2">Search for Odia movies, actors, and more</p>
+          <p className="text-gray-400 text-lg mb-2">Search for hindi movies, actors, and more</p>
           <p className="text-gray-600 text-sm">Use the search bar in the header to get started</p>
         </div>
       )}
@@ -96,7 +96,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
                       <Image src={c.photo || "/placeholder-person.jpg"} alt={c.name} fill className="object-cover" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-white group-hover:text-orange-400 transition-colors">{c.name}</p>
+                      <p className="text-sm font-semibold text-white group-hover:text-brand-400 transition-colors">{c.name}</p>
                       <p className="text-xs text-gray-500">{c.roles?.length ? c.roles.join(", ") : c.type}</p>
                     </div>
                   </Link>

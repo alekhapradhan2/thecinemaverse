@@ -39,7 +39,7 @@ const VERDICT_STYLE: Record<string, { bg: string; text: string; border: string }
 };
 
 function vs(v?: string) {
-  return VERDICT_STYLE[v || ""] || { bg: "bg-orange-500/15", text: "text-orange-400", border: "border-orange-500/30" };
+  return VERDICT_STYLE[v || ""] || { bg: "bg-brand-500/15", text: "text-brand-400", border: "border-brand-500/30" };
 }
 
 // ─── Static params ────────────────────────────────────────────────────────────
@@ -96,29 +96,29 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     : null;
   const genres = [...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ");
 
-  const title = `${person.name} – Odia ${roles} | Biography, Movies & Career | Ollypedia`;
+  const title = `${person.name} – bollywood ${roles} | Biography, Movies & Career | The Cinema Verse`;
   const description =
     person.bio?.slice(0, 155) ||
-    `${person.name} is a celebrated Odia ${roles.toLowerCase()} in Ollywood with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on Ollypedia.`;
-  const canonical = `https://ollypedia.in/cast/${String(person._id)}`;
+    `${person.name} is a celebrated bollywood ${roles.toLowerCase()} in bollywood with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
+  const canonical = `https://thecinemaverse.in/cast/${String(person._id)}`;
 
   return {
     title, description,
     keywords: [
       person.name, `${person.name} movies`, `${person.name} biography`,
-      `${person.name} Ollywood`, `${person.name} odia film`,
-      `Odia ${person.type?.toLowerCase() || "artist"}`,
-      "Ollywood cast", "Odia cinema", genres,
+      `${person.name} bollywood`, `${person.name} hindi film`,
+      `bollywood ${person.type?.toLowerCase() || "artist"}`,
+      "bollywood cast", "hindi cinema", genres,
     ].filter(Boolean),
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
     openGraph: {
-      title, description, url: canonical, siteName: "Ollypedia", type: "profile",
+      title, description, url: canonical, siteName: "The Cinema Verse", type: "profile",
       images: person.photo
         ? [{ url: person.photo, width: 800, height: 1000, alt: person.name }]
-        : [{ url: "https://ollypedia.in/default.jpg", width: 1200, height: 630 }],
+        : [{ url: "https://thecinemaverse.in/default.jpg", width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [person.photo || "https://ollypedia.in/default.jpg"] },
+    twitter: { card: "summary_large_image", title, description, images: [person.photo || "https://thecinemaverse.in/default.jpg"] },
   };
 }
 
@@ -148,29 +148,29 @@ function generateRichBio(person: any, movies: any[]): string {
   const topCostar = Object.values(coMap).sort((a, b) => b.count - a.count)[0];
   const paras: string[] = [];
   paras.push(
-    `${person.name} is a prominent ${roles} in the Odia film industry (Ollywood), known for their remarkable contributions to Odia cinema.` +
-    (debutYear ? ` Having debuted in ${debutYear}${debutMovie ? ` with the film "${debutMovie.title}"` : ""}, ${person.name} has steadily built a distinguished career in Odia entertainment.` : "")
+    `${person.name} is a prominent ${roles} in the hindi film industry (bollywood), known for their remarkable contributions to hindi cinema.` +
+    (debutYear ? ` Having debuted in ${debutYear}${debutMovie ? ` with the film "${debutMovie.title}"` : ""}, ${person.name} has steadily built a distinguished career in bollywood entertainment.` : "")
   );
   if (movies.length > 0) {
     paras.push(
-      `Over the course of their career, ${person.name} has been associated with ${movies.length} Odia film${movies.length !== 1 ? "s" : ""}.` +
+      `Over the course of their career, ${person.name} has been associated with ${movies.length} hindi film${movies.length !== 1 ? "s" : ""}.` +
       (genreStr ? ` ${person.name} has worked across genres including ${genreStr}, demonstrating remarkable versatility.` : "")
     );
   }
   if (topCostar) {
-    paras.push(`${person.name} is widely recognized for their on-screen chemistry with fellow Odia artists. Their most frequent collaboration has been with ${topCostar.name}, having appeared together in ${topCostar.count} film${topCostar.count !== 1 ? "s" : ""}. These collaborations have become highlights of Ollywood and are celebrated by fans across Odisha.`);
+    paras.push(`${person.name} is widely recognized for their on-screen chemistry with fellow bollywood artists. Their most frequent collaboration has been with ${topCostar.name}, having appeared together in ${topCostar.count} film${topCostar.count !== 1 ? "s" : ""}. These collaborations have become highlights of bollywood and are celebrated by fans across Odisha.`);
   }
   if (latestMovie) {
     paras.push(
-      `${person.name}'s most recent work includes the Odia film "${latestMovie.title}"` +
+      `${person.name}'s most recent work includes the hindi film "${latestMovie.title}"` +
       (latestMovie.releaseDate ? ` (${new Date(latestMovie.releaseDate).getFullYear()})` : "") +
       (latestMovie.verdict && latestMovie.verdict !== "Upcoming" ? `, which received a "${latestMovie.verdict}" verdict` : "") +
-      `. Their performances continue to resonate deeply with Odia audiences, making them a household name across Odisha.`
+      `. Their performances continue to resonate deeply with bollywood audiences, making them a household name across Odisha.`
     );
   }
   paras.push(
-    `As one of Ollywood's celebrated ${roles}s, ${person.name}'s dedication to the craft has earned them critical acclaim and a loyal fanbase that extends beyond the borders of Odisha.` +
-    (person.location ? ` Originally from ${person.location}, they continue to inspire the next generation of Odia film artists.` : "")
+    `As one of bollywood's celebrated ${roles}s, ${person.name}'s dedication to the craft has earned them critical acclaim and a loyal fanbase that extends beyond the borders of Odisha.` +
+    (person.location ? ` Originally from ${person.location}, they continue to inspire the next generation of hindi film artists.` : "")
   );
   return paras.join("\n\n");
 }
@@ -179,9 +179,9 @@ function generateRichBio(person: any, movies: any[]): string {
 function SectionHeading({ icon: Icon, title, count }: { icon?: any; title: string; count?: number }) {
   return (
     <div className="flex items-center gap-3 mb-5">
-      <div className="w-1 h-7 bg-orange-500 rounded-full flex-shrink-0" />
+      <div className="w-1 h-7 bg-brand-500 rounded-full flex-shrink-0" />
       <h2 className="font-display text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-        {Icon && <Icon className="w-5 h-5 text-orange-500" />}
+        {Icon && <Icon className="w-5 h-5 text-brand-500" />}
         {title}
         {count !== undefined && count > 0 && (
           <span className="text-gray-500 text-base font-normal ml-1">({count})</span>
@@ -195,8 +195,8 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
   if (!value) return null;
   return (
     <div className="flex items-start gap-3 py-3 border-b border-[#1f1f1f] last:border-0">
-      <div className="w-8 h-8 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-        <Icon className="w-4 h-4 text-orange-400" />
+      <div className="w-8 h-8 bg-brand-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+        <Icon className="w-4 h-4 text-brand-400" />
       </div>
       <div className="min-w-0">
         <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{label}</p>
@@ -250,7 +250,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
     movies.find((m: any) => m.posterUrl)?.posterUrl || null;
 
   const bio = generateRichBio(person, movies);
-  const canonical = `https://ollypedia.in/cast/${String(person._id)}`;
+  const canonical = `https://thecinemaverse.in/cast/${String(person._id)}`;
 
   const debutMovie  = movies.length ? movies[movies.length - 1] : null;
   const latestMovie = movies[0];
@@ -270,7 +270,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
   const personLd = {
     "@context": "https://schema.org", "@type": "Person",
     name: person.name, image: person.photo || undefined,
-    description: person.bio || `Odia ${rolesStr} in Ollywood`,
+    description: person.bio || `bollywood ${rolesStr} in bollywood`,
     jobTitle: rolesStr,
     nationality: { "@type": "Country", name: "India" },
     birthDate: person.dob || undefined,
@@ -280,13 +280,13 @@ export default async function CastDetailPage({ params }: { params: { id: string 
       person.instagram ? `https://instagram.com/${person.instagram.replace("@", "")}` : null,
       person.website ?? null,
     ].filter(Boolean),
-    memberOf: { "@type": "Organization", name: "Ollywood – Odia Film Industry" },
+    memberOf: { "@type": "Organization", name: "bollywood – Hindi Film Industry" },
   };
   const breadcrumbLd = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://ollypedia.in" },
-      { "@type": "ListItem", position: 2, name: "Cast", item: "https://ollypedia.in/cast" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverse.in" },
+      { "@type": "ListItem", position: 2, name: "Cast", item: "https://thecinemaverse.in/cast" },
       { "@type": "ListItem", position: 3, name: person.name, item: canonical },
     ],
   };
@@ -295,22 +295,22 @@ export default async function CastDetailPage({ params }: { params: { id: string 
     mainEntity: [
       {
         "@type": "Question",
-        name: `How many Odia films has ${person.name} acted in?`,
+        name: `How many hindi films has ${person.name} acted in?`,
         acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name} has been part of ${movies.length} Odia film${movies.length !== 1 ? "s" : ""} in Ollywood, spanning genres such as ${genres || "drama, action and romance"}.`
-          : `${person.name} is associated with Ollywood, the Odia film industry.` },
+          ? `${person.name} has been part of ${movies.length} hindi film${movies.length !== 1 ? "s" : ""} in bollywood, spanning genres such as ${genres || "drama, action and romance"}.`
+          : `${person.name} is associated with bollywood, the hindi film industry.` },
       },
       {
         "@type": "Question",
-        name: `What is ${person.name}'s most popular Odia film?`,
+        name: `What is ${person.name}'s most popular hindi film?`,
         acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name}'s notable Odia films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on Ollypedia for detailed cast, songs and review information.`
-          : `Check Ollypedia for the latest updates on ${person.name}'s filmography.` },
+          ? `${person.name}'s notable hindi films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
+          : `Check The Cinema Verse for the latest updates on ${person.name}'s filmography.` },
       },
       {
         "@type": "Question",
-        name: `What is ${person.name}'s role in Odia cinema?`,
-        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in the Odia film industry (Ollywood).` },
+        name: `What is ${person.name}'s role in hindi cinema?`,
+        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in the hindi film industry (bollywood).` },
       },
     ],
   };
@@ -364,7 +364,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 marginBottom: "-44px",
               }}>
               {person.photo ? (
-                <Image src={person.photo} alt={`${person.name} – Odia ${rolesStr}`}
+                <Image src={person.photo} alt={`${person.name} – bollywood ${rolesStr}`}
                   fill className="object-cover object-top" priority />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-4xl" style={{ background: "#1a1a1a" }}>{icon}</div>
@@ -487,7 +487,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 boxShadow: "0 0 50px rgba(249,115,22,0.18), 0 28px 64px rgba(0,0,0,0.85)",
               }}>
               {person.photo ? (
-                <Image src={person.photo} alt={`${person.name} – Odia ${rolesStr}`}
+                <Image src={person.photo} alt={`${person.name} – bollywood ${rolesStr}`}
                   fill className="object-cover object-top" priority />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-6xl" style={{ background: "#1a1a1a" }}>{icon}</div>
@@ -601,9 +601,9 @@ export default async function CastDetailPage({ params }: { params: { id: string 
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-gray-500 pb-6"
           style={{ paddingTop: "clamp(12px, 3vw, 80px)" }} aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+          <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
           <ChevronRight className="w-3 h-3" />
-          <Link href="/cast" className="hover:text-orange-400 transition-colors">Cast</Link>
+          <Link href="/cast" className="hover:text-brand-400 transition-colors">Cast</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-gray-300">{person.name}</span>
         </nav>
@@ -624,7 +624,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
               <InfoRow icon={Calendar}    label="Date of Birth" value={fmtDate(person.dob)} />
               <InfoRow icon={MapPin}      label="Location"     value={person.location} />
               <InfoRow icon={User}        label="Gender"       value={person.gender} />
-              <InfoRow icon={Film}        label="Total Films"  value={movies.length ? `${movies.length} Odia films` : undefined} />
+              <InfoRow icon={Film}        label="Total Films"  value={movies.length ? `${movies.length} hindi films` : undefined} />
               <InfoRow icon={Award}       label="Genres" value={genres.length ? genres.map(([g]) => g).join(", ") : undefined} />
             </div>
 
@@ -632,7 +632,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
             {movies.length > 0 && (
               <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5">
                 <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <BarChart2 className="w-3.5 h-3.5 text-orange-500" /> Career Stats
+                  <BarChart2 className="w-3.5 h-3.5 text-brand-500" /> Career Stats
                 </h2>
                 <div className="space-y-0">
                   {[
@@ -641,7 +641,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                     { label: "Flops",          value: String(flops.length),  color: "text-red-400" },
                     { label: "Upcoming",       value: String(upcoming.length), color: "text-blue-400" },
                     ...(debutMovie?.releaseDate ? [{ label: "Active Since", value: String(new Date(debutMovie.releaseDate).getFullYear()), color: "text-purple-400" }] : []),
-                    ...(genres.length > 0 ? [{ label: "Genres", value: String(genres.length), color: "text-orange-400" }] : []),
+                    ...(genres.length > 0 ? [{ label: "Genres", value: String(genres.length), color: "text-brand-400" }] : []),
                   ].filter(r => r.value !== "0").map(({ label, value, color }) => (
                     <div key={label} className="flex justify-between items-center py-2.5 border-b border-[#1f1f1f] last:border-0">
                       <span className="text-xs text-gray-500">{label}</span>
@@ -665,10 +665,10 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                       <div key={g}>
                         <div className="flex justify-between text-xs mb-1">
                           <span className="text-gray-300 font-medium">{g}</span>
-                          <span className="text-orange-400 font-bold">{count} film{count !== 1 ? "s" : ""}</span>
+                          <span className="text-brand-400 font-bold">{count} film{count !== 1 ? "s" : ""}</span>
                         </div>
                         <div className="h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
-                          <div className="h-full rounded-full bg-gradient-to-r from-orange-600 to-orange-400"
+                          <div className="h-full rounded-full bg-gradient-to-r from-brand-600 to-brand-400"
                             style={{ width: `${pct}%` }} />
                         </div>
                       </div>
@@ -683,15 +683,15 @@ export default async function CastDetailPage({ params }: { params: { id: string 
               <h2 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-3">Explore More</h2>
               <div className="flex flex-col gap-1">
                 {[
-                  { label: "All Odia Movies",    href: "/movies" },
-                  { label: "Odia Songs",         href: "/songs" },
+                  { label: "All Hindi Movies",    href: "/movies" },
+                  { label: "bollywood Songs",         href: "/songs" },
                   { label: "Box Office",         href: "/box-office" },
                   { label: "Cast & Crew",        href: "/cast" },
-                  { label: "Odia Film Reviews",  href: "/blog/category/movie-review" },
+                  { label: "Hindi Film Reviews",  href: "/blog/category/movie-review" },
                 ].map(item => (
                   <Link key={item.href} href={item.href}
-                    className="text-xs text-gray-400 hover:text-orange-400 flex items-center gap-2 py-1.5 transition-colors group border-b border-[#1a1a1a] last:border-0">
-                    <span className="w-1 h-1 rounded-full bg-orange-500/50 group-hover:bg-orange-400 flex-shrink-0 transition-colors" />
+                    className="text-xs text-gray-400 hover:text-brand-400 flex items-center gap-2 py-1.5 transition-colors group border-b border-[#1a1a1a] last:border-0">
+                    <span className="w-1 h-1 rounded-full bg-brand-500/50 group-hover:bg-brand-400 flex-shrink-0 transition-colors" />
                     {item.label}
                     <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
@@ -701,11 +701,11 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
             {/* Editorial credit */}
             <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-4 flex items-start gap-3">
-              <div className="w-9 h-9 bg-orange-500/20 rounded-full flex-shrink-0 flex items-center justify-center text-orange-400 text-sm font-black">O</div>
+              <div className="w-9 h-9 bg-brand-500/20 rounded-full flex-shrink-0 flex items-center justify-center text-brand-400 text-sm font-black">O</div>
               <div>
-                <p className="text-xs text-gray-300 font-semibold">Ollypedia Editorial Team</p>
+                <p className="text-xs text-gray-300 font-semibold">The Cinema Verse Editorial Team</p>
                 <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">
-                  Verified by our Odia cinema experts
+                  Verified by our hindi cinema experts
                 </p>
                 <p className="text-[10px] text-gray-600 mt-1">
                   Updated: {new Date().toLocaleDateString("en-IN", { month: "long", year: "numeric" })}
@@ -736,7 +736,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-[#242424] bg-[#0d0d0d]">
-                        <th className="px-4 py-3 text-left text-[10px] font-bold text-orange-400/60 uppercase tracking-widest w-[40%]">Film</th>
+                        <th className="px-4 py-3 text-left text-[10px] font-bold text-brand-400/60 uppercase tracking-widest w-[40%]">Film</th>
                         <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 uppercase tracking-widest w-[20%]">Release Date</th>
                         <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 uppercase tracking-widest w-[20%]">Role</th>
                         <th className="px-4 py-3 text-left text-[10px] font-bold text-gray-600 uppercase tracking-widest w-[20%]">Verdict</th>
@@ -749,7 +749,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                         const releaseDate = m.releaseDate ? fmtDate(m.releaseDate) : "TBA";
                         return (
                           <tr key={String(m._id)}
-                            className="group border-b border-[#1a1a1a] last:border-0 hover:bg-orange-500/3 transition-colors">
+                            className="group border-b border-[#1a1a1a] last:border-0 hover:bg-brand-500/3 transition-colors">
 
                             {/* Poster + Title */}
                             <td className="px-4 py-3 align-middle">
@@ -764,7 +764,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                                   )}
                                 </div>
                                 <div className="min-w-0">
-                                  <p className="text-sm font-semibold text-white group-hover/link:text-orange-400 transition-colors line-clamp-1">
+                                  <p className="text-sm font-semibold text-white group-hover/link:text-brand-400 transition-colors line-clamp-1">
                                     {m.title}
                                   </p>
                                   {m.genre?.[0] && (
@@ -781,7 +781,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
                             {/* Role */}
                             <td className="px-4 py-3 align-middle">
-                              <span className="text-[10px] font-bold text-orange-400/70 uppercase tracking-widest">
+                              <span className="text-[10px] font-bold text-brand-400/70 uppercase tracking-widest">
                                 {entry?.role || entry?.type || rolesStr.split(",")[0] || "—"}
                               </span>
                             </td>
@@ -815,21 +815,21 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                   </p>
                   <div className="relative pl-6">
                     {/* Vertical line */}
-                    <div className="absolute left-2 top-1 bottom-1 w-0.5 bg-gradient-to-b from-orange-500 to-orange-500/10 rounded-full" />
+                    <div className="absolute left-2 top-1 bottom-1 w-0.5 bg-gradient-to-b from-brand-500 to-brand-500/10 rounded-full" />
                     {timelineYears.map((yr, yi) => (
                       <div key={yr} className="relative mb-5 last:mb-0">
                         {/* Dot */}
-                        <div className={`absolute -left-4 top-1 w-2.5 h-2.5 rounded-full border-2 border-orange-500 ${
-                          yi === 0 ? "bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]" : "bg-[#0a0a0a]"
+                        <div className={`absolute -left-4 top-1 w-2.5 h-2.5 rounded-full border-2 border-brand-500 ${
+                          yi === 0 ? "bg-brand-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]" : "bg-[#0a0a0a]"
                         }`} />
                         <div className="flex items-start gap-3">
-                          <span className="text-xs font-black text-orange-400 w-10 flex-shrink-0 pt-0.5">{yr}</span>
+                          <span className="text-xs font-black text-brand-400 w-10 flex-shrink-0 pt-0.5">{yr}</span>
                           <div className="flex flex-wrap gap-2 flex-1">
                             {byYear[yr].map((m: any) => {
                               const style = vs(m.verdict);
                               return (
                                 <Link key={String(m._id)} href={`/movie/${m.slug || String(m._id)}`}
-                                  className="flex items-center gap-2 px-2.5 py-1 bg-[#0d0d0d] border border-[#1f1f1f] hover:border-orange-500/30 rounded-full text-xs text-white hover:text-orange-400 transition-all">
+                                  className="flex items-center gap-2 px-2.5 py-1 bg-[#0d0d0d] border border-[#1f1f1f] hover:border-brand-500/30 rounded-full text-xs text-white hover:text-brand-400 transition-all">
                                   {m.posterUrl && (
                                     <Image src={m.posterUrl} alt="" width={14} height={18}
                                       className="rounded-sm flex-shrink-0 object-cover" />
@@ -857,7 +857,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {costars.map((c: any, i: number) => {
                     const inner = (
-                      <div className="group bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl overflow-hidden transition-all hover:-translate-y-0.5">
+                      <div className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl overflow-hidden transition-all hover:-translate-y-0.5">
                         <div className="relative h-36 bg-[#1a1a1a]">
                           {c.photo ? (
                             <Image src={c.photo} alt={c.name} fill className="object-cover object-top" sizes="180px" />
@@ -867,8 +867,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                         </div>
                         <div className="p-2.5">
-                          <p className="text-xs font-semibold text-white line-clamp-1 group-hover:text-orange-400 transition-colors">{c.name}</p>
-                          <p className="text-[10px] text-orange-500 mt-0.5 font-medium">{c.count} film{c.count !== 1 ? "s" : ""} together</p>
+                          <p className="text-xs font-semibold text-white line-clamp-1 group-hover:text-brand-400 transition-colors">{c.name}</p>
+                          <p className="text-[10px] text-brand-500 mt-0.5 font-medium">{c.count} film{c.count !== 1 ? "s" : ""} together</p>
                         </div>
                       </div>
                     );
@@ -890,7 +890,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                       href={s.ytId ? `https://youtube.com/watch?v=${s.ytId}` : `/songs/${s.movieSlug}`}
                       target={s.ytId ? "_blank" : undefined}
                       rel={s.ytId ? "noopener noreferrer" : undefined}
-                      className="group bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl overflow-hidden transition-all">
+                      className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl overflow-hidden transition-all">
                       <div className="relative aspect-video bg-[#1a1a1a]">
                         {s.thumbnailUrl ? (
                           <Image src={s.thumbnailUrl} alt={s.title} fill className="object-cover" sizes="180px" />
@@ -907,9 +907,9 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                         </div>
                       </div>
                       <div className="p-2.5">
-                        <p className="text-xs font-semibold text-white line-clamp-1 group-hover:text-orange-400 transition-colors">{s.title}</p>
+                        <p className="text-xs font-semibold text-white line-clamp-1 group-hover:text-brand-400 transition-colors">{s.title}</p>
                         {s.singer && <p className="text-[10px] text-gray-500 truncate mt-0.5">{s.singer}</p>}
-                        <p className="text-[10px] text-orange-500/70 truncate">{s.movieTitle}</p>
+                        <p className="text-[10px] text-brand-500/70 truncate">{s.movieTitle}</p>
                       </div>
                     </Link>
                   ))}
@@ -925,7 +925,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                   {trailers.slice(0, 4).map((t: any, i: number) => (
                     <Link key={i} href={`https://youtube.com/watch?v=${t.ytId}`}
                       target="_blank" rel="noopener noreferrer"
-                      className="group bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl overflow-hidden transition-all">
+                      className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl overflow-hidden transition-all">
                       <div className="relative aspect-video bg-[#1a1a1a]">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={`https://img.youtube.com/vi/${t.ytId}/mqdefault.jpg`}
@@ -941,7 +941,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                         </div>
                       </div>
                       <div className="p-2.5">
-                        <p className="text-xs font-semibold text-white group-hover:text-orange-400 transition-colors line-clamp-1">{t.movieTitle}</p>
+                        <p className="text-xs font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-1">{t.movieTitle}</p>
                       </div>
                     </Link>
                   ))}
@@ -956,7 +956,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {newsList.slice(0, 6).map((n: any) => (
                     <Link key={String(n._id)} href={`/news/${String(n._id)}`}
-                      className="group flex gap-3 bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl p-3 transition-all">
+                      className="group flex gap-3 bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-3 transition-all">
                       <div className="relative w-20 h-14 flex-shrink-0 rounded-lg overflow-hidden bg-[#1a1a1a]">
                         {n.imageUrl ? (
                           <Image src={n.imageUrl} alt={n.title} fill className="object-cover" sizes="80px" />
@@ -966,9 +966,9 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                       </div>
                       <div className="flex-1 min-w-0">
                         {n.category && (
-                          <span className="text-[9px] font-bold text-orange-500 uppercase tracking-wider">{n.category}</span>
+                          <span className="text-[9px] font-bold text-brand-500 uppercase tracking-wider">{n.category}</span>
                         )}
-                        <p className="text-xs font-semibold text-white group-hover:text-orange-400 transition-colors line-clamp-2 mt-0.5 leading-snug">{n.title}</p>
+                        <p className="text-xs font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-2 mt-0.5 leading-snug">{n.title}</p>
                       </div>
                     </Link>
                   ))}
@@ -996,8 +996,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                       <Link
                         key={String(b._id)}
                         href={`/blog/${b.slug}`}
-                        className="group flex flex-col bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-orange-900/10"
-                        title={`${b.title} — Ollypedia`}
+                        className="group flex flex-col bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg hover:shadow-brand-900/10"
+                        title={`${b.title} — The Cinema Verse`}
                       >
                         {/* Cover image */}
                         <div className="relative w-full aspect-[16/9] bg-[#1a1a1a] flex-shrink-0 overflow-hidden">
@@ -1026,7 +1026,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
                         {/* Card body */}
                         <div className="flex flex-col flex-1 p-3.5 gap-2">
-                          <h3 className="text-sm font-bold text-white group-hover:text-orange-400 transition-colors line-clamp-2 leading-snug">
+                          <h3 className="text-sm font-bold text-white group-hover:text-brand-400 transition-colors line-clamp-2 leading-snug">
                             {b.title}
                           </h3>
                           {displayExcerpt && (
@@ -1075,9 +1075,9 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 {/* SEO internal link */}
                 <div className="mt-4 p-4 bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl text-[11px] text-gray-500 leading-relaxed">
                   <strong className="text-gray-300">{person.name}</strong> features in multiple articles published
-                  on Ollypedia — Odisha&apos;s complete Odia cinema encyclopedia. Browse movie reviews, actor
-                  spotlights, box office reports and the latest Ollywood entertainment news.{" "}
-                  <Link href="/blog" className="text-orange-400/80 hover:text-orange-400 underline transition-colors">
+                  on The Cinema Verse — Odisha&apos;s complete hindi cinema encyclopedia. Browse movie reviews, actor
+                  spotlights, box office reports and the latest bollywood entertainment news.{" "}
+                  <Link href="/blog" className="text-brand-400/80 hover:text-brand-400 underline transition-colors">
                     Explore all blogs →
                   </Link>
                 </div>
@@ -1089,59 +1089,59 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
               {/* Detailed career editorial */}
               <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
-                <SectionHeading title={`${person.name} – Career & Contributions to Odia Cinema`} />
+                <SectionHeading title={`${person.name} – Career & Contributions to Hindi Cinema`} />
                 <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                   <p>
-                    <strong className="text-white">{person.name}</strong> is one of Ollywood's celebrated{" "}
+                    <strong className="text-white">{person.name}</strong> is one of bollywood's celebrated{" "}
                     <strong className="text-white">{rolesStr.toLowerCase()}s</strong>, having contributed
-                    to <strong className="text-white">{movies.length} Odia films</strong> in the{" "}
-                    <strong className="text-white">Odia film industry</strong> (popularly known as{" "}
-                    <strong className="text-white">Ollywood</strong>), headquartered in Bhubaneswar, Odisha.
+                    to <strong className="text-white">{movies.length} hindi films</strong> in the{" "}
+                    <strong className="text-white">hindi film industry</strong> (popularly known as{" "}
+                    <strong className="text-white">bollywood</strong>), headquartered in Bhubaneswar, Odisha.
                   </p>
 
                   {costars.length > 0 && (
                     <p>
                       Throughout their career, <strong className="text-white">{person.name}</strong> has
-                      collaborated with some of Ollywood's finest artists, including{" "}
+                      collaborated with some of bollywood's finest artists, including{" "}
                       {costars.slice(0, 3).map((c: any, i: number) => (
                         <span key={String(c.castId || i)}>
                           {c.castId
-                            ? <Link href={`/cast/${String(c.castId)}`} className="text-orange-400 hover:text-orange-300 transition-colors">{c.name}</Link>
+                            ? <Link href={`/cast/${String(c.castId)}`} className="text-brand-400 hover:text-brand-300 transition-colors">{c.name}</Link>
                             : <strong className="text-white">{c.name}</strong>}
                           {i < Math.min(costars.length, 3) - 1 ? ", " : ""}
                         </span>
                       ))}.
-                      These on-screen partnerships have resonated strongly with Odia audiences.
+                      These on-screen partnerships have resonated strongly with bollywood audiences.
                     </p>
                   )}
 
                   {genres.length > 0 && (
                     <p>
-                      {person.name} has worked across multiple genres in Odia cinema, including{" "}
+                      {person.name} has worked across multiple genres in hindi cinema, including{" "}
                       <strong className="text-white">{genres.map(([g]) => g).join(", ")}</strong>.
                       This versatility has made them a sought-after name across all kinds of{" "}
-                      <strong className="text-white">Ollywood productions</strong>.
+                      <strong className="text-white">bollywood productions</strong>.
                     </p>
                   )}
 
                   {debutMovie && (
                     <p>
-                      {person.name} made their Odia film debut{debutMovie.releaseDate
+                      {person.name} made their hindi film debut{debutMovie.releaseDate
                         ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}`
                         : ""}{" "}
                       with the film{" "}
                       <Link href={`/movie/${debutMovie.slug || String(debutMovie._id)}`}
-                        className="text-orange-400 hover:text-orange-300 transition-colors">
+                        className="text-brand-400 hover:text-brand-300 transition-colors">
                         {debutMovie.title}
                       </Link>.
-                      Since then, they have steadily grown into one of Ollywood's most recognised faces,
-                      building a loyal fanbase across Odisha and among the global Odia diaspora.
+                      Since then, they have steadily grown into one of bollywood's most recognised faces,
+                      building a loyal fanbase across Odisha and among the global bollywood diaspora.
                     </p>
                   )}
 
                   <p>
                     Follow <strong className="text-white">{person.name}</strong>'s complete filmography,
-                    songs, trailers and box office records on Ollypedia — the most comprehensive Odia
+                    songs, trailers and box office records on The Cinema Verse — the most comprehensive bollywood
                     cinema database online.
                   </p>
                 </div>
@@ -1149,20 +1149,20 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 {/* Internal topic links */}
                 <div className="flex flex-wrap gap-2 mt-5 pt-5 border-t border-[#1f1f1f]">
                   <Link href="/cast"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
                     🎭 All Cast Profiles
                   </Link>
                   <Link href="/movies"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-                    🎬 Odia Movies
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    🎬 Hindi Movies
                   </Link>
                   <Link href="/box-office"
-                    className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+                    className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
                     📊 Box Office
                   </Link>
                   {genres[0] && (
                     <Link href={`/movies?genre=${encodeURIComponent(genres[0][0])}`}
-                      className="text-xs text-orange-400/80 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+                      className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
                       🎭 {genres[0][0]} Films
                     </Link>
                   )}
@@ -1175,36 +1175,36 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 <div className="space-y-2">
                   {[
                     {
-                      q: `How many Odia films has ${person.name} acted in?`,
+                      q: `How many hindi films has ${person.name} acted in?`,
                       a: movies.length > 0
-                        ? `${person.name} has been part of ${movies.length} Odia film${movies.length !== 1 ? "s" : ""} in Ollywood, spanning genres such as ${[...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ") || "drama and action"}.`
-                        : `${person.name} is associated with Ollywood. Stay tuned to Ollypedia for their latest updates.`,
+                        ? `${person.name} has been part of ${movies.length} hindi film${movies.length !== 1 ? "s" : ""} in bollywood, spanning genres such as ${[...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ") || "drama and action"}.`
+                        : `${person.name} is associated with bollywood. Stay tuned to The Cinema Verse for their latest updates.`,
                     },
                     {
-                      q: `What is ${person.name}'s most popular Odia film?`,
+                      q: `What is ${person.name}'s most popular hindi film?`,
                       a: movies.length > 0
-                        ? `${person.name}'s notable Odia films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on Ollypedia for detailed cast, songs and review information.`
-                        : `Check Ollypedia for the latest updates on ${person.name}'s filmography.`,
+                        ? `${person.name}'s notable hindi films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
+                        : `Check The Cinema Verse for the latest updates on ${person.name}'s filmography.`,
                     },
                     {
-                      q: `What is ${person.name}'s role in Odia cinema?`,
-                      a: `${person.name} works as a ${rolesStr} in the Odia film industry (Ollywood). ${person.bio ? person.bio.slice(0, 150) + "..." : `They have made significant contributions to Odia cinema and remain a beloved figure among Odia audiences.`}`,
+                      q: `What is ${person.name}'s role in hindi cinema?`,
+                      a: `${person.name} works as a ${rolesStr} in the hindi film industry (bollywood). ${person.bio ? person.bio.slice(0, 150) + "..." : `They have made significant contributions to hindi cinema and remain a beloved figure among bollywood audiences.`}`,
                     },
                     {
-                      q: `When did ${person.name} debut in Ollywood?`,
+                      q: `When did ${person.name} debut in bollywood?`,
                       a: debutMovie
-                        ? `${person.name} made their Ollywood debut${debutMovie.releaseDate ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}` : ""} with the film "${debutMovie.title}".`
-                        : `Debut information for ${person.name} is available on Ollypedia's cast profile page.`,
+                        ? `${person.name} made their bollywood debut${debutMovie.releaseDate ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}` : ""} with the film "${debutMovie.title}".`
+                        : `Debut information for ${person.name} is available on The Cinema Verse's cast profile page.`,
                     },
                     {
                       q: `What genres has ${person.name} worked in?`,
                       a: genres.length > 0
-                        ? `${person.name} has worked in ${genres.map(([g, c]) => `${g} (${c} film${c !== 1 ? "s" : ""})`).join(", ")} in their Odia film career.`
-                        : `${person.name} has worked across various genres in Odia cinema. Explore their full filmography on Ollypedia.`,
+                        ? `${person.name} has worked in ${genres.map(([g, c]) => `${g} (${c} film${c !== 1 ? "s" : ""})`).join(", ")} in their hindi film career.`
+                        : `${person.name} has worked across various genres in hindi cinema. Explore their full filmography on The Cinema Verse.`,
                     },
                   ].map((faq, i) => (
                     <details key={i} className="group border border-[#1a1a1a] rounded-xl overflow-hidden">
-                      <summary className="cursor-pointer px-4 py-3.5 text-sm font-semibold text-gray-200 list-none flex justify-between items-center gap-3 select-none hover:text-orange-400 hover:bg-[#0d0d0d] transition-all">
+                      <summary className="cursor-pointer px-4 py-3.5 text-sm font-semibold text-gray-200 list-none flex justify-between items-center gap-3 select-none hover:text-brand-400 hover:bg-[#0d0d0d] transition-all">
                         <span>{faq.q}</span>
                         <span className="text-gray-500 group-open:rotate-180 transition-transform duration-200 flex-shrink-0 text-xs">▼</span>
                       </summary>

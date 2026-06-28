@@ -125,8 +125,8 @@ function getMisspellings(title: string): string[] {
   variants.forEach((v) => {
     if (v && v !== title.toLowerCase() && v.length > 2) {
       result.push(v);
-      result.push(`${v} odia movie`);
-      result.push(`${v} odia film`);
+      result.push(`${v} hindi movie`);
+      result.push(`${v} hindi film`);
     }
   });
   return result;
@@ -150,47 +150,47 @@ export async function generateMetadata({
   const thumb     = song.thumbnailUrl
     || (song.ytId ? `https://img.youtube.com/vi/${song.ytId}/hqdefault.jpg` : null)
     || movie.posterUrl
-    || "https://ollypedia.in/og-default.jpg";
+    || "https://thecinemaverse.in/og-default.jpg";
 
   // ★ Rich title — song + singer + movie + year for long-tail capture
-  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | Odia Song | Ollypedia`;
+  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | bollywood Song | The Cinema Verse`;
 
   const descParts = [
-    `Listen to "${song.title}"${singerStr} from the Odia film "${movie.title}"${year ? ` (${year})` : ""}.`,
+    `Listen to "${song.title}"${singerStr} from the hindi film "${movie.title}"${year ? ` (${year})` : ""}.`,
     song.musicDirector ? ` Music by ${song.musicDirector}.` : "",
     song.lyrics?.trim() ? " Full lyrics available." : "",
-    " Watch on YouTube and explore the full soundtrack on Ollypedia.",
+    " Watch on YouTube and explore the full soundtrack on The Cinema Verse.",
   ];
   const description = descParts.join("").replace(/\s+/g, " ").trim().slice(0, 160);
 
   const stableSlug = toSlug(song.title) || String(idx);
-  const canonical  = `https://ollypedia.in/songs/${movie.slug}/${idx}/${stableSlug}`;
+  const canonical  = `https://thecinemaverse.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   // ★ Comprehensive keyword set — hit every variant someone might search
   const keywords = [
     song.title,
     `${song.title} lyrics`,
-    `${song.title} odia song`,
+    `${song.title} bollywood song`,
     `${song.title} ${movie.title}`,
     song.singer ? `${song.singer} songs`       : null,
-    song.singer ? `${song.singer} odia songs`  : null,
+    song.singer ? `${song.singer} bollywood songs`  : null,
     song.musicDirector ? `${song.musicDirector} music`      : null,
-    song.musicDirector ? `${song.musicDirector} odia music` : null,
+    song.musicDirector ? `${song.musicDirector} bollywood music` : null,
     `${movie.title} songs`,
     `${movie.title} album`,
     `${movie.title} songs download`,
-    `${movie.title} odia movie songs`,
+    `${movie.title} hindi movie songs`,
     movie.title,
-    `${movie.title} odia movie`,
-    `${movie.title} odia film`,
+    `${movie.title} hindi movie`,
+    `${movie.title} hindi film`,
     `${movie.title} review`,
-    "odia song",
-    "ollywood song",
-    "odia film song",
-    "odia movie song",
-    year ? `odia songs ${year}` : null,
-    year ? `ollywood songs ${year}` : null,
-    ...(movie.genre || []).map((g: string) => `${g} odia film`),
+    "bollywood song",
+    "bollywood song",
+    "hindi film song",
+    "hindi movie song",
+    year ? `bollywood songs ${year}` : null,
+    year ? `bollywood songs ${year}` : null,
+    ...(movie.genre || []).map((g: string) => `${g} hindi film`),
     ...getMisspellings(movie.title),
     ...getMisspellings(song.title),
   ].filter(Boolean) as string[];
@@ -248,9 +248,9 @@ function SeoProseBlock({
           {song.singer && (
             <> is sung by <strong className="text-white">{song.singer}</strong></>
           )}
-          {!song.singer && " is an Odia film song"} from the{" "}
-          {movie.genre?.length ? `${movie.genre.join(", ")} ` : ""}Odia film{" "}
-          <Link href={`/movie/${movie.slug}`} className="text-orange-400 hover:underline font-semibold">
+          {!song.singer && " is an hindi film song"} from the{" "}
+          {movie.genre?.length ? `${movie.genre.join(", ")} ` : ""}hindi film{" "}
+          <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline font-semibold">
             {movie.title}
           </Link>
           {year ? ` (${year})` : ""}.
@@ -264,7 +264,7 @@ function SeoProseBlock({
             <> The film is directed by <strong className="text-white">{movie.director}</strong>.</>
           )}{" "}
           This is track #{idx + 1} of {movie.media?.songs?.length || 1} in the{" "}
-          <Link href={`/movie/${movie.slug}`} className="text-orange-400 hover:underline">
+          <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline">
             {movie.title} soundtrack
           </Link>.
           {song.lyrics?.trim() && (
@@ -275,17 +275,17 @@ function SeoProseBlock({
         {/* ── Category / discovery links ── */}
         <div className="flex flex-wrap gap-2 mt-2">
           {year && (
-            <Link href={`/songs/category/${year}`} className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-              🎵 More Odia Songs {year}
+            <Link href={`/songs/category/${year}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+              🎵 More bollywood Songs {year}
             </Link>
           )}
-          <Link href="/songs/category/latest" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
-            🆕 Latest Odia Songs
+          <Link href="/songs/category/latest" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
+            🆕 Latest bollywood Songs
           </Link>
-          <Link href="/songs/category/trending" className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+          <Link href="/songs/category/trending" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
             🔥 Trending Songs
           </Link>
-          <Link href={`/movie/${movie.slug}`} className="text-xs text-orange-400/70 hover:text-orange-400 bg-orange-500/8 border border-orange-500/15 px-2.5 py-1 rounded-full transition-colors">
+          <Link href={`/movie/${movie.slug}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
             🎬 {movie.title} — Full Movie Page
           </Link>
         </div>
@@ -295,7 +295,7 @@ function SeoProseBlock({
       {relatedBlogs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-6">
           <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
-            <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
+            <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
             Articles & Reviews for {movie.title}
           </h2>
           <ul className="flex flex-col gap-2">
@@ -320,7 +320,7 @@ function SeoProseBlock({
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-gray-300 group-hover:text-orange-400 transition-colors line-clamp-2">
+                    <p className="text-sm font-semibold text-gray-300 group-hover:text-brand-400 transition-colors line-clamp-2">
                       {b.title}
                     </p>
                     {b.category && (
@@ -333,7 +333,7 @@ function SeoProseBlock({
           </ul>
           <Link
             href={`/blog?movie=${encodeURIComponent(movie.title)}`}
-            className="block mt-3 text-center text-xs text-orange-400/60 hover:text-orange-400 transition-colors"
+            className="block mt-3 text-center text-xs text-brand-400/60 hover:text-brand-400 transition-colors"
           >
             View all articles about {movie.title} →
           </Link>
@@ -344,7 +344,7 @@ function SeoProseBlock({
       {otherSongs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5">
           <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
-            <span className="w-4 h-[2.5px] bg-orange-500 rounded inline-block" />
+            <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
             More Songs from {movie.title}
           </h2>
           <ul className="flex flex-wrap gap-2">
@@ -352,7 +352,7 @@ function SeoProseBlock({
               <li key={s.index}>
                 <Link
                   href={`/songs/${movie.slug}/${s.index}/${s.slug}`}
-                  className="text-xs text-gray-400 hover:text-orange-400 bg-[#181818] hover:bg-orange-500/10 border border-[#222] hover:border-orange-500/30 px-3 py-1.5 rounded-full transition-all"
+                  className="text-xs text-gray-400 hover:text-brand-400 bg-[#181818] hover:bg-brand-500/10 border border-[#222] hover:border-brand-500/30 px-3 py-1.5 rounded-full transition-all"
                 >
                   🎵 {s.title}
                 </Link>
@@ -390,7 +390,7 @@ export default async function SongDetailSlugPage({
     || movie.posterUrl;
 
   const stableSlug = toSlug(song.title) || String(idx);
-  const canonical  = `https://ollypedia.in/songs/${movie.slug}/${idx}/${stableSlug}`;
+  const canonical  = `https://thecinemaverse.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   const otherSongs = (movie.media.songs || [])
     .map((s: any, i: number) => ({ title: s.title, slug: toSlug(s.title) || String(i), index: i }))
@@ -403,7 +403,7 @@ export default async function SongDetailSlugPage({
         "@type": "MusicRecording",
         "name": song.title,
         "description": song.description
-          || `${song.title} is a song from the Odia film ${movie.title}${year ? ` (${year})` : ""}.`,
+          || `${song.title} is a song from the hindi film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer     && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
         ...(thumb           && { "thumbnailUrl": thumb }),
         ...(song.ytId       && { "sameAs": `https://www.youtube.com/watch?v=${song.ytId}` }),
@@ -421,15 +421,15 @@ export default async function SongDetailSlugPage({
         "associatedMedia": {
           "@type": "Movie",
           "name": movie.title,
-          "url": `https://ollypedia.in/movie/${movie.slug}`,
+          "url": `https://thecinemaverse.in/movie/${movie.slug}`,
         },
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://ollypedia.in/" },
-          { "@type": "ListItem", "position": 2, "name": "Songs",      "item": "https://ollypedia.in/songs" },
-          { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://ollypedia.in/movie/${movie.slug}` },
+          { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Songs",      "item": "https://thecinemaverse.in/songs" },
+          { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverse.in/movie/${movie.slug}` },
           { "@type": "ListItem", "position": 4, "name": song.title,   "item": canonical },
         ],
       },
@@ -442,7 +442,7 @@ export default async function SongDetailSlugPage({
               "@type": "ListItem",
               "position": i + 1,
               "name": b.title,
-              "url": `https://ollypedia.in/blog/${b.slug}`,
+              "url": `https://thecinemaverse.in/blog/${b.slug}`,
             })),
           }]
         : []),

@@ -25,8 +25,8 @@ const nextConfig = {
       // Redirect non-www → www (permanent 301)
       {
         source: "/:path*",
-        has: [{ type: "host", value: "ollypedia.in" }],
-        destination: "https://www.ollypedia.in/:path*",
+        has: [{ type: "host", value: "thecinemaverse.in" }],
+        destination: "https://www.thecinemaverse.in/:path*",
         permanent: true,
       },
     ];

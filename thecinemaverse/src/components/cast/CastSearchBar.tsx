@@ -25,7 +25,7 @@ function highlightMatch(name: string, query: string) {
   return (
     <>
       <span>{name.slice(0, idx)}</span>
-      <span className="text-orange-400 font-black">{name.slice(idx, idx + query.length)}</span>
+      <span className="text-brand-400 font-black">{name.slice(idx, idx + query.length)}</span>
       <span>{name.slice(idx + query.length)}</span>
     </>
   );
@@ -122,11 +122,11 @@ export default function CastSearchBar() {
       {/* Input */}
       <div
         className={`flex items-center gap-2.5 px-3.5 h-11 rounded-xl bg-zinc-800 border transition-all duration-200 ${
-          focused ? "border-orange-500 ring-1 ring-orange-500/40" : "border-zinc-700"
+          focused ? "border-brand-500 ring-1 ring-brand-500/40" : "border-zinc-700"
         }`}
       >
         {isLoading ? (
-          <div className="w-4 h-4 rounded-full border-2 border-orange-500/30 border-t-orange-400 animate-spin flex-shrink-0" />
+          <div className="w-4 h-4 rounded-full border-2 border-brand-500/30 border-t-orange-400 animate-spin flex-shrink-0" />
         ) : (
           <svg className="w-4 h-4 text-zinc-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
@@ -215,7 +215,7 @@ export default function CastSearchBar() {
                       {c.filmCount ? ` · ${c.filmCount} film${c.filmCount !== 1 ? "s" : ""}` : ""}
                     </p>
                   </div>
-                  <span className="text-orange-400 text-xs flex-shrink-0">→</span>
+                  <span className="text-brand-400 text-xs flex-shrink-0">→</span>
                 </a>
               ))}
 

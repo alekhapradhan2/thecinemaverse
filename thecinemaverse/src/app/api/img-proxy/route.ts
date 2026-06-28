@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const upstream = await fetch(parsed.toString(), {
-      headers: { "User-Agent": "Ollypedia/1.0" },
+      headers: { "User-Agent": "The Cinema Verse/1.0" },
     });
     if (!upstream.ok) return new NextResponse("Upstream error", { status: 502 });
 

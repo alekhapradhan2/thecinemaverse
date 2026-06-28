@@ -275,7 +275,7 @@ function SongCard({ song }: { song: Song }) {
           {thumb ? (
             <Image
               src={thumb}
-              alt={song.title || "Odia Song"}
+              alt={song.title || "bollywood Song"}
               fill
               sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
             />
@@ -424,8 +424,8 @@ export function SongsClient({
   }
 
   const pillBase = "px-3 py-1.5 text-xs font-medium rounded-full border transition-all cursor-pointer whitespace-nowrap";
-  const pillOn   = "bg-orange-500/20 border-orange-500/50 text-orange-400";
-  const pillOff  = "border-[#2a2a2a] text-gray-400 hover:border-orange-500/30 hover:text-white";
+  const pillOn   = "bg-brand-500/20 border-brand-500/50 text-brand-400";
+  const pillOff  = "border-[#2a2a2a] text-gray-400 hover:border-brand-500/30 hover:text-white";
 
   const start = (currentPage - 1) * pageSize + 1;
   const end   = Math.min(currentPage * pageSize, total);
@@ -439,8 +439,8 @@ export function SongsClient({
       {/* ── Header ── */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-1 h-5 bg-orange-500 rounded-full" />
-          <h2 className="font-display text-lg sm:text-xl font-bold text-white">All Odia Songs</h2>
+          <div className="w-1 h-5 bg-brand-500 rounded-full" />
+          <h2 className="font-display text-lg sm:text-xl font-bold text-white">All bollywood Songs</h2>
         </div>
         <p className="text-xs sm:text-sm text-gray-500">
           {total.toLocaleString()} songs
@@ -461,10 +461,10 @@ export function SongsClient({
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search across all songs, singers, movies…"
-            className="w-full pl-10 pr-10 py-2.5 bg-[#0d0d0d] border border-[#2a2a2a] rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none focus:border-orange-500/50 transition-colors"
+            className="w-full pl-10 pr-10 py-2.5 bg-[#0d0d0d] border border-[#2a2a2a] rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none focus:border-brand-500/50 transition-colors"
           />
           {isPending && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-400 animate-spin" />
+            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-400 animate-spin" />
           )}
           {searchInput && !isPending && (
             <button
@@ -480,24 +480,24 @@ export function SongsClient({
         {isFiltered && (
           <div className="flex items-center gap-2 flex-wrap pt-1">
             {active.q && (
-              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 border border-orange-500/30 rounded-full text-xs text-orange-400">
+              <span className="flex items-center gap-1.5 px-2.5 py-1 bg-brand-500/10 border border-brand-500/30 rounded-full text-xs text-brand-400">
                 Search: &quot;{active.q}&quot;
                 <button onClick={() => setSearchInput("")}><X className="w-3 h-3" /></button>
               </span>
             )}
             {active.singer && (
               <Link href={buildFilterUrl("singer", null)}
-                className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 border border-orange-500/30 rounded-full text-xs text-orange-400">
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-brand-500/10 border border-brand-500/30 rounded-full text-xs text-brand-400">
                 Singer: {active.singer} <X className="w-3 h-3" />
               </Link>
             )}
             {active.musicDirector && (
               <Link href={buildFilterUrl("musicDirector", null)}
-                className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-500/10 border border-orange-500/30 rounded-full text-xs text-orange-400">
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-brand-500/10 border border-brand-500/30 rounded-full text-xs text-brand-400">
                 Director: {active.musicDirector} <X className="w-3 h-3" />
               </Link>
             )}
-            <Link href="/songs" className="ml-auto text-xs text-gray-500 hover:text-orange-400 transition-colors">
+            <Link href="/songs" className="ml-auto text-xs text-gray-500 hover:text-brand-400 transition-colors">
               Clear all
             </Link>
           </div>
@@ -554,12 +554,12 @@ export function SongsClient({
             <p className="text-white font-bold text-base mb-1">No songs found</p>
             <p className="text-gray-500 text-sm">
               {active.q
-                ? `No Odia songs found for "${active.q}"`
+                ? `No bollywood songs found for "${active.q}"`
                 : "No songs match your current filters."}
             </p>
             <button
               onClick={() => { setSearchInput(""); router.push("/songs"); }}
-              className="mt-4 text-xs text-orange-400 hover:text-orange-300 transition-colors"
+              className="mt-4 text-xs text-brand-400 hover:text-brand-300 transition-colors"
             >
               Clear and browse all songs
             </button>
@@ -573,7 +573,7 @@ export function SongsClient({
           <button
             onClick={() => gotoPage(currentPage - 1)}
             disabled={currentPage <= 1}
-            className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-[#2a2a2a] text-xs sm:text-sm text-gray-400 hover:border-orange-500/40 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-[#2a2a2a] text-xs sm:text-sm text-gray-400 hover:border-brand-500/40 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
             <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> <span className="hidden sm:inline">Prev</span>
           </button>
@@ -591,8 +591,8 @@ export function SongsClient({
                 className={[
                   "w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-medium transition-all border",
                   p === currentPage
-                    ? "bg-orange-500/20 border-orange-500/50 text-orange-400"
-                    : "border-[#2a2a2a] text-gray-400 hover:border-orange-500/30 hover:text-white",
+                    ? "bg-brand-500/20 border-brand-500/50 text-brand-400"
+                    : "border-[#2a2a2a] text-gray-400 hover:border-brand-500/30 hover:text-white",
                 ].join(" ")}
               >
                 {p}
@@ -603,7 +603,7 @@ export function SongsClient({
           <button
             onClick={() => gotoPage(currentPage + 1)}
             disabled={currentPage >= totalPages}
-            className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-[#2a2a2a] text-xs sm:text-sm text-gray-400 hover:border-orange-500/40 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+            className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-[#2a2a2a] text-xs sm:text-sm text-gray-400 hover:border-brand-500/40 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
           >
             <span className="hidden sm:inline">Next</span> <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
@@ -620,14 +620,14 @@ export function SongsClient({
       {/* SEO content block */}
       <div className="mt-2 p-4 sm:p-6 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <h3 className="font-display font-bold text-white text-sm sm:text-base mb-2 sm:mb-3">
-          Odia Film Songs — Complete Ollywood Music Database
+          Hindi Film Songs — Complete bollywood Music Database
         </h3>
         <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-          Ollypedia features the most extensive collection of{" "}
-          <strong className="text-gray-300">Odia film songs</strong> available online. From timeless
+          The Cinema Verse features the most extensive collection of{" "}
+          <strong className="text-gray-300">hindi film songs</strong> available online. From timeless
           classics by legendary singers to the latest{" "}
-          <strong className="text-gray-300">new Odia songs 2026</strong>, every track is catalogued
-          with full credits — singer, music director, lyricist and the original Odia movie. Use the
+          <strong className="text-gray-300">new bollywood songs 2026</strong>, every track is catalogued
+          with full credits — singer, music director, lyricist and the original hindi movie. Use the
           search above to find any song across our entire database, or filter by your favourite singer
           or music director.
         </p>

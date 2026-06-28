@@ -96,7 +96,7 @@ function LyricsPanel({ lyrics, currentTime }: { lyrics?: string; currentTime: nu
           className={[
             "px-3 py-1.5 rounded-md text-sm leading-relaxed whitespace-pre-wrap transition-all duration-300",
             isLRC && i === activeIdx
-              ? "text-white font-bold text-base bg-orange-500/10 border-l-4 border-orange-400 pl-3"
+              ? "text-white font-bold text-base bg-brand-500/10 border-l-4 border-brand-400 pl-3"
               : isLRC && i < activeIdx
               ? "text-gray-600"
               : "text-gray-400",
@@ -120,7 +120,7 @@ function SongItem({ song, active, onClick, index }: {
       className={[
         "flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer border transition-all",
         active
-          ? "bg-orange-500/10 border-orange-500/30"
+          ? "bg-brand-500/10 border-brand-500/30"
           : "border-transparent hover:bg-white/5",
       ].join(" ")}
     >
@@ -131,13 +131,13 @@ function SongItem({ song, active, onClick, index }: {
         )}
         <div className={[
           "absolute inset-0 flex items-center justify-center text-xs font-bold",
-          active ? "bg-orange-500/40 text-orange-300" : "bg-black/40 text-white/70",
+          active ? "bg-brand-500/40 text-brand-300" : "bg-black/40 text-white/70",
         ].join(" ")}>
           {active ? "▶" : "♪"}
         </div>
       </div>
       <div className="flex-1 min-w-0">
-        <p className={["text-xs font-semibold truncate", active ? "text-orange-400" : "text-white"].join(" ")}>
+        <p className={["text-xs font-semibold truncate", active ? "text-brand-400" : "text-white"].join(" ")}>
           {song.title}
         </p>
         {song.singer && <p className="text-xs text-gray-500 mt-0.5">🎤 {song.singer}</p>}
@@ -145,7 +145,7 @@ function SongItem({ song, active, onClick, index }: {
       {song.ytId && (
         <a href={`https://www.youtube.com/watch?v=${song.ytId}`} target="_blank" rel="noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="text-orange-400/60 text-xs font-bold hover:text-orange-400 px-1 flex-shrink-0">
+          className="text-brand-400/60 text-xs font-bold hover:text-brand-400 px-1 flex-shrink-0">
           YT↗
         </a>
       )}
@@ -167,14 +167,14 @@ function SpotifyCard({ song, onClick }: {
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-3xl text-gray-600">🎵</div>
         )}
-        <div className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-sm text-black shadow-lg
+        <div className="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-sm text-black shadow-lg
           opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
           ▶
         </div>
       </div>
       <p className="text-xs font-bold text-white truncate">{song.title}</p>
       {song.singer && <p className="text-xs text-gray-500 mt-0.5 truncate">🎤 {song.singer}</p>}
-      {song.movieTitle && <p className="text-xs mt-0.5 truncate text-orange-400/70">{song.movieTitle}</p>}
+      {song.movieTitle && <p className="text-xs mt-0.5 truncate text-brand-400/70">{song.movieTitle}</p>}
     </div>
   );
 }
@@ -193,9 +193,9 @@ function SongScrollRow({ title, songs, onSongClick }: {
         <h2 className="font-bold text-sm sm:text-base">{title}</h2>
         <div className="flex gap-1">
           <button onClick={() => ref.current?.scrollBy({ left: -400, behavior: "smooth" })}
-            className="w-7 h-7 rounded-full border border-white/15 bg-white/5 text-white flex items-center justify-center hover:border-orange-500/40 hover:text-orange-400 transition-all">‹</button>
+            className="w-7 h-7 rounded-full border border-white/15 bg-white/5 text-white flex items-center justify-center hover:border-brand-500/40 hover:text-brand-400 transition-all">‹</button>
           <button onClick={() => ref.current?.scrollBy({ left: 400, behavior: "smooth" })}
-            className="w-7 h-7 rounded-full border border-white/15 bg-white/5 text-white flex items-center justify-center hover:border-orange-500/40 hover:text-orange-400 transition-all">›</button>
+            className="w-7 h-7 rounded-full border border-white/15 bg-white/5 text-white flex items-center justify-center hover:border-brand-500/40 hover:text-brand-400 transition-all">›</button>
         </div>
       </div>
       <div ref={ref} className="flex gap-3 overflow-x-auto px-4 sm:px-6 pb-3 scrollbar-none">
@@ -222,14 +222,14 @@ function ShareModal({ song, movie, onClose }: { song: SongData; movie: MovieData
 
   return (
     <div className="fixed inset-0 z-[300] bg-black/85 backdrop-blur-sm flex items-center justify-center p-5" onClick={onClose}>
-      <div className="w-full max-w-sm bg-gradient-to-br from-[#1a1200] via-[#0f0a00] to-[#0a0a0a] border border-orange-500/40 rounded-2xl overflow-hidden"
+      <div className="w-full max-w-sm bg-gradient-to-br from-[#1a1200] via-[#0f0a00] to-[#0a0a0a] border border-brand-500/40 rounded-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}>
         {thumb
           ? <img src={thumb} alt={song.title} className="w-full aspect-video object-cover" />
           : <div className="w-full aspect-video bg-[#1a1200] flex items-center justify-center text-5xl">🎵</div>
         }
         <div className="p-5">
-          <p className="text-[10px] font-black tracking-[0.14em] uppercase text-orange-400 mb-1.5">🎵 Now Playing</p>
+          <p className="text-[10px] font-black tracking-[0.14em] uppercase text-brand-400 mb-1.5">🎵 Now Playing</p>
           <h3 className="font-black text-xl text-white leading-tight mb-1">{song.title}</h3>
           <p className="text-sm text-white/55 mb-3">
             {song.singer && <span>🎤 {song.singer}</span>}
@@ -242,12 +242,12 @@ function ShareModal({ song, movie, onClose }: { song: SongData; movie: MovieData
             )}
             <div>
               <p className="text-[10px] text-gray-500">From the film</p>
-              <p className="text-sm font-bold text-orange-400">{movie.title}</p>
+              <p className="text-sm font-bold text-brand-400">{movie.title}</p>
             </div>
-            <span className="ml-auto text-[10px] font-black tracking-wider text-orange-400/60">Ollypedia</span>
+            <span className="ml-auto text-[10px] font-black tracking-wider text-brand-400/60">The Cinema Verse</span>
           </div>
           <div className="flex gap-2">
-            <button onClick={handleShare} className="flex-1 py-2 bg-orange-500 text-black text-sm font-bold rounded-lg">
+            <button onClick={handleShare} className="flex-1 py-2 bg-brand-500 text-black text-sm font-bold rounded-lg">
               {typeof navigator !== "undefined" && typeof navigator.share === "function" ? "📤 Share" : "🔗 Copy Link"}
             </button>
             {song.ytId && (
@@ -484,15 +484,15 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
         {/* Back + Breadcrumb */}
         <div className="relative z-10 px-4 sm:px-6 lg:px-10 pb-2">
           <Link href={`/movie/${movie.slug}`}
-            className="inline-flex items-center gap-1.5 text-white/55 text-xs font-semibold hover:text-orange-400 transition-colors py-1.5">
+            className="inline-flex items-center gap-1.5 text-white/55 text-xs font-semibold hover:text-brand-400 transition-colors py-1.5">
             ← {movie.title}
           </Link>
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 flex-wrap text-xs text-gray-500 mt-0.5">
-            <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+            <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
             <span className="opacity-35">›</span>
-            <Link href="/songs" className="hover:text-orange-400 transition-colors">Songs</Link>
+            <Link href="/songs" className="hover:text-brand-400 transition-colors">Songs</Link>
             <span className="opacity-35">›</span>
-            <Link href={`/movie/${movie.slug}`} className="hover:text-orange-400 transition-colors">{movie.title}</Link>
+            <Link href={`/movie/${movie.slug}`} className="hover:text-brand-400 transition-colors">{movie.title}</Link>
             <span className="opacity-35">›</span>
             <span className="text-white/70 font-medium">{activeSong.title}</span>
           </nav>
@@ -527,7 +527,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
             <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 sm:p-5 mb-4">
               {/* Badges */}
               <div className="flex flex-wrap gap-1.5 mb-3">
-                <span className="text-xs px-2.5 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 font-semibold">🎵 Song</span>
+                <span className="text-xs px-2.5 py-1 rounded-full bg-brand-500/15 border border-brand-500/30 text-brand-400 font-semibold">🎵 Song</span>
                 {activeSong.singer        && <span className="text-xs px-2.5 py-1 rounded-full border border-white/15 text-gray-300 font-medium">🎤 {activeSong.singer}</span>}
                 {activeSong.musicDirector && <span className="text-xs px-2.5 py-1 rounded-full border border-white/15 text-gray-300 font-medium">🎼 {activeSong.musicDirector}</span>}
                 {activeSong.lyricist      && <span className="text-xs px-2.5 py-1 rounded-full border border-white/15 text-gray-300 font-medium">✍️ {activeSong.lyricist}</span>}
@@ -540,7 +540,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
 
               {/* Meta rows */}
               {[
-                activeSong.singer        && ["Singer",     "🎤", activeSong.singer,        "text-orange-400 font-semibold"],
+                activeSong.singer        && ["Singer",     "🎤", activeSong.singer,        "text-brand-400 font-semibold"],
                 activeSong.musicDirector && ["Music Dir.", "🎼", activeSong.musicDirector, "text-white"],
                 activeSong.lyricist      && ["Lyricist",   "✍️", activeSong.lyricist,      "text-white"],
               ].filter(Boolean).map(([label, icon, val, cls]: any) => (
@@ -558,8 +558,8 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                   className={[
                     "inline-flex items-center gap-1.5 px-4 py-2 rounded-full border text-xs font-bold transition-all",
                     knowVoted
-                      ? "bg-orange-500/15 border-orange-500/40 text-orange-400"
-                      : "border-white/15 text-gray-400 hover:border-orange-500/30 hover:text-orange-400",
+                      ? "bg-brand-500/15 border-brand-500/40 text-brand-400"
+                      : "border-white/15 text-gray-400 hover:border-brand-500/30 hover:text-brand-400",
                   ].join(" ")}
                 >
                   🎙 {knowVoted ? `${knowCount} know this` : "I know this song!"}
@@ -570,10 +570,10 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                   onClick={() => setAutoplay(p => !p)}
                   className={[
                     "inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all",
-                    autoplay ? "text-orange-400 bg-orange-500/10" : "text-gray-500 hover:text-white hover:bg-white/5",
+                    autoplay ? "text-brand-400 bg-brand-500/10" : "text-gray-500 hover:text-white hover:bg-white/5",
                   ].join(" ")}
                 >
-                  <span className={["w-7 h-4 rounded-full relative transition-colors", autoplay ? "bg-orange-400" : "bg-gray-600"].join(" ")}>
+                  <span className={["w-7 h-4 rounded-full relative transition-colors", autoplay ? "bg-brand-400" : "bg-gray-600"].join(" ")}>
                     <span className={["absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform", autoplay ? "translate-x-3.5" : "translate-x-0.5"].join(" ")} />
                   </span>
                   Autoplay
@@ -584,7 +584,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                   onClick={() => setRepeatMode(m => m === "none" ? "one" : m === "one" ? "all" : "none")}
                   className={[
                     "px-3 py-2 rounded-lg text-xs font-semibold transition-all",
-                    repeatMode !== "none" ? "text-orange-400 bg-orange-500/10" : "text-gray-500 hover:text-white hover:bg-white/5",
+                    repeatMode !== "none" ? "text-brand-400 bg-brand-500/10" : "text-gray-500 hover:text-white hover:bg-white/5",
                   ].join(" ")}
                 >
                   {repeatMode === "one" ? "🔂 One" : repeatMode === "all" ? "🔁 All" : "🔁 Repeat"}
@@ -607,7 +607,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                       ⭐
                     </button>
                   ))}
-                  {ratingMsg && <span className="text-xs text-orange-400 ml-1">{ratingMsg}</span>}
+                  {ratingMsg && <span className="text-xs text-brand-400 ml-1">{ratingMsg}</span>}
                 </div>
               </div>
             </div>
@@ -667,7 +667,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                   <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest w-20 flex-shrink-0 pt-0.5">Genre</span>
                   <div className="flex flex-wrap gap-1.5">
                     {movie.genre.map((g) => (
-                      <span key={g} className="text-xs px-2.5 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">{g}</span>
+                      <span key={g} className="text-xs px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">{g}</span>
                     ))}
                   </div>
                 </div>
@@ -689,7 +689,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                 )}
                 <div className="flex-1 min-w-0">
                   <Link href={`/movie/${movie.slug}`}
-                    className="text-xs font-bold text-orange-400 leading-tight truncate block hover:text-orange-300 transition-colors">
+                    className="text-xs font-bold text-brand-400 leading-tight truncate block hover:text-brand-300 transition-colors">
                     {movie.title}
                   </Link>
                   {movie.releaseDate && <p className="text-xs text-gray-500 mt-0.5">{fmtDate(movie.releaseDate)}</p>}
@@ -704,12 +704,12 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                   className={[
                     "flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wide border-b-2 transition-all",
                     sidebarTab === tab
-                      ? "text-orange-400 border-orange-400"
+                      ? "text-brand-400 border-brand-400"
                       : "text-gray-500 border-transparent hover:text-gray-300",
                   ].join(" ")}>
                   {tab === "playlist" ? `🎵 Playlist (${songs.length})` : "✍️ Lyrics"}
                   {tab === "lyrics" && activeSong?.lyrics && (
-                    <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-orange-400 align-middle" />
+                    <span className="ml-1.5 inline-block w-1.5 h-1.5 rounded-full bg-brand-400 align-middle" />
                   )}
                 </button>
               ))}
@@ -737,7 +737,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
             {/* Footer */}
             <div className="p-3 border-t border-white/[0.07] flex-shrink-0">
               <Link href={`/movie/${movie.slug}`}
-                className="block w-full py-2 text-center text-xs font-bold border border-white/15 text-white/70 rounded-lg hover:border-orange-500/30 hover:text-orange-400 transition-all">
+                className="block w-full py-2 text-center text-xs font-bold border border-white/15 text-white/70 rounded-lg hover:border-brand-500/30 hover:text-brand-400 transition-all">
                 🎬 View Full Movie Page
               </Link>
             </div>
@@ -807,7 +807,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                         {(m.posterUrl || m.thumbnailUrl) && (
                           <Image src={m.posterUrl || m.thumbnailUrl || ""} alt={m.title} fill className="object-cover" sizes="120px" />
                         )}
-                        <div className="absolute top-1.5 right-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-lg bg-black/75 text-orange-400">
+                        <div className="absolute top-1.5 right-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-lg bg-black/75 text-brand-400">
                           {count} songs
                         </div>
                       </div>
@@ -842,7 +842,7 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
                     </div>
                   </div>
                   <p className="text-xs font-bold text-white truncate mt-1.5">{c.name}</p>
-                  {c.role && <p className="text-[10px] text-orange-400 truncate">{c.role}</p>}
+                  {c.role && <p className="text-[10px] text-brand-400 truncate">{c.role}</p>}
                 </Link>
               ))}
             </div>
@@ -884,15 +884,15 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
             About "{activeSong.title}" — {movie.title}
           </h2>
           <p className="text-gray-400 text-sm leading-relaxed">
-            "{activeSong.title}" is{activeSong.singer ? ` sung by ${activeSong.singer}` : " an Odia film song"} from the{" "}
+            "{activeSong.title}" is{activeSong.singer ? ` sung by ${activeSong.singer}` : " an hindi film song"} from the{" "}
             {movie.genre?.length ? movie.genre.join(", ") + " " : ""}
-            Odia film <strong className="text-white">{movie.title}</strong>
+            hindi film <strong className="text-white">{movie.title}</strong>
             {movie.releaseDate ? ` (${new Date(movie.releaseDate).getFullYear()})` : ""}.
             {activeSong.musicDirector ? ` Music is composed by ${activeSong.musicDirector}.` : ""}
             {activeSong.lyricist ? ` Lyrics are written by ${activeSong.lyricist}.` : ""}
             {" "}This is track #{activeIdx + 1} of {songs.length} songs in the movie.
             {movie.director ? ` The film is directed by ${movie.director}.` : ""}
-            {" "}Explore the full playlist, read lyrics, and discover more Odia songs on Ollypedia — your complete guide to Ollywood music.
+            {" "}Explore the full playlist, read lyrics, and discover more bollywood songs on The Cinema Verse — your complete guide to bollywood music.
           </p>
         </div>
       </div>
@@ -903,11 +903,11 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
       {/* ── Now Playing floating bar ─── */}
       <div className={[
         "fixed bottom-0 left-0 right-0 z-[200] flex items-center gap-3 px-4 sm:px-6 py-2.5",
-        "bg-gradient-to-r from-[#0a0a0a]/97 to-[#140e00]/97 border-t border-orange-500/25 backdrop-blur-xl",
+        "bg-gradient-to-r from-[#0a0a0a]/97 to-[#140e00]/97 border-t border-brand-500/25 backdrop-blur-xl",
         "transition-transform duration-[350ms] cubic-bezier(0.34,1.56,0.64,1)",
         showBar ? "translate-y-0" : "translate-y-full",
       ].join(" ")}>
-        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-[#1a1a1a] border border-orange-500/30">
+        <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-[#1a1a1a] border border-brand-500/30">
           {(activeSong.thumbnailUrl || ytId)
             ? <img src={activeSong.thumbnailUrl || ytThumb(ytId) || ""} alt={activeSong.title} className="w-full h-full object-cover" />
             : <div className="w-full h-full flex items-center justify-center text-lg">🎵</div>
@@ -915,13 +915,13 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-bold text-white truncate">{activeSong.title}</p>
-          {activeSong.singer && <p className="text-xs text-orange-400 mt-0.5">🎤 {activeSong.singer}</p>}
+          {activeSong.singer && <p className="text-xs text-brand-400 mt-0.5">🎤 {activeSong.singer}</p>}
         </div>
         <button onClick={() => activeIdx > 0 && changeActiveSong(activeIdx - 1)}
           style={{ opacity: activeIdx > 0 ? 1 : 0.4 }}
           className="w-9 h-9 rounded-full bg-white/10 text-white flex items-center justify-center text-lg hover:bg-white/20 transition-all">‹</button>
         <button onClick={togglePlay}
-          className="w-9 h-9 rounded-full bg-orange-500 text-black flex items-center justify-center text-sm font-bold hover:scale-110 transition-transform">
+          className="w-9 h-9 rounded-full bg-brand-500 text-black flex items-center justify-center text-sm font-bold hover:scale-110 transition-transform">
           {isPlaying ? "⏸" : "▶"}
         </button>
         <button onClick={() => activeIdx < songs.length - 1 && changeActiveSong(activeIdx + 1)}

@@ -17,48 +17,48 @@ export async function generateMetadata(
   const year = searchParams?.year ? parseInt(searchParams.year, 10) : new Date().getFullYear();
   const isCurrentYear = year === new Date().getFullYear();
   const title = isCurrentYear
-    ? `Odia Box Office Collection ${year} | Ollypedia`
-    : `Odia Box Office Collection ${year} | Ollywood Hit Flop List | Ollypedia`;
+    ? `bollywood Box Office Collection ${year} | The Cinema Verse`
+    : `bollywood Box Office Collection ${year} | bollywood Hit Flop List | The Cinema Verse`;
   const description = isCurrentYear
-    ? `Complete Odia (Ollywood) box office collection report ${year}. Day-wise net and gross earnings for all latest Odia movies — updated daily on Ollypedia.`
-    : `Odia (Ollywood) box office collection ${year} — all movies, hit & flop verdict, day-wise net and gross earnings. Complete Ollywood ${year} trade report on Ollypedia.`;
+    ? `Complete bollywood (bollywood) box office collection report ${year}. Day-wise net and gross earnings for all latest hindi movies — updated daily on The Cinema Verse.`
+    : `bollywood (bollywood) box office collection ${year} — all movies, hit & flop verdict, day-wise net and gross earnings. Complete bollywood ${year} trade report on The Cinema Verse.`;
 
   return {
     title,
     description,
     alternates:  {
       canonical: isCurrentYear
-        ? "https://ollypedia.in/box-office"
-        : `https://ollypedia.in/box-office?year=${year}`,
+        ? "https://thecinemaverse.in/box-office"
+        : `https://thecinemaverse.in/box-office?year=${year}`,
     },
     robots:      { index: true, follow: true },
     keywords:    [
-      "Odia box office", "Ollywood collection", `Odia movie collection ${year}`,
-      "Odia cinema box office", `Ollywood box office ${year}`, "Odia film earnings",
-      "Ollywood hit flop verdict", "Odia movie first day collection",
-      `Ollywood movie verdict ${year}`, "Odia film box office report",
-      "Ollywood hit or flop", "Odia movie total collection",
-      "today Odia box office", "Odia movie this week collection",
-      `Ollywood ${year} hit flop list`, "Odia cinema earnings report",
-      "all time highest grossing Odia film", "Ollywood blockbuster list",
+      "bollywood box office", "bollywood collection", `hindi movie collection ${year}`,
+      "hindi cinema box office", `bollywood box office ${year}`, "hindi film earnings",
+      "bollywood hit flop verdict", "hindi movie first day collection",
+      `bollywood movie verdict ${year}`, "hindi film box office report",
+      "bollywood hit or flop", "hindi movie total collection",
+      "today bollywood box office", "hindi movie this week collection",
+      `bollywood ${year} hit flop list`, "hindi cinema earnings report",
+      "all time highest grossing hindi film", "bollywood blockbuster list",
     ],
     openGraph: {
       title,
       description,
       url: isCurrentYear
-        ? "https://ollypedia.in/box-office"
-        : `https://ollypedia.in/box-office?year=${year}`,
-      siteName:    "Ollypedia",
+        ? "https://thecinemaverse.in/box-office"
+        : `https://thecinemaverse.in/box-office?year=${year}`,
+      siteName:    "The Cinema Verse",
       type:        "website",
       locale:      "en_IN",
-      images: [{ url: "https://ollypedia.in/og-box-office.jpg", width: 1200, height: 630, alt: `Odia Box Office Collection ${year} — Ollypedia` }],
+      images: [{ url: "https://thecinemaverse.in/og-box-office.jpg", width: 1200, height: 630, alt: `bollywood Box Office Collection ${year} — The Cinema Verse` }],
     },
     twitter: {
       card:        "summary_large_image",
       title,
-      description: `Day-wise net & gross earnings for all Odia (Ollywood) movies ${year}. Updated daily.`,
-      images:      ["https://ollypedia.in/og-box-office.jpg"],
-      site:        "@ollypedia",
+      description: `Day-wise net & gross earnings for all bollywood (bollywood) movies ${year}. Updated daily.`,
+      images:      ["https://thecinemaverse.in/og-box-office.jpg"],
+      site:        "@thecinemaverse",
     },
   };
 }
@@ -293,20 +293,20 @@ export default async function BoxOfficePage({
     "@context": "https://schema.org",
     "@type":    "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://ollypedia.in" },
-      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://ollypedia.in/box-office" },
-      ...(selectedYear !== currentYear ? [{ "@type": "ListItem", "position": 3, "name": String(selectedYear), "item": `https://ollypedia.in/box-office?year=${selectedYear}` }] : []),
+      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in" },
+      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverse.in/box-office" },
+      ...(selectedYear !== currentYear ? [{ "@type": "ListItem", "position": 3, "name": String(selectedYear), "item": `https://thecinemaverse.in/box-office?year=${selectedYear}` }] : []),
     ],
   };
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type":    "WebSite",
-    "name":     "Ollypedia",
-    "url":      "https://ollypedia.in",
+    "name":     "The Cinema Verse",
+    "url":      "https://thecinemaverse.in",
     "potentialAction": {
       "@type":       "SearchAction",
-      "target":      { "@type": "EntryPoint", "urlTemplate": "https://ollypedia.in/search?q={search_term_string}" },
+      "target":      { "@type": "EntryPoint", "urlTemplate": "https://thecinemaverse.in/search?q={search_term_string}" },
       "query-input": "required name=search_term_string",
     },
   };
@@ -314,20 +314,20 @@ export default async function BoxOfficePage({
   const movieListJsonLd = {
     "@context": "https://schema.org",
     "@type":    "CollectionPage",
-    "name":     `Odia Box Office Collection ${selectedYear} | Ollypedia`,
-    "description": `Complete day-wise box office collection for Odia (Ollywood) movies ${selectedYear}. Updated daily.`,
-    "url":      "https://ollypedia.in/box-office",
+    "name":     `bollywood Box Office Collection ${selectedYear} | The Cinema Verse`,
+    "description": `Complete day-wise box office collection for bollywood (bollywood) movies ${selectedYear}. Updated daily.`,
+    "url":      "https://thecinemaverse.in/box-office",
     "dateModified": lastUpdated,
-    "publisher": { "@type": "Organization", "name": "Ollypedia", "url": "https://ollypedia.in" },
+    "publisher": { "@type": "Organization", "name": "The Cinema Verse", "url": "https://thecinemaverse.in" },
     "mainEntity": {
       "@type": "ItemList",
-      "name":  `Odia Movies Box Office ${selectedYear}`,
+      "name":  `Hindi Movies Box Office ${selectedYear}`,
       "numberOfItems": yearMovies.length,
       "itemListElement": yearMovies.slice(0, 20).map((m: any, i: number) => ({
         "@type":    "ListItem",
         "position": i + 1,
         "name":     m.title,
-        "url":      `https://ollypedia.in/box-office/${movieSlug(m)}`,
+        "url":      `https://thecinemaverse.in/box-office/${movieSlug(m)}`,
       })),
     },
   };
@@ -338,8 +338,8 @@ export default async function BoxOfficePage({
     "mainEntity": [
       {
         "@type":          "Question",
-        "name":           "Where can I find the latest Odia movie box office collection?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Ollypedia publishes daily box office updates for all Odia movies. Bookmark this page and check back every day for fresh figures." },
+        "name":           "Where can I find the latest hindi movie box office collection?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Cinema Verse publishes daily box office updates for all hindi movies. Bookmark this page and check back every day for fresh figures." },
       },
       {
         "@type":          "Question",
@@ -348,33 +348,33 @@ export default async function BoxOfficePage({
       },
       {
         "@type":          "Question",
-        "name":           "How is an Odia movie verdict decided?",
+        "name":           "How is an hindi movie verdict decided?",
         "acceptedAnswer": { "@type": "Answer", "text": "A verdict is based on earnings vs total cost (production + prints + publicity). A film recovering more than twice its cost is called a Blockbuster; failing to recover costs is a Flop." },
       },
       {
         "@type":          "Question",
-        "name":           "Does Ollypedia track worldwide collection of Odia movies?",
+        "name":           "Does The Cinema Verse track worldwide collection of hindi movies?",
         "acceptedAnswer": { "@type": "Answer", "text": "Yes, where data is available we include worldwide figures covering Odisha, rest of India, and international markets." },
       },
       {
         "@type":          "Question",
-        "name":           "Which Odia movie has the highest box office collection ever?",
-        "acceptedAnswer": { "@type": "Answer", "text": allTimeTop ? `${allTimeTop.title} holds the record for the highest net collection among all Odia films tracked on Ollypedia, with a total of ${fmtINR(allTimeTop.totalNet)}.` : "Ollypedia tracks all Odia films and the all-time highest grosser is updated regularly on this page." },
+        "name":           "Which hindi movie has the highest box office collection ever?",
+        "acceptedAnswer": { "@type": "Answer", "text": allTimeTop ? `${allTimeTop.title} holds the record for the highest net collection among all hindi films tracked on The Cinema Verse, with a total of ${fmtINR(allTimeTop.totalNet)}.` : "The Cinema Verse tracks all hindi films and the all-time highest grosser is updated regularly on this page." },
       },
       {
         "@type":          "Question",
-        "name":           `How many Odia movies are tracked on Ollypedia?`,
-        "acceptedAnswer": { "@type": "Answer", "text": `Ollypedia is currently tracking ${enriched.length} Odia films with box office data across all years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.` },
+        "name":           `How many hindi movies are tracked on The Cinema Verse?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `The Cinema Verse is currently tracking ${enriched.length} hindi films with box office data across all years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.` },
       },
       {
         "@type":          "Question",
-        "name":           "What does 'Day 1 collection' mean for Odia movies?",
+        "name":           "What does 'Day 1 collection' mean for hindi movies?",
         "acceptedAnswer": { "@type": "Answer", "text": "Day 1 collection refers to box office earnings on a film's first day of release, including morning, afternoon, and evening shows across all theatres in Odisha and other regions." },
       },
       {
         "@type":          "Question",
-        "name":           "Is Ollypedia free to use?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes, Ollypedia is completely free. All box office data, verdicts, and Odia cinema news are available without any subscription or login." },
+        "name":           "Is The Cinema Verse free to use?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, The Cinema Verse is completely free. All box office data, verdicts, and hindi cinema news are available without any subscription or login." },
       },
     ],
   };
@@ -382,11 +382,11 @@ export default async function BoxOfficePage({
   const blogListJsonLd = blogs.length > 0 ? {
     "@context": "https://schema.org",
     "@type":    "ItemList",
-    "name":     "Odia Box Office News & Analysis",
+    "name":     "bollywood Box Office News & Analysis",
     "itemListElement": blogs.map((b: any, i: number) => ({
       "@type":    "ListItem",
       "position": i + 1,
-      "url":      `https://ollypedia.in/blog/${b.slug}`,
+      "url":      `https://thecinemaverse.in/blog/${b.slug}`,
       "name":     b.title,
     })),
   } : null;
@@ -407,9 +407,9 @@ export default async function BoxOfficePage({
         <div className="border-b border-[#1c1c1c] bg-[#0b0b0b]">
           <div className="w-full max-w-screen-lg mx-auto px-3 sm:px-5 py-5 sm:py-8">
             <nav className="flex items-center gap-1.5 text-xs text-gray-600 mb-3">
-              <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+              <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
               <span>/</span>
-              <Link href="/box-office" className="hover:text-orange-400 transition-colors">Box Office</Link>
+              <Link href="/box-office" className="hover:text-brand-400 transition-colors">Box Office</Link>
               {selectedYear !== currentYear && (
                 <>
                   <span>/</span>
@@ -419,19 +419,19 @@ export default async function BoxOfficePage({
             </nav>
             <div className="flex items-center gap-3 mb-2">
               <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-widest
-                uppercase text-orange-400 bg-orange-500/10 border border-orange-500/20
+                uppercase text-brand-400 bg-brand-500/10 border border-brand-500/20
                 rounded-full px-2.5 py-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse inline-block" />
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse inline-block" />
                 Live Tracking
               </span>
               <span className="text-xs text-gray-600">{enriched.length} films across all years</span>
             </div>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-white leading-tight">
-              Odia Box Office{" "}
-              <span className="text-orange-400">Collection {selectedYear}</span>
+              bollywood Box Office{" "}
+              <span className="text-brand-400">Collection {selectedYear}</span>
             </h1>
             <p className="text-gray-500 text-xs mt-1.5">
-              Day-wise net &amp; gross for all Odia (Ollywood) movies — latest releases first.
+              Day-wise net &amp; gross for all bollywood (bollywood) movies — latest releases first.
               {selectedYear !== currentYear && (
                 <> Viewing archive for <strong className="text-gray-400">{selectedYear}</strong>.</>
               )}
@@ -474,13 +474,13 @@ export default async function BoxOfficePage({
                       className={[
                         "flex-shrink-0 snap-start px-3 py-1.5 rounded-full text-xs font-bold border transition-all whitespace-nowrap",
                         isActive
-                          ? "text-orange-400 border-orange-500/40 bg-orange-500/15"
-                          : "text-gray-400 border-[#1c1c1c] bg-[#0f0f0f] hover:text-white hover:border-orange-500/20 hover:bg-[#141414]",
+                          ? "text-brand-400 border-brand-500/40 bg-brand-500/15"
+                          : "text-gray-400 border-[#1c1c1c] bg-[#0f0f0f] hover:text-white hover:border-brand-500/20 hover:bg-[#141414]",
                       ].join(" ")}
                     >
                       {yr}
                       {isCurrent && (
-                        <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 inline-block align-middle" />
+                        <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-brand-400 inline-block align-middle" />
                       )}
                     </Link>
                   );
@@ -497,7 +497,7 @@ export default async function BoxOfficePage({
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
-                  { label: "All-Time Net",    value: fmtINR(allTimeNet),        accent: "text-orange-400" },
+                  { label: "All-Time Net",    value: fmtINR(allTimeNet),        accent: "text-brand-400" },
                   { label: "All-Time Gross",  value: fmtINR(allTimeGross),      accent: "text-sky-300" },
                   { label: "Films Tracked",   value: String(enriched.length),   accent: "text-white" },
                   { label: "Total Hits",      value: String(allHitsCount),      accent: "text-emerald-400" },
@@ -519,7 +519,7 @@ export default async function BoxOfficePage({
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: `${selectedYear} Net`,   value: fmtINR(yearNet),        accent: "text-orange-400" },
+                  { label: `${selectedYear} Net`,   value: fmtINR(yearNet),        accent: "text-brand-400" },
                   { label: `${selectedYear} Gross`, value: fmtINR(yearGross),      accent: "text-sky-300" },
                   { label: "Hits",                  value: String(yearHits),        accent: "text-emerald-400" },
                 ].map(({ label, value, accent }) => (
@@ -540,7 +540,7 @@ export default async function BoxOfficePage({
               <p className="text-xs text-amber-300/80 leading-relaxed">
                 The Box Office Data are compiled from various sources and by our own research.
                 These data can be approximate or may have a huge difference from producer figures.{" "}
-                <strong className="text-amber-300">Ollypedia</strong> does not make any claims about the
+                <strong className="text-amber-300">The Cinema Verse</strong> does not make any claims about the
                 authenticity of the data. This is box office collection data reported as new data arrives.
               </p>
             </div>
@@ -553,7 +553,7 @@ export default async function BoxOfficePage({
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   🏆 {selectedYear} Verdict Scorecard
                 </span>
-                <span className="text-[10px] text-gray-600">— how Ollywood performed</span>
+                <span className="text-[10px] text-gray-600">— how bollywood performed</span>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {verdictEntries.map(([label, count]) => (
@@ -575,10 +575,10 @@ export default async function BoxOfficePage({
               {weekTop && (
                 <Link
                   href={`/box-office/${movieSlug(weekTop)}`}
-                  className="group relative overflow-hidden bg-gradient-to-br from-orange-500/10 via-[#111] to-[#0f0f0f]
-                    border border-orange-500/20 rounded-2xl p-4 hover:border-orange-500/40 transition-all"
+                  className="group relative overflow-hidden bg-gradient-to-br from-brand-500/10 via-[#111] to-[#0f0f0f]
+                    border border-brand-500/20 rounded-2xl p-4 hover:border-brand-500/40 transition-all"
                 >
-                  <p className="text-[10px] font-black uppercase tracking-widest text-orange-400 mb-2">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-brand-400 mb-2">
                     🔥 This Week's Top Performer
                   </p>
                   <div className="flex items-start gap-3">
@@ -591,11 +591,11 @@ export default async function BoxOfficePage({
                       />
                     )}
                     <div className="min-w-0">
-                      <p className="font-black text-white group-hover:text-orange-400 transition-colors
+                      <p className="font-black text-white group-hover:text-brand-400 transition-colors
                         text-sm sm:text-base leading-snug truncate">{weekTop.title}</p>
                       <p className="text-[10px] text-gray-500 mt-0.5">{fmtDate(weekTop.releaseDate)}</p>
                       <div className="mt-2">
-                        <p className="text-xl font-black text-orange-400">{fmtINR(weekTop.weekNet)}</p>
+                        <p className="text-xl font-black text-brand-400">{fmtINR(weekTop.weekNet)}</p>
                         <p className="text-[10px] text-gray-600 mt-0.5">This week's net</p>
                       </div>
                       {isValidVerdict(weekTop.verdict) && (
@@ -605,8 +605,8 @@ export default async function BoxOfficePage({
                       )}
                     </div>
                   </div>
-                  <div className="absolute bottom-3 right-4 text-orange-500/15 text-5xl font-black
-                    pointer-events-none select-none group-hover:text-orange-500/25 transition-colors">🔥</div>
+                  <div className="absolute bottom-3 right-4 text-brand-500/15 text-5xl font-black
+                    pointer-events-none select-none group-hover:text-brand-500/25 transition-colors">🔥</div>
                 </Link>
               )}
 
@@ -676,7 +676,7 @@ export default async function BoxOfficePage({
                       key={m._id}
                       href={`/box-office/${slug}`}
                       className="group bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl p-2.5
-                        hover:border-orange-500/30 transition-all flex gap-2.5 items-start"
+                        hover:border-brand-500/30 transition-all flex gap-2.5 items-start"
                     >
                       {(m.posterUrl || m.thumbnailUrl) ? (
                         <img src={m.posterUrl || m.thumbnailUrl} alt={m.title} loading="lazy"
@@ -686,9 +686,9 @@ export default async function BoxOfficePage({
                           justify-center text-sm text-gray-700 flex-shrink-0">🎬</div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] font-bold text-white group-hover:text-orange-400
+                        <p className="text-[11px] font-bold text-white group-hover:text-brand-400
                           transition-colors leading-tight line-clamp-2">{m.title}</p>
-                        <p className="text-[10px] text-orange-400 font-bold mt-1">{fmtINR(m.totalNet)}</p>
+                        <p className="text-[10px] text-brand-400 font-bold mt-1">{fmtINR(m.totalNet)}</p>
                         <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                           <span className="text-[9px] text-gray-600">Day {m.lastDay}</span>
                           {verdict && (
@@ -711,7 +711,7 @@ export default async function BoxOfficePage({
 
           {/* ── All-Time Top 10 Leaderboard ── */}
           {allTimeTop5.length > 0 && (
-            <section id="all-time" aria-label="All-time highest grossing Odia movies">
+            <section id="all-time" aria-label="All-time highest grossing hindi movies">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-bold text-white uppercase tracking-wider">
@@ -803,8 +803,8 @@ export default async function BoxOfficePage({
                   {languages.map((lang: string) => (
                     <a key={lang}
                       href={`#lang-${lang.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="text-[10px] text-gray-400 hover:text-orange-400 border border-[#1c1c1c]
-                        hover:border-orange-500/30 bg-[#0f0f0f] rounded-full px-2.5 py-1 transition-colors">
+                      className="text-[10px] text-gray-400 hover:text-brand-400 border border-[#1c1c1c]
+                        hover:border-brand-500/30 bg-[#0f0f0f] rounded-full px-2.5 py-1 transition-colors">
                       {lang}
                     </a>
                   ))}
@@ -814,7 +814,7 @@ export default async function BoxOfficePage({
           )}
 
           {/* ── Full Year List — Month Grouped ── */}
-          <section aria-label={`Odia movies box office collection ${selectedYear}`}>
+          <section aria-label={`hindi movies box office collection ${selectedYear}`}>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-bold text-white uppercase tracking-wider">
                 📋 {selectedYear} Releases
@@ -830,8 +830,8 @@ export default async function BoxOfficePage({
                 <p className="text-sm font-bold text-gray-400">No films tracked for {selectedYear}</p>
                 <p className="text-xs text-gray-600 mt-1">Try a different year from the tabs above.</p>
                 <Link href="/box-office"
-                  className="inline-block mt-4 px-4 py-2 bg-orange-500/10 border border-orange-500/20
-                    rounded-full text-xs font-bold text-orange-400 hover:bg-orange-500/20 transition-all">
+                  className="inline-block mt-4 px-4 py-2 bg-brand-500/10 border border-brand-500/20
+                    rounded-full text-xs font-bold text-brand-400 hover:bg-brand-500/20 transition-all">
                   View {currentYear} →
                 </Link>
               </div>
@@ -879,7 +879,7 @@ export default async function BoxOfficePage({
                             className="group flex items-center gap-2 sm:gap-3 py-2.5 px-2 rounded-lg
                               hover:bg-white/[0.03] transition-colors duration-100">
                             <span className="w-6 text-center text-xs font-black text-gray-700
-                              group-hover:text-orange-500 transition-colors flex-shrink-0">
+                              group-hover:text-brand-500 transition-colors flex-shrink-0">
                               {globalRank}
                             </span>
 
@@ -896,17 +896,17 @@ export default async function BoxOfficePage({
 
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-1.5">
-                                <p className="font-semibold text-white group-hover:text-orange-400
+                                <p className="font-semibold text-white group-hover:text-brand-400
                                   transition-colors truncate text-xs sm:text-sm leading-snug">{m.title}</p>
                                 {isNew && (
                                   <span className="flex-shrink-0 text-[8px] font-black uppercase
-                                    tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/20
+                                    tracking-widest text-brand-400 bg-brand-500/10 border border-brand-500/20
                                     rounded-full px-1.5 py-0.5 hidden sm:inline">New</span>
                                 )}
                               </div>
                               <div className="sm:hidden flex items-center gap-2 mt-1 flex-wrap">
                                 {relDate !== "—" && <span className="text-[10px] text-gray-500">{relDate}</span>}
-                                {m.totalNet > 0 && <span className="text-[10px] font-bold text-orange-400">{fmtINR(m.totalNet)}</span>}
+                                {m.totalNet > 0 && <span className="text-[10px] font-bold text-brand-400">{fmtINR(m.totalNet)}</span>}
                                 {storedVerdict && (
                                   <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${vColor}`}>
                                     {storedVerdict}
@@ -923,7 +923,7 @@ export default async function BoxOfficePage({
                               <span className="text-xs text-gray-400 whitespace-nowrap">{relDate}</span>
                             </div>
                             <div className="hidden sm:block w-20 text-right flex-shrink-0">
-                              <span className="font-bold text-orange-400 text-sm">{fmtINR(m.totalNet)}</span>
+                              <span className="font-bold text-brand-400 text-sm">{fmtINR(m.totalNet)}</span>
                             </div>
                             <div className="hidden md:block w-20 text-right flex-shrink-0">
                               <span className="font-bold text-sky-300 text-sm">{fmtINR(m.totalGross)}</span>
@@ -935,7 +935,7 @@ export default async function BoxOfficePage({
                                 </span>
                               )}
                             </div>
-                            <span className="w-4 text-right text-gray-700 group-hover:text-orange-400
+                            <span className="w-4 text-right text-gray-700 group-hover:text-brand-400
                               transition-colors text-xs flex-shrink-0">→</span>
                           </Link>
                         );
@@ -958,7 +958,7 @@ export default async function BoxOfficePage({
                   <span className="text-[10px] text-gray-600">— {blogs.length} articles</span>
                 </div>
                 <Link href="/blog?category=Box+Office"
-                  className="text-[10px] text-orange-400 hover:text-orange-300 transition-colors font-semibold">
+                  className="text-[10px] text-brand-400 hover:text-brand-300 transition-colors font-semibold">
                   View all →
                 </Link>
               </div>
@@ -967,7 +967,7 @@ export default async function BoxOfficePage({
                 {blogs.map((b: any) => (
                   <Link key={b._id} href={`/blog/${b.slug}`}
                     className="group flex gap-3 bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl p-3
-                      hover:border-orange-500/30 hover:bg-[#111] transition-all duration-150">
+                      hover:border-brand-500/30 hover:bg-[#111] transition-all duration-150">
                     {b.coverImage ? (
                       <img src={b.coverImage} alt={b.title} loading="lazy"
                         className="w-20 h-14 sm:w-24 sm:h-16 object-cover rounded-lg flex-shrink-0
@@ -980,11 +980,11 @@ export default async function BoxOfficePage({
                       <div>
                         {b.featured && (
                           <span className="inline-block text-[8px] font-black uppercase tracking-widest
-                            text-orange-400 bg-orange-500/10 border border-orange-500/20
+                            text-brand-400 bg-brand-500/10 border border-brand-500/20
                             rounded-full px-1.5 py-0.5 mb-1">Featured</span>
                         )}
                         <p className="text-[11px] sm:text-xs font-bold text-white
-                          group-hover:text-orange-400 transition-colors leading-snug line-clamp-2">
+                          group-hover:text-brand-400 transition-colors leading-snug line-clamp-2">
                           {b.title}
                         </p>
                         {b.excerpt && (
@@ -1003,16 +1003,16 @@ export default async function BoxOfficePage({
           <div className="space-y-4 pt-4">
             {[
               {
-                title: "Odia Box Office Collection — All Years | Ollywood Trade Report",
-                body:  `Ollypedia is Odisha's most trusted box office tracking platform for Odia (Ollywood) cinema. We publish accurate, day-wise net and gross collection figures for every major Odia film release — from ${availableYears[availableYears.length - 1]} to ${availableYears[0]}. Whether you follow the first-day opening, weekend trends, or total lifetime earnings, our box office section covers it all — updated daily with verified trade estimates.`,
+                title: "bollywood Box Office Collection — All Years | bollywood Trade Report",
+                body:  `The Cinema Verse is Odisha's most trusted box office tracking platform for bollywood (bollywood) cinema. We publish accurate, day-wise net and gross collection figures for every major hindi film release — from ${availableYears[availableYears.length - 1]} to ${availableYears[0]}. Whether you follow the first-day opening, weekend trends, or total lifetime earnings, our box office section covers it all — updated daily with verified trade estimates.`,
               },
               {
-                title: "How We Calculate Odia Movie Box Office Collection",
+                title: "How We Calculate Hindi Movie Box Office Collection",
                 body:  "Our figures are sourced from distributor reports, exhibitor data, and industry trade networks across Odisha. Net collection is the money collected after deducting GST and entertainment tax. Gross collection includes all taxes. Verdicts like Hit, Blockbuster, Average, and Flop are based on the film's performance against its total cost.",
               },
               {
-                title: "About Ollywood — The Odia Film Industry",
-                body:  "Ollywood, the Odia film industry based in Bhubaneswar and Cuttack, produces over 30–40 films annually. With a growing theatre network across Odisha and diaspora audiences in other states, Odia cinema has seen a steady rise in box office numbers. Stars like Babushan Mohanty, Anubhav Mohanty, and Elina Samantray consistently deliver films that resonate with audiences across Odisha.",
+                title: "About bollywood — The Hindi Film Industry",
+                body:  "bollywood, the hindi film industry based in Bhubaneswar and Cuttack, produces over 30–40 films annually. With a growing theatre network across Odisha and diaspora audiences in other states, hindi cinema has seen a steady rise in box office numbers. Stars like Babushan Mohanty, Anubhav Mohanty, and Elina Samantray consistently deliver films that resonate with audiences across Odisha.",
               },
             ].map(({ title, body }) => (
               <div key={title} className="p-4 sm:p-5 bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl">
@@ -1025,12 +1025,12 @@ export default async function BoxOfficePage({
             {allTimeTop5.length > 0 && (
               <div className="p-4 sm:p-5 bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl">
                 <h2 className="text-xs sm:text-sm font-bold text-white mb-2">
-                  Top Earning Odia Movies — All Time
+                  Top Earning Hindi Movies — All Time
                 </h2>
                 <p className="text-xs text-gray-400 leading-relaxed mb-3">
-                  Based on total net collection tracked on Ollypedia, the highest-grossing Odia films of all time are{" "}
+                  Based on total net collection tracked on The Cinema Verse, the highest-grossing hindi films of all time are{" "}
                   <strong className="text-gray-300">{allTimeTop5.map((m: any) => m.title).join(", ")}</strong>. These films
-                  represent the benchmark for Ollywood box office success and are regularly cited in trade reports across Odisha.
+                  represent the benchmark for bollywood box office success and are regularly cited in trade reports across Odisha.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {allTimeTop5.map((m: any) => (
@@ -1050,42 +1050,42 @@ export default async function BoxOfficePage({
               <div className="space-y-3">
                 {[
                   {
-                    q: "Where can I find the latest Odia movie box office collection?",
-                    a: "Ollypedia publishes daily box office updates for all Odia movies. Bookmark this page and check back every day for fresh figures.",
+                    q: "Where can I find the latest hindi movie box office collection?",
+                    a: "The Cinema Verse publishes daily box office updates for all hindi movies. Bookmark this page and check back every day for fresh figures.",
                   },
                   {
                     q: "What is the difference between net and gross collection?",
                     a: "Gross is total revenue including taxes. Net is what remains after deducting GST and local entertainment tax — the actual revenue for producers and distributors.",
                   },
                   {
-                    q: "How is an Odia movie verdict decided?",
+                    q: "How is an hindi movie verdict decided?",
                     a: "A verdict is based on earnings vs total cost (production + prints + publicity). A film recovering more than twice its cost is called a Blockbuster; failing to recover costs is a Flop.",
                   },
                   {
-                    q: "Does Ollypedia track worldwide collection of Odia movies?",
+                    q: "Does The Cinema Verse track worldwide collection of hindi movies?",
                     a: "Yes, where data is available we include worldwide figures covering Odisha, rest of India, and international markets.",
                   },
                   {
-                    q: "Which Odia movie has the highest box office collection ever?",
+                    q: "Which hindi movie has the highest box office collection ever?",
                     a: allTimeTop
-                      ? `${allTimeTop.title} holds the record for the highest net collection among all Odia films tracked on Ollypedia with a total of ${fmtINR(allTimeTop.totalNet)}.`
-                      : "Ollypedia tracks all Odia films and the all-time highest grosser is updated regularly on this page.",
+                      ? `${allTimeTop.title} holds the record for the highest net collection among all hindi films tracked on The Cinema Verse with a total of ${fmtINR(allTimeTop.totalNet)}.`
+                      : "The Cinema Verse tracks all hindi films and the all-time highest grosser is updated regularly on this page.",
                   },
                   {
-                    q: "How many Odia movies does Ollypedia track?",
-                    a: `Ollypedia is currently tracking ${enriched.length} Odia films with box office data across ${availableYears.length} years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.`,
+                    q: "How many hindi movies does The Cinema Verse track?",
+                    a: `The Cinema Verse is currently tracking ${enriched.length} hindi films with box office data across ${availableYears.length} years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.`,
                   },
                   {
-                    q: "Can I browse Odia box office by year?",
+                    q: "Can I browse bollywood box office by year?",
                     a: `Yes! Use the year tabs at the top of the page to browse collections for any year from ${availableYears[availableYears.length - 1]} to ${availableYears[0]}. Each year view shows month-wise release data and verdicts.`,
                   },
                   {
-                    q: "What does 'Day 1 collection' mean for Odia movies?",
+                    q: "What does 'Day 1 collection' mean for hindi movies?",
                     a: "Day 1 collection refers to box office earnings on a film's first day of release, including morning, afternoon, and evening shows across all theatres in Odisha and other regions.",
                   },
                   {
-                    q: "Is Ollypedia free to use?",
-                    a: "Yes, Ollypedia is completely free. All box office data, verdicts, and Odia cinema news are available without any subscription or login.",
+                    q: "Is The Cinema Verse free to use?",
+                    a: "Yes, The Cinema Verse is completely free. All box office data, verdicts, and hindi cinema news are available without any subscription or login.",
                   },
                 ].map(({ q, a }) => (
                   <div key={q} className="border-t border-[#1c1c1c] pt-3 first:border-0 first:pt-0">
@@ -1098,22 +1098,22 @@ export default async function BoxOfficePage({
           </div>
 
           {/* ── Internal Link Footer ── */}
-          <nav aria-label="Explore more on Ollypedia"
+          <nav aria-label="Explore more on The Cinema Verse"
             className="border-t border-[#1c1c1c] pt-5 mt-2">
             <p className="text-[10px] font-bold uppercase tracking-widest text-gray-600 mb-3">
-              Explore Ollypedia
+              Explore The Cinema Verse
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {[
-                { href: "/box-office",               label: "Box Office Home",     desc: "All Odia movie collections" },
-                { href: "/blog",                     label: "Odia Cinema News",    desc: "Latest Ollywood updates" },
+                { href: "/box-office",               label: "Box Office Home",     desc: "All hindi movie collections" },
+                { href: "/blog",                     label: "Hindi Cinema News",    desc: "Latest bollywood updates" },
                 { href: "/blog?category=Box+Office", label: "Box Office Reports",  desc: "Day-wise collection blogs" },
-                { href: "/",                         label: "Ollypedia Home",       desc: "Odisha's cinema database" },
+                { href: "/",                         label: "The Cinema Verse Home",       desc: "Odisha's cinema database" },
               ].map(({ href, label, desc }) => (
                 <Link key={href} href={href}
                   className="group p-3 bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl
-                    hover:border-orange-500/20 hover:bg-[#111] transition-all">
-                  <p className="text-[11px] font-bold text-white group-hover:text-orange-400
+                    hover:border-brand-500/20 hover:bg-[#111] transition-all">
+                  <p className="text-[11px] font-bold text-white group-hover:text-brand-400
                     transition-colors">{label}</p>
                   <p className="text-[10px] text-gray-600 mt-0.5">{desc}</p>
                 </Link>
@@ -1130,9 +1130,9 @@ export default async function BoxOfficePage({
                   {availableYears.map((yr) => (
                     <Link key={yr}
                       href={yr === currentYear ? "/box-office" : `/box-office?year=${yr}`}
-                      className="text-[10px] text-gray-500 hover:text-orange-400 border border-[#1a1a1a]
-                        hover:border-orange-500/20 bg-[#0d0d0d] rounded-full px-2.5 py-1 transition-colors">
-                      Odia Box Office {yr}
+                      className="text-[10px] text-gray-500 hover:text-brand-400 border border-[#1a1a1a]
+                        hover:border-brand-500/20 bg-[#0d0d0d] rounded-full px-2.5 py-1 transition-colors">
+                      bollywood Box Office {yr}
                     </Link>
                   ))}
                 </div>

@@ -1,6 +1,6 @@
-# Ollypedia – Odia Film Encyclopedia
+# The Cinema Verse – Hindi Film Encyclopedia
 
-A production-ready Next.js website for Odia (Ollywood) cinema, built with App Router, MongoDB, Tailwind CSS, and full SSR + SEO support.
+A production-ready Next.js website for Bbollywood (Bbollywood) cinema, built with App Router, MongoDB, Tailwind CSS, and full SSR + SEO support.
 
 ---
 
@@ -28,8 +28,8 @@ Visit → http://localhost:3000
 
 ```
 MONGODB_URI=mongodb+srv://...your connection string...
-NEXT_PUBLIC_SITE_URL=https://www.ollypedia.in
-NEXT_PUBLIC_SITE_NAME=Ollypedia
+NEXT_PUBLIC_SITE_URL=https://www.thecinemaverse.in
+NEXT_PUBLIC_SITE_NAME=The Cinema Verse
 JWT_SECRET=your_secret_here
 GROQ_API_KEY=your_groq_key_here   # optional, for AI article generation
 ```
@@ -39,7 +39,7 @@ GROQ_API_KEY=your_groq_key_here   # optional, for AI article generation
 ## Project Structure
 
 ```
-ollypedia/
+thecinemaverse/
 ├── src/
 │   ├── app/                    # Next.js App Router pages
 │   │   ├── page.tsx            # Homepage (/)
@@ -129,9 +129,9 @@ ollypedia/
 | `/blog` | Blog listing with category filter |
 | `/blog/[slug]` | Full blog article with related posts |
 | `/songs` | Songs database with singer/director filters + YouTube modal |
-| `/news` | Latest Ollywood news |
+| `/news` | Latest Bbollywood news |
 | `/search` | Full-text search across movies, cast, blogs |
-| `/about` | About Ollypedia |
+| `/about` | About The Cinema Verse |
 | `/contact` | Contact form |
 | `/privacy` | Privacy policy |
 | `/disclaimer` | Legal disclaimer |
@@ -225,4 +225,4 @@ node scripts/seed.js
 
 ---
 
-Built with ❤️ for Odia cinema.
+Built with ❤️ for hindi cinema.

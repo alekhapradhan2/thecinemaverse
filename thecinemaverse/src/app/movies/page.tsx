@@ -16,14 +16,14 @@ import {
 export const revalidate = 600;
 
 export const metadata: Metadata = buildMeta({
-  title: "Odia Movies – Complete Ollywood Film Database | Ollypedia",
+  title: "Hindi Movies – Complete bollywood Film Database | The Cinema Verse",
   description:
-    "Browse the complete list of Odia (Ollywood) movies. Filter by genre, year, verdict and more. Find your favourite Odia films with full cast, songs, box office collection, trailers and reviews.",
+    "Browse the complete list of bollywood (bollywood) movies. Filter by genre, year, verdict and more. Find your favourite hindi films with full cast, songs, box office collection, trailers and reviews.",
   keywords: [
-    "Odia movies list", "Ollywood films", "Odia movies 2024", "Odia movies 2025",
-    "Odia cinema database", "Ollywood box office", "Odia film reviews",
-    "best Odia movies", "new Odia movies", "Odia movie cast",
-    "upcoming Odia movies", "Odia blockbuster movies", "latest Ollywood films",
+    "hindi movies list", "bollywood films", "hindi movies 2024", "hindi movies 2025",
+    "hindi cinema database", "bollywood box office", "hindi film reviews",
+    "best hindi movies", "new hindi movies", "hindi movie cast",
+    "upcoming hindi movies", "bollywood blockbuster movies", "latest bollywood films",
   ],
   url: "/movies",
 });
@@ -33,28 +33,28 @@ const GENRES   = ["Action", "Romance", "Drama", "Comedy", "Thriller", "Horror", 
 const VERDICTS = ["Hit", "Superhit", "Blockbuster", "Average", "Flop", "Upcoming"];
 
 const GENRE_META: Record<string, { emoji: string; desc: string; color: string }> = {
-  Action:     { emoji: "⚔️",  desc: "High-octane Odia action films",        color: "from-red-500/20 to-orange-500/10"   },
-  Romance:    { emoji: "❤️",  desc: "Romantic Ollywood love stories",        color: "from-pink-500/20 to-rose-500/10"    },
-  Drama:      { emoji: "🎭",  desc: "Emotional Odia drama films",            color: "from-purple-500/20 to-violet-500/10"},
-  Comedy:     { emoji: "😄",  desc: "Fun Odia comedy movies",                color: "from-yellow-500/20 to-amber-500/10" },
-  Thriller:   { emoji: "🔍",  desc: "Suspenseful Odia thrillers",            color: "from-cyan-500/20 to-sky-500/10"     },
-  Horror:     { emoji: "👻",  desc: "Scary Odia horror films",               color: "from-gray-700/40 to-zinc-800/10"    },
-  Devotional: { emoji: "🪔",  desc: "Spiritual & devotional Odia films",     color: "from-amber-500/20 to-yellow-400/10" },
-  Family:     { emoji: "👨‍👩‍👧",  desc: "Family entertainer Odia movies",       color: "from-green-500/20 to-emerald-500/10"},
-  Historical: { emoji: "🏛️",  desc: "Historical Odia period films",          color: "from-stone-500/20 to-slate-500/10"  },
+  Action:     { emoji: "⚔️",  desc: "High-octane bollywood action films",        color: "from-red-500/20 to-brand-500/10"   },
+  Romance:    { emoji: "❤️",  desc: "Romantic bollywood love stories",        color: "from-pink-500/20 to-rose-500/10"    },
+  Drama:      { emoji: "🎭",  desc: "Emotional bollywood drama films",            color: "from-purple-500/20 to-violet-500/10"},
+  Comedy:     { emoji: "😄",  desc: "Fun bollywood comedy movies",                color: "from-yellow-500/20 to-amber-500/10" },
+  Thriller:   { emoji: "🔍",  desc: "Suspenseful bollywood thrillers",            color: "from-cyan-500/20 to-sky-500/10"     },
+  Horror:     { emoji: "👻",  desc: "Scary bollywood horror films",               color: "from-gray-700/40 to-zinc-800/10"    },
+  Devotional: { emoji: "🪔",  desc: "Spiritual & devotional hindi films",     color: "from-amber-500/20 to-yellow-400/10" },
+  Family:     { emoji: "👨‍👩‍👧",  desc: "Family entertainer hindi movies",       color: "from-green-500/20 to-emerald-500/10"},
+  Historical: { emoji: "🏛️",  desc: "Historical bollywood period films",          color: "from-stone-500/20 to-slate-500/10"  },
 };
 
-const ODIA_FILM_FACTS = [
-  { icon: Film,     stat: "1936",  label: "First Odia Film",   note: "Sita Bibaha — the first ever Odia feature film" },
-  { icon: Globe,    stat: "40–60", label: "Films Per Year",    note: "Ollywood produces 40–60 Odia films annually" },
+const bollywood_FILM_FACTS = [
+  { icon: Film,     stat: "1936",  label: "First Hindi Film",   note: "Sita Bibaha — the first ever bollywood feature film" },
+  { icon: Globe,    stat: "40–60", label: "Films Per Year",    note: "bollywood produces 40–60 hindi films annually" },
   { icon: Users,    stat: "1000+", label: "Cast & Crew",       note: "Actors, directors & technicians in our database" },
-  { icon: Calendar, stat: "85+",   label: "Years of Cinema",   note: "Odia cinema has a rich heritage of over 85 years" },
+  { icon: Calendar, stat: "85+",   label: "Years of Cinema",   note: "hindi cinema has a rich heritage of over 85 years" },
 ];
 
 const VERDICT_TABS = [
   { label: "All",         value: null,         icon: Film,      color: "text-gray-300"  },
   { label: "Upcoming",    value: "Upcoming",   icon: Calendar,  color: "text-sky-400"   },
-  { label: "Blockbuster", value: "Blockbuster",icon: Flame,     color: "text-orange-400"},
+  { label: "Blockbuster", value: "Blockbuster",icon: Flame,     color: "text-brand-400"},
   { label: "Superhit",    value: "Superhit",   icon: Star,      color: "text-yellow-400"},
   { label: "Hit",         value: "Hit",        icon: TrendingUp,color: "text-green-400" },
   { label: "Average",     value: "Average",    icon: Zap,       color: "text-blue-400"  },
@@ -189,12 +189,12 @@ export default async function MoviesPage({
       ══════════════════════════════════════════════════════════ */}
       <section
         className="relative overflow-hidden bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] border-b border-[#1f1f1f]"
-        aria-label="Odia movies database hero"
+        aria-label="hindi movies database hero"
       >
         {/* Decorative glows */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/6 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-600/4 rounded-full blur-2xl" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-500/6 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-brand-600/4 rounded-full blur-2xl" />
           <div className="absolute inset-0"
             style={{ backgroundImage: "radial-gradient(circle at 70% 50%, #f9731608 0%, transparent 60%)" }} />
         </div>
@@ -202,19 +202,19 @@ export default async function MoviesPage({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10">
           {/* Breadcrumb — SEO canonical trail */}
           <nav className="flex items-center gap-1.5 text-xs text-gray-500 mb-5" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-orange-400 transition-colors">Home</Link>
+            <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/movies" className="hover:text-orange-400 transition-colors text-gray-300">Movies</Link>
+            <Link href="/movies" className="hover:text-brand-400 transition-colors text-gray-300">Movies</Link>
             {genre && (
               <>
                 <ChevronRight className="w-3 h-3" />
-                <span className="text-orange-400">{genre}</span>
+                <span className="text-brand-400">{genre}</span>
               </>
             )}
             {verdict && !genre && (
               <>
                 <ChevronRight className="w-3 h-3" />
-                <span className="text-orange-400">{activeVerdictLabel} Films</span>
+                <span className="text-brand-400">{activeVerdictLabel} Films</span>
               </>
             )}
           </nav>
@@ -222,31 +222,31 @@ export default async function MoviesPage({
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-orange-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Clapperboard className="w-5 h-5 text-orange-500" />
+                <div className="w-10 h-10 bg-brand-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Clapperboard className="w-5 h-5 text-brand-500" />
                 </div>
                 <h1 className="font-display text-3xl md:text-4xl font-black text-white leading-tight">
                   {genre
-                    ? `${genre} Odia Movies`
+                    ? `${genre} Hindi Movies`
                     : verdict
-                      ? `${activeVerdictLabel} Odia Movies`
-                      : "Odia Movies — Ollywood Film Database"}
+                      ? `${activeVerdictLabel} Hindi Movies`
+                      : "Hindi Movies — bollywood Film Database"}
                 </h1>
               </div>
               <p className="text-gray-400 text-sm md:text-base max-w-xl leading-relaxed">
                 {genre
-                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from Ollywood`}. Discover the best ${genre.toLowerCase()} Odia movies with cast, box office and reviews.`
+                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from bollywood`}. Discover the best ${genre.toLowerCase()} hindi movies with cast, box office and reviews.`
                   : verdict === "Upcoming"
-                    ? "All confirmed upcoming Odia movies with release dates, cast details and trailers. Stay ahead of every new Ollywood release."
-                    : "The most complete Ollywood film database — browse every Odia movie with cast, songs, box office collection, trailers and reviews."}
+                    ? "All confirmed upcoming hindi movies with release dates, cast details and trailers. Stay ahead of every new bollywood release."
+                    : "The most complete bollywood film database — browse every hindi movie with cast, songs, box office collection, trailers and reviews."}
               </p>
             </div>
 
             {/* Live count pill */}
             <div className="flex items-center gap-2 bg-[#111] border border-[#1f1f1f] rounded-xl px-5 py-3 self-start md:self-auto flex-shrink-0">
-              <Film className="w-4 h-4 text-orange-500" />
+              <Film className="w-4 h-4 text-brand-500" />
               <span className="text-2xl font-black text-white font-display">{total}</span>
-              <span className="text-xs text-gray-500 leading-tight">Odia<br />films</span>
+              <span className="text-xs text-gray-500 leading-tight">bollywood<br />films</span>
             </div>
           </div>
         </div>
@@ -271,8 +271,8 @@ export default async function MoviesPage({
                   className={[
                     "flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap",
                     isActive
-                      ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
-                      : `bg-[#141414] border border-[#222] ${color} hover:border-orange-500/30`,
+                      ? "bg-brand-500 text-white shadow-lg shadow-brand-500/20"
+                      : `bg-[#141414] border border-[#222] ${color} hover:border-brand-500/30`,
                   ].join(" ")}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -290,8 +290,8 @@ export default async function MoviesPage({
                 className={[
                   "flex-shrink-0 flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium transition-all whitespace-nowrap",
                   genre === g
-                    ? "bg-orange-500/20 border border-orange-500/50 text-orange-300"
-                    : "bg-[#141414] border border-[#222] text-gray-400 hover:border-orange-500/30 hover:text-orange-400",
+                    ? "bg-brand-500/20 border border-brand-500/50 text-brand-300"
+                    : "bg-[#141414] border border-[#222] text-gray-400 hover:border-brand-500/30 hover:text-brand-400",
                 ].join(" ")}
               >
                 {GENRE_META[g]?.emoji} {g}
@@ -317,10 +317,10 @@ export default async function MoviesPage({
         ══════════════════════════════════════════════════════ */}
         <div className="bg-[#111] border border-[#1f1f1f] rounded-xl p-4">
           <div className="flex items-center gap-2 mb-3">
-            <Filter className="w-4 h-4 text-orange-500" />
+            <Filter className="w-4 h-4 text-brand-500" />
             <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Refine Results</span>
             {isFiltered && (
-              <Link href="/movies" className="ml-auto text-xs text-orange-400 hover:text-orange-300 transition-colors">
+              <Link href="/movies" className="ml-auto text-xs text-brand-400 hover:text-brand-300 transition-colors">
                 Clear all filters
               </Link>
             )}
@@ -345,9 +345,9 @@ export default async function MoviesPage({
                 </div>
                 <div>
                   <h2 id="upcoming-heading" className="font-display text-lg font-bold text-white">
-                    Upcoming Odia Movies 2026
+                    Upcoming Hindi Movies 2026
                   </h2>
-                  <p className="text-xs text-gray-500 mt-0.5">Confirmed & announced Ollywood releases</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Confirmed & announced bollywood releases</p>
                 </div>
               </div>
               <Link
@@ -365,18 +365,18 @@ export default async function MoviesPage({
         {/* ══════════════════════════════════════════════════════
             SECTION HEADER — dynamic title for current filter
         ══════════════════════════════════════════════════════ */}
-        <section aria-label={`${genre || activeVerdictLabel || "Odia"} movies list`}>
+        <section aria-label={`${genre || activeVerdictLabel || "bollywood"} movies list`}>
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-1 h-6 bg-orange-500 rounded-full" aria-hidden="true" />
+              <div className="w-1 h-6 bg-brand-500 rounded-full" aria-hidden="true" />
               <h2 className="font-display text-xl font-bold text-white">
                 {verdict === "Upcoming"
-                  ? "All Upcoming Odia Films"
+                  ? "All Upcoming Hindi Films"
                   : verdict === "Blockbuster"
-                    ? "Ollywood Blockbusters"
+                    ? "bollywood Blockbusters"
                     : genre
-                      ? `${genre} Odia Movies`
-                      : "Latest Odia Movies"}
+                      ? `${genre} Hindi Movies`
+                      : "Latest Hindi Movies"}
               </h2>
             </div>
             <p className="text-sm text-gray-500">
@@ -411,8 +411,8 @@ export default async function MoviesPage({
             <div className="text-center py-20 bg-[#111] border border-[#1f1f1f] rounded-2xl">
               <Film className="w-12 h-12 text-gray-700 mx-auto mb-4" />
               <h3 className="text-white font-bold text-lg mb-2">No movies found</h3>
-              <p className="text-gray-500 text-sm mb-6">Try a different filter or browse all Odia films.</p>
-              <Link href="/movies" className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 text-sm font-semibold transition-colors">
+              <p className="text-gray-500 text-sm mb-6">Try a different filter or browse all hindi films.</p>
+              <Link href="/movies" className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 text-sm font-semibold transition-colors">
                 View all movies <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
@@ -429,9 +429,9 @@ export default async function MoviesPage({
         ══════════════════════════════════════════════════════ */}
         <section aria-labelledby="genre-browse-heading">
           <div className="flex items-center gap-2 mb-5">
-            <div className="w-1 h-5 bg-orange-500 rounded-full" />
+            <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 id="genre-browse-heading" className="font-display text-xl font-bold text-white">
-              Browse Odia Movies by Genre
+              Browse Hindi Movies by Genre
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -439,13 +439,13 @@ export default async function MoviesPage({
               <Link
                 key={g}
                 href={`/movies?genre=${g}`}
-                title={`${GENRE_META[g]?.desc} — Ollypedia`}
-                className={`group bg-gradient-to-br ${GENRE_META[g]?.color} border border-[#1f1f1f] hover:border-orange-500/40 rounded-xl p-4 transition-all hover:-translate-y-0.5 text-center`}
+                title={`${GENRE_META[g]?.desc} — The Cinema Verse`}
+                className={`group bg-gradient-to-br ${GENRE_META[g]?.color} border border-[#1f1f1f] hover:border-brand-500/40 rounded-xl p-4 transition-all hover:-translate-y-0.5 text-center`}
               >
                 <div className="text-2xl mb-2">{GENRE_META[g]?.emoji}</div>
-                <p className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors">{g}</p>
+                <p className="text-sm font-bold text-white group-hover:text-brand-300 transition-colors">{g}</p>
                 <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">{GENRE_META[g]?.desc}</p>
-                <div className="flex items-center justify-center gap-0.5 mt-2 text-orange-400 text-[10px] font-semibold group-hover:gap-1 transition-all">
+                <div className="flex items-center justify-center gap-0.5 mt-2 text-brand-400 text-[10px] font-semibold group-hover:gap-1 transition-all">
                   Browse <ChevronRight className="w-3 h-3" />
                 </div>
               </Link>
@@ -459,50 +459,50 @@ export default async function MoviesPage({
         ══════════════════════════════════════════════════════ */}
         <section aria-labelledby="explore-heading">
           <div className="flex items-center gap-2 mb-5">
-            <div className="w-1 h-5 bg-orange-500 rounded-full" />
+            <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 id="explore-heading" className="font-display text-xl font-bold text-white">
-              Explore More on Ollypedia
+              Explore More on The Cinema Verse
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
                 icon: TrendingUp, href: "/box-office",
-                title: "Odia Box Office Collection",
-                desc: "Day-wise net and gross collection for every Odia film — opening day figures, total earnings and verdict breakdowns.",
+                title: "bollywood Box Office Collection",
+                desc: "Day-wise net and gross collection for every hindi film — opening day figures, total earnings and verdict breakdowns.",
                 cta: "View Box Office",
               },
               {
                 icon: Users, href: "/cast",
-                title: "Ollywood Cast & Crew Profiles",
-                desc: "Detailed profiles of Odia actors, actresses, directors, producers and music directors with complete filmographies.",
+                title: "bollywood Cast & Crew Profiles",
+                desc: "Detailed profiles of bollywood actors, actresses, directors, producers and music directors with complete filmographies.",
                 cta: "Browse Cast",
               },
               {
                 icon: Mic2, href: "/songs",
-                title: "Odia Film Songs & Lyrics",
-                desc: "Every song from every Odia film — YouTube videos, lyrics, singer credits and music director information.",
+                title: "Hindi Film Songs & Lyrics",
+                desc: "Every song from every hindi film — YouTube videos, lyrics, singer credits and music director information.",
                 cta: "Find Songs",
               },
               {
                 icon: BookOpen, href: "/blog",
-                title: "Odia Film Reviews & Blog",
-                desc: "In-depth reviews, top 10 lists, actor spotlights, behind-the-scenes stories and opinion pieces about Ollywood.",
+                title: "Hindi Film Reviews & Blog",
+                desc: "In-depth reviews, top 10 lists, actor spotlights, behind-the-scenes stories and opinion pieces about bollywood.",
                 cta: "Read Blog",
               },
             ].map(({ icon: Icon, href, title, desc, cta }) => (
               <Link
                 key={title}
                 href={href}
-                title={`${title} — Ollypedia`}
-                className="group bg-[#111] border border-[#1f1f1f] hover:border-orange-500/30 rounded-xl p-5 transition-all hover:-translate-y-0.5 flex flex-col"
+                title={`${title} — The Cinema Verse`}
+                className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-5 transition-all hover:-translate-y-0.5 flex flex-col"
               >
-                <div className="w-9 h-9 bg-orange-500/10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-orange-500/20 transition-colors">
-                  <Icon className="w-4 h-4 text-orange-500" />
+                <div className="w-9 h-9 bg-brand-500/10 rounded-xl flex items-center justify-center mb-3 group-hover:bg-brand-500/20 transition-colors">
+                  <Icon className="w-4 h-4 text-brand-500" />
                 </div>
                 <h3 className="font-bold text-white text-sm mb-1.5">{title}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed flex-1">{desc}</p>
-                <div className="flex items-center gap-1 mt-4 text-orange-400 text-xs font-semibold group-hover:gap-2 transition-all">
+                <div className="flex items-center gap-1 mt-4 text-brand-400 text-xs font-semibold group-hover:gap-2 transition-all">
                   {cta} <ChevronRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
@@ -516,37 +516,37 @@ export default async function MoviesPage({
         <AdBanner slot="5566778899" format="auto" />
 
         {/* ══════════════════════════════════════════════════════
-            SEO BLOCK 3 — About Ollywood (rich editorial text)
+            SEO BLOCK 3 — About bollywood (rich editorial text)
         ══════════════════════════════════════════════════════ */}
         <section
-          aria-labelledby="about-ollywood-heading"
+          aria-labelledby="about-bollywood-heading"
           className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8 md:p-10"
         >
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-1 h-6 bg-orange-500 rounded-full" />
-            <h2 id="about-ollywood-heading" className="font-display text-xl md:text-2xl font-bold text-white">
-              About Odia Cinema — The Ollywood Film Industry
+            <div className="w-1 h-6 bg-brand-500 rounded-full" />
+            <h2 id="about-bollywood-heading" className="font-display text-xl md:text-2xl font-bold text-white">
+              About Hindi Cinema — The bollywood Film Industry
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                <strong className="text-white">Ollywood</strong> is the popular name for the{" "}
-                <strong className="text-white">Odia language film industry</strong>, based in Bhubaneswar,
+                <strong className="text-white">bollywood</strong> is the popular name for the{" "}
+                <strong className="text-white">bollywood language film industry</strong>, based in Bhubaneswar,
                 the capital of Odisha, India. It is one of India's oldest regional film industries,
                 with its roots tracing back to <strong className="text-white">1936</strong> when{" "}
-                <em>Sita Bibaha</em> became the first Odia feature film ever produced.
+                <em>Sita Bibaha</em> became the first bollywood feature film ever produced.
               </p>
               <p>
-                Today, Ollywood produces between <strong className="text-white">40 to 60 Odia films every year</strong>,
+                Today, bollywood produces between <strong className="text-white">40 to 60 hindi films every year</strong>,
                 spanning genres like action, romance, drama, comedy, devotional, thriller and historical.
                 The industry is closely tied to Odisha's culture — featuring stories rooted in Odishan
                 traditions, temples, folklore, and everyday life.
               </p>
               <p>
-                Some of the biggest <strong className="text-white">Odia movie stars</strong> include{" "}
-                <strong className="text-white">Babushaan Mohanty</strong>, the reigning superstar of Ollywood,
+                Some of the biggest <strong className="text-white">hindi movie stars</strong> include{" "}
+                <strong className="text-white">Babushaan Mohanty</strong>, the reigning superstar of bollywood,
                 alongside <strong className="text-white">Sabyasachi Mishra</strong>,{" "}
                 <strong className="text-white">Anubhav Mohanty</strong>,{" "}
                 <strong className="text-white">Elina Samantray</strong>,{" "}
@@ -556,32 +556,32 @@ export default async function MoviesPage({
             </div>
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                The <strong className="text-white">box office performance</strong> of Odia films has grown
-                significantly over the past decade. Modern Ollywood blockbusters regularly collect over
+                The <strong className="text-white">box office performance</strong> of hindi films has grown
+                significantly over the past decade. Modern bollywood blockbusters regularly collect over
                 ₹1 crore in their opening week, with top hits like <em>Daman</em>, <em>Khusi</em>, and{" "}
-                <em>Love Station</em> setting new records for Odia cinema.
+                <em>Love Station</em> setting new records for hindi cinema.
               </p>
               <p>
-                Ollypedia tracks every aspect of Odia cinema — from{" "}
+                The Cinema Verse tracks every aspect of hindi cinema — from{" "}
                 <strong className="text-white">day-wise box office collection</strong> to complete cast and
                 crew details, song lyrics, YouTube trailers, and audience reviews. Our database currently
-                features <strong className="text-white">{total}+ Odia films</strong>, making it the most
-                comprehensive Odia movie database available online.
+                features <strong className="text-white">{total}+ hindi films</strong>, making it the most
+                comprehensive hindi movie database available online.
               </p>
               <p>
-                Whether you're looking for <strong className="text-white">new Odia movies</strong> released
-                in 2025, classic Odia films from the 1990s, or upcoming Ollywood releases — Ollypedia is
-                your one-stop destination for everything Odia cinema.
+                Whether you're looking for <strong className="text-white">new hindi movies</strong> released
+                in 2025, classic hindi films from the 1990s, or upcoming bollywood releases — The Cinema Verse is
+                your one-stop destination for everything hindi cinema.
               </p>
             </div>
           </div>
 
           {/* Fact grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-[#1f1f1f]">
-            {ODIA_FILM_FACTS.map(({ icon: Icon, stat, label, note }) => (
+            {bollywood_FILM_FACTS.map(({ icon: Icon, stat, label, note }) => (
               <div key={label} className="text-center">
-                <div className="w-9 h-9 bg-orange-500/10 rounded-xl flex items-center justify-center mx-auto mb-2">
-                  <Icon className="w-4 h-4 text-orange-500" />
+                <div className="w-9 h-9 bg-brand-500/10 rounded-xl flex items-center justify-center mx-auto mb-2">
+                  <Icon className="w-4 h-4 text-brand-500" />
                 </div>
                 <p className="text-xl font-black text-white font-display">{stat}</p>
                 <p className="text-xs font-semibold text-gray-300 mt-0.5">{label}</p>
@@ -601,36 +601,36 @@ export default async function MoviesPage({
           itemType="https://schema.org/FAQPage"
         >
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-1 h-6 bg-orange-500 rounded-full" />
+            <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 id="faq-heading" className="font-display text-xl md:text-2xl font-bold text-white">
-              Frequently Asked Questions — Odia Movies
+              Frequently Asked Questions — Hindi Movies
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
             {[
               {
-                q: "Where can I find a complete list of Odia movies?",
-                a: "Ollypedia maintains the most complete database of Odia (Ollywood) films online. You can browse all Odia movies by genre, year, verdict, or alphabetically. Each movie page includes cast, songs, box office, synopsis and reviews.",
+                q: "Where can I find a complete list of hindi movies?",
+                a: "The Cinema Verse maintains the most complete database of bollywood (bollywood) films online. You can browse all hindi movies by genre, year, verdict, or alphabetically. Each movie page includes cast, songs, box office, synopsis and reviews.",
               },
               {
-                q: "What are the latest Odia movies of 2025?",
-                a: "Ollypedia regularly updates its database with the latest Odia films. Use the 'Latest' sort on this page to see the newest Ollywood releases of 2025, complete with release dates, verdicts and box office figures.",
+                q: "What are the latest hindi movies of 2025?",
+                a: "The Cinema Verse regularly updates its database with the latest hindi films. Use the 'Latest' sort on this page to see the newest bollywood releases of 2025, complete with release dates, verdicts and box office figures.",
               },
               {
-                q: "Which Odia movies are upcoming?",
-                a: "Click the 'Upcoming' tab at the top of this page to see all announced and confirmed upcoming Odia movies with expected release dates, cast announcements and official trailer links.",
+                q: "Which hindi movies are upcoming?",
+                a: "Click the 'Upcoming' tab at the top of this page to see all announced and confirmed upcoming hindi movies with expected release dates, cast announcements and official trailer links.",
               },
               {
-                q: "Which Odia movies are blockbusters?",
-                a: "Filter by 'Blockbuster' verdict on this page to see all Odia films that achieved blockbuster status. Ollypedia calculates verdicts based on box office performance relative to the film's budget and screen count.",
+                q: "Which hindi movies are blockbusters?",
+                a: "Filter by 'Blockbuster' verdict on this page to see all hindi films that achieved blockbuster status. The Cinema Verse calculates verdicts based on box office performance relative to the film's budget and screen count.",
               },
               {
-                q: "How can I watch Odia movies online?",
-                a: "Many Odia films are available on OTT platforms like Amazon Prime Video, Disney+ Hotstar, Zee5, and SunNXT. Each movie page on Ollypedia includes trailer links and OTT streaming information where available.",
+                q: "How can I watch hindi movies online?",
+                a: "Many hindi films are available on OTT platforms like Amazon Prime Video, Disney+ Hotstar, Zee5, and SunNXT. Each movie page on The Cinema Verse includes trailer links and OTT streaming information where available.",
               },
               {
-                q: "What genres are popular in Ollywood?",
-                a: "Odia cinema is diverse — Action, Romance and Drama are the most popular genres. Devotional films set around the Jagannath Temple in Puri have a dedicated audience. Comedy and family entertainers also perform well at the Odia box office.",
+                q: "What genres are popular in bollywood?",
+                a: "hindi cinema is diverse — Action, Romance and Drama are the most popular genres. Devotional films set around the Jagannath Temple in Puri have a dedicated audience. Comedy and family entertainers also perform well at the bollywood box office.",
               },
             ].map(({ q, a }) => (
               <div
@@ -641,7 +641,7 @@ export default async function MoviesPage({
                 itemType="https://schema.org/Question"
               >
                 <h3 className="font-bold text-white text-sm mb-2 flex items-start gap-2" itemProp="name">
-                  <span className="text-orange-500 mt-0.5 flex-shrink-0">Q.</span>
+                  <span className="text-brand-500 mt-0.5 flex-shrink-0">Q.</span>
                   {q}
                 </h3>
                 <div itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer">
@@ -658,9 +658,9 @@ export default async function MoviesPage({
         ══════════════════════════════════════════════════════ */}
         <section aria-labelledby="year-nav-heading">
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-1 h-5 bg-orange-500 rounded-full" />
+            <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 id="year-nav-heading" className="font-display text-lg font-bold text-white">
-              Odia Movies by Year
+              Hindi Movies by Year
             </h2>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -668,8 +668,8 @@ export default async function MoviesPage({
               <Link
                 key={yr}
                 href={`/movies/year/${yr}`}
-                title={`Odia movies released in ${yr}`}
-                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-orange-500/40 hover:text-orange-400 transition-all"
+                title={`hindi movies released in ${yr}`}
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-brand-500/40 hover:text-brand-400 transition-all"
               >
                 {yr}
               </Link>
@@ -734,10 +734,10 @@ async function UpcomingStrip() {
         ))}
         <Link
           href="/movies?verdict=Upcoming"
-          className="flex-shrink-0 w-32 sm:w-36 bg-[#111] border border-[#1f1f1f] rounded-xl flex flex-col items-center justify-center gap-2 text-center p-4 hover:border-orange-500/30 transition-all group"
+          className="flex-shrink-0 w-32 sm:w-36 bg-[#111] border border-[#1f1f1f] rounded-xl flex flex-col items-center justify-center gap-2 text-center p-4 hover:border-brand-500/30 transition-all group"
         >
-          <PlayCircle className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-transform" />
-          <span className="text-xs font-semibold text-gray-400 group-hover:text-orange-400 transition-colors">
+          <PlayCircle className="w-8 h-8 text-brand-500 group-hover:scale-110 transition-transform" />
+          <span className="text-xs font-semibold text-gray-400 group-hover:text-brand-400 transition-colors">
             View All Upcoming
           </span>
         </Link>

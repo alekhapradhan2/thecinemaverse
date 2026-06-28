@@ -35,64 +35,64 @@ const CATEGORY_CONFIG: Record<
   }
 > = {
   "2026": {
-    title: "Odia Movies 2026",
-    metaTitle: "Odia Movies 2026 List | Upcoming & Latest Ollywood Films",
+    title: "Hindi Movies 2026",
+    metaTitle: "Hindi Movies 2026 List | Upcoming & Latest bollywood Films",
     metaDesc:
-      "Explore all Odia movies released in 2026 including upcoming films, cast, songs, and trailers. Complete Ollywood 2026 movie list with ratings and reviews.",
-    h1: "Odia Movies 2026 — Complete Ollywood Film List",
+      "Explore all hindi movies released in 2026 including upcoming films, cast, songs, and trailers. Complete bollywood 2026 movie list with ratings and reviews.",
+    h1: "Hindi Movies 2026 — Complete bollywood Film List",
     intro:
-      "The year 2026 is shaping up to be a landmark chapter in Ollywood. From action blockbusters to heartfelt family dramas, Odia cinema in 2026 continues to push creative boundaries. Browse the full 2026 release list with cast details, ratings, and official songs.",
-    keywords: ["odia movies 2026", "ollywood 2026", "new odia films 2026"],
+      "The year 2026 is shaping up to be a landmark chapter in bollywood. From action blockbusters to heartfelt family dramas, hindi cinema in 2026 continues to push creative boundaries. Browse the full 2026 release list with cast details, ratings, and official songs.",
+    keywords: ["hindi movies 2026", "bollywood 2026", "new hindi films 2026"],
   },
   "2025": {
-    title: "Odia Movies 2025",
-    metaTitle: "Odia Movies 2025 — Full Ollywood Film List with Ratings",
+    title: "Hindi Movies 2025",
+    metaTitle: "Hindi Movies 2025 — Full bollywood Film List with Ratings",
     metaDesc:
-      "Complete list of Odia movies released in 2025. Browse Ollywood films by genre, cast, and rating.",
-    h1: "Odia Movies 2025 — Full Ollywood Release List",
+      "Complete list of hindi movies released in 2025. Browse bollywood films by genre, cast, and rating.",
+    h1: "Hindi Movies 2025 — Full bollywood Release List",
     intro:
-      "2025 brought a rich and varied slate to Ollywood, with filmmakers exploring genres from supernatural thrillers to romantic musicals. This page compiles every Odia movie released in 2025 with ratings, cast details, and song listings.",
-    keywords: ["odia movies 2025", "ollywood 2025", "odia films 2025"],
+      "2025 brought a rich and varied slate to bollywood, with filmmakers exploring genres from supernatural thrillers to romantic musicals. This page compiles every hindi movie released in 2025 with ratings, cast details, and song listings.",
+    keywords: ["hindi movies 2025", "bollywood 2025", "hindi films 2025"],
   },
   "2024": {
-    title: "Odia Movies 2024",
-    metaTitle: "Odia Movies 2024 — Ollywood Hits, Flops & Reviews",
+    title: "Hindi Movies 2024",
+    metaTitle: "Hindi Movies 2024 — bollywood Hits, Flops & Reviews",
     metaDesc:
-      "Browse all Odia movies of 2024 with cast, songs, box office, and reviews. The definitive Ollywood 2024 archive.",
-    h1: "Odia Movies 2024 — Complete Ollywood Archive",
+      "Browse all hindi movies of 2024 with cast, songs, box office, and reviews. The definitive bollywood 2024 archive.",
+    h1: "Hindi Movies 2024 — Complete bollywood Archive",
     intro:
-      "2024 was a watershed year for Odia cinema, with several films achieving mainstream recognition. This comprehensive archive covers every Odia movie released in 2024 — from blockbusters to indie gems.",
-    keywords: ["odia movies 2024", "ollywood 2024", "odia films list 2024"],
+      "2024 was a watershed year for hindi cinema, with several films achieving mainstream recognition. This comprehensive archive covers every hindi movie released in 2024 — from blockbusters to indie gems.",
+    keywords: ["hindi movies 2024", "bollywood 2024", "hindi films list 2024"],
   },
   upcoming: {
-    title: "Upcoming Odia Movies",
-    metaTitle: "Upcoming Odia Movies 2026 | Next Ollywood Releases & Trailers",
+    title: "Upcoming Hindi Movies",
+    metaTitle: "Upcoming Hindi Movies 2026 | Next bollywood Releases & Trailers",
     metaDesc:
-      "Get the latest updates on upcoming Odia movies in 2026. Release dates, cast, trailers and songs for all announced Ollywood films.",
-    h1: "Upcoming Odia Movies — Next Ollywood Releases",
+      "Get the latest updates on upcoming hindi movies in 2026. Release dates, cast, trailers and songs for all announced bollywood films.",
+    h1: "Upcoming Hindi Movies — Next bollywood Releases",
     intro:
-      "Ollywood's upcoming slate is packed with anticipated releases across every genre. This page tracks every announced and scheduled Odia movie yet to hit screens, updated in real-time with release dates, first-look posters, and pre-release song details.",
-    keywords: ["upcoming odia movies", "new ollywood releases", "odia movies 2026 upcoming"],
+      "bollywood's upcoming slate is packed with anticipated releases across every genre. This page tracks every announced and scheduled hindi movie yet to hit screens, updated in real-time with release dates, first-look posters, and pre-release song details.",
+    keywords: ["upcoming hindi movies", "new bollywood releases", "hindi movies 2026 upcoming"],
   },
   latest: {
-    title: "Latest Odia Movies",
-    metaTitle: "Latest Odia Movies 2026 | Newest Ollywood Releases This Week",
+    title: "Latest Hindi Movies",
+    metaTitle: "Latest Hindi Movies 2026 | Newest bollywood Releases This Week",
     metaDesc:
-      "Watch the latest Odia movies released this week and month. Stay updated with the newest Ollywood films, songs, and reviews.",
-    h1: "Latest Odia Movies — Newest Ollywood Releases",
+      "Watch the latest hindi movies released this week and month. Stay updated with the newest bollywood films, songs, and reviews.",
+    h1: "Latest Hindi Movies — Newest bollywood Releases",
     intro:
-      "Stay ahead of the curve with Ollypedia's real-time tracker of the latest Odia movie releases. Updated every week, this page surfaces the freshest Ollywood content from theatrical releases to OTT premieres.",
-    keywords: ["latest odia movies", "new odia films", "ollywood new release"],
+      "Stay ahead of the curve with The Cinema Verse's real-time tracker of the latest hindi movie releases. Updated every week, this page surfaces the freshest bollywood content from theatrical releases to OTT premieres.",
+    keywords: ["latest hindi movies", "new hindi films", "bollywood new release"],
   },
   blockbuster: {
-    title: "Blockbuster Odia Movies",
-    metaTitle: "Blockbuster Odia Movies | Top-Rated Ollywood Hits of All Time",
+    title: "Blockbuster Hindi Movies",
+    metaTitle: "Blockbuster Hindi Movies | Top-Rated bollywood Hits of All Time",
     metaDesc:
-      "Discover the biggest blockbuster Odia movies with top ratings and box office records. The ultimate list of hit Ollywood films.",
-    h1: "Blockbuster Odia Movies — Ollywood's Greatest Hits",
+      "Discover the biggest blockbuster hindi movies with top ratings and box office records. The ultimate list of hit bollywood films.",
+    h1: "Blockbuster Hindi Movies — bollywood's Greatest Hits",
     intro:
-      "These are the films that defined generations of Odia moviegoers — blockbusters that smashed box-office records, produced timeless songs, and created cultural moments that resonate to this day.",
-    keywords: ["blockbuster odia movies", "best ollywood films", "top rated odia movies"],
+      "These are the films that defined generations of hindi moviegoers — blockbusters that smashed box-office records, produced timeless songs, and created cultural moments that resonate to this day.",
+    keywords: ["blockbuster hindi movies", "best bollywood films", "top rated hindi movies"],
   },
 };
 
@@ -177,7 +177,7 @@ function JsonLd({
   category: string;
   cfg: (typeof CATEGORY_CONFIG)[string];
 }) {
-  const base = "https://ollypedia.com";
+  const base = "https://thecinemaverse.com";
 
   const itemList = {
     "@context": "https://schema.org",
@@ -228,14 +228,14 @@ function MovieCard({ movie }: { movie: MovieDoc }) {
           loading="lazy"
         />
         {movie.rating > 0 && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/70 backdrop-blur-sm text-orange-400 text-xs font-bold px-2 py-1 rounded-full">
-            <Star className="w-3 h-3 fill-orange-400" />
+          <div className="absolute top-2 right-2 flex items-center gap-1 bg-black/70 backdrop-blur-sm text-brand-400 text-xs font-bold px-2 py-1 rounded-full">
+            <Star className="w-3 h-3 fill-brand-400" />
             {movie.rating.toFixed(1)}
           </div>
         )}
       </div>
       <div className="p-3">
-        <h3 className="text-white text-sm font-semibold line-clamp-1 group-hover:text-orange-400 transition-colors">
+        <h3 className="text-white text-sm font-semibold line-clamp-1 group-hover:text-brand-400 transition-colors">
           {movie.title}
         </h3>
         <div className="flex items-center justify-between mt-1.5">
@@ -303,8 +303,8 @@ export default async function MovieCategoryPage({
                 href={`/movies/${yr}`}
                 className={`text-xs px-4 py-2 rounded-full border transition-all ${
                   params.category === yr
-                    ? "bg-orange-500 border-orange-500 text-white"
-                    : "border-[#2a2a2a] text-gray-400 hover:border-orange-500/40 hover:text-orange-400"
+                    ? "bg-brand-500 border-brand-500 text-white"
+                    : "border-[#2a2a2a] text-gray-400 hover:border-brand-500/40 hover:text-brand-400"
                 }`}
               >
                 {yr} Movies
@@ -316,8 +316,8 @@ export default async function MovieCategoryPage({
                 href={`/movies/${key}`}
                 className={`text-xs px-4 py-2 rounded-full border transition-all ${
                   params.category === key
-                    ? "bg-orange-500 border-orange-500 text-white"
-                    : "border-[#2a2a2a] text-gray-400 hover:border-orange-500/40 hover:text-orange-400"
+                    ? "bg-brand-500 border-brand-500 text-white"
+                    : "border-[#2a2a2a] text-gray-400 hover:border-brand-500/40 hover:text-brand-400"
                 }`}
               >
                 {label}
@@ -332,7 +332,7 @@ export default async function MovieCategoryPage({
                 <p className="text-gray-500 text-sm">
                   <span className="text-white font-semibold">{movies.length}</span> movies found
                 </p>
-                <Link href="/movies" className="text-orange-400 text-xs hover:underline flex items-center gap-1">
+                <Link href="/movies" className="text-brand-400 text-xs hover:underline flex items-center gap-1">
                   View all <ChevronRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -342,15 +342,15 @@ export default async function MovieCategoryPage({
   </h2>
 
   <p className="mb-3">
-    {cfg.title} is a curated collection of Odia (Ollywood) films including
+    {cfg.title} is a curated collection of bollywood (bollywood) films including
     latest releases, upcoming movies, and blockbuster hits. Each movie
     includes detailed information such as cast, release date, songs,
     ratings, and storyline.
   </p>
 
   <p>
-    Stay updated with the latest trends in Ollywood cinema, discover new
-    movies, and explore top-rated films all in one place on Ollypedia.
+    Stay updated with the latest trends in bollywood cinema, discover new
+    movies, and explore top-rated films all in one place on The Cinema Verse.
   </p>
 </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -368,25 +368,25 @@ export default async function MovieCategoryPage({
 
           {/* Internal links */}
           <div className="mt-16 p-6 bg-[#111] border border-[#1e1e1e] rounded-2xl">
-            <h2 className="text-lg font-semibold text-white mb-4">Explore More Ollywood Content</h2>
+            <h2 className="text-lg font-semibold text-white mb-4">Explore More bollywood Content</h2>
             <div className="flex flex-wrap gap-2">
               {[
-                { label: "Odia Movies 2025",       href: "/movies/2025" },
-                { label: "Odia Movies 2024",       href: "/movies/2024" },
+                { label: "Hindi Movies 2025",       href: "/movies/2025" },
+                { label: "Hindi Movies 2024",       href: "/movies/2024" },
                 { label: "Upcoming Movies",        href: "/movies/upcoming" },
                 { label: "Latest Songs",           href: "/songs/latest" },
                 { label: "Trending Songs",         href: "/songs/trending" },
-                { label: "Odia Songs 2026",        href: "/songs/2026" },
+                { label: "bollywood Songs 2026",        href: "/songs/2026" },
                 { label: "Top Singers",            href: "/songs/singers" },
                 { label: "Cast & Crew",            href: "/cast" },
-                { label: "Ollywood News",          href: "/news" },
-                { label: "Know About Odia Movies", href: "/blog/odia-movies" },
-                { label: "History of Ollywood",    href: "/blog/history-of-ollywood" },
+                { label: "bollywood News",          href: "/news" },
+                { label: "Know About Hindi Movies", href: "/blog/bollywood-movies" },
+                { label: "History of bollywood",    href: "/blog/history-of-bollywood" },
               ].map((l) => (
                 <Link
                   key={l.href}
                   href={l.href}
-                  className="text-xs text-gray-400 hover:text-orange-400 bg-[#181818] hover:bg-orange-500/10 border border-[#222] hover:border-orange-500/30 px-3 py-1.5 rounded-full transition-all"
+                  className="text-xs text-gray-400 hover:text-brand-400 bg-[#181818] hover:bg-brand-500/10 border border-[#222] hover:border-brand-500/30 px-3 py-1.5 rounded-full transition-all"
                 >
                   {l.label}
                 </Link>

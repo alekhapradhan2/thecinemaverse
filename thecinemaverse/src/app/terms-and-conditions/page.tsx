@@ -7,25 +7,25 @@ import { Film, ChevronRight, Shield, Eye, FileText, AlertCircle, Scale, Mail } f
 
 // ── SEO Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Ollypedia — Odia Cinema Encyclopedia",
+  title: "Terms & Conditions | The Cinema Verse — Hindi Cinema Encyclopedia",
   description:
-    "Read the Terms and Conditions for using Ollypedia, the most complete online encyclopedia for Odia movies and the Ollywood film industry. We do not collect any personal user data.",
+    "Read the Terms and Conditions for using The Cinema Verse, the most complete online encyclopedia for hindi movies and the bollywood film industry. We do not collect any personal user data.",
   keywords: [
-    "Ollypedia terms and conditions",
-    "Ollypedia terms of use",
-    "Ollywood website terms",
-    "Odia cinema website policy",
+    "The Cinema Verse terms and conditions",
+    "The Cinema Verse terms of use",
+    "bollywood website terms",
+    "hindi cinema website policy",
     "no data collection policy",
   ],
   alternates: {
-    canonical: "https://ollypedia.com/terms-and-conditions",
+    canonical: "https://thecinemaverse.com/terms-and-conditions",
   },
   openGraph: {
-    title: "Terms & Conditions | Ollypedia",
+    title: "Terms & Conditions | The Cinema Verse",
     description:
       "Our Terms & Conditions are simple: use the site freely, we respect your privacy and collect no personal data.",
-    url: "https://ollypedia.com/terms-and-conditions",
-    siteName: "Ollypedia",
+    url: "https://thecinemaverse.com/terms-and-conditions",
+    siteName: "The Cinema Verse",
     type: "website",
   },
 };
@@ -37,8 +37,8 @@ const sections = [
     icon: FileText,
     title: "1. Acceptance of Terms",
     content: [
-      "By accessing and using Ollypedia (ollypedia.com), you agree to be bound by these Terms and Conditions. If you do not agree to any part of these terms, please discontinue using the website.",
-      "These terms apply to all visitors, users, and anyone else who accesses or uses Ollypedia. We may update these terms from time to time; continued use of the site after changes constitutes your acceptance of the new terms.",
+      "By accessing and using The Cinema Verse (thecinemaverse.com), you agree to be bound by these Terms and Conditions. If you do not agree to any part of these terms, please discontinue using the website.",
+      "These terms apply to all visitors, users, and anyone else who accesses or uses The Cinema Verse. We may update these terms from time to time; continued use of the site after changes constitutes your acceptance of the new terms.",
     ],
   },
   {
@@ -47,8 +47,8 @@ const sections = [
     title: "2. No Personal Data Collection",
     highlight: true,
     content: [
-      "Ollypedia does not collect, store, process, or share any personal data from its users. We do not require you to create an account, log in, or provide any personal information to browse or use this website.",
-      "We do not use tracking cookies, analytics that identify individuals, advertising trackers, or any technology designed to collect personal information. You can enjoy the full content of Ollypedia completely anonymously.",
+      "The Cinema Verse does not collect, store, process, or share any personal data from its users. We do not require you to create an account, log in, or provide any personal information to browse or use this website.",
+      "We do not use tracking cookies, analytics that identify individuals, advertising trackers, or any technology designed to collect personal information. You can enjoy the full content of The Cinema Verse completely anonymously.",
       "Any technical data that may be processed by our hosting infrastructure (such as server logs) is used solely for security and operational purposes and is not used to identify or profile individual users.",
     ],
   },
@@ -57,8 +57,8 @@ const sections = [
     icon: Eye,
     title: "3. Use of Content",
     content: [
-      "All content on Ollypedia — including movie information, cast profiles, song listings, articles, reviews, and editorial text — is provided for informational and entertainment purposes only.",
-      "You may read, share, and link to content on Ollypedia for personal, non-commercial purposes. You may not reproduce, republish, scrape, or redistribute our content in bulk or for commercial purposes without prior written permission.",
+      "All content on The Cinema Verse — including movie information, cast profiles, song listings, articles, reviews, and editorial text — is provided for informational and entertainment purposes only.",
+      "You may read, share, and link to content on The Cinema Verse for personal, non-commercial purposes. You may not reproduce, republish, scrape, or redistribute our content in bulk or for commercial purposes without prior written permission.",
       "Movie posters, promotional images, and other media displayed on this site remain the property of their respective studios, distributors, and copyright holders. They are used here for editorial and encyclopedic purposes under fair use principles.",
     ],
   },
@@ -67,9 +67,9 @@ const sections = [
     icon: Scale,
     title: "4. Intellectual Property",
     content: [
-      "The Ollypedia name, logo, design, and original written content are the intellectual property of Ollypedia and may not be used without permission.",
-      "Movie titles, actor names, song titles, and other factual information about Odia films are not subject to copyright and are provided as factual reference. Reviews and editorial opinions expressed on this site are original works authored by Ollypedia.",
-      "If you believe any content on Ollypedia infringes your copyright, please contact us at the email below and we will respond promptly.",
+      "The The Cinema Verse name, logo, design, and original written content are the intellectual property of The Cinema Verse and may not be used without permission.",
+      "Movie titles, actor names, song titles, and other factual information about hindi films are not subject to copyright and are provided as factual reference. Reviews and editorial opinions expressed on this site are original works authored by The Cinema Verse.",
+      "If you believe any content on The Cinema Verse infringes your copyright, please contact us at the email below and we will respond promptly.",
     ],
   },
   {
@@ -77,9 +77,9 @@ const sections = [
     icon: AlertCircle,
     title: "5. Accuracy & Disclaimers",
     content: [
-      "Ollypedia strives to provide accurate, up-to-date information about Odia cinema. However, we cannot guarantee the completeness or accuracy of all information, especially for historical films or rapidly changing box office data.",
+      "The Cinema Verse strives to provide accurate, up-to-date information about hindi cinema. However, we cannot guarantee the completeness or accuracy of all information, especially for historical films or rapidly changing box office data.",
       "Box office figures, ratings, and verdicts are based on publicly available information and editorial judgment. They should not be taken as financial advice or definitive commercial assessments.",
-      "External links on this site point to third-party websites. Ollypedia is not responsible for the content, accuracy, or privacy practices of any linked websites.",
+      "External links on this site point to third-party websites. The Cinema Verse is not responsible for the content, accuracy, or privacy practices of any linked websites.",
     ],
   },
   {
@@ -87,7 +87,7 @@ const sections = [
     icon: FileText,
     title: "6. Acceptable Use",
     content: [
-      "You agree to use Ollypedia only for lawful purposes. You must not use the site in any way that could damage, disable, or impair the website or interfere with other users.",
+      "You agree to use The Cinema Verse only for lawful purposes. You must not use the site in any way that could damage, disable, or impair the website or interfere with other users.",
       "Automated scraping, crawling, or bulk downloading of content without prior written permission is prohibited. Reasonable crawling by search engine bots for indexing purposes is permitted.",
       "Any attempt to gain unauthorised access to our systems, inject malicious code, or interfere with the normal operation of the site is strictly prohibited and may be reported to relevant authorities.",
     ],
@@ -98,7 +98,7 @@ const sections = [
     title: "7. Changes to These Terms",
     content: [
       "We reserve the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to this page with an updated revision date.",
-      "We encourage you to review these terms periodically. Your continued use of Ollypedia after any changes are posted constitutes your acceptance of the new terms.",
+      "We encourage you to review these terms periodically. Your continued use of The Cinema Verse after any changes are posted constitutes your acceptance of the new terms.",
     ],
   },
   {
@@ -136,9 +136,9 @@ export default function TermsAndConditionsPage() {
           <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
             <ol className="flex items-center gap-1.5 text-[11px] text-gray-600 flex-wrap">
               <li>
-                <Link href="/" className="hover:text-orange-400 transition-colors flex items-center gap-1">
+                <Link href="/" className="hover:text-brand-400 transition-colors flex items-center gap-1">
                   <Film className="w-3 h-3" aria-hidden="true" />
-                  Ollypedia
+                  The Cinema Verse
                 </Link>
               </li>
               <li aria-hidden="true">
@@ -155,11 +155,11 @@ export default function TermsAndConditionsPage() {
               style={{ background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.20)" }}
               aria-hidden="true"
             >
-              <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-orange-400" />
+              <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-brand-400" />
             </div>
 
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.20em] text-orange-500 mb-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.20em] text-brand-500 mb-2">
                 Legal
               </p>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
@@ -194,7 +194,7 @@ export default function TermsAndConditionsPage() {
             </div>
             <p className="text-gray-400 text-[13px] leading-relaxed sm:ml-1">
               <strong className="text-gray-300 font-medium">We do not collect any personal data.</strong>{" "}
-              No accounts, no tracking, no cookies that identify you. Browse Ollypedia freely and
+              No accounts, no tracking, no cookies that identify you. Browse The Cinema Verse freely and
               anonymously.
             </p>
           </div>
@@ -220,10 +220,10 @@ export default function TermsAndConditionsPage() {
                     <li key={s.id}>
                       <a
                         href={`#${s.id}`}
-                        className="group flex items-center gap-2 text-[12px] text-gray-600 hover:text-orange-400 transition-colors py-1"
+                        className="group flex items-center gap-2 text-[12px] text-gray-600 hover:text-brand-400 transition-colors py-1"
                       >
                         <span
-                          className="w-1 h-1 rounded-full bg-gray-700 group-hover:bg-orange-500 transition-colors flex-shrink-0"
+                          className="w-1 h-1 rounded-full bg-gray-700 group-hover:bg-brand-500 transition-colors flex-shrink-0"
                           aria-hidden="true"
                         />
                         {s.title.replace(/^\d+\.\s/, "")}
@@ -240,14 +240,14 @@ export default function TermsAndConditionsPage() {
                 </p>
                 <Link
                   href="/privacy"
-                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-orange-400 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-brand-400 transition-colors"
                 >
                   <ChevronRight className="w-2.5 h-2.5" aria-hidden="true" />
                   Privacy Policy
                 </Link>
                 <Link
                   href="/disclaimer"
-                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-orange-400 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-brand-400 transition-colors"
                 >
                   <ChevronRight className="w-2.5 h-2.5" aria-hidden="true" />
                   Disclaimer
@@ -262,10 +262,10 @@ export default function TermsAndConditionsPage() {
             itemScope
             itemType="https://schema.org/WebPage"
           >
-            <meta itemProp="name" content="Terms and Conditions — Ollypedia" />
+            <meta itemProp="name" content="Terms and Conditions — The Cinema Verse" />
             <meta
               itemProp="description"
-              content="Terms and Conditions for Ollypedia, the Odia cinema encyclopedia. No personal data is collected from users."
+              content="Terms and Conditions for The Cinema Verse, the hindi cinema encyclopedia. No personal data is collected from users."
             />
 
             <div className="space-y-10 sm:space-y-12">
@@ -288,7 +288,7 @@ export default function TermsAndConditionsPage() {
                         aria-hidden="true"
                       >
                         <Icon
-                          className={`w-3.5 h-3.5 ${section.highlight ? "text-green-400" : "text-orange-400"}`}
+                          className={`w-3.5 h-3.5 ${section.highlight ? "text-green-400" : "text-brand-400"}`}
                         />
                       </div>
                       <h2
@@ -323,7 +323,7 @@ export default function TermsAndConditionsPage() {
                       <div className="mt-5">
                         <Link
                           href="/contact"
-                          className="inline-flex items-center gap-2 text-[13px] font-medium text-orange-400 hover:text-orange-300 border border-orange-500/25 hover:border-orange-400/50 bg-orange-500/8 hover:bg-orange-500/12 px-4 py-2 rounded-lg transition-all duration-200"
+                          className="inline-flex items-center gap-2 text-[13px] font-medium text-brand-400 hover:text-brand-300 border border-brand-500/25 hover:border-brand-400/50 bg-brand-500/8 hover:bg-brand-500/12 px-4 py-2 rounded-lg transition-all duration-200"
                         >
                           <Mail className="w-3.5 h-3.5" aria-hidden="true" />
                           Contact Us
@@ -342,13 +342,13 @@ export default function TermsAndConditionsPage() {
             >
               <p className="text-[12px] text-gray-600 leading-relaxed">
                 These Terms &amp; Conditions govern your use of{" "}
-                <strong className="text-gray-500">Ollypedia</strong> and constitute the entire
-                agreement between you and Ollypedia regarding your use of this website. By using
-                Ollypedia you acknowledge that you have read, understood, and agree to be bound by
+                <strong className="text-gray-500">The Cinema Verse</strong> and constitute the entire
+                agreement between you and The Cinema Verse regarding your use of this website. By using
+                The Cinema Verse you acknowledge that you have read, understood, and agree to be bound by
                 these terms.
               </p>
               <p className="text-[11px] text-gray-700 mt-2">
-                Last updated: <time dateTime="2025-01-01">{lastUpdated}</time> &nbsp;·&nbsp; Ollypedia,
+                Last updated: <time dateTime="2025-01-01">{lastUpdated}</time> &nbsp;·&nbsp; The Cinema Verse,
                 Odisha, India
               </p>
             </div>

@@ -161,9 +161,9 @@ const CAT: Record<Category, {
   movie: {
     label: "Movie", sectionLabel: "Movies",
     Icon: Clapperboard,
-    color:  "text-orange-400",
-    pill:   "bg-orange-500/15 text-orange-300",
-    iconBg: "bg-orange-500/15",
+    color:  "text-brand-400",
+    pill:   "bg-brand-500/15 text-brand-300",
+    iconBg: "bg-brand-500/15",
   },
   cast: {
     label: "Cast", sectionLabel: "Cast",
@@ -202,7 +202,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
       <>
         {parts.map((p, i) =>
           p.toLowerCase() === q.toLowerCase()
-            ? <mark key={i} className="bg-orange-500/30 text-orange-200 rounded-[3px] not-italic px-px">{p}</mark>
+            ? <mark key={i} className="bg-brand-500/30 text-brand-200 rounded-[3px] not-italic px-px">{p}</mark>
             : <span key={i}>{p}</span>
         )}
       </>
@@ -301,7 +301,7 @@ function SearchDropdown({
       {/* ── Loading ── */}
       {loading && (
         <div className="flex items-center gap-3 px-5 py-4">
-          <span className="w-4 h-4 rounded-full border-2 border-orange-500 border-t-transparent animate-spin flex-shrink-0" />
+          <span className="w-4 h-4 rounded-full border-2 border-brand-500 border-t-transparent animate-spin flex-shrink-0" />
           <span className="text-sm text-gray-400">
             Searching for <span className="text-white font-medium">"{query}"</span>…
           </span>
@@ -322,7 +322,7 @@ function SearchDropdown({
           </div>
           <button
             onClick={onViewAll}
-            className="mt-1 text-xs text-orange-400 hover:text-orange-300 flex items-center gap-1 transition-colors"
+            className="mt-1 text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1 transition-colors"
           >
             Search anyway <ChevronRight className="w-3 h-3" />
           </button>
@@ -365,7 +365,7 @@ function SearchDropdown({
             </span>
             <button
               onClick={onViewAll}
-              className="flex items-center gap-1.5 text-xs font-semibold text-orange-400 hover:text-orange-300 transition-colors group"
+              className="flex items-center gap-1.5 text-xs font-semibold text-brand-400 hover:text-brand-300 transition-colors group"
             >
               See all results
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
@@ -390,13 +390,13 @@ function MoviesYearDropdown({ onClose }: { onClose: () => void }) {
       onMouseLeave={onClose}
     >
       {/* Header */}
-      <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-white/[0.07] bg-orange-500/5">
-        <div className="w-7 h-7 bg-orange-500/20 rounded-lg flex items-center justify-center">
-          <Calendar className="w-3.5 h-3.5 text-orange-400" />
+      <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-white/[0.07] bg-brand-500/5">
+        <div className="w-7 h-7 bg-brand-500/20 rounded-lg flex items-center justify-center">
+          <Calendar className="w-3.5 h-3.5 text-brand-400" />
         </div>
         <div>
           <p className="text-xs font-bold text-white tracking-wide">Movies by Year</p>
-          <p className="text-[10px] text-gray-500 mt-0.5">Browse Odia films by release year</p>
+          <p className="text-[10px] text-gray-500 mt-0.5">Browse hindi films by release year</p>
         </div>
       </div>
 
@@ -413,21 +413,21 @@ function MoviesYearDropdown({ onClose }: { onClose: () => void }) {
                 className={clsx(
                   "group relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-150 text-center overflow-hidden",
                   isCurrent
-                    ? "bg-orange-500/20 border border-orange-500/40 hover:bg-orange-500/30"
-                    : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-orange-500/25",
+                    ? "bg-brand-500/20 border border-brand-500/40 hover:bg-brand-500/30"
+                    : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-brand-500/25",
                 )}
               >
                 {isCurrent && (
-                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-orange-500 rounded-full" />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full" />
                 )}
                 <span className={clsx(
                   "text-sm font-bold transition-colors",
-                  isCurrent ? "text-orange-400" : "text-gray-300 group-hover:text-orange-400",
+                  isCurrent ? "text-brand-400" : "text-gray-300 group-hover:text-brand-400",
                 )}>
                   {yr}
                 </span>
                 {isCurrent && (
-                  <span className="text-[9px] text-orange-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
+                  <span className="text-[9px] text-brand-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
                 )}
               </Link>
             );
@@ -439,15 +439,15 @@ function MoviesYearDropdown({ onClose }: { onClose: () => void }) {
           <Link
             href="/movies"
             onClick={onClose}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-orange-500/10 border border-white/[0.06] hover:border-orange-500/30 transition-all group"
+            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group"
           >
             <div className="flex items-center gap-2">
-              <Film className="w-3.5 h-3.5 text-orange-500" />
-              <span className="text-xs font-semibold text-gray-300 group-hover:text-orange-400 transition-colors">
-                All Odia Movies
+              <Film className="w-3.5 h-3.5 text-brand-500" />
+              <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors">
+                All Hindi Movies
               </span>
             </div>
-            <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-orange-400 group-hover:translate-x-0.5 transition-all" />
+            <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
           </Link>
         </div>
       </div>
@@ -468,13 +468,13 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
       onMouseLeave={onClose}
     >
       {/* Header */}
-      <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-white/[0.07] bg-orange-500/5">
-        <div className="w-7 h-7 bg-orange-500/20 rounded-lg flex items-center justify-center">
-          <TrendingUp className="w-3.5 h-3.5 text-orange-400" />
+      <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-white/[0.07] bg-brand-500/5">
+        <div className="w-7 h-7 bg-brand-500/20 rounded-lg flex items-center justify-center">
+          <TrendingUp className="w-3.5 h-3.5 text-brand-400" />
         </div>
         <div>
           <p className="text-xs font-bold text-white tracking-wide">Box Office by Year</p>
-          <p className="text-[10px] text-gray-500 mt-0.5">Odia film collections, year-wise</p>
+          <p className="text-[10px] text-gray-500 mt-0.5">hindi film collections, year-wise</p>
         </div>
       </div>
 
@@ -491,21 +491,21 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
                 className={clsx(
                   "group relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-150 text-center overflow-hidden",
                   isCurrent
-                    ? "bg-orange-500/20 border border-orange-500/40 hover:bg-orange-500/30"
-                    : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-orange-500/25",
+                    ? "bg-brand-500/20 border border-brand-500/40 hover:bg-brand-500/30"
+                    : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-brand-500/25",
                 )}
               >
                 {isCurrent && (
-                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
+                  <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse" />
                 )}
                 <span className={clsx(
                   "text-sm font-bold transition-colors",
-                  isCurrent ? "text-orange-400" : "text-gray-300 group-hover:text-orange-400",
+                  isCurrent ? "text-brand-400" : "text-gray-300 group-hover:text-brand-400",
                 )}>
                   {yr}
                 </span>
                 {isCurrent && (
-                  <span className="text-[9px] text-orange-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
+                  <span className="text-[9px] text-brand-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
                 )}
               </Link>
             );
@@ -530,15 +530,15 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
           <Link
             href="/box-office"
             onClick={onClose}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-orange-500/10 border border-white/[0.06] hover:border-orange-500/30 transition-all group"
+            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group"
           >
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-3.5 h-3.5 text-orange-500" />
-              <span className="text-xs font-semibold text-gray-300 group-hover:text-orange-400 transition-colors">
+              <TrendingUp className="w-3.5 h-3.5 text-brand-500" />
+              <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors">
                 All Box Office Data
               </span>
             </div>
-            <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-orange-400 group-hover:translate-x-0.5 transition-all" />
+            <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
           </Link>
         </div>
       </div>
@@ -695,7 +695,7 @@ export function Navbar() {
     "w-full pl-9 pr-3 py-2 rounded-xl text-sm text-white",
     "bg-[#181818] border border-white/10",
     "placeholder-gray-600 focus:outline-none",
-    "focus:border-orange-500/50 focus:bg-[#1e1e1e]",
+    "focus:border-brand-500/50 focus:bg-[#1e1e1e]",
     "transition-all duration-150",
   ].join(" ");
 
@@ -708,12 +708,12 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo ──────────────────────────────────────────────────────── */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="Ollypedia — Home">
-            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center group-hover:bg-orange-600 transition-colors">
+          <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="The Cinema Verse — Home">
+            <div className="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center group-hover:bg-brand-600 transition-colors">
               <Film className="w-5 h-5 text-white" aria-hidden="true" />
             </div>
             <span className="font-bold text-[1.2rem] text-white tracking-wide select-none">
-              Olly<span className="text-orange-500">pedia</span>
+              The Cinema <span className="text-brand-500">Verse</span>
             </span>
           </Link>
 
@@ -737,7 +737,7 @@ export function Navbar() {
                       className={clsx(
                         "flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150",
                         pathname?.startsWith(link.href)
-                          ? "text-orange-400 bg-orange-500/10"
+                          ? "text-brand-400 bg-brand-500/10"
                           : "text-gray-400 hover:text-white hover:bg-white/5",
                       )}
                     >
@@ -745,7 +745,7 @@ export function Navbar() {
                       <ChevronRight
                         className={clsx(
                           "w-3 h-3 transition-transform duration-200",
-                          moviesDropOpen ? "rotate-90 text-orange-400" : "rotate-0",
+                          moviesDropOpen ? "rotate-90 text-brand-400" : "rotate-0",
                         )}
                       />
                     </Link>
@@ -773,7 +773,7 @@ export function Navbar() {
                       className={clsx(
                         "flex items-center gap-1 px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150",
                         pathname?.startsWith(link.href)
-                          ? "text-orange-400 bg-orange-500/10"
+                          ? "text-brand-400 bg-brand-500/10"
                           : "text-gray-400 hover:text-white hover:bg-white/5",
                       )}
                     >
@@ -781,7 +781,7 @@ export function Navbar() {
                       <ChevronRight
                         className={clsx(
                           "w-3 h-3 transition-transform duration-200",
-                          boDropOpen ? "rotate-90 text-orange-400" : "rotate-0",
+                          boDropOpen ? "rotate-90 text-brand-400" : "rotate-0",
                         )}
                       />
                     </Link>
@@ -800,7 +800,7 @@ export function Navbar() {
                   className={clsx(
                     "px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150",
                     pathname?.startsWith(link.href)
-                      ? "text-orange-400 bg-orange-500/10"
+                      ? "text-brand-400 bg-brand-500/10"
                       : "text-gray-400 hover:text-white hover:bg-white/5",
                   )}
                 >
@@ -832,7 +832,7 @@ export function Navbar() {
                         aria-autocomplete="list"
                         aria-expanded={showDropdown}
                         aria-haspopup="listbox"
-                        aria-label="Search Ollypedia"
+                        aria-label="Search The Cinema Verse"
                         className={inputCls}
                       />
                     </div>
@@ -920,7 +920,7 @@ export function Navbar() {
                 <button
                   type="submit"
                   aria-label="Search"
-                  className="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-xl text-white text-sm font-semibold transition-colors"
+                  className="px-4 py-2 bg-brand-500 hover:bg-brand-600 rounded-xl text-white text-sm font-semibold transition-colors"
                 >
                   Go
                 </button>
@@ -948,19 +948,19 @@ export function Navbar() {
                       className={clsx(
                         "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium mb-0.5 transition-colors",
                         pathname?.startsWith(link.href)
-                          ? "text-orange-400 bg-orange-500/10"
+                          ? "text-brand-400 bg-brand-500/10"
                           : "text-gray-400 hover:text-white hover:bg-white/5",
                       )}
                     >
                       <span>{link.label}</span>
                       <ChevronRight className={clsx(
                         "w-4 h-4 transition-transform duration-200",
-                        mobileYearsOpen ? "rotate-90 text-orange-400" : "",
+                        mobileYearsOpen ? "rotate-90 text-brand-400" : "",
                       )} />
                     </button>
                     {mobileYearsOpen && (
                       <div className="mb-2 mx-2 p-3 bg-white/[0.03] border border-white/[0.07] rounded-xl">
-                        <p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest mb-2 px-1">
+                        <p className="text-[10px] font-bold text-brand-400 uppercase tracking-widest mb-2 px-1">
                           Browse by Year
                         </p>
                         <div className="grid grid-cols-4 gap-1.5">
@@ -969,7 +969,7 @@ export function Navbar() {
                               key={yr}
                               href={`/movies/year/${yr}`}
                               onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
-                              className="flex items-center justify-center py-2 rounded-lg bg-white/[0.04] border border-white/[0.07] hover:bg-orange-500/15 hover:border-orange-500/30 text-xs font-semibold text-gray-400 hover:text-orange-400 transition-all"
+                              className="flex items-center justify-center py-2 rounded-lg bg-white/[0.04] border border-white/[0.07] hover:bg-brand-500/15 hover:border-brand-500/30 text-xs font-semibold text-gray-400 hover:text-brand-400 transition-all"
                             >
                               {yr}
                             </Link>
@@ -978,7 +978,7 @@ export function Navbar() {
                         <Link
                           href="/movies"
                           onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
-                          className="flex items-center justify-center gap-1.5 mt-2 py-2 rounded-lg bg-orange-500/10 border border-orange-500/20 text-xs font-semibold text-orange-400 hover:bg-orange-500/20 transition-all"
+                          className="flex items-center justify-center gap-1.5 mt-2 py-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
                         >
                           <Film className="w-3 h-3" />
                           All Movies
@@ -997,19 +997,19 @@ export function Navbar() {
                       className={clsx(
                         "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium mb-0.5 transition-colors",
                         pathname?.startsWith(link.href)
-                          ? "text-orange-400 bg-orange-500/10"
+                          ? "text-brand-400 bg-brand-500/10"
                           : "text-gray-400 hover:text-white hover:bg-white/5",
                       )}
                     >
                       <span>{link.label}</span>
                       <ChevronRight className={clsx(
                         "w-4 h-4 transition-transform duration-200",
-                        mobileBoOpen ? "rotate-90 text-orange-400" : "",
+                        mobileBoOpen ? "rotate-90 text-brand-400" : "",
                       )} />
                     </button>
                     {mobileBoOpen && (
                       <div className="mb-2 mx-2 p-3 bg-white/[0.03] border border-white/[0.07] rounded-xl">
-                        <p className="text-[10px] font-bold text-orange-400 uppercase tracking-widest mb-2 px-1">
+                        <p className="text-[10px] font-bold text-brand-400 uppercase tracking-widest mb-2 px-1">
                           Box Office by Year
                         </p>
                         <div className="grid grid-cols-4 gap-1.5">
@@ -1021,8 +1021,8 @@ export function Navbar() {
                               className={clsx(
                                 "flex items-center justify-center py-2 rounded-lg border text-xs font-semibold transition-all",
                                 yr === _currentYear
-                                  ? "bg-orange-500/15 border-orange-500/30 text-orange-400"
-                                  : "bg-white/[0.04] border-white/[0.07] text-gray-400 hover:bg-orange-500/15 hover:border-orange-500/30 hover:text-orange-400",
+                                  ? "bg-brand-500/15 border-brand-500/30 text-brand-400"
+                                  : "bg-white/[0.04] border-white/[0.07] text-gray-400 hover:bg-brand-500/15 hover:border-brand-500/30 hover:text-brand-400",
                               )}
                             >
                               {yr}
@@ -1041,7 +1041,7 @@ export function Navbar() {
                           <Link
                             href="/box-office"
                             onClick={() => { setMenuOpen(false); setMobileBoOpen(false); }}
-                            className="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-orange-500/10 border border-orange-500/20 text-xs font-semibold text-orange-400 hover:bg-orange-500/20 transition-all"
+                            className="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
                           >
                             <TrendingUp className="w-3 h-3" />
                             All Box Office Data
@@ -1062,7 +1062,7 @@ export function Navbar() {
                   className={clsx(
                     "flex items-center px-3 py-2.5 rounded-xl text-sm font-medium mb-0.5 transition-colors",
                     pathname?.startsWith(link.href)
-                      ? "text-orange-400 bg-orange-500/10"
+                      ? "text-brand-400 bg-brand-500/10"
                       : "text-gray-400 hover:text-white hover:bg-white/5",
                   )}
                 >

@@ -18,12 +18,12 @@ export const revalidate = 600;
 // ── SEO METADATA ──────────────────────────────────────────────────────────────
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  "Box Office":   "Day-wise Odia movie box office collection reports, hit/flop verdicts, and trade analysis for Ollywood films.",
-  "Reviews":      "In-depth Odia movie reviews — honest, spoiler-aware breakdowns of the latest Ollywood releases.",
-  "Actor":        "Actor profiles, filmographies, and career spotlights for Odia cinema stars.",
-  "Songs":        "Top Odia song lists, music guides, and behind-the-scenes coverage from Ollywood.",
-  "News":         "Latest Ollywood news, announcements, and industry updates from Odia cinema.",
-  "Top Lists":    "Curated top 10 lists covering the best of Ollywood — movies, songs, actors, and more.",
+  "Box Office":   "Day-wise hindi movie box office collection reports, hit/flop verdicts, and trade analysis for bollywood films.",
+  "Reviews":      "In-depth hindi movie reviews — honest, spoiler-aware breakdowns of the latest bollywood releases.",
+  "Actor":        "Actor profiles, filmographies, and career spotlights for hindi cinema stars.",
+  "Songs":        "Top bollywood song lists, music guides, and behind-the-scenes coverage from bollywood.",
+  "News":         "Latest bollywood news, announcements, and industry updates from hindi cinema.",
+  "Top Lists":    "Curated top 10 lists covering the best of bollywood — movies, songs, actors, and more.",
 };
 
 export async function generateMetadata({
@@ -46,35 +46,35 @@ export async function generateMetadata({
   const catLabel  = category ? ` | ${category}` : "";
 
   const title = query
-    ? `Search: "${query}" | Ollypedia Blog`
+    ? `Search: "${query}" | The Cinema Verse Blog`
     : category
-    ? `${category} Articles${pageLabel} | Ollypedia Blog`
-    : `Ollywood Blog${catLabel}${pageLabel} | Odia Cinema News, Reviews & Guides`;
+    ? `${category} Articles${pageLabel} | The Cinema Verse Blog`
+    : `bollywood Blog${catLabel}${pageLabel} | Hindi Cinema News, Reviews & Guides`;
 
   const description = category && CATEGORY_DESCRIPTIONS[category]
     ? CATEGORY_DESCRIPTIONS[category]
     : query
-    ? `Search results for "${query}" on the Ollypedia Blog — Odia cinema news, reviews, and guides.`
-    : "Explore the latest Ollywood blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of Odia cinema. Updated weekly.";
+    ? `Search results for "${query}" on the The Cinema Verse Blog — hindi cinema news, reviews, and guides.`
+    : "Explore the latest bollywood blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of hindi cinema. Updated weekly.";
 
   const canonical = category
-    ? `https://ollypedia.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
+    ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
     : page > 1
-    ? `https://ollypedia.in/blog?page=${page}`
-    : "https://ollypedia.in/blog";
+    ? `https://thecinemaverse.in/blog?page=${page}`
+    : "https://thecinemaverse.in/blog";
 
   // ── PREV link ──
   const prevPage = page > 1
     ? (page === 2
-        ? (category ? `https://ollypedia.in/blog?category=${encodeURIComponent(category)}` : "https://ollypedia.in/blog")
-        : (category ? `https://ollypedia.in/blog?category=${encodeURIComponent(category)}&page=${page - 1}` : `https://ollypedia.in/blog?page=${page - 1}`))
+        ? (category ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}` : "https://thecinemaverse.in/blog")
+        : (category ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}&page=${page - 1}` : `https://thecinemaverse.in/blog?page=${page - 1}`))
     : undefined;
 
   // ── NEXT link (new) ──
   const nextPage = page < totalPages
     ? (category
-        ? `https://ollypedia.in/blog?category=${encodeURIComponent(category)}&page=${page + 1}`
-        : `https://ollypedia.in/blog?page=${page + 1}`)
+        ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}&page=${page + 1}`
+        : `https://thecinemaverse.in/blog?page=${page + 1}`)
     : undefined;
 
   return {
@@ -87,26 +87,26 @@ export async function generateMetadata({
     },
     robots: query ? { index: false, follow: true } : { index: true, follow: true },
     keywords: [
-      "Ollywood blog", "Odia cinema news", "Odia movie reviews", "Ollywood updates",
-      "Odia film industry", "Ollywood actor profiles", "Odia songs guide",
-      "Odia box office blog", "Ollywood top 10", "Odia cinema 2026",
-      ...(category ? [category, `${category} Odia movies`, `Ollywood ${category.toLowerCase()}`] : []),
+      "bollywood blog", "hindi cinema news", "hindi movie reviews", "bollywood updates",
+      "hindi film industry", "bollywood actor profiles", "bollywood songs guide",
+      "bollywood box office blog", "bollywood top 10", "hindi cinema 2026",
+      ...(category ? [category, `${category} hindi movies`, `bollywood ${category.toLowerCase()}`] : []),
     ],
     openGraph: {
       title,
       description,
       url:      canonical,
-      siteName: "Ollypedia",
+      siteName: "The Cinema Verse",
       type:     "website",
       locale:   "en_IN",
-      images: [{ url: "https://ollypedia.in/og-blog.jpg", width: 1200, height: 630, alt: "Ollypedia Blog — Odia Cinema News & Reviews" }],
+      images: [{ url: "https://thecinemaverse.in/og-blog.jpg", width: 1200, height: 630, alt: "The Cinema Verse Blog — Hindi Cinema News & Reviews" }],
     },
     twitter: {
       card:        "summary_large_image",
       title,
       description,
-      site:        "@ollypedia",
-      images:      ["https://ollypedia.in/og-blog.jpg"],
+      site:        "@thecinemaverse",
+      images:      ["https://thecinemaverse.in/og-blog.jpg"],
     },
   };
 }
@@ -125,15 +125,15 @@ function BlogSchema({
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "Ollypedia Blog",
-    description: "News, reviews, and guides about Ollywood — the Odia-language film industry based in Bhubaneswar, Odisha.",
-    url: "https://ollypedia.in/blog",
+    name: "The Cinema Verse Blog",
+    description: "News, reviews, and guides about bollywood — the bollywood-language film industry based in Bhubaneswar, Odisha.",
+    url: "https://thecinemaverse.in/blog",
     dateModified: mostRecentDate,
     publisher: {
       "@type": "Organization",
-      name: "Ollypedia",
-      url: "https://ollypedia.in",
-      logo: { "@type": "ImageObject", url: "https://ollypedia.in/logo.png" },
+      name: "The Cinema Verse",
+      url: "https://thecinemaverse.in",
+      logo: { "@type": "ImageObject", url: "https://thecinemaverse.in/logo.png" },
       address: {
         "@type": "PostalAddress",
         addressLocality: "Bhubaneswar",
@@ -145,21 +145,21 @@ function BlogSchema({
     genre: "Entertainment",
     about: {
       "@type": "Thing",
-      name: "Ollywood",
-      description: "The Odia-language film industry",
-      sameAs: "https://en.wikipedia.org/wiki/Odia_cinema",
+      name: "bollywood",
+      description: "The bollywood-language film industry",
+      sameAs: "https://en.wikipedia.org/wiki/bollywood_cinema",
     },
   };
 
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Latest Ollywood Blog Posts",
+    name: "Latest bollywood Blog Posts",
     numberOfItems: blogs.length,
     itemListElement: blogs.slice(0, 10).map((b: any, i: number) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `https://ollypedia.in/blog/${b.slug}`,
+      url: `https://thecinemaverse.in/blog/${b.slug}`,
       name: b.title,
       // NEW: richer item data for Google
       image: b.coverImage ?? undefined,
@@ -174,13 +174,13 @@ function BlogSchema({
     ? {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: "Ollypedia",
-        url: "https://ollypedia.in",
+        name: "The Cinema Verse",
+        url: "https://thecinemaverse.in",
         potentialAction: {
           "@type": "SearchAction",
           target: {
             "@type": "EntryPoint",
-            urlTemplate: "https://ollypedia.in/blog?q={search_term_string}",
+            urlTemplate: "https://thecinemaverse.in/blog?q={search_term_string}",
           },
           "query-input": "required name=search_term_string",
         },
@@ -377,7 +377,7 @@ export default async function BlogPage({
                 itemType="https://schema.org/BreadcrumbList"
               >
                 <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
-                  <a href="/" itemProp="item" className="hover:text-orange-400 transition-colors">
+                  <a href="/" itemProp="item" className="hover:text-brand-400 transition-colors">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -386,14 +386,14 @@ export default async function BlogPage({
                 <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
                   {category ? (
                     <>
-                      <a href="/blog" itemProp="item" className="hover:text-orange-400 transition-colors">
+                      <a href="/blog" itemProp="item" className="hover:text-brand-400 transition-colors">
                         <span itemProp="name">Blog</span>
                       </a>
                       <meta itemProp="position" content="2" />
                     </>
                   ) : (
                     <>
-                      <span itemProp="name" className="text-orange-400">Blog</span>
+                      <span itemProp="name" className="text-brand-400">Blog</span>
                       <meta itemProp="position" content="2" />
                     </>
                   )}
@@ -403,7 +403,7 @@ export default async function BlogPage({
                   <>
                     <span aria-hidden>/</span>
                     <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
-                      <span itemProp="name" className="text-orange-400">{category}</span>
+                      <span itemProp="name" className="text-brand-400">{category}</span>
                       <meta itemProp="position" content="3" />
                     </li>
                   </>
@@ -416,40 +416,40 @@ export default async function BlogPage({
                 {/* H1 — dynamic per category/search/page for better keyword targeting */}
                 <h1 className="font-display text-4xl md:text-5xl font-black text-white leading-tight tracking-tight mb-3">
                   {category ? (
-                    <>{category} <span className="text-orange-400">Articles</span></>
+                    <>{category} <span className="text-brand-400">Articles</span></>
                   ) : query ? (
-                    <>Search <span className="text-orange-400">Results</span></>
+                    <>Search <span className="text-brand-400">Results</span></>
                   ) : (
-                    <>Ollywood <span className="text-orange-400">Blog</span></>
+                    <>bollywood <span className="text-brand-400">Blog</span></>
                   )}
                 </h1>
                 <p className="text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed">
                   {category && CATEGORY_DESCRIPTIONS[category]
                     ? CATEGORY_DESCRIPTIONS[category]
                     : query
-                    ? `Showing results for "${query}" across all Odia cinema articles.`
+                    ? `Showing results for "${query}" across all hindi cinema articles.`
                     : <>In-depth movie reviews, actor profiles, top lists, song breakdowns and news
-                      from <strong className="text-gray-300 font-medium">Odia cinema</strong> — updated every week.</>
+                      from <strong className="text-gray-300 font-medium">hindi cinema</strong> — updated every week.</>
                   }
                 </p>
 
                 {/* Stat pills */}
                 <div className="flex flex-wrap gap-2 mt-4">
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/6 border border-white/10 rounded-full px-3 py-1.5 text-gray-300">
-                    <BookOpen className="w-3.5 h-3.5 text-orange-400" />
+                    <BookOpen className="w-3.5 h-3.5 text-brand-400" />
                     {stats.totalPosts}+ Articles
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/6 border border-white/10 rounded-full px-3 py-1.5 text-gray-300">
-                    <TrendingUp className="w-3.5 h-3.5 text-orange-400" />
+                    <TrendingUp className="w-3.5 h-3.5 text-brand-400" />
                     {stats.totalCategories} Categories
                   </span>
                   <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/6 border border-white/10 rounded-full px-3 py-1.5 text-gray-300">
-                    <Star className="w-3.5 h-3.5 text-orange-400" />
+                    <Star className="w-3.5 h-3.5 text-brand-400" />
                     Weekly Updates
                   </span>
                   {totalViews > 0 && (
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/6 border border-white/10 rounded-full px-3 py-1.5 text-gray-300">
-                      <Eye className="w-3.5 h-3.5 text-orange-400" />
+                      <Eye className="w-3.5 h-3.5 text-brand-400" />
                       {totalViews >= 1_000_000
                         ? `${(totalViews / 1_000_000).toFixed(1)}M`
                         : totalViews >= 1_000
@@ -475,8 +475,8 @@ export default async function BlogPage({
                   href="/blog"
                   className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all ${
                     !category
-                      ? "bg-orange-500 border-orange-500 text-white"
-                      : "border-white/15 text-gray-400 hover:border-orange-500/50 hover:text-white"
+                      ? "bg-brand-500 border-brand-500 text-white"
+                      : "border-white/15 text-gray-400 hover:border-brand-500/50 hover:text-white"
                   }`}
                 >
                   All
@@ -487,8 +487,8 @@ export default async function BlogPage({
                     href={`/blog?category=${encodeURIComponent(cat)}`}
                     className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all ${
                       category === cat
-                        ? "bg-orange-500 border-orange-500 text-white"
-                        : "border-white/15 text-gray-400 hover:border-orange-500/50 hover:text-white"
+                        ? "bg-brand-500 border-brand-500 text-white"
+                        : "border-white/15 text-gray-400 hover:border-brand-500/50 hover:text-white"
                     }`}
                   >
                     {cat}
@@ -510,11 +510,11 @@ export default async function BlogPage({
                     ? "No results found"
                     : `Found ${total} article${total !== 1 ? "s" : ""}`}
                   {query    && <> for <strong className="text-white">"{query}"</strong></>}
-                  {category && <> in <strong className="text-orange-400">{category}</strong></>}
+                  {category && <> in <strong className="text-brand-400">{category}</strong></>}
                 </p>
                 <a
                   href="/blog"
-                  className="text-xs text-orange-400 hover:text-orange-300 underline underline-offset-4"
+                  className="text-xs text-brand-400 hover:text-brand-300 underline underline-offset-4"
                 >
                   Clear filters
                 </a>
@@ -535,10 +535,10 @@ export default async function BlogPage({
           {isHomePage && mostPopular.length > 0 && (
             <section aria-labelledby="popular-heading" className="mb-12">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-1 h-5 bg-orange-500 rounded-full" aria-hidden />
+                <div className="w-1 h-5 bg-brand-500 rounded-full" aria-hidden />
                 <h2
                   id="popular-heading"
-                  className="text-xs font-black uppercase tracking-widest text-orange-400 flex items-center gap-1.5"
+                  className="text-xs font-black uppercase tracking-widest text-brand-400 flex items-center gap-1.5"
                 >
                   <Flame className="w-3.5 h-3.5" />
                   Most Popular
@@ -555,7 +555,7 @@ export default async function BlogPage({
                   >
                     {/* Rank */}
                     <span className="w-6 text-center text-sm font-black flex-shrink-0
-                      text-gray-700 group-hover:text-orange-500 transition-colors">
+                      text-gray-700 group-hover:text-brand-500 transition-colors">
                       {i + 1}
                     </span>
                     {/* Thumbnail */}
@@ -569,12 +569,12 @@ export default async function BlogPage({
                     {/* Title */}
                     <div className="flex-1 min-w-0">
                       <p className="text-xs sm:text-sm font-semibold text-white truncate
-                        group-hover:text-orange-400 transition-colors">
+                        group-hover:text-brand-400 transition-colors">
                         {b.title}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
                         {b.category && (
-                          <span className="text-[10px] text-orange-400/70">{b.category}</span>
+                          <span className="text-[10px] text-brand-400/70">{b.category}</span>
                         )}
                         {b.readTime && (
                           <span className="text-[10px] text-gray-600">{b.readTime} min read</span>
@@ -598,10 +598,10 @@ export default async function BlogPage({
           {showFeatured && (
             <section aria-labelledby="featured-heading" className="mb-12">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-1 h-5 bg-orange-500 rounded-full" aria-hidden />
+                <div className="w-1 h-5 bg-brand-500 rounded-full" aria-hidden />
                 <h2
                   id="featured-heading"
-                  className="text-xs font-black uppercase tracking-widest text-orange-400"
+                  className="text-xs font-black uppercase tracking-widest text-brand-400"
                 >
                   Featured Articles
                 </h2>
@@ -648,7 +648,7 @@ export default async function BlogPage({
               <p className="text-gray-600 text-sm mb-4">
                 {query ? `We couldn't find anything matching "${query}".` : "No posts published yet."}
               </p>
-              <a href="/blog" className="text-xs text-orange-400 underline underline-offset-4">
+              <a href="/blog" className="text-xs text-brand-400 underline underline-offset-4">
                 Browse all articles
               </a>
             </div>
@@ -658,7 +658,7 @@ export default async function BlogPage({
           {!isFiltered && page === 1 && popularTags.length > 0 && (
             <nav aria-label="Browse by tag" className="mt-10 pt-8 border-t border-white/6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-4 bg-orange-500/50 rounded-full" aria-hidden />
+                <div className="w-1 h-4 bg-brand-500/50 rounded-full" aria-hidden />
                 <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">
                   Browse by Topic
                 </h2>
@@ -669,8 +669,8 @@ export default async function BlogPage({
                     key={tag}
                     href={`/blog?q=${encodeURIComponent(tag)}`}
                     className="inline-flex items-center gap-1.5 text-xs text-gray-400
-                      hover:text-orange-400 border border-white/10 hover:border-orange-500/30
-                      bg-white/3 hover:bg-orange-500/5 rounded-full px-3 py-1.5 transition-all"
+                      hover:text-brand-400 border border-white/10 hover:border-brand-500/30
+                      bg-white/3 hover:bg-brand-500/5 rounded-full px-3 py-1.5 transition-all"
                   >
                     #{tag}
                     <span className="text-gray-700 text-[10px]">{count}</span>
@@ -689,7 +689,7 @@ export default async function BlogPage({
               className="mt-10 pt-8 border-t border-white/6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-1 h-4 bg-orange-500/50 rounded-full" aria-hidden />
+                <div className="w-1 h-4 bg-brand-500/50 rounded-full" aria-hidden />
                 <h2 className="text-xs font-black uppercase tracking-widest text-gray-500">
                   Explore More
                 </h2>
@@ -700,8 +700,8 @@ export default async function BlogPage({
                     key={cat}
                     href={`/blog?category=${encodeURIComponent(cat)}`}
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400
-                      hover:text-orange-400 border border-white/10 hover:border-orange-500/30
-                      bg-white/3 hover:bg-orange-500/5 rounded-full px-3 py-1.5 transition-all"
+                      hover:text-brand-400 border border-white/10 hover:border-brand-500/30
+                      bg-white/3 hover:bg-brand-500/5 rounded-full px-3 py-1.5 transition-all"
                   >
                     {cat} →
                   </a>
@@ -737,21 +737,21 @@ export default async function BlogPage({
                     id="about-blog-heading"
                     className="text-xl font-bold text-white mb-4"
                   >
-                    About the Ollypedia Blog
+                    About the The Cinema Verse Blog
                   </h2>
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
-                      The <strong className="text-gray-300">Ollypedia Blog</strong> is your definitive guide to{" "}
-                      <strong className="text-gray-300">Odia cinema</strong>, popularly known as{" "}
-                      <strong className="text-gray-300">Ollywood</strong>. We cover everything from blockbuster
+                      The <strong className="text-gray-300">The Cinema Verse Blog</strong> is your definitive guide to{" "}
+                      <strong className="text-gray-300">hindi cinema</strong>, popularly known as{" "}
+                      <strong className="text-gray-300">bollywood</strong>. We cover everything from blockbuster
                       movie releases to indie films, from celebrated actors to emerging talent shaping the
                       future of Odisha's film industry.
                     </p>
                     <p>
                       Our <strong className="text-gray-300">movie reviews</strong> give you honest, spoiler-aware
-                      breakdowns of the latest Odia films. Our{" "}
+                      breakdowns of the latest hindi films. Our{" "}
                       <strong className="text-gray-300">actor spotlights</strong> go deep into the careers and
-                      filmographies of Ollywood stars like Babushan Mohanty, Elina Samantray, Sabyasachi
+                      filmographies of bollywood stars like Babushan Mohanty, Elina Samantray, Sabyasachi
                       Mishra, and many more.
                     </p>
                   </div>
@@ -776,15 +776,15 @@ export default async function BlogPage({
                   <h3 className="text-base font-bold text-white mb-4">What You'll Find Here</h3>
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
-                      Looking for the best Odia songs? Our{" "}
+                      Looking for the best bollywood songs? Our{" "}
                       <strong className="text-gray-300">song guides and top 10 lists</strong> curate the finest
-                      music from decades of Ollywood — from classical devotional numbers to modern romantic
+                      music from decades of bollywood — from classical devotional numbers to modern romantic
                       hits and high-energy dance numbers.
                     </p>
                     <p>
                       Bookmark this page and return every week for fresh{" "}
-                      <strong className="text-gray-300">Ollywood news, reviews, and analysis</strong> — all
-                      written by passionate fans and experts of Odia cinema culture.
+                      <strong className="text-gray-300">bollywood news, reviews, and analysis</strong> — all
+                      written by passionate fans and experts of hindi cinema culture.
                     </p>
                   </div>
 
@@ -797,12 +797,12 @@ export default async function BlogPage({
                       { label: "Movie Reviews",   href: "/blog?category=Reviews" },
                       { label: "Actor Profiles",  href: "/blog?category=Actor" },
                       { label: "Top Lists",       href: "/blog?category=Top+Lists" },
-                      { label: "Odia Songs",      href: "/blog?category=Songs" },
+                      { label: "bollywood Songs",      href: "/blog?category=Songs" },
                     ].map((link) => (
                       <a
                         key={link.href}
                         href={link.href}
-                        className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/5 border border-white/12 text-gray-400 hover:text-orange-400 hover:border-orange-500/40 transition-all"
+                        className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/5 border border-white/12 text-gray-400 hover:text-brand-400 hover:border-brand-500/40 transition-all"
                       >
                         {link.label} →
                       </a>

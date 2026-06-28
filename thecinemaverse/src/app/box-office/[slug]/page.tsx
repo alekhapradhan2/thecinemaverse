@@ -53,13 +53,13 @@ function getMisspellings(title: string): string[] {
 
   // --- Suffix sets ---
   const intentSuffixes = [
-    "movie", "film", "odia", "odia film", "odia movie", "ollywood",
+    "movie", "film", "bollywood", "hindi film", "hindi movie", "bollywood",
     "review", "story", "cast", "songs", "trailer", "box office",
     "collection", "rating", "release date", "full movie",
     "movie review", "public review", "movie story", "movie cast",
     "movie trailer", "movie details", "worth watching",
-    "movie rating ollypedia", "movie in odisha", "bhubaneswar release",
-    "odia cinema", "odia movie review", "ollywood movie",
+    "movie rating thecinemaverse", "movie in odisha", "bhubaneswar release",
+    "hindi cinema", "hindi movie review", "bollywood movie",
   ];
 
   const variants = new Set<string>();
@@ -152,7 +152,7 @@ async function getRelatedBlogs(movieTitle: string, limit = 6) {
   return JSON.parse(JSON.stringify(blogs));
 }
 
-// Fetch movies releasing around the same date — "other Odia movies this week" section
+// Fetch movies releasing around the same date — "other hindi movies this week" section
 async function getCompetingMovies(currentSlug: string, releaseDate?: string, limit = 4) {
   await connectDB();
   if (!releaseDate) return [];
@@ -192,15 +192,15 @@ export async function generateMetadata({
 
   // SEO title: movie name first → highest relevance signal
   const title = lastDay
-    ? `${movie.title} Box Office Collection Day ${lastDay} — ${fmtINR(totalNet)} Net | Ollypedia`
-    : `${movie.title} Box Office Collection | Odia Film | Ollypedia`;
+    ? `${movie.title} Box Office Collection Day ${lastDay} — ${fmtINR(totalNet)} Net | The Cinema Verse`
+    : `${movie.title} Box Office Collection | Hindi Film | The Cinema Verse`;
 
   const description = totalNet
-    ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise Odia (Ollywood) box office data on Ollypedia.`
-    : `Track ${movie.title} day-wise box office collection — net and gross earnings updated daily. Odia (Ollywood) cinema box office data on Ollypedia.`;
+    ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise bollywood (bollywood) box office data on The Cinema Verse.`
+    : `Track ${movie.title} day-wise box office collection — net and gross earnings updated daily. bollywood (bollywood) cinema box office data on The Cinema Verse.`;
 
-  const image     = movie.bannerUrl || movie.posterUrl || "https://ollypedia.in/default.jpg";
-  const canonical = `https://ollypedia.in/box-office/${slug}`;
+  const image     = movie.bannerUrl || movie.posterUrl || "https://thecinemaverse.in/default.jpg";
+  const canonical = `https://thecinemaverse.in/box-office/${slug}`;
 
   // ★ Comprehensive keyword set — movie name first in every variant
   const keywords = [
@@ -239,58 +239,58 @@ export async function generateMetadata({
     `${movie.title} movie cast`,
     `${movie.title} full movie review`,
     `${movie.title} movie details`,
-    `${movie.title} movie rating ollypedia`,
+    `${movie.title} movie rating thecinemaverse`,
 
     // ── Regional + language ────────────────────────────────────────────────
-    `${movie.title} odia movie`,
-    `${movie.title} odia film`,
-    `${movie.title} ollywood`,
-    `${movie.title} ollywood movie`,
-    `${movie.title} odia cinema`,
+    `${movie.title} hindi movie`,
+    `${movie.title} hindi film`,
+    `${movie.title} bollywood`,
+    `${movie.title} bollywood movie`,
+    `${movie.title} hindi cinema`,
     `${movie.title} movie in odisha`,
     `${movie.title} bhubaneswar release`,
-    `odia movie ${movie.title} review`,
+    `hindi movie ${movie.title} review`,
 
     // ── Long-tail intent ───────────────────────────────────────────────────
-    `${movie.title} movie review in odia`,
+    `${movie.title} movie review in bollywood`,
     `${movie.title} movie public review`,
     `${movie.title} movie worth watching`,
-    `${movie.title} movie rating ollypedia`,
-    year ? `latest odia movie ${movie.title} review ${year}` : "",
+    `${movie.title} movie rating thecinemaverse`,
+    year ? `latest hindi movie ${movie.title} review ${year}` : "",
     year ? `${movie.title} ${year} box office` : "",
     year ? `${movie.title} ${year} collection` : "",
     year ? `${movie.title} ${year} review` : "",
-    year ? `${movie.title} odia movie ${year}` : "",
+    year ? `${movie.title} hindi movie ${year}` : "",
 
     // ── Director-based ────────────────────────────────────────────────────
     movie.director ? `${movie.director} movie collection` : "",
-    movie.director ? `${movie.director} odia film` : "",
+    movie.director ? `${movie.director} hindi film` : "",
     movie.director ? `${movie.director} new movie` : "",
     movie.director ? `${movie.director} movie review` : "",
 
-    // ── General Odia box office ───────────────────────────────────────────
-    "odia box office collection",
-    "ollywood box office",
-    "odia film collection",
-    "odia movie box office",
-    "odia film box office report",
-    "ollywood hit movie",
-    year ? `odia movies ${year}` : "",
-    year ? `ollywood ${year} collection` : "",
-    year ? `odia box office ${year}` : "",
-    year ? `best odia movie ${year}` : "",
+    // ── General bollywood box office ───────────────────────────────────────────
+    "bollywood box office collection",
+    "bollywood box office",
+    "hindi film collection",
+    "hindi movie box office",
+    "hindi film box office report",
+    "bollywood hit movie",
+    year ? `hindi movies ${year}` : "",
+    year ? `bollywood ${year} collection` : "",
+    year ? `bollywood box office ${year}` : "",
+    year ? `best hindi movie ${year}` : "",
 
     // ── Cast-based keywords — actor name + "new movie collection" = top search type ──
     ...(movie.cast || []).slice(0, 4).flatMap((c: any) => [
       `${c.name} new movie`,
       `${c.name} new movie collection`,
       `${c.name} movie ${year || ""}`.trim(),
-      `${c.name} odia movie`,
+      `${c.name} hindi movie`,
     ]),
 
     // ── Genre-based ──────────────────────────────────────────────────────
-    ...(movie.genre || []).map((g: string) => `${g} odia film box office`),
-    ...(movie.genre || []).map((g: string) => `${g} ollywood movie`),
+    ...(movie.genre || []).map((g: string) => `${g} hindi film box office`),
+    ...(movie.genre || []).map((g: string) => `${g} bollywood movie`),
 
     // ── Fuzzy typo variants with intent phrases ───────────────────────────
     ...getMisspellings(movie.title),
@@ -306,7 +306,7 @@ export async function generateMetadata({
       title,
       description,
       url:           canonical,
-      siteName:      "Ollypedia",
+      siteName:      "The Cinema Verse",
       type:          "article",
       locale:        "en_IN",
       publishedTime: movie.createdAt ? new Date(movie.createdAt).toISOString() : undefined,
@@ -317,7 +317,7 @@ export async function generateMetadata({
       card:        "summary_large_image",
       title,
       description,
-      site:        "@ollypedia",
+      site:        "@thecinemaverse",
       images:      [image],
     },
   };
@@ -354,22 +354,22 @@ export default async function BoxOfficePage({
     "description": `Complete day-wise box office collection of ${movie.title}. Total Net: ${fmtINR(totalNet)}, Total Gross: ${fmtINR(totalGross)}.`,
     "datePublished": movie.createdAt ? new Date(movie.createdAt).toISOString() : undefined,
     "dateModified":  movie.updatedAt ? new Date(movie.updatedAt).toISOString() : undefined,
-    "image":         movie.bannerUrl || movie.posterUrl || "https://ollypedia.in/default.jpg",
-    "author":        { "@type": "Organization", "name": "Ollypedia" },
+    "image":         movie.bannerUrl || movie.posterUrl || "https://thecinemaverse.in/default.jpg",
+    "author":        { "@type": "Organization", "name": "The Cinema Verse" },
     "publisher": {
       "@type": "Organization",
-      "name":  "Ollypedia",
-      "logo":  { "@type": "ImageObject", "url": "https://ollypedia.in/logo.png" },
+      "name":  "The Cinema Verse",
+      "logo":  { "@type": "ImageObject", "url": "https://thecinemaverse.in/logo.png" },
     },
     "mainEntityOfPage": {
       "@type": "@id",
-      "@id":   `https://ollypedia.in/box-office/${slug}`,
+      "@id":   `https://thecinemaverse.in/box-office/${slug}`,
     },
     // ★ Link box-office page → movie entity with cast for Knowledge Panel
     "about": {
       "@type":       "Movie",
       "name":        movie.title,
-      "url":         `https://ollypedia.in/movie/${movie.slug}`,
+      "url":         `https://thecinemaverse.in/movie/${movie.slug}`,
       "dateCreated": movie.releaseDate || undefined,
       // sameAs links to IMDB/Wikipedia allow Google to match this to a known entity
       // Add the real IMDB/Wikipedia URL if available in your movie data
@@ -390,13 +390,13 @@ export default async function BoxOfficePage({
     },
     // ★ Mention all cross-linked pages so Google traces the entity web
     "mentions": [
-      { "@type": "WebPage", "name": `${movie.title} — Movie Page`,  "url": `https://ollypedia.in/movie/${movie.slug}` },
-      { "@type": "WebPage", "name": `${movie.title} Songs`,          "url": `https://ollypedia.in/songs/${movie.slug}` },
-      { "@type": "WebPage", "name": `${movie.title} Blog & Reviews`, "url": `https://ollypedia.in/blog?movie=${encodeURIComponent(movie.title)}` },
+      { "@type": "WebPage", "name": `${movie.title} — Movie Page`,  "url": `https://thecinemaverse.in/movie/${movie.slug}` },
+      { "@type": "WebPage", "name": `${movie.title} Songs`,          "url": `https://thecinemaverse.in/songs/${movie.slug}` },
+      { "@type": "WebPage", "name": `${movie.title} Blog & Reviews`, "url": `https://thecinemaverse.in/blog?movie=${encodeURIComponent(movie.title)}` },
       ...relatedBlogs.map((b: any) => ({
         "@type": "WebPage",
         "name":  b.title,
-        "url":   `https://ollypedia.in/blog/${b.slug}`,
+        "url":   `https://thecinemaverse.in/blog/${b.slug}`,
       })),
     ],
   };
@@ -407,15 +407,15 @@ export default async function BoxOfficePage({
     "@context":   "https://schema.org",
     "@type":      "Dataset",
     "name":       `${movie.title} Day-wise Box Office Collection`,
-    "description": `Complete day-wise net and gross box office collection of ${movie.title} at the Odia (Ollywood) box office.`,
-    "url":        `https://ollypedia.in/box-office/${slug}`,
-    "creator":    { "@type": "Organization", "name": "Ollypedia" },
+    "description": `Complete day-wise net and gross box office collection of ${movie.title} at the bollywood (bollywood) box office.`,
+    "url":        `https://thecinemaverse.in/box-office/${slug}`,
+    "creator":    { "@type": "Organization", "name": "The Cinema Verse" },
     "dateModified": movie.updatedAt ? new Date(movie.updatedAt).toISOString() : undefined,
     "variableMeasured": ["Net Collection (INR)", "Gross Collection (INR)", "Day"],
     "distribution": {
       "@type":        "DataDownload",
       "encodingFormat": "text/html",
-      "contentUrl":   `https://ollypedia.in/box-office/${slug}`,
+      "contentUrl":   `https://thecinemaverse.in/box-office/${slug}`,
     },
   } : null;
 
@@ -435,7 +435,7 @@ export default async function BoxOfficePage({
         "name":  `What is the total box office collection of ${movie.title}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} has earned ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross in ${lastDay} days at the Odia box office.`,
+          "text":  `${movie.title} has earned ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross in ${lastDay} days at the bollywood box office.`,
         },
       },
       ...(days[0] ? [{
@@ -443,7 +443,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} Day 1 box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} collected ${fmtINR(days[0].net)} net on Day 1 at the Odia box office.`,
+          "text":  `${movie.title} collected ${fmtINR(days[0].net)} net on Day 1 at the bollywood box office.`,
         },
       }] : []),
       ...(days.length >= 7 ? [{
@@ -451,7 +451,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} first week collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} earned ${fmtINR(week1Total)} net in its first week (Day 1–7) at the Odia box office.`,
+          "text":  `${movie.title} earned ${fmtINR(week1Total)} net in its first week (Day 1–7) at the bollywood box office.`,
         },
       }] : []),
       ...(days.length >= 14 ? [{
@@ -475,7 +475,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} total 30-day box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} collected a total of ${fmtINR(month1Total)} net in its first 30 days of theatrical run at the Odia (Ollywood) box office.`,
+          "text":  `${movie.title} collected a total of ${fmtINR(month1Total)} net in its first 30 days of theatrical run at the bollywood (bollywood) box office.`,
         },
       }] : []),
       {
@@ -483,7 +483,7 @@ export default async function BoxOfficePage({
         "name":  `Where can I find ${movie.title} daily box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `Ollypedia publishes verified day-wise box office collection for ${movie.title} at ollypedia.in/box-office/${slug}. Data is updated daily.`,
+          "text":  `The Cinema Verse publishes verified day-wise box office collection for ${movie.title} at thecinemaverse.in/box-office/${slug}. Data is updated daily.`,
         },
       },
       {
@@ -491,7 +491,7 @@ export default async function BoxOfficePage({
         "name":  `Where can I read reviews and blogs about ${movie.title}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `You can read full reviews and articles about ${movie.title} on Ollypedia's blog section at ollypedia.in/blog.`,
+          "text":  `You can read full reviews and articles about ${movie.title} on The Cinema Verse's blog section at thecinemaverse.in/blog.`,
         },
       },
     ],
@@ -502,9 +502,9 @@ export default async function BoxOfficePage({
     "@context": "https://schema.org",
     "@type":    "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://ollypedia.in/" },
-      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://ollypedia.in/box-office" },
-      { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://ollypedia.in/box-office/${slug}` },
+      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverse.in/box-office" },
+      { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverse.in/box-office/${slug}` },
     ],
   };
 
@@ -514,12 +514,12 @@ export default async function BoxOfficePage({
     "@context":     "https://schema.org",
     "@type":        "VideoObject",
     "name":         `${movie.title} Official Trailer`,
-    "description":  `Watch the official trailer of ${movie.title}, an Odia film${movie.director ? ` directed by ${movie.director}` : ""}.`,
+    "description":  `Watch the official trailer of ${movie.title}, an hindi film${movie.director ? ` directed by ${movie.director}` : ""}.`,
     "thumbnailUrl": `https://img.youtube.com/vi/${trailerYtId}/maxresdefault.jpg`,
     "uploadDate":   movie.releaseDate ? new Date(movie.releaseDate).toISOString() : new Date().toISOString(),
     "contentUrl":   `https://www.youtube.com/watch?v=${trailerYtId}`,
     "embedUrl":     `https://www.youtube.com/embed/${trailerYtId}`,
-    "publisher":    { "@type": "Organization", "name": "Ollypedia" },
+    "publisher":    { "@type": "Organization", "name": "The Cinema Verse" },
     "inLanguage":   "or",
   } : null;
 
@@ -532,7 +532,7 @@ export default async function BoxOfficePage({
       "@type":    "ListItem",
       "position": i + 1,
       "name":     b.title,
-      "url":      `https://ollypedia.in/blog/${b.slug}`,
+      "url":      `https://thecinemaverse.in/blog/${b.slug}`,
     })),
   } : null;
 
@@ -558,7 +558,7 @@ export default async function BoxOfficePage({
            aria-hidden="true">
         <h1>{movie.title} Box Office Collection — Total {fmtINR(totalNet)} Net</h1>
         <p>{movie.title} has collected {fmtINR(totalNet)} net and {fmtINR(totalGross)} gross
-           in {lastDay} days at the Odia (Ollywood) box office.</p>
+           in {lastDay} days at the bollywood (bollywood) box office.</p>
         <table>
           <caption>{movie.title} Day-wise Box Office Collection</caption>
           <thead><tr><th>Day</th><th>Net Collection</th><th>Gross Collection</th></tr></thead>

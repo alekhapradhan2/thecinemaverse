@@ -200,24 +200,24 @@ const NAV_LINKS = {
 
 const SEO_LINKS = {
   "Explore Movies & Songs": [
-    { label: "Odia Movies 2026",        href: "/movies"                   },
-    { label: "Odia Movies 2025",        href: "/movies"                   },
-    { label: "Odia Movies 2024",        href: "/movies"                   },
-    { label: "Upcoming Odia Movies",    href: "/movies"                   },
-    { label: "Latest Odia Movies",      href: "/movies"                   },
-    { label: "Blockbuster Odia Movies", href: "/movies"                   },
-    { label: "Odia Songs 2026",         href: "/songs/category/2026"      },
-    { label: "Latest Odia Songs",       href: "/songs/category/latest"    },
+    { label: "Hindi Movies 2026",        href: "/movies"                   },
+    { label: "Hindi Movies 2025",        href: "/movies"                   },
+    { label: "Hindi Movies 2024",        href: "/movies"                   },
+    { label: "Upcoming Hindi Movies",    href: "/movies"                   },
+    { label: "Latest Hindi Movies",      href: "/movies"                   },
+    { label: "Blockbuster Hindi Movies", href: "/movies"                   },
+    { label: "bollywood Songs 2026",         href: "/songs/category/2026"      },
+    { label: "Latest bollywood Songs",       href: "/songs/category/latest"    },
     { label: "Trending Songs",          href: "/songs/category/trending"  },
     { label: "Old Hit Songs",           href: "/songs/category/classics"  },
     { label: "Top Singers",             href: "/songs/category/singers"   },
   ],
   "Learn / Discover": [
-    { label: "Know About Odia Movies",  href: "/blog/odia-guides/odia-movies"          },
-    { label: "History of Ollywood",     href: "/blog/odia-guides/history-of-ollywood"  },
-    { label: "Top 10 Odia Movies",      href: "/blog/odia-guides/top-10-odia-movies"   },
-    { label: "Best Odia Songs List",    href: "/blog/odia-guides/best-odia-songs"      },
-    { label: "Famous Odia Actors",      href: "/blog/odia-guides/odia-actors"          },
+    { label: "Know About Hindi Movies",  href: "/blog/bollywood-guides/bollywood-movies"          },
+    { label: "History of bollywood",     href: "/blog/bollywood-guides/history-of-bollywood"  },
+    { label: "Top 10 Hindi Movies",      href: "/blog/bollywood-guides/top-10-bollywood-movies"   },
+    { label: "Best bollywood Songs List",    href: "/blog/bollywood-guides/best-bollywood-songs"      },
+    { label: "Famous bollywood Actors",      href: "/blog/bollywood-guides/bollywood-actors"          },
   ],
 };
 
@@ -241,8 +241,8 @@ export async function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pb-8 sm:pb-10 border-b border-[#1c1c1c]">
             {Object.entries(SEO_LINKS).map(([section, links]) => (
               <div key={section}>
-                <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-500 mb-3 sm:mb-4 flex items-center gap-2">
-                  <span className="w-5 h-px bg-orange-500/60" aria-hidden="true" />
+                <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-500 mb-3 sm:mb-4 flex items-center gap-2">
+                  <span className="w-5 h-px bg-brand-500/60" aria-hidden="true" />
                   {section}
                 </h3>
                 <ul className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -250,7 +250,7 @@ export async function Footer() {
                     <li key={`${link.href}-${link.label}`}>
                       <Link
                         href={link.href}
-                        className="inline-flex items-center gap-1 text-[11px] text-gray-500 hover:text-orange-400 bg-[#141414] hover:bg-orange-500/8 border border-[#1e1e1e] hover:border-orange-500/25 px-2.5 py-1 rounded-full transition-all duration-200"
+                        className="inline-flex items-center gap-1 text-[11px] text-gray-500 hover:text-brand-400 bg-[#141414] hover:bg-brand-500/8 border border-[#1e1e1e] hover:border-brand-500/25 px-2.5 py-1 rounded-full transition-all duration-200"
                       >
                         <ChevronRight className="w-2.5 h-2.5 opacity-40" aria-hidden="true" />
                         {link.label}
@@ -271,7 +271,7 @@ export async function Footer() {
 
             {/* Recent Movies */}
             {movies.length > 0 && (
-              <section aria-label="Recently released Odia movies">
+              <section aria-label="Recently released hindi movies">
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-600 mb-4 flex items-center gap-2">
                   <span className="w-5 h-px bg-gray-700" aria-hidden="true" />
                   Recently Released
@@ -285,7 +285,7 @@ export async function Footer() {
                         <Link
                           href={`/movie/${movie.slug}`}
                           className="group flex gap-3 items-start hover:bg-[#111] rounded-xl p-2 -mx-2 transition-colors"
-                          title={`${movie.title} — Odia Movie`}
+                          title={`${movie.title} — Hindi Movie`}
                         >
                           {/* Poster */}
                           <div className="w-9 h-12 sm:w-10 sm:h-14 flex-shrink-0 rounded-lg overflow-hidden bg-[#1a1a1a] relative">
@@ -308,7 +308,7 @@ export async function Footer() {
 
                           {/* Text */}
                           <div className="flex-1 min-w-0">
-                            <p className="text-[13px] font-medium text-gray-300 line-clamp-1 group-hover:text-orange-400 transition-colors">
+                            <p className="text-[13px] font-medium text-gray-300 line-clamp-1 group-hover:text-brand-400 transition-colors">
                               {movie.title}
                             </p>
                             <p className="text-[11px] text-gray-600 mt-0.5">
@@ -333,8 +333,8 @@ export async function Footer() {
 
                 <Link
                   href="/movies"
-                  className="inline-flex items-center gap-1 mt-4 sm:mt-5 text-xs text-orange-400/50 hover:text-orange-400 transition-colors"
-                  aria-label="View all Odia movies"
+                  className="inline-flex items-center gap-1 mt-4 sm:mt-5 text-xs text-brand-400/50 hover:text-brand-400 transition-colors"
+                  aria-label="View all hindi movies"
                 >
                   View all movies <ChevronRight className="w-3 h-3" aria-hidden="true" />
                 </Link>
@@ -343,7 +343,7 @@ export async function Footer() {
 
             {/* Latest Blogs */}
             {blogs.length > 0 && (
-              <section aria-label="Latest Ollywood articles">
+              <section aria-label="Latest bollywood articles">
                 <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-600 mb-4 flex items-center gap-2">
                   <span className="w-5 h-px bg-gray-700" aria-hidden="true" />
                   Latest Articles
@@ -379,12 +379,12 @@ export async function Footer() {
 
                           {/* Text */}
                           <div className="flex-1 min-w-0">
-                            <p className="text-[13px] font-medium text-gray-300 line-clamp-2 group-hover:text-orange-400 transition-colors leading-snug">
+                            <p className="text-[13px] font-medium text-gray-300 line-clamp-2 group-hover:text-brand-400 transition-colors leading-snug">
                               {blog.title}
                             </p>
                             <div className="flex items-center gap-2 mt-1 flex-wrap">
                               {blog.category && (
-                                <span className="text-[9px] font-bold tracking-widest uppercase text-orange-400/55 bg-orange-500/8 border border-orange-500/15 px-1.5 py-px rounded">
+                                <span className="text-[9px] font-bold tracking-widest uppercase text-brand-400/55 bg-brand-500/8 border border-brand-500/15 px-1.5 py-px rounded">
                                   {blog.category}
                                 </span>
                               )}
@@ -409,8 +409,8 @@ export async function Footer() {
 
                 <Link
                   href="/blog"
-                  className="inline-flex items-center gap-1 mt-4 sm:mt-5 text-xs text-orange-400/50 hover:text-orange-400 transition-colors"
-                  aria-label="View all Ollywood articles"
+                  className="inline-flex items-center gap-1 mt-4 sm:mt-5 text-xs text-brand-400/50 hover:text-brand-400 transition-colors"
+                  aria-label="View all bollywood articles"
                 >
                   View all articles <ChevronRight className="w-3 h-3" aria-hidden="true" />
                 </Link>
@@ -423,53 +423,53 @@ export async function Footer() {
             SEO RICH TEXT BLOCK
         ══════════════════════════════════════════════════════ */}
         <div className="py-8 sm:py-10 border-b border-[#1c1c1c]">
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-500 mb-4 sm:mb-5 flex items-center gap-2">
-            <span className="w-5 h-px bg-orange-500/60" aria-hidden="true" />
-            About Ollypedia — Odia Cinema Encyclopedia
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-500 mb-4 sm:mb-5 flex items-center gap-2">
+            <span className="w-5 h-px bg-brand-500/60" aria-hidden="true" />
+            About The Cinema Verse — Hindi Cinema Encyclopedia
           </h3>
           <div
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 text-[12px] text-gray-600 leading-relaxed"
             itemScope
             itemType="https://schema.org/Organization"
           >
-            <meta itemProp="name" content="Ollypedia" />
-            <meta itemProp="description" content="Odisha's most complete online encyclopedia for Odia movies and the Ollywood film industry." />
+            <meta itemProp="name" content="The Cinema Verse" />
+            <meta itemProp="description" content="Odisha's most complete online encyclopedia for hindi movies and the bollywood film industry." />
             <p>
-              <strong className="text-gray-500" itemProp="name">Ollypedia</strong> is Odisha&apos;s most
+              <strong className="text-gray-500" itemProp="name">The Cinema Verse</strong> is Odisha&apos;s most
               complete online encyclopedia for{" "}
-              <strong className="text-gray-500">Odia movies</strong> and the{" "}
-              <strong className="text-gray-500">Ollywood film industry</strong>. From classic films of the
-              1950s to the latest blockbusters of 2026, we catalogue every Odia film with full cast, crew,
+              <strong className="text-gray-500">hindi movies</strong> and the{" "}
+              <strong className="text-gray-500">bollywood film industry</strong>. From classic films of the
+              1950s to the latest blockbusters of 2026, we catalogue every hindi film with full cast, crew,
               songs, box office data, and reviews — all in one place.
             </p>
             <p>
               Explore detailed profiles of your favourite{" "}
-              <Link href="/cast" className="text-gray-500 hover:text-orange-400 transition-colors">
-                Odia actors and actresses
+              <Link href="/cast" className="text-gray-500 hover:text-brand-400 transition-colors">
+                bollywood actors and actresses
               </Link>
               , discover the stories behind{" "}
-              <Link href="/songs" className="text-gray-500 hover:text-orange-400 transition-colors">
-                hit Odia songs
+              <Link href="/songs" className="text-gray-500 hover:text-brand-400 transition-colors">
+                hit bollywood songs
               </Link>
               , and follow the latest{" "}
-              <Link href="/news" className="text-gray-500 hover:text-orange-400 transition-colors">
-                Ollywood news
+              <Link href="/news" className="text-gray-500 hover:text-brand-400 transition-colors">
+                bollywood news
               </Link>{" "}
               and announcements. We cover music directors, cinematographers, directors, and every creative
-              talent shaping Odia cinema today.
+              talent shaping hindi cinema today.
             </p>
             <p>
               Our{" "}
-              <Link href="/blog" className="text-gray-500 hover:text-orange-400 transition-colors">
-                Ollywood blog
+              <Link href="/blog" className="text-gray-500 hover:text-brand-400 transition-colors">
+                bollywood blog
               </Link>{" "}
               publishes in-depth{" "}
-              <Link href="/blog" className="text-gray-500 hover:text-orange-400 transition-colors">
-                Odia movie reviews
+              <Link href="/blog" className="text-gray-500 hover:text-brand-400 transition-colors">
+                hindi movie reviews
               </Link>
               , top-10 lists, cast spotlights, and behind-the-scenes features. Whether you&apos;re looking for
-              the best Odia movies to watch, upcoming releases, or box office verdicts — Ollypedia is your
-              definitive guide to Odia cinema.
+              the best hindi movies to watch, upcoming releases, or box office verdicts — The Cinema Verse is your
+              definitive guide to hindi cinema.
             </p>
           </div>
         </div>
@@ -481,25 +481,25 @@ export async function Footer() {
 
           {/* Brand — full width on mobile, spans 2 cols on md+ */}
           <div className="col-span-2 md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4" aria-label="Ollypedia home">
-              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center" aria-hidden="true">
+            <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4" aria-label="The Cinema Verse home">
+              <div className="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center" aria-hidden="true">
                 <Film className="w-5 h-5 text-white" />
               </div>
               <span className="font-display text-xl font-bold text-white">
-                Olly<span className="text-orange-500">pedia</span>
+                The Cinema <span className="text-brand-500">Verse</span>
               </span>
             </Link>
 
             <p className="text-gray-500 text-[13px] leading-relaxed max-w-sm">
               The most comprehensive encyclopedia of{" "}
-              <strong className="font-medium text-gray-400">Odia cinema</strong> — covering
-              Ollywood movies, songs, actors, box office results, and industry news from
+              <strong className="font-medium text-gray-400">hindi cinema</strong> — covering
+              bollywood movies, songs, actors, box office results, and industry news from
               Odisha&apos;s vibrant film industry since its founding.
             </p>
 
             {/* SEO keyword pills */}
             <div className="flex flex-wrap gap-1.5 mt-3 sm:mt-4">
-              {["Odia Movies", "Ollywood", "Odia Songs", "Odia Actors", "Box Office"].map((kw) => (
+              {["Hindi Movies", "bollywood", "bollywood Songs", "bollywood Actors", "Box Office"].map((kw) => (
                 <span
                   key={kw}
                   className="text-[10px] text-gray-700 border border-[#1e1e1e] px-2 py-0.5 rounded-full"
@@ -513,24 +513,24 @@ export async function Footer() {
             <div className="flex items-center gap-2 mt-4 sm:mt-5">
               <a
                 href="#"
-                className="p-2 text-gray-600 hover:text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors"
-                aria-label="Ollypedia on YouTube"
+                className="p-2 text-gray-600 hover:text-brand-400 hover:bg-brand-500/10 rounded-lg transition-colors"
+                aria-label="The Cinema Verse on YouTube"
                 rel="noopener noreferrer"
               >
                 <Youtube className="w-4 h-4" aria-hidden="true" />
               </a>
               <a
                 href="#"
-                className="p-2 text-gray-600 hover:text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors"
-                aria-label="Ollypedia on Instagram"
+                className="p-2 text-gray-600 hover:text-brand-400 hover:bg-brand-500/10 rounded-lg transition-colors"
+                aria-label="The Cinema Verse on Instagram"
                 rel="noopener noreferrer"
               >
                 <Instagram className="w-4 h-4" aria-hidden="true" />
               </a>
               <a
                 href="#"
-                className="p-2 text-gray-600 hover:text-orange-400 hover:bg-orange-500/10 rounded-lg transition-colors"
-                aria-label="Ollypedia on Twitter / X"
+                className="p-2 text-gray-600 hover:text-brand-400 hover:bg-brand-500/10 rounded-lg transition-colors"
+                aria-label="The Cinema Verse on Twitter / X"
                 rel="noopener noreferrer"
               >
                 <Twitter className="w-4 h-4" aria-hidden="true" />
@@ -549,7 +549,7 @@ export async function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-gray-500 hover:text-orange-400 transition-colors"
+                      className="text-[13px] text-gray-500 hover:text-brand-400 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -565,7 +565,7 @@ export async function Footer() {
         ══════════════════════════════════════════════════════ */}
         <div className="border-t border-[#1c1c1c] mt-8 sm:mt-10 pt-5 sm:pt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-gray-700 text-xs text-center sm:text-left">
-            © {new Date().getFullYear()} Ollypedia. All rights reserved.
+            © {new Date().getFullYear()} The Cinema Verse. All rights reserved.
           </p>
 
           {/* Legal links */}
@@ -589,13 +589,13 @@ export async function Footer() {
               Terms &amp; Conditions
             </Link>
             <span className="text-gray-700 text-xs hidden sm:inline">
-              Celebrating the richness of Odia cinema 🎬
+              Celebrating the richness of hindi cinema 🎬
             </span>
           </div>
 
           {/* Show tagline below links on very small screens */}
           <p className="text-gray-700 text-xs text-center sm:hidden">
-            Celebrating the richness of Odia cinema 🎬
+            Celebrating the richness of hindi cinema 🎬
           </p>
         </div>
 

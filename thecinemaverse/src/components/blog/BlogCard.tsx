@@ -24,7 +24,7 @@ interface BlogCardProps {
 }
 
 const CATEGORY_STYLES: Record<string, { bg: string; text: string; dot: string }> = {
-  "Movie Review":    { bg: "bg-orange-950",  text: "text-orange-400",  dot: "bg-orange-400"  },
+  "Movie Review":    { bg: "bg-brand-950",  text: "text-brand-400",  dot: "bg-brand-400"  },
   "Top 10":          { bg: "bg-purple-950",  text: "text-purple-400",  dot: "bg-purple-400"  },
   "Actor Spotlight": { bg: "bg-sky-950",     text: "text-sky-400",     dot: "bg-sky-400"     },
   "News":            { bg: "bg-emerald-950", text: "text-emerald-400", dot: "bg-emerald-400" },
@@ -47,7 +47,7 @@ function CardLoadingOverlay({ rounded }: { rounded: string }) {
     <div
       className={`absolute inset-0 z-20 flex items-center justify-center gap-2 bg-zinc-950/80 backdrop-blur-[2px] ${rounded}`}
     >
-      <Loader2 className="w-4 h-4 text-orange-400 animate-spin" />
+      <Loader2 className="w-4 h-4 text-brand-400 animate-spin" />
       <span className="text-xs font-medium text-zinc-300">Opening...</span>
     </div>
   );
@@ -59,7 +59,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
 
   const image    = blog.coverImage || "/placeholder-blog.jpg";
   const cat      = blog.category   || "General";
-  const author   = blog.author     || "Ollypedia Team";
+  const author   = blog.author     || "The Cinema Verse Team";
   const readTime = blog.readTime   || 5;
 
   // Strip HTML tags + decode entities so raw markup never leaks into card previews
@@ -86,7 +86,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
       <article
         itemScope
         itemType="https://schema.org/BlogPosting"
-        className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 hover:border-orange-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-500/20"
+        className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 hover:border-brand-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-brand-500/20"
       >
         <Link href={`/blog/${blog.slug}`} className="block" onClick={handleNavigate}>
           <div className="relative aspect-video overflow-hidden">
@@ -99,7 +99,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent" />
-            <div className="absolute top-3 right-3 bg-orange-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg">
+            <div className="absolute top-3 right-3 bg-brand-500 text-white text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg">
               ★ Featured
             </div>
             <div className="absolute bottom-3 left-3">
@@ -110,7 +110,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
           <div className="p-5">
             <h2
               itemProp="headline"
-              className="font-bold text-white text-lg leading-snug line-clamp-2 group-hover:text-orange-400 transition-colors mb-2"
+              className="font-bold text-white text-lg leading-snug line-clamp-2 group-hover:text-brand-400 transition-colors mb-2"
             >
               {blog.title}
             </h2>
@@ -124,7 +124,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
             <div className="flex items-center justify-between border-t border-zinc-800 pt-3">
               <div className="flex items-center gap-3 text-xs text-zinc-500">
                 <span className="flex items-center gap-1.5">
-                  <User className="w-3 h-3 text-orange-400" />
+                  <User className="w-3 h-3 text-brand-400" />
                   <span itemProp="author">{author}</span>
                 </span>
                 <span className="flex items-center gap-1">
@@ -138,7 +138,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
                   </span>
                 )}
               </div>
-              <span className="flex items-center gap-1 text-xs font-semibold text-orange-400 opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="flex items-center gap-1 text-xs font-semibold text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">
                 Read <ArrowRight className="w-3 h-3" />
               </span>
             </div>
@@ -155,7 +155,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
       <article
         itemScope
         itemType="https://schema.org/BlogPosting"
-        className="group relative border border-zinc-800 bg-zinc-900 rounded-xl hover:border-orange-500 transition-all duration-200"
+        className="group relative border border-zinc-800 bg-zinc-900 rounded-xl hover:border-brand-500 transition-all duration-200"
       >
         <Link href={`/blog/${blog.slug}`} className="flex gap-3 p-3" onClick={handleNavigate}>
           <div className="relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-zinc-800">
@@ -171,7 +171,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
             <CategoryBadge category={cat} />
             <h3
               itemProp="headline"
-              className="font-semibold text-white text-xs leading-snug line-clamp-2 group-hover:text-orange-400 transition-colors mt-1.5"
+              className="font-semibold text-white text-xs leading-snug line-clamp-2 group-hover:text-brand-400 transition-colors mt-1.5"
             >
               {blog.title}
             </h3>
@@ -190,7 +190,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
     <article
       itemScope
       itemType="https://schema.org/BlogPosting"
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 hover:border-orange-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-500/15"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 hover:border-brand-500 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/15"
     >
       <Link href={`/blog/${blog.slug}`} className="flex flex-col h-full" onClick={handleNavigate}>
 
@@ -213,7 +213,7 @@ export function BlogCard({ blog, variant = "standard" }: BlogCardProps) {
         <div className="flex flex-col flex-1 p-4">
           <h2
             itemProp="headline"
-            className="font-bold text-white text-sm leading-snug line-clamp-2 group-hover:text-orange-400 transition-colors duration-200 mb-2"
+            className="font-bold text-white text-sm leading-snug line-clamp-2 group-hover:text-brand-400 transition-colors duration-200 mb-2"
           >
             {blog.title}
           </h2>

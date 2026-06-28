@@ -9,25 +9,29 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          50:  "#fff7ed",
-          100: "#ffedd5",
-          200: "#fed7aa",
-          300: "#fdba74",
-          400: "#fb923c",
-          500: "#f97316",
-          600: "#ea580c",
-          700: "#c2410c",
-          800: "#9a3412",
-          900: "#7c2d12",
+          50:  "#fcf9f2",
+          100: "#f8eedb",
+          200: "#f0dfb7",
+          300: "#e5c589",
+          400: "#dca759",
+          500: "#d4af37", // Gold
+          600: "#b58428",
+          700: "#916023",
+          800: "#794f24",
+          900: "#644122",
+        },
+        highlight: {
+          500: "#B71C1C", // Crimson Red
         },
         dark: {
-          900: "#0a0a0a",
-          800: "#111111",
-          700: "#1a1a1a",
-          600: "#222222",
-          500: "#2d2d2d",
-          400: "#3d3d3d",
+          900: "#0F0F10", // Matte Black
+          800: "#1B1B1D", // Charcoal
+          700: "#222225",
+          600: "#2C2C30",
+          500: "#36363B",
+          400: "#48484F",
         },
+        silver: "#BFC3C9", // Secondary Text
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],
@@ -52,10 +56,10 @@ module.exports = {
       typography: {
         invert: {
           css: {
-            color: "#d1d5db",
-            "h1,h2,h3,h4": { color: "#f9fafb" },
-            a: { color: "#f97316" },
-            strong: { color: "#f9fafb" },
+            color: "#BFC3C9",
+            "h1,h2,h3,h4": { color: "#FFFFFF" },
+            a: { color: "#d4af37" },
+            strong: { color: "#FFFFFF" },
           },
         },
       },

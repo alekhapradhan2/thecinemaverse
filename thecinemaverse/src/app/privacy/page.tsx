@@ -7,11 +7,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Ollypedia",
+  title: "Privacy Policy | The Cinema Verse",
   description:
-    "Read Ollypedia's Privacy Policy to learn how we collect, use, and protect your information while you browse Odisha's most complete Odia cinema encyclopedia.",
+    "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse Odisha's most complete hindi cinema encyclopedia.",
   alternates: {
-    canonical: "https://ollypedia.in/privacy",
+    canonical: "https://thecinemaverse.in/privacy",
   },
   robots: {
     index: true,
@@ -22,11 +22,11 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     heading: "1. Introduction",
-    body: `Ollypedia ("we", "us", or "our") operates ollypedia.in, an online encyclopedia for Odia cinema (Ollywood), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
+    body: `The Cinema Verse ("we", "us", or "our") operates thecinemaverse.in, an online encyclopedia for hindi cinema (bollywood), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
   },
   {
     heading: "2. Information We Collect",
-    body: `We collect limited information to operate and improve Ollypedia:`,
+    body: `We collect limited information to operate and improve The Cinema Verse:`,
     list: [
       "Usage data — pages visited, time spent, device and browser type, and approximate location, collected automatically via analytics tools.",
       "Cookies and similar technologies — used to remember preferences and understand site traffic.",
@@ -37,7 +37,7 @@ const SECTIONS = [
     heading: "3. How We Use Your Information",
     body: `Information we collect is used to:`,
     list: [
-      "Operate, maintain, and improve the Ollypedia website and its content.",
+      "Operate, maintain, and improve the The Cinema Verse website and its content.",
       "Understand site traffic and user behaviour through analytics.",
       "Respond to inquiries submitted through our contact page.",
       "Display relevant advertising, where applicable, through third-party advertising networks.",
@@ -45,7 +45,7 @@ const SECTIONS = [
   },
   {
     heading: "4. Cookies",
-    body: `Ollypedia uses cookies and similar tracking technologies to enhance your browsing experience. Cookies are small text files stored on your device. You can choose to disable cookies through your browser settings, though some site features may not function as intended without them.`,
+    body: `The Cinema Verse uses cookies and similar tracking technologies to enhance your browsing experience. Cookies are small text files stored on your device. You can choose to disable cookies through your browser settings, though some site features may not function as intended without them.`,
   },
   {
     heading: "5. Third-Party Services",
@@ -57,7 +57,7 @@ const SECTIONS = [
   },
   {
     heading: "7. Children's Privacy",
-    body: `Ollypedia is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can remove it.`,
+    body: `The Cinema Verse is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can remove it.`,
   },
   {
     heading: "8. Your Choices",
@@ -79,8 +79,8 @@ export default function PrivacyPolicyPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         {/* Header */}
         <div className="mb-10 sm:mb-12">
-          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-orange-500 mb-3 flex items-center gap-2">
-            <span className="w-5 h-px bg-orange-500/60" aria-hidden="true" />
+          <h3 className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-500 mb-3 flex items-center gap-2">
+            <span className="w-5 h-px bg-brand-500/60" aria-hidden="true" />
             Legal
           </h3>
           <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
@@ -116,19 +116,19 @@ export default function PrivacyPolicyPage() {
         <div className="mt-12 pt-6 border-t border-[#1c1c1c] flex flex-wrap gap-x-4 gap-y-2">
           <Link
             href="/disclaimer"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Disclaimer
           </Link>
           <Link
             href="/terms-and-conditions"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Terms &amp; Conditions
           </Link>
           <Link
             href="/contact"
-            className="text-gray-600 text-xs hover:text-orange-400 transition-colors"
+            className="text-gray-600 text-xs hover:text-brand-400 transition-colors"
           >
             Contact Us
           </Link>

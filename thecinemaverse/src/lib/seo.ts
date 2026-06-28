@@ -1,8 +1,8 @@
-export const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  || "https://www.ollypedia.in";
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "Ollypedia";
+export const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  || "https://www.thecinemaverse.in";
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "The Cinema Verse";
 
 export function buildTitle(pageTitle: string) {
-  return `${pageTitle} | ${SITE_NAME} – Odia Film Encyclopedia`;
+  return `${pageTitle} | ${SITE_NAME} – Hindi Film Encyclopedia`;
 }
 
 export function buildMeta({
@@ -55,7 +55,7 @@ export function movieJsonLd(movie: any) {
     url: `${SITE_URL}/movie/${movie.slug}`,
     image: movie.posterUrl || movie.thumbnailUrl,
     datePublished: movie.releaseDate,
-    inLanguage: movie.language || "Odia",
+    inLanguage: movie.language || "Hindi",
     director: movie.director ? { "@type": "Person", name: movie.director } : undefined,
     genre: movie.genre,
     duration: movie.runtime,
