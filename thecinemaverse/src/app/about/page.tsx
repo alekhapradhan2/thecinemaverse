@@ -7,7 +7,7 @@ export const metadata: Metadata = buildMeta({
   description:
     "Learn about Ollypedia, the most comprehensive online database for Odia cinema (Ollywood). Our mission is to document, celebrate and promote Odia film heritage.",
   url: "/about",
-});
+}); 
 
 export default function AboutPage() {
   return (
