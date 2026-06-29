@@ -24,7 +24,7 @@ import News          from "@/models/News";
 //   sitemap is served from. Do NOT use SITE_URL from @/lib/seo if that
 //   constant contains "www." — Google treats www and non-www as different
 //   origins and will reject all URLs in the sitemap with "URL not allowed".
-const CANONICAL_ORIGIN = "https://thecinemaverse.in";
+const CANONICAL_ORIGIN = "https://thecinemaverses.in";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 

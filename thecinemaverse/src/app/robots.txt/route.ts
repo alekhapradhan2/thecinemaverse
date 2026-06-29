@@ -24,7 +24,7 @@
 
 // ★ Hardcoded non-www canonical — must match the origin the sitemap is served
 //   from. Do NOT use SITE_URL from @/lib/seo if it contains "www."
-const CANONICAL_ORIGIN = "https://thecinemaverse.in";
+const CANONICAL_ORIGIN = "https://thecinemaverses.in";
 
 export async function GET() {
   const content = `# ── General crawlers ────────────────────────────────────
