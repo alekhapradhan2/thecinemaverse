@@ -16,9 +16,15 @@
 //     them — submitted-but-blocked is a wasted/contradictory signal. Only
 //     /blog?category= is allowed; all other /blog? query variants (e.g.
 //     /blog?q=, /blog?page=) remain blocked as before.
+//  ★ FIX: Sitemap URL uses hardcoded non-www canonical to match the origin
+//     the sitemap is actually served from (https://thecinemaverse.in).
+//     Using www.thecinemaverse.in here while the sitemap lives at non-www
+//     causes Google Search Console "URL not allowed" errors for all entries.
 //  ✅ All other existing rules preserved (pure training scrapers still blocked)
 
-import { SITE_URL } from "@/lib/seo";
+// ★ Hardcoded non-www canonical — must match the origin the sitemap is served
+//   from. Do NOT use SITE_URL from @/lib/seo if it contains "www."
+const CANONICAL_ORIGIN = "https://thecinemaverse.in";
 
 export async function GET() {
   const content = `# ── General crawlers ────────────────────────────────────
@@ -73,13 +79,13 @@ Disallow: /
 # ── Sitemaps ─────────────────────────────────────────────
 # List all sitemaps so every crawler finds them automatically.
 # Also submit these URLs manually in Google Search Console + Bing Webmaster Tools.
-Sitemap: ${SITE_URL}/sitemap.xml
+Sitemap: ${CANONICAL_ORIGIN}/sitemap.xml
 `;
 
   return new Response(content, {
     headers: {
       "Content-Type":  "text/plain; charset=utf-8",
-      "Cache-Control": "public, s-maxage=86400",  // cache for 24h — robots.txt rarely changes
+      "Cache-Control": "public, s-maxage=86400",
     },
   });
 }

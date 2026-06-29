@@ -9,13 +9,22 @@
 //  7. ★ Blog query now filters { published: true, indexed: { $ne: false } }
 //     so non-indexable day-wise box office articles are excluded from sitemap
 //  ✅ All previous fixes preserved (box-office, blog categories, song pages, priorities)
+//  ★ FIX: Replaced imported SITE_URL with hardcoded non-www canonical to resolve
+//     Google Search Console "URL not allowed" error (21191 instances).
+//     The sitemap is served from https://thecinemaverse.in — all URLs must match
+//     that origin exactly. www.thecinemaverse.in is a different origin in GSC.
 
 import { connectDB } from "@/lib/db";
 import Movie         from "@/models/Movie";
 import Cast          from "@/models/Cast";
 import Blog          from "@/models/Blog";
 import News          from "@/models/News";
-import { SITE_URL }  from "@/lib/seo";
+
+// ★ Hardcoded to non-www canonical — must exactly match the origin this
+//   sitemap is served from. Do NOT use SITE_URL from @/lib/seo if that
+//   constant contains "www." — Google treats www and non-www as different
+//   origins and will reject all URLs in the sitemap with "URL not allowed".
+const CANONICAL_ORIGIN = "https://thecinemaverse.in";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -80,22 +89,19 @@ export async function GET() {
   ];
 
   const entries: string[] = statics.map(([p, f, pr]) =>
-    urlEntry(`${SITE_URL}${p}`, today, f, pr)
+    urlEntry(`${CANONICAL_ORIGIN}${p}`, today, f, pr)
   );
 
   // ── Genre pages ────────────────────────────────────────────────────────────
-  // Only the canonical /movies/genre/[genre] path is included.
-  // /movies?genre= is blocked in robots.txt as a duplicate — don't list it here.
   const genres = [
     "Action", "Romance", "Comedy", "Drama", "Family",
     "Thriller", "Mythological", "Horror", "Social", "Devotional",
   ];
   genres.forEach((g) => {
-    entries.push(urlEntry(`${SITE_URL}/movies/genre/${encodeURIComponent(g.toLowerCase())}`, today, "weekly", "0.75"));
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`, today, "weekly", "0.75"));
   });
 
   // ── Blog category pages ────────────────────────────────────────────────────
-  // Each is a unique keyword-targeted page. Box Office gets daily crawl priority.
   const blogCategories: [string, string, string][] = [
     ["Box Office", "daily",   "0.9"],
     ["Reviews",    "weekly",  "0.75"],
@@ -108,7 +114,7 @@ export async function GET() {
   blogCategories.forEach(([cat, freq, pri]) => {
     entries.push(
       urlEntry(
-        `${SITE_URL}/blog?category=${encodeURIComponent(cat)}`,
+        `${CANONICAL_ORIGIN}/blog?category=${encodeURIComponent(cat)}`,
         today,
         freq,
         pri
@@ -126,7 +132,7 @@ export async function GET() {
   ];
 
   songCategories.forEach(([cat, pri]) => {
-    entries.push(urlEntry(`${SITE_URL}/songs/category/${cat}`, today, "weekly", pri));
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}/songs/category/${cat}`, today, "weekly", pri));
   });
 
   // ── Movies by year pages ───────────────────────────────────────────────────
@@ -135,16 +141,13 @@ export async function GET() {
   for (let yr = YEAR_END; yr >= YEAR_START; yr--) {
     const freq = yr >= YEAR_END - 1 ? "daily"   : yr >= YEAR_END - 4 ? "monthly" : "yearly";
     const pri  = yr >= YEAR_END - 1 ? "0.85"    : yr >= YEAR_END - 4 ? "0.75"    : "0.6";
-    entries.push(urlEntry(`${SITE_URL}/movies/year/${yr}`, today, freq, pri));
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}/movies/year/${yr}`, today, freq, pri));
   }
 
   // ── Box office by year pages ───────────────────────────────────────────────
-  // Current year is covered by the static "/box-office" entry above (canonical
-  // points there for the current year). Only past years get the ?year= variant —
-  // matches the dynamic canonical/openGraph logic in app/box-office/page.tsx.
   const BOX_OFFICE_YEAR_START = 2020;
   for (let yr = YEAR_END - 1; yr >= BOX_OFFICE_YEAR_START; yr--) {
-    entries.push(urlEntry(`${SITE_URL}/box-office?year=${yr}`, today, "weekly", "0.75"));
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}/box-office?year=${yr}`, today, "weekly", "0.75"));
   }
 
   try {
@@ -161,18 +164,16 @@ export async function GET() {
       const lastmod     = safeDate(m.updatedAt ?? m.createdAt ?? m.releaseDate);
       const hasBoxOffice = m.boxOfficeDays?.length > 0;
 
-      // Movie detail page — daily if actively tracked for box office
       entries.push(urlEntry(
-        `${SITE_URL}/movie/${movieSlug}`,
+        `${CANONICAL_ORIGIN}/movie/${movieSlug}`,
         lastmod,
         hasBoxOffice ? "daily"  : "weekly",
         hasBoxOffice ? "0.85"   : "0.8"
       ));
 
-      // Box office page per movie — highest priority after homepage
       if (hasBoxOffice) {
         entries.push(urlEntry(
-          `${SITE_URL}/box-office/${movieSlug}`,
+          `${CANONICAL_ORIGIN}/box-office/${movieSlug}`,
           lastmod,
           "daily",
           "0.9"
@@ -185,7 +186,7 @@ export async function GET() {
           const songSlug = s.slug || toSlug(s.title);
           if (!songSlug) return;
           entries.push(
-            urlEntry(`${SITE_URL}/songs/${movieSlug}/${i}/${songSlug}`, lastmod, "weekly", "0.7")
+            urlEntry(`${CANONICAL_ORIGIN}/songs/${movieSlug}/${i}/${songSlug}`, lastmod, "weekly", "0.7")
           );
         });
       }
@@ -197,19 +198,10 @@ export async function GET() {
     casts.forEach((c) => {
       if (!c.name?.trim()) return;
       const lastmod = safeDate(c.updatedAt ?? c.createdAt);
-      // Route is /cast/[id] — always use MongoDB _id, never slug
-      entries.push(urlEntry(`${SITE_URL}/cast/${String(c._id)}`, lastmod, "monthly", "0.7"));
+      entries.push(urlEntry(`${CANONICAL_ORIGIN}/cast/${String(c._id)}`, lastmod, "monthly", "0.7"));
     });
 
     // ── Blogs ──────────────────────────────────────────────────────────────
-    // Only blogs with published:true AND indexed not explicitly false.
-    // indexed:false = non-key box office day articles (stored in DB, visible in
-    // UI, but intentionally excluded from sitemap + Google index to avoid
-    // crawl budget waste on near-duplicate day-wise content).
-    // indexed:true or indexed field absent = all other blogs → included normally.
-    // Box Office key/milestone days: daily + 0.9
-    // Featured blogs:                weekly + 0.85
-    // All others:                    weekly + 0.75
     const blogs = await Blog.find(
       { published: true, indexed: { $ne: false } },
       "slug category featured updatedAt createdAt"
@@ -222,7 +214,7 @@ export async function GET() {
       const isFeatured  = !!b.featured;
       const freq        = isBoxOffice ? "daily"  : "weekly";
       const pri         = isBoxOffice ? "0.9"    : isFeatured ? "0.85" : "0.75";
-      entries.push(urlEntry(`${SITE_URL}/blog/${b.slug}`, lastmod, freq, pri));
+      entries.push(urlEntry(`${CANONICAL_ORIGIN}/blog/${b.slug}`, lastmod, freq, pri));
     });
 
     // ── News articles ──────────────────────────────────────────────────────
@@ -234,7 +226,7 @@ export async function GET() {
     newsItems.forEach((n: any) => {
       const newsSlug = n.slug?.trim() || String(n._id);
       const lastmod  = safeDate(n.updatedAt ?? n.createdAt);
-      entries.push(urlEntry(`${SITE_URL}/news/${newsSlug}`, lastmod, "weekly", "0.75"));
+      entries.push(urlEntry(`${CANONICAL_ORIGIN}/news/${newsSlug}`, lastmod, "weekly", "0.75"));
     });
 
   } catch (err) {
