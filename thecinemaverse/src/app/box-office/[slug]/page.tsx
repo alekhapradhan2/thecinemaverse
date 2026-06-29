@@ -199,8 +199,8 @@ export async function generateMetadata({
     ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise bollywood (bollywood) box office data on The Cinema Verse.`
     : `Track ${movie.title} day-wise box office collection — net and gross earnings updated daily. bollywood (bollywood) cinema box office data on The Cinema Verse.`;
 
-  const image     = movie.bannerUrl || movie.posterUrl || "https://thecinemaverse.in/default.jpg";
-  const canonical = `https://thecinemaverse.in/box-office/${slug}`;
+  const image     = movie.bannerUrl || movie.posterUrl || "https://thecinemaverses.in/default.jpg";
+  const canonical = `https://thecinemaverses.in/box-office/${slug}`;
 
   // ★ Comprehensive keyword set — movie name first in every variant
   const keywords = [
@@ -354,22 +354,22 @@ export default async function BoxOfficePage({
     "description": `Complete day-wise box office collection of ${movie.title}. Total Net: ${fmtINR(totalNet)}, Total Gross: ${fmtINR(totalGross)}.`,
     "datePublished": movie.createdAt ? new Date(movie.createdAt).toISOString() : undefined,
     "dateModified":  movie.updatedAt ? new Date(movie.updatedAt).toISOString() : undefined,
-    "image":         movie.bannerUrl || movie.posterUrl || "https://thecinemaverse.in/default.jpg",
+    "image":         movie.bannerUrl || movie.posterUrl || "https://thecinemaverses.in/default.jpg",
     "author":        { "@type": "Organization", "name": "The Cinema Verse" },
     "publisher": {
       "@type": "Organization",
       "name":  "The Cinema Verse",
-      "logo":  { "@type": "ImageObject", "url": "https://thecinemaverse.in/logo.png" },
+      "logo":  { "@type": "ImageObject", "url": "https://thecinemaverses.in/logo.png" },
     },
     "mainEntityOfPage": {
       "@type": "@id",
-      "@id":   `https://thecinemaverse.in/box-office/${slug}`,
+      "@id":   `https://thecinemaverses.in/box-office/${slug}`,
     },
     // ★ Link box-office page → movie entity with cast for Knowledge Panel
     "about": {
       "@type":       "Movie",
       "name":        movie.title,
-      "url":         `https://thecinemaverse.in/movie/${movie.slug}`,
+      "url":         `https://thecinemaverses.in/movie/${movie.slug}`,
       "dateCreated": movie.releaseDate || undefined,
       // sameAs links to IMDB/Wikipedia allow Google to match this to a known entity
       // Add the real IMDB/Wikipedia URL if available in your movie data
@@ -390,13 +390,13 @@ export default async function BoxOfficePage({
     },
     // ★ Mention all cross-linked pages so Google traces the entity web
     "mentions": [
-      { "@type": "WebPage", "name": `${movie.title} — Movie Page`,  "url": `https://thecinemaverse.in/movie/${movie.slug}` },
-      { "@type": "WebPage", "name": `${movie.title} Songs`,          "url": `https://thecinemaverse.in/songs/${movie.slug}` },
-      { "@type": "WebPage", "name": `${movie.title} Blog & Reviews`, "url": `https://thecinemaverse.in/blog?movie=${encodeURIComponent(movie.title)}` },
+      { "@type": "WebPage", "name": `${movie.title} — Movie Page`,  "url": `https://thecinemaverses.in/movie/${movie.slug}` },
+      { "@type": "WebPage", "name": `${movie.title} Songs`,          "url": `https://thecinemaverses.in/songs/${movie.slug}` },
+      { "@type": "WebPage", "name": `${movie.title} Blog & Reviews`, "url": `https://thecinemaverses.in/blog?movie=${encodeURIComponent(movie.title)}` },
       ...relatedBlogs.map((b: any) => ({
         "@type": "WebPage",
         "name":  b.title,
-        "url":   `https://thecinemaverse.in/blog/${b.slug}`,
+        "url":   `https://thecinemaverses.in/blog/${b.slug}`,
       })),
     ],
   };
@@ -408,14 +408,14 @@ export default async function BoxOfficePage({
     "@type":      "Dataset",
     "name":       `${movie.title} Day-wise Box Office Collection`,
     "description": `Complete day-wise net and gross box office collection of ${movie.title} at the bollywood (bollywood) box office.`,
-    "url":        `https://thecinemaverse.in/box-office/${slug}`,
+    "url":        `https://thecinemaverses.in/box-office/${slug}`,
     "creator":    { "@type": "Organization", "name": "The Cinema Verse" },
     "dateModified": movie.updatedAt ? new Date(movie.updatedAt).toISOString() : undefined,
     "variableMeasured": ["Net Collection (INR)", "Gross Collection (INR)", "Day"],
     "distribution": {
       "@type":        "DataDownload",
       "encodingFormat": "text/html",
-      "contentUrl":   `https://thecinemaverse.in/box-office/${slug}`,
+      "contentUrl":   `https://thecinemaverses.in/box-office/${slug}`,
     },
   } : null;
 
@@ -483,7 +483,7 @@ export default async function BoxOfficePage({
         "name":  `Where can I find ${movie.title} daily box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `The Cinema Verse publishes verified day-wise box office collection for ${movie.title} at thecinemaverse.in/box-office/${slug}. Data is updated daily.`,
+          "text":  `The Cinema Verse publishes verified day-wise box office collection for ${movie.title} at thecinemaverses.in/box-office/${slug}. Data is updated daily.`,
         },
       },
       {
@@ -491,7 +491,7 @@ export default async function BoxOfficePage({
         "name":  `Where can I read reviews and blogs about ${movie.title}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `You can read full reviews and articles about ${movie.title} on The Cinema Verse's blog section at thecinemaverse.in/blog.`,
+          "text":  `You can read full reviews and articles about ${movie.title} on The Cinema Verse's blog section at thecinemaverses.in/blog.`,
         },
       },
     ],
@@ -502,9 +502,9 @@ export default async function BoxOfficePage({
     "@context": "https://schema.org",
     "@type":    "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in/" },
-      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverse.in/box-office" },
-      { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverse.in/box-office/${slug}` },
+      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverses.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverses.in/box-office" },
+      { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverses.in/box-office/${slug}` },
     ],
   };
 
@@ -532,7 +532,7 @@ export default async function BoxOfficePage({
       "@type":    "ListItem",
       "position": i + 1,
       "name":     b.title,
-      "url":      `https://thecinemaverse.in/blog/${b.slug}`,
+      "url":      `https://thecinemaverses.in/blog/${b.slug}`,
     })),
   } : null;
 

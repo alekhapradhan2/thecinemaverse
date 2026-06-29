@@ -188,9 +188,9 @@ function CastSchema({ type, total }: { type?: string; total: number }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home",        item: "https://thecinemaverse.in" },
-      { "@type": "ListItem", position: 2, name: "Cast & Crew", item: "https://thecinemaverse.in/cast" },
-      ...(type ? [{ "@type": "ListItem", position: 3, name: `${type}s`, item: `https://thecinemaverse.in/cast?type=${type}` }] : []),
+      { "@type": "ListItem", position: 1, name: "Home",        item: "https://thecinemaverses.in" },
+      { "@type": "ListItem", position: 2, name: "Cast & Crew", item: "https://thecinemaverses.in/cast" },
+      ...(type ? [{ "@type": "ListItem", position: 3, name: `${type}s`, item: `https://thecinemaverses.in/cast?type=${type}` }] : []),
     ],
   };
 
@@ -202,7 +202,7 @@ function CastSchema({ type, total }: { type?: string; total: number }) {
       ? `Complete list of bollywood ${type}s in bollywood cinema`
       : "Complete directory of actors, actresses, directors and crew in hindi cinema",
     numberOfItems: total,
-    url: type ? `https://thecinemaverse.in/cast?type=${type}` : "https://thecinemaverse.in/cast",
+    url: type ? `https://thecinemaverses.in/cast?type=${type}` : "https://thecinemaverses.in/cast",
   };
 
   return (

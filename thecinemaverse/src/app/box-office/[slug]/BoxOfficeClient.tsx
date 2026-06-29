@@ -591,7 +591,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                 {/* WhatsApp share — primary sharing platform in Odisha */}
                 {totalNet > 0 && (
                   <a
-                    href={`https://wa.me/?text=${encodeURIComponent(`${movie.title} Box Office Collection: ${fmtINR(totalNet)} net in ${days.length} days 🎬\n\nFull day-wise data: https://thecinemaverse.in/box-office/${movie.slug}`)}`}
+                    href={`https://wa.me/?text=${encodeURIComponent(`${movie.title} Box Office Collection: ${fmtINR(totalNet)} net in ${days.length} days 🎬\n\nFull day-wise data: https://thecinemaverses.in/box-office/${movie.slug}`)}`}
                     target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-600/10 hover:bg-green-600/20 border border-green-600/25 hover:border-green-600/50 rounded-full text-xs font-semibold text-green-400 transition-all">
                     📲 Share on WhatsApp
@@ -1147,11 +1147,11 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       },
                       {
                         q: `Where to find ${movie.title} day-wise box office data?`,
-                        a: `The Cinema Verse publishes verified day-wise box office for ${movie.title} at thecinemaverse.in/box-office/${movie.slug}. Data includes net, gross, screens and occupancy updated daily.`,
+                        a: `The Cinema Verse publishes verified day-wise box office for ${movie.title} at thecinemaverses.in/box-office/${movie.slug}. Data includes net, gross, screens and occupancy updated daily.`,
                       },
                       {
                         q: `Where can I read ${movie.title} movie review?`,
-                        a: `Full ${movie.title} movie review, cast analysis and bollywood articles are on The Cinema Verse's blog at thecinemaverse.in/blog. User ratings and public reviews are also on the movie page.`,
+                        a: `Full ${movie.title} movie review, cast analysis and bollywood articles are on The Cinema Verse's blog at thecinemaverses.in/blog. User ratings and public reviews are also on the movie page.`,
                       },
                     ] as {q:string;a:string}[]).map(({ q, a }, i) => (
                       <FaqItem key={i} q={q} a={a} />

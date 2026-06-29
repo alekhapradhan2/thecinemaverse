@@ -6,7 +6,7 @@
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
 
-const SITE_URL = "https://thecinemaverse.in";
+const SITE_URL = "https://thecinemaverses.in";
 const FEED_URL = `${SITE_URL}/blog/feed.xml`;
 
 function escapeXml(str: string): string {
@@ -50,7 +50,7 @@ export async function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${excerpt}</description>
-      <author>noreply@thecinemaverse.in (${author})</author>
+      <author>noreply@thecinemaverses.in (${author})</author>
       <category>${category}</category>
       ${tags}
       <pubDate>${pubDate}</pubDate>

@@ -150,7 +150,7 @@ export async function generateMetadata({
   const thumb     = song.thumbnailUrl
     || (song.ytId ? `https://img.youtube.com/vi/${song.ytId}/hqdefault.jpg` : null)
     || movie.posterUrl
-    || "https://thecinemaverse.in/og-default.jpg";
+    || "https://thecinemaverses.in/og-default.jpg";
 
   // ★ Rich title — song + singer + movie + year for long-tail capture
   const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | bollywood Song | The Cinema Verse`;
@@ -164,7 +164,7 @@ export async function generateMetadata({
   const description = descParts.join("").replace(/\s+/g, " ").trim().slice(0, 160);
 
   const stableSlug = toSlug(song.title) || String(idx);
-  const canonical  = `https://thecinemaverse.in/songs/${movie.slug}/${idx}/${stableSlug}`;
+  const canonical  = `https://thecinemaverses.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   // ★ Comprehensive keyword set — hit every variant someone might search
   const keywords = [
@@ -390,7 +390,7 @@ export default async function SongDetailSlugPage({
     || movie.posterUrl;
 
   const stableSlug = toSlug(song.title) || String(idx);
-  const canonical  = `https://thecinemaverse.in/songs/${movie.slug}/${idx}/${stableSlug}`;
+  const canonical  = `https://thecinemaverses.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   const otherSongs = (movie.media.songs || [])
     .map((s: any, i: number) => ({ title: s.title, slug: toSlug(s.title) || String(i), index: i }))
@@ -421,15 +421,15 @@ export default async function SongDetailSlugPage({
         "associatedMedia": {
           "@type": "Movie",
           "name": movie.title,
-          "url": `https://thecinemaverse.in/movie/${movie.slug}`,
+          "url": `https://thecinemaverses.in/movie/${movie.slug}`,
         },
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in/" },
-          { "@type": "ListItem", "position": 2, "name": "Songs",      "item": "https://thecinemaverse.in/songs" },
-          { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverse.in/movie/${movie.slug}` },
+          { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverses.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Songs",      "item": "https://thecinemaverses.in/songs" },
+          { "@type": "ListItem", "position": 3, "name": movie.title,  "item": `https://thecinemaverses.in/movie/${movie.slug}` },
           { "@type": "ListItem", "position": 4, "name": song.title,   "item": canonical },
         ],
       },
@@ -442,7 +442,7 @@ export default async function SongDetailSlugPage({
               "@type": "ListItem",
               "position": i + 1,
               "name": b.title,
-              "url": `https://thecinemaverse.in/blog/${b.slug}`,
+              "url": `https://thecinemaverses.in/blog/${b.slug}`,
             })),
           }]
         : []),

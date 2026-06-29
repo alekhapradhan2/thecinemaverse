@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse Odisha's most complete hindi cinema encyclopedia.",
   alternates: {
-    canonical: "https://thecinemaverse.in/privacy",
+    canonical: "https://thecinemaverses.in/privacy",
   },
   robots: {
     index: true,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     heading: "1. Introduction",
-    body: `The Cinema Verse ("we", "us", or "our") operates thecinemaverse.in, an online encyclopedia for hindi cinema (bollywood), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
+    body: `The Cinema Verse ("we", "us", or "our") operates thecinemaverses.in, an online encyclopedia for hindi cinema (bollywood), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
   },
   {
     heading: "2. Information We Collect",

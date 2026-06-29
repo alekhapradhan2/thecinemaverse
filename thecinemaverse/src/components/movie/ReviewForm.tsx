@@ -267,7 +267,7 @@ function ShareModal({
       //   [ROW: poster(left 160×224) | title + stars(right)]         ~244px
       //   [1px divider]
       //   [Quote box full-width]                                      ~dynamic
-      //   [Footer: thecinemaverse.in]                                      ~44px
+      //   [Footer: thecinemaverses.in]                                      ~44px
       //   [4px gold bar]
 
       const CARD_W = 600;
@@ -565,7 +565,7 @@ ry += lines.length * lineHeight + 12;
       // Attribution
       ctx.fillStyle = "rgba(255,255,255,0.3)";
       ctx.font = "12px 'Georgia', serif";
-      ctx.fillText(`— ${review.user || "Anonymous"} · thecinemaverse.in`, BOX_X + BOX_PAD + 6, BOX_Y + BOX_H - 14);
+      ctx.fillText(`— ${review.user || "Anonymous"} · thecinemaverses.in`, BOX_X + BOX_PAD + 6, BOX_Y + BOX_H - 14);
 
       curY += BOX_H + 16;
       divider(curY); curY += DIV;
@@ -574,7 +574,7 @@ ry += lines.length * lineHeight + 12;
       ctx.fillStyle = "rgba(245,158,11,0.38)";
       ctx.font = "11.5px 'Georgia', serif";
       ctx.textAlign = "center";
-      ctx.fillText("thecinemaverse.in  ·  Your Hindi Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
+      ctx.fillText("thecinemaverses.in  ·  Your Hindi Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
       ctx.textAlign = "left";
 
       // ── Export PNG ──
@@ -784,7 +784,7 @@ ry += lines.length * lineHeight + 12;
               <svg width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="rgba(245,158,11,.4)" strokeWidth={2}>
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
               </svg>
-              {review.user || "Anonymous"} &nbsp;·&nbsp; thecinemaverse.in
+              {review.user || "Anonymous"} &nbsp;·&nbsp; thecinemaverses.in
             </p>
           </div>
         </div>
@@ -801,7 +801,7 @@ ry += lines.length * lineHeight + 12;
           justifyContent: "space-between",
         }}>
           <div style={{ fontSize: "0.68rem", color: "rgba(245,158,11,.5)" }}>
-            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>thecinemaverse.in</strong>
+            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>thecinemaverses.in</strong>
           </div>
           <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,.2)", letterSpacing: "0.06em" }}>
             hindi cinema UNIVERSE

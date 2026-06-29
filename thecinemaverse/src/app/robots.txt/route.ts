@@ -17,8 +17,8 @@
 //     /blog?category= is allowed; all other /blog? query variants (e.g.
 //     /blog?q=, /blog?page=) remain blocked as before.
 //  ★ FIX: Sitemap URL uses hardcoded non-www canonical to match the origin
-//     the sitemap is actually served from (https://thecinemaverse.in).
-//     Using www.thecinemaverse.in here while the sitemap lives at non-www
+//     the sitemap is actually served from (https://thecinemaverses.in).
+//     Using www.thecinemaverses.in here while the sitemap lives at non-www
 //     causes Google Search Console "URL not allowed" errors for all entries.
 //  ✅ All other existing rules preserved (pure training scrapers still blocked)
 

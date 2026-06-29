@@ -58,23 +58,23 @@ export async function generateMetadata({
     : "Explore the latest bollywood blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of hindi cinema. Updated weekly.";
 
   const canonical = category
-    ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
+    ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
     : page > 1
-    ? `https://thecinemaverse.in/blog?page=${page}`
-    : "https://thecinemaverse.in/blog";
+    ? `https://thecinemaverses.in/blog?page=${page}`
+    : "https://thecinemaverses.in/blog";
 
   // ── PREV link ──
   const prevPage = page > 1
     ? (page === 2
-        ? (category ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}` : "https://thecinemaverse.in/blog")
-        : (category ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}&page=${page - 1}` : `https://thecinemaverse.in/blog?page=${page - 1}`))
+        ? (category ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}` : "https://thecinemaverses.in/blog")
+        : (category ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}&page=${page - 1}` : `https://thecinemaverses.in/blog?page=${page - 1}`))
     : undefined;
 
   // ── NEXT link (new) ──
   const nextPage = page < totalPages
     ? (category
-        ? `https://thecinemaverse.in/blog?category=${encodeURIComponent(category)}&page=${page + 1}`
-        : `https://thecinemaverse.in/blog?page=${page + 1}`)
+        ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}&page=${page + 1}`
+        : `https://thecinemaverses.in/blog?page=${page + 1}`)
     : undefined;
 
   return {
@@ -99,14 +99,14 @@ export async function generateMetadata({
       siteName: "The Cinema Verse",
       type:     "website",
       locale:   "en_IN",
-      images: [{ url: "https://thecinemaverse.in/og-blog.jpg", width: 1200, height: 630, alt: "The Cinema Verse Blog — Hindi Cinema News & Reviews" }],
+      images: [{ url: "https://thecinemaverses.in/og-blog.jpg", width: 1200, height: 630, alt: "The Cinema Verse Blog — Hindi Cinema News & Reviews" }],
     },
     twitter: {
       card:        "summary_large_image",
       title,
       description,
       site:        "@thecinemaverse",
-      images:      ["https://thecinemaverse.in/og-blog.jpg"],
+      images:      ["https://thecinemaverses.in/og-blog.jpg"],
     },
   };
 }
@@ -127,13 +127,13 @@ function BlogSchema({
     "@type": "Blog",
     name: "The Cinema Verse Blog",
     description: "News, reviews, and guides about bollywood — the bollywood-language film industry based in Bhubaneswar, Odisha.",
-    url: "https://thecinemaverse.in/blog",
+    url: "https://thecinemaverses.in/blog",
     dateModified: mostRecentDate,
     publisher: {
       "@type": "Organization",
       name: "The Cinema Verse",
-      url: "https://thecinemaverse.in",
-      logo: { "@type": "ImageObject", url: "https://thecinemaverse.in/logo.png" },
+      url: "https://thecinemaverses.in",
+      logo: { "@type": "ImageObject", url: "https://thecinemaverses.in/logo.png" },
       address: {
         "@type": "PostalAddress",
         addressLocality: "Bhubaneswar",
@@ -159,7 +159,7 @@ function BlogSchema({
     itemListElement: blogs.slice(0, 10).map((b: any, i: number) => ({
       "@type": "ListItem",
       position: i + 1,
-      url: `https://thecinemaverse.in/blog/${b.slug}`,
+      url: `https://thecinemaverses.in/blog/${b.slug}`,
       name: b.title,
       // NEW: richer item data for Google
       image: b.coverImage ?? undefined,
@@ -175,12 +175,12 @@ function BlogSchema({
         "@context": "https://schema.org",
         "@type": "WebSite",
         name: "The Cinema Verse",
-        url: "https://thecinemaverse.in",
+        url: "https://thecinemaverses.in",
         potentialAction: {
           "@type": "SearchAction",
           target: {
             "@type": "EntryPoint",
-            urlTemplate: "https://thecinemaverse.in/blog?q={search_term_string}",
+            urlTemplate: "https://thecinemaverses.in/blog?q={search_term_string}",
           },
           "query-input": "required name=search_term_string",
         },

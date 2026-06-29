@@ -28,8 +28,8 @@ export async function generateMetadata(
     description,
     alternates:  {
       canonical: isCurrentYear
-        ? "https://thecinemaverse.in/box-office"
-        : `https://thecinemaverse.in/box-office?year=${year}`,
+        ? "https://thecinemaverses.in/box-office"
+        : `https://thecinemaverses.in/box-office?year=${year}`,
     },
     robots:      { index: true, follow: true },
     keywords:    [
@@ -46,18 +46,18 @@ export async function generateMetadata(
       title,
       description,
       url: isCurrentYear
-        ? "https://thecinemaverse.in/box-office"
-        : `https://thecinemaverse.in/box-office?year=${year}`,
+        ? "https://thecinemaverses.in/box-office"
+        : `https://thecinemaverses.in/box-office?year=${year}`,
       siteName:    "The Cinema Verse",
       type:        "website",
       locale:      "en_IN",
-      images: [{ url: "https://thecinemaverse.in/og-box-office.jpg", width: 1200, height: 630, alt: `bollywood Box Office Collection ${year} — The Cinema Verse` }],
+      images: [{ url: "https://thecinemaverses.in/og-box-office.jpg", width: 1200, height: 630, alt: `bollywood Box Office Collection ${year} — The Cinema Verse` }],
     },
     twitter: {
       card:        "summary_large_image",
       title,
       description: `Day-wise net & gross earnings for all bollywood (bollywood) movies ${year}. Updated daily.`,
-      images:      ["https://thecinemaverse.in/og-box-office.jpg"],
+      images:      ["https://thecinemaverses.in/og-box-office.jpg"],
       site:        "@thecinemaverse",
     },
   };
@@ -297,9 +297,9 @@ export default async function BoxOfficePage({
     "@context": "https://schema.org",
     "@type":    "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverse.in" },
-      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverse.in/box-office" },
-      ...(selectedYear !== currentYear ? [{ "@type": "ListItem", "position": 3, "name": String(selectedYear), "item": `https://thecinemaverse.in/box-office?year=${selectedYear}` }] : []),
+      { "@type": "ListItem", "position": 1, "name": "Home",       "item": "https://thecinemaverses.in" },
+      { "@type": "ListItem", "position": 2, "name": "Box Office", "item": "https://thecinemaverses.in/box-office" },
+      ...(selectedYear !== currentYear ? [{ "@type": "ListItem", "position": 3, "name": String(selectedYear), "item": `https://thecinemaverses.in/box-office?year=${selectedYear}` }] : []),
     ],
   };
 
@@ -307,10 +307,10 @@ export default async function BoxOfficePage({
     "@context": "https://schema.org",
     "@type":    "WebSite",
     "name":     "The Cinema Verse",
-    "url":      "https://thecinemaverse.in",
+    "url":      "https://thecinemaverses.in",
     "potentialAction": {
       "@type":       "SearchAction",
-      "target":      { "@type": "EntryPoint", "urlTemplate": "https://thecinemaverse.in/search?q={search_term_string}" },
+      "target":      { "@type": "EntryPoint", "urlTemplate": "https://thecinemaverses.in/search?q={search_term_string}" },
       "query-input": "required name=search_term_string",
     },
   };
@@ -320,9 +320,9 @@ export default async function BoxOfficePage({
     "@type":    "CollectionPage",
     "name":     `bollywood Box Office Collection ${selectedYear} | The Cinema Verse`,
     "description": `Complete day-wise box office collection for bollywood (bollywood) movies ${selectedYear}. Updated daily.`,
-    "url":      "https://thecinemaverse.in/box-office",
+    "url":      "https://thecinemaverses.in/box-office",
     "dateModified": lastUpdated,
-    "publisher": { "@type": "Organization", "name": "The Cinema Verse", "url": "https://thecinemaverse.in" },
+    "publisher": { "@type": "Organization", "name": "The Cinema Verse", "url": "https://thecinemaverses.in" },
     "mainEntity": {
       "@type": "ItemList",
       "name":  `Hindi Movies Box Office ${selectedYear}`,
@@ -331,7 +331,7 @@ export default async function BoxOfficePage({
         "@type":    "ListItem",
         "position": i + 1,
         "name":     m.title,
-        "url":      `https://thecinemaverse.in/box-office/${movieSlug(m)}`,
+        "url":      `https://thecinemaverses.in/box-office/${movieSlug(m)}`,
       })),
     },
   };
@@ -390,7 +390,7 @@ export default async function BoxOfficePage({
     "itemListElement": blogs.map((b: any, i: number) => ({
       "@type":    "ListItem",
       "position": i + 1,
-      "url":      `https://thecinemaverse.in/blog/${b.slug}`,
+      "url":      `https://thecinemaverses.in/blog/${b.slug}`,
       "name":     b.title,
     })),
   } : null;

@@ -77,7 +77,7 @@ const SECTIONS = [
     title: "Copyright & Intellectual Property",
     body: [
       "All movie posters, stills, trailers, songs, and promotional artwork featured on The Cinema Verse are the property of their respective copyright holders — including production houses, music labels, and distributors. We use such material under fair use for the purposes of commentary, criticism, news reporting, and education.",
-      "If you are a copyright owner and believe content on The Cinema Verse has been used inappropriately, please contact us at hello@thecinemaverse.in and we will review and respond promptly.",
+      "If you are a copyright owner and believe content on The Cinema Verse has been used inappropriately, please contact us at hello@thecinemaverses.in and we will review and respond promptly.",
     ],
   },
   {

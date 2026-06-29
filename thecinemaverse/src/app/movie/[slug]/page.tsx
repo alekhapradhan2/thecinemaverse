@@ -325,8 +325,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       : `Complete info about hindi film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on The Cinema Verse.`
   ).slice(0, 160);
 
-  const image     = movie.posterUrl || movie.thumbnailUrl || "https://thecinemaverse.in/default.jpg";
-  const canonical = `https://thecinemaverse.in/movie/${movie.slug || movie._id}`;
+  const image     = movie.posterUrl || movie.thumbnailUrl || "https://thecinemaverses.in/default.jpg";
+  const canonical = `https://thecinemaverses.in/movie/${movie.slug || movie._id}`;
 
   // ── OTT keyword matrix ──────────────────────────────────────────────────────
   const ottKw: string[] = movie.streamingOn ? [
@@ -440,7 +440,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title, description, keywords,
-    metadataBase: new URL("https://thecinemaverse.in"),
+    metadataBase: new URL("https://thecinemaverses.in"),
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-snippet": -1, "max-image-preview": "large" } },
     openGraph: {
@@ -530,7 +530,7 @@ function buildAggregateRatingJsonLd(movie: any, avgRating: number) {
     "@context": "https://schema.org",
     "@type": "Movie",
     name: movie.title,
-    url: `https://thecinemaverse.in/movie/${movie.slug || movie._id}`,
+    url: `https://thecinemaverses.in/movie/${movie.slug || movie._id}`,
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: avgRating.toFixed(1),
@@ -604,7 +604,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
   const year      = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
   const songs     = movie.media?.songs || [];
   const trailer   = movie.media?.trailer;
-  const canonical = `https://thecinemaverse.in/movie/${movie.slug || movie._id}`;
+  const canonical = `https://thecinemaverses.in/movie/${movie.slug || movie._id}`;
   const vs        = verdictStyle(movie.verdict);
 
   // Prefer cast-list names, fall back to movie fields
@@ -619,11 +619,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
     .map((m: any) => ({
       "@type": "Person",
       name: m.name,
-      ...(m.castId ? { url: `https://thecinemaverse.in/cast/${m.castId}` } : {}),
+      ...(m.castId ? { url: `https://thecinemaverses.in/cast/${m.castId}` } : {}),
     }));
   const dirCrewEntry = crewForSchema.find((c: any) => c.role?.toLowerCase().includes("director"));
   const directorPersonObj = directorName
-    ? [{ "@type": "Person", name: directorName, ...(dirCrewEntry?.castId ? { url: `https://thecinemaverse.in/cast/${dirCrewEntry.castId}` } : {}) }]
+    ? [{ "@type": "Person", name: directorName, ...(dirCrewEntry?.castId ? { url: `https://thecinemaverses.in/cast/${dirCrewEntry.castId}` } : {}) }]
     : [];
 
   const enrichedMovieSchema = {
@@ -676,8 +676,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
   const structuredData = [
     enrichedMovieSchema,
     breadcrumbJsonLd([
-      { name: "Home",   url: "https://thecinemaverse.in/" },
-      { name: "Movies", url: "https://thecinemaverse.in/movies" },
+      { name: "Home",   url: "https://thecinemaverses.in/" },
+      { name: "Movies", url: "https://thecinemaverses.in/movies" },
       { name: movie.title, url: canonical },
     ]),
     buildFaqJsonLd(movie, year, avgRating, songs, directorName, producerName),
@@ -688,7 +688,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
       name: `Articles about ${movie.title}`,
       itemListElement: blogs.map((b: any, i: number) => ({
         "@type": "ListItem", position: i + 1, name: b.title,
-        url: `https://thecinemaverse.in/blog/${b.slug}`,
+        url: `https://thecinemaverses.in/blog/${b.slug}`,
       })),
     }] : []),
     ...(songs.length > 0 ? [{
@@ -699,7 +699,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
       track: songs.map((s: any, i: number) => ({
         "@type": "MusicRecording",
         name: s.title,
-        url: `https://thecinemaverse.in/songs/${movie.slug}/${i}/${toSlug(s.title) || String(i)}`,
+        url: `https://thecinemaverses.in/songs/${movie.slug}/${i}/${toSlug(s.title) || String(i)}`,
         ...(s.singer && { byArtist: { "@type": "Person", name: s.singer } }),
       })),
     }] : []),

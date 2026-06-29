@@ -100,7 +100,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const description =
     person.bio?.slice(0, 155) ||
     `${person.name} is a celebrated bollywood ${roles.toLowerCase()} in bollywood with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
-  const canonical = `https://thecinemaverse.in/cast/${String(person._id)}`;
+  const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
 
   return {
     title, description,
@@ -116,9 +116,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       title, description, url: canonical, siteName: "The Cinema Verse", type: "profile",
       images: person.photo
         ? [{ url: person.photo, width: 800, height: 1000, alt: person.name }]
-        : [{ url: "https://thecinemaverse.in/default.jpg", width: 1200, height: 630 }],
+        : [{ url: "https://thecinemaverses.in/default.jpg", width: 1200, height: 630 }],
     },
-    twitter: { card: "summary_large_image", title, description, images: [person.photo || "https://thecinemaverse.in/default.jpg"] },
+    twitter: { card: "summary_large_image", title, description, images: [person.photo || "https://thecinemaverses.in/default.jpg"] },
   };
 }
 
@@ -250,7 +250,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
     movies.find((m: any) => m.posterUrl)?.posterUrl || null;
 
   const bio = generateRichBio(person, movies);
-  const canonical = `https://thecinemaverse.in/cast/${String(person._id)}`;
+  const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
 
   const debutMovie  = movies.length ? movies[movies.length - 1] : null;
   const latestMovie = movies[0];
@@ -285,8 +285,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
   const breadcrumbLd = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverse.in" },
-      { "@type": "ListItem", position: 2, name: "Cast", item: "https://thecinemaverse.in/cast" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverses.in" },
+      { "@type": "ListItem", position: 2, name: "Cast", item: "https://thecinemaverses.in/cast" },
       { "@type": "ListItem", position: 3, name: person.name, item: canonical },
     ],
   };

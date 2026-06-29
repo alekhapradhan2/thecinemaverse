@@ -104,7 +104,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://thecinemaverse.in${url}`,
+      url: `https://thecinemaverses.in${url}`,
       type: "music.song",
       images: thumb ? [{ url: thumb, width: 1280, height: 720, alt: song.title }] : [],
     },
@@ -115,7 +115,7 @@ export async function generateMetadata({
       images: thumb ? [thumb] : [],
     },
     alternates: {
-      canonical: `https://thecinemaverse.in${url}`,
+      canonical: `https://thecinemaverses.in${url}`,
     },
   };
 }
@@ -145,7 +145,7 @@ export default async function SongDetailPage({
     "@graph": [
       {
         "@type": "MusicRecording",
-        "@id": `https://thecinemaverse.in/songs/${movie.slug}/${idx}#song`,
+        "@id": `https://thecinemaverses.in/songs/${movie.slug}/${idx}#song`,
         "name": song.title,
         "description": song.description || `${song.title} is a song from the hindi film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
@@ -169,17 +169,17 @@ export default async function SongDetailPage({
         "track": movie.media.songs.map((s: any, i: number) => ({
           "@type": "MusicRecording",
           "name": s.title,
-          "url": `https://thecinemaverse.in/songs/${movie.slug}/${i}`,
+          "url": `https://thecinemaverses.in/songs/${movie.slug}/${i}`,
           ...(s.ytId && { "sameAs": `https://www.youtube.com/watch?v=${s.ytId}` }),
         })),
       },
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://thecinemaverse.in/" },
-          { "@type": "ListItem", "position": 2, "name": "Songs",     "item": "https://thecinemaverse.in/songs" },
-          { "@type": "ListItem", "position": 3, "name": movie.title, "item": `https://thecinemaverse.in/movie/${movie.slug}` },
-          { "@type": "ListItem", "position": 4, "name": song.title,  "item": `https://thecinemaverse.in/songs/${movie.slug}/${idx}` },
+          { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://thecinemaverses.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Songs",     "item": "https://thecinemaverses.in/songs" },
+          { "@type": "ListItem", "position": 3, "name": movie.title, "item": `https://thecinemaverses.in/movie/${movie.slug}` },
+          { "@type": "ListItem", "position": 4, "name": song.title,  "item": `https://thecinemaverses.in/songs/${movie.slug}/${idx}` },
         ],
       },
     ],
