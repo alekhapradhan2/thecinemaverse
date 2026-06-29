@@ -16,6 +16,7 @@ interface BoxOfficeDay {
   day:        number;
   net:        number | string;
   gross:      number | string;
+  overseas?:  number | string;
   date?:      string;
   note?:      string;
   screens?:   number;
@@ -55,6 +56,7 @@ interface Movie {
   cast?:        { name: string; type: string; role?: string }[];
   synopsis?:    string;
   media?:       { songs?: Song[] };
+  boxOffice?:   { overseasCollection?: string; grossCollection?: string; total?: string };
 }
 
 interface CompetingMovie {
@@ -603,20 +605,26 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
 
       {/* ── Stats Cards ── */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {[
-            { label: "Total Net",    value: fmtINR(totalNet),   icon: <IndianRupee className="w-4 h-4" />, color: "#f97316" },
-            { label: "Total Gross",  value: fmtINR(totalGross), icon: <TrendingUp  className="w-4 h-4" />, color: "#7ec8e3" },
-            { label: "Days Tracked", value: days.length || "—", icon: <Calendar    className="w-4 h-4" />, color: "#a78bfa" },
-          ].map(({ label, value, icon, color }) => (
-            <div key={label} className="bg-[#111] border border-[#1f1f1f] rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-1" style={{ color }}>
-                {icon}
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</span>
+        <div className="grid grid-cols-3 gap-4">
+          {(() => {
+            // Overseas: sum from day-level overseas fields, fall back to movie.boxOffice.overseasCollection
+            const overseasFromDays = days.reduce((s, d) => s + parseN(d.overseas), 0);
+            const overseasFallback = parseN(movie.boxOffice?.overseasCollection);
+            const overseas = overseasFromDays > 0 ? overseasFromDays : overseasFallback;
+            return [
+              { label: "India Net",    value: fmtINR(totalNet),   icon: <IndianRupee className="w-4 h-4" />, color: "#f97316" },
+              { label: "Overseas",     value: overseas > 0 ? fmtINR(overseas) : "—", icon: <TrendingUp className="w-4 h-4" />, color: "#34d399" },
+              { label: "Total Gross",  value: fmtINR(totalGross), icon: <BarChart3    className="w-4 h-4" />, color: "#7ec8e3" },
+            ].map(({ label, value, icon, color }) => (
+              <div key={label} className="bg-[#111] border border-[#1f1f1f] rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-1" style={{ color }}>
+                  {icon}
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</span>
+                </div>
+                <div className="text-xl font-black" style={{ color }}>{value}</div>
               </div>
-              <div className="text-xl font-black" style={{ color }}>{value}</div>
-            </div>
-          ))}
+            ));
+          })()}
         </div>
       </div>
 
@@ -750,8 +758,9 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                           <tr className="border-b border-[#1f1f1f] bg-[#111]">
                             <th className="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Day</th>
                             <th className="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Date</th>
-                            <th className="px-5 py-3 text-left text-xs font-bold text-brand-500/70 uppercase tracking-wider">Net Collection</th>
-                            <th className="px-5 py-3 text-left text-xs font-bold text-sky-400/70 uppercase tracking-wider">Gross Collection</th>
+                            <th className="px-5 py-3 text-left text-xs font-bold text-brand-500/70 uppercase tracking-wider">India Net</th>
+                            <th className="px-5 py-3 text-left text-xs font-bold text-emerald-400/70 uppercase tracking-wider">Overseas</th>
+                            <th className="px-5 py-3 text-left text-xs font-bold text-sky-400/70 uppercase tracking-wider">Total Gross</th>
                             {days.some(d => d.screens)   && <th className="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Screens</th>}
                             {days.some(d => d.occupancy) && <th className="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Occupancy</th>}
                             {days.some(d => d.note)      && <th className="px-5 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Notes</th>}
@@ -774,6 +783,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                                     : "—"}
                                 </td>
                                 <td className="px-5 py-3.5 font-semibold text-white">{fmtINR(d.net)}</td>
+                                <td className="px-5 py-3.5 font-semibold text-emerald-300">{d.overseas && parseN(d.overseas) > 0 ? fmtINR(d.overseas) : "—"}</td>
                                 <td className="px-5 py-3.5 font-semibold text-sky-300">{fmtINR(d.gross)}</td>
                                 {days.some(x => x.screens)   && <td className="px-5 py-3.5 text-gray-400 text-xs">{d.screens || "—"}</td>}
                                 {days.some(x => x.occupancy) && <td className="px-5 py-3.5 text-gray-400 text-xs">{d.occupancy || "—"}</td>}
@@ -788,6 +798,13 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                               Total ({days.length} day{days.length !== 1 ? "s" : ""})
                             </td>
                             <td className="px-5 py-3.5 font-black text-brand-400 text-base">{fmtINR(totalNet)}</td>
+                            <td className="px-5 py-3.5 font-black text-emerald-300 text-base">
+                              {(() => {
+                                const overseasFromDays = days.reduce((s, d) => s + parseN(d.overseas), 0);
+                                const overseas = overseasFromDays > 0 ? overseasFromDays : parseN(movie.boxOffice?.overseasCollection);
+                                return overseas > 0 ? fmtINR(overseas) : "—";
+                              })()}
+                            </td>
                             <td className="px-5 py-3.5 font-black text-sky-300 text-base">{fmtINR(totalGross)}</td>
                             {days.some(x => x.screens)   && <td />}
                             {days.some(x => x.occupancy) && <td />}

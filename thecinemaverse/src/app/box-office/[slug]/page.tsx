@@ -561,12 +561,13 @@ export default async function BoxOfficePage({
            in {lastDay} days at the bollywood (bollywood) box office.</p>
         <table>
           <caption>{movie.title} Day-wise Box Office Collection</caption>
-          <thead><tr><th>Day</th><th>Net Collection</th><th>Gross Collection</th></tr></thead>
+          <thead><tr><th>Day</th><th>India Net</th><th>Overseas</th><th>Total Gross</th></tr></thead>
           <tbody>
             {days.map((d: any) => (
               <tr key={d.day}>
                 <td>Day {d.day}</td>
                 <td>{fmtINR(d.net)}</td>
+                <td>{d.overseas && parseNum(d.overseas) > 0 ? fmtINR(d.overseas) : "—"}</td>
                 <td>{fmtINR(d.gross)}</td>
               </tr>
             ))}

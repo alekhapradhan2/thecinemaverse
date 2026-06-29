@@ -134,7 +134,7 @@ async function getBoxOfficeMovies() {
   const movies = await (Movie as any)
     .find(
       { "boxOfficeDays.0": { $exists: true } },
-      "title slug posterUrl thumbnailUrl releaseDate language verdict boxOfficeDays updatedAt"
+      "title slug posterUrl thumbnailUrl releaseDate language verdict boxOfficeDays boxOffice updatedAt"
     )
     .sort({ releaseDate: -1 })
     .lean();
@@ -170,12 +170,16 @@ export default async function BoxOfficePage({
 
   // Enrich ALL movies (needed for all-time stats)
   const enriched = movies.map((m: any) => {
-    const days       = (m.boxOfficeDays || []).sort((a: any, b: any) => a.day - b.day);
-    const totalNet   = days.reduce((s: number, d: any) => s + parseNum(d.net),   0);
-    const totalGross = days.reduce((s: number, d: any) => s + parseNum(d.gross), 0);
-    const lastDay    = days[days.length - 1]?.day || 0;
-    const year       = getYear(m.releaseDate);
-    return { ...m, days, totalNet, totalGross, lastDay, year };
+    const days         = (m.boxOfficeDays || []).sort((a: any, b: any) => a.day - b.day);
+    const totalNet     = days.reduce((s: number, d: any) => s + parseNum(d.net),     0);
+    const totalGross   = days.reduce((s: number, d: any) => s + parseNum(d.gross),   0);
+    const overseasFromDays = days.reduce((s: number, d: any) => s + parseNum(d.overseas), 0);
+    const totalOverseas = overseasFromDays > 0
+      ? overseasFromDays
+      : parseNum(m.boxOffice?.overseasCollection);
+    const lastDay      = days[days.length - 1]?.day || 0;
+    const year         = getYear(m.releaseDate);
+    return { ...m, days, totalNet, totalGross, totalOverseas, lastDay, year };
   });
 
   // Available years (for tabs)
@@ -191,8 +195,8 @@ export default async function BoxOfficePage({
   const yearMovies = enriched.filter((m: any) => m.year === selectedYear);
 
   /* ── All-time stats (across all years) ── */
-  const allTimeNet    = enriched.reduce((s: number, m: any) => s + m.totalNet, 0);
-  const allTimeGross  = enriched.reduce((s: number, m: any) => s + m.totalGross, 0);
+  const allTimeNet      = enriched.reduce((s: number, m: any) => s + m.totalNet, 0);
+  const allTimeOverseas = enriched.reduce((s: number, m: any) => s + m.totalOverseas, 0);
   const allTimeTop    = [...enriched].sort((a: any, b: any) => b.totalNet - a.totalNet)[0] || null;
   const allTimeTop5   = [...enriched].sort((a: any, b: any) => b.totalNet - a.totalNet).slice(0, 5);
   const allHitsCount  = enriched.filter((m: any) =>
@@ -200,8 +204,8 @@ export default async function BoxOfficePage({
   ).length;
 
   /* ── Selected year stats ── */
-  const yearNet    = yearMovies.reduce((s: number, m: any) => s + m.totalNet, 0);
-  const yearGross  = yearMovies.reduce((s: number, m: any) => s + m.totalGross, 0);
+  const yearNet      = yearMovies.reduce((s: number, m: any) => s + m.totalNet, 0);
+  const yearOverseas = yearMovies.reduce((s: number, m: any) => s + m.totalOverseas, 0);
   const yearHits   = yearMovies.filter((m: any) =>
     m.verdict && ["hit","superhit","blockbuster"].some((k: string) => m.verdict.toLowerCase().includes(k))
   ).length;
@@ -497,10 +501,10 @@ export default async function BoxOfficePage({
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {[
-                  { label: "All-Time Net",    value: fmtINR(allTimeNet),        accent: "text-brand-400" },
-                  { label: "All-Time Gross",  value: fmtINR(allTimeGross),      accent: "text-sky-300" },
-                  { label: "Films Tracked",   value: String(enriched.length),   accent: "text-white" },
-                  { label: "Total Hits",      value: String(allHitsCount),      accent: "text-emerald-400" },
+                  { label: "All-Time Net",      value: fmtINR(allTimeNet),        accent: "text-brand-400" },
+                  { label: "All-Time Overseas",  value: allTimeOverseas > 0 ? fmtINR(allTimeOverseas) : "—", accent: "text-emerald-400" },
+                  { label: "Films Tracked",      value: String(enriched.length),   accent: "text-white" },
+                  { label: "Total Hits",         value: String(allHitsCount),      accent: "text-emerald-400" },
                 ].map(({ label, value, accent }) => (
                   <div key={label} className="bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl px-4 py-3">
                     <p className="text-[10px] text-gray-600 uppercase tracking-widest mb-1">{label}</p>
@@ -519,9 +523,9 @@ export default async function BoxOfficePage({
               </p>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: `${selectedYear} Net`,   value: fmtINR(yearNet),        accent: "text-brand-400" },
-                  { label: `${selectedYear} Gross`, value: fmtINR(yearGross),      accent: "text-sky-300" },
-                  { label: "Hits",                  value: String(yearHits),        accent: "text-emerald-400" },
+                  { label: `${selectedYear} Net`,      value: fmtINR(yearNet),                                   accent: "text-brand-400" },
+                  { label: `${selectedYear} Overseas`, value: yearOverseas > 0 ? fmtINR(yearOverseas) : "—",    accent: "text-emerald-400" },
+                  { label: "Hits",                     value: String(yearHits),                                   accent: "text-emerald-400" },
                 ].map(({ label, value, accent }) => (
                   <div key={label} className="bg-[#0a0a0a] border border-[#181818] rounded-xl px-3 py-2.5">
                     <p className="text-[10px] text-gray-700 uppercase tracking-widest mb-1">{label}</p>
@@ -729,7 +733,7 @@ export default async function BoxOfficePage({
                   <span className="flex-1">Movie</span>
                   <span className="w-14 text-center">Year</span>
                   <span className="w-24 text-right">Net</span>
-                  <span className="w-24 text-right hidden md:block">Gross</span>
+                  <span className="w-24 text-right hidden md:block">Overseas</span>
                   <span className="w-24 text-right">Verdict</span>
                 </div>
                 <div className="divide-y divide-[#141414]">
@@ -777,7 +781,7 @@ export default async function BoxOfficePage({
                             <span className="font-bold text-yellow-400 text-sm">{fmtINR(m.totalNet)}</span>
                           </div>
                           <div className="hidden md:block w-24 text-right flex-shrink-0">
-                            <span className="font-bold text-sky-300 text-sm">{fmtINR(m.totalGross)}</span>
+                            <span className="font-bold text-emerald-300 text-sm">{m.totalOverseas > 0 ? fmtINR(m.totalOverseas) : "—"}</span>
                           </div>
                           <div className="hidden sm:flex w-24 justify-end flex-shrink-0">
                             {storedVerdict && (
@@ -859,7 +863,7 @@ export default async function BoxOfficePage({
                         <span className="flex-1">Movie</span>
                         <span className="w-28 text-left">Released</span>
                         <span className="w-20 text-right">Net</span>
-                        <span className="w-20 text-right hidden md:block">Gross</span>
+                        <span className="w-20 text-right hidden md:block">Overseas</span>
                         <span className="w-24 text-right">Verdict</span>
                         <span className="w-4" />
                       </div>
@@ -926,7 +930,7 @@ export default async function BoxOfficePage({
                               <span className="font-bold text-brand-400 text-sm">{fmtINR(m.totalNet)}</span>
                             </div>
                             <div className="hidden md:block w-20 text-right flex-shrink-0">
-                              <span className="font-bold text-sky-300 text-sm">{fmtINR(m.totalGross)}</span>
+                              <span className="font-bold text-emerald-300 text-sm">{m.totalOverseas > 0 ? fmtINR(m.totalOverseas) : "—"}</span>
                             </div>
                             <div className="hidden sm:flex w-24 justify-end flex-shrink-0">
                               {storedVerdict && (
