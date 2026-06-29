@@ -21,15 +21,7 @@ const nextConfig = {
   },
 
   async redirects() {
-    return [
-      // Redirect non-www → www (permanent 301)
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "thecinemaverses.in" }],
-        destination: "https://www.thecinemaverses.in/:path*",
-        permanent: true,
-      },
-    ];
+    return [];
   },
 
   async headers() {
