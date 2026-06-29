@@ -745,14 +745,14 @@ export default async function BlogPage({
                       <strong className="text-gray-300">hindi cinema</strong>, popularly known as{" "}
                       <strong className="text-gray-300">bollywood</strong>. We cover everything from blockbuster
                       movie releases to indie films, from celebrated actors to emerging talent shaping the
-                      future of Odisha's film industry.
+                      future of India's Bollywood film industry.
                     </p>
                     <p>
                       Our <strong className="text-gray-300">movie reviews</strong> give you honest, spoiler-aware
                       breakdowns of the latest hindi films. Our{" "}
                       <strong className="text-gray-300">actor spotlights</strong> go deep into the careers and
-                      filmographies of bollywood stars like Babushan Mohanty, Elina Samantray, Sabyasachi
-                      Mishra, and many more.
+                       filmographies of Bollywood stars like Shah Rukh Khan, Deepika Padukone, Ranveer
+                      Singh, and many more.
                     </p>
                   </div>
 

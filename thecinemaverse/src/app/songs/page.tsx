@@ -40,10 +40,10 @@ export async function generateMetadata({
     keywords: [
       "bollywood songs", "bollywood songs", "hindi film songs", "latest bollywood songs 2026",
       "hindi movie songs", "bollywood music", "new bollywood songs", "bollywood romantic songs",
-      "Human Sagar songs", "bollywood devotional songs", "bollywood dance songs",
+      "Arijit Singh songs", "bollywood devotional songs", "bollywood dance songs",
     ],
-    alternates: { canonical: "https://thecinemaverse.com/songs" },
-    openGraph: { title, description, url: "https://thecinemaverse.com/songs", type: "website" },
+    alternates: { canonical: "https://thecinemaverses.in/songs" },
+    openGraph: { title, description, url: "https://thecinemaverses.in/songs", type: "website" },
   };
 }
 

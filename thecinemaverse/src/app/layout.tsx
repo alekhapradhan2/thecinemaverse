@@ -8,14 +8,16 @@ import { SITE_NAME, SITE_URL } from "@/lib/seo";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} – The Hindi Film Encyclopedia`,
+    default: `${SITE_NAME} – #1 Bollywood Movie Database | Hindi Films, Songs & Box Office`,
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "The Cinema Verse is the ultimate encyclopedia for Bollywood cinema. Discover movies, actors, songs, reviews, box office, and news from the Hindi film industry.",
+    "The Cinema Verse is India's #1 Bollywood encyclopedia. Discover Hindi movies, actors, songs, box office collections, OTT releases, reviews, and the latest Bollywood news — all in one place.",
   keywords: [
-    "hindi movies", "bollywood", "hindi films", "hindi cinema", "bollywood actors",
+    "bollywood movies", "hindi movies", "bollywood", "hindi cinema", "bollywood actors",
     "bollywood songs", "bollywood news", "hindi movie reviews", "hindi film database",
+    "bollywood box office", "upcoming hindi movies", "bollywood OTT release",
+    "new hindi films 2026", "hindi movie cast", "bollywood blockbuster",
   ],
   openGraph: {
     type: "website",

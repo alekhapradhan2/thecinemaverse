@@ -23,66 +23,66 @@ interface GuideConfig {
 const GUIDES: Record<string, GuideConfig> = {
   "bollywood-movies": {
     title: "Know About Hindi Movies",
-    metaTitle: "Hindi Movies — Everything You Need to Know About bollywood",
-    metaDesc: "A complete guide to hindi movies and bollywood cinema. History, best films, top actors, and how to explore hindi cinema.",
-    h1: "Hindi Movies — A Complete Guide to bollywood Cinema",
+    metaTitle: "Hindi Movies — Everything You Need to Know About Bollywood",
+    metaDesc: "A complete guide to Hindi movies and Bollywood cinema. History, best films, top actors, and how to explore Hindi cinema on The Cinema Verse.",
+    h1: "Hindi Movies — A Complete Guide to Bollywood Cinema",
     keywords: ["hindi movies", "bollywood", "what is bollywood", "hindi cinema guide"],
     relatedLinks: [
       { label: "Hindi Movies 2026",   href: "/movies/2026" },
       { label: "Latest Hindi Movies", href: "/movies/latest" },
       { label: "Upcoming Movies",    href: "/movies/upcoming" },
-      { label: "Best bollywood Songs",    href: "/blog/bollywood-guides/best-bollywood-songs" },
+      { label: "Best Bollywood Songs",    href: "/blog/bollywood-guides/best-bollywood-songs" },
     ],
     sections: [
       {
-        heading: "What Is bollywood?",
-        body: "The term 'bollywood' is a portmanteau of bollywood (or Oriya) and Hbollywood, coined to describe the bollywood-language film industry based primarily in Bhubaneswar and Cuttack, Odisha. The industry produces over 50 films annually, spanning genres including romance, action, mythology, comedy, and thriller. hindi films are distributed across Odisha, Jharkhand, Chhattisgarh, and West Bengal, as well as to the bollywood diaspora worldwide.",
+        heading: "What Is Bollywood?",
+        body: "The term 'Bollywood' is a portmanteau of Bombay (now Mumbai) and Hollywood, coined to describe the Hindi-language film industry based in Mumbai, Maharashtra. Bollywood is the largest film industry in India by number of films produced, churning out over 300 films annually across genres including romance, action, drama, comedy, thriller, and mythological. Hindi films are distributed across India, South Asia, and to the Indian diaspora worldwide, making Bollywood one of the most-watched film industries on the planet.",
       },
       {
         heading: "History of Hindi Cinema",
-        body: "The first bollywood sound film, Sita Bibaha, was released in 1936, marking the dawn of a new cultural era for Odisha. Through the 1950s and 60s, mythological and devotional films dominated, drawing massive crowds to rural screening halls. The 1970s and 80s ushered in a golden age of romantic melodramas, with superstar actors and legendary playback singers creating songs that remain beloved classics to this day. The 21st century saw bollywood embrace modern production values, digital filmmaking, and international distribution.",
+        body: "The first Indian sound film, Alam Ara (1931), directed by Ardeshir Irani, marked the dawn of the Hindi talkie era. Through the 1940s and 50s, mythological epics and social dramas dominated, drawing massive crowds to cinema halls. The 1960s and 70s ushered in Bollywood's golden age of romantic melodramas, with legendary actors like Dilip Kumar, Dev Anand, and Rajesh Khanna and legendary playback singers like Lata Mangeshkar and Mohammed Rafi creating songs that remain beloved classics to this day. The 21st century saw Bollywood embrace modern production values, CGI, and international co-productions.",
       },
       {
         heading: "Top Genres in Hindi Cinema",
-        body: "Action films with high-octane stunt sequences dominate the box office, while romantic films set against Odisha's scenic landscapes attract family audiences. Mythological and devotional films based on bollywood folk deities maintain a dedicated following, and a growing wave of social dramas address contemporary issues like urbanisation and women's empowerment. Comedy films rooted in bollywood humour round out the genre landscape.",
+        body: "Action films with high-octane sequences dominate the Bollywood box office, while romantic films set against India's diverse landscapes attract family audiences. Mythological and biographical films based on Indian history maintain a dedicated following, and a growing wave of social dramas address contemporary issues like gender equality and social justice. Comedy films rooted in Indian humour, and suspense thrillers round out the vibrant genre landscape of Hindi cinema.",
       },
       {
         heading: "How to Explore Hindi Movies on The Cinema Verse",
-        body: "The Cinema Verse is the most comprehensive database of hindi cinema. Browse films by release year, explore blockbuster hits, or check out upcoming releases. Each movie page includes the full song list, cast details, director credits, and audience ratings — everything you need to decide what to watch next.",
+        body: "The Cinema Verse is the most comprehensive database of Bollywood cinema. Browse films by release year, explore blockbuster hits, or check out upcoming releases. Each movie page includes the full song list, cast details, director credits, and audience ratings — everything you need to decide what to watch next.",
       },
     ],
   },
   "history-of-bollywood": {
-    title: "History of bollywood",
-    metaTitle: "History of bollywood | The Complete Story of Hindi Cinema",
-    metaDesc: "Explore the complete history of bollywood — from the first hindi film in 1936 to today's modern blockbusters. A definitive timeline of hindi cinema.",
-    h1: "History of bollywood — From 1936 to the Modern Era",
+    title: "History of Bollywood",
+    metaTitle: "History of Bollywood | The Complete Story of Hindi Cinema",
+    metaDesc: "Explore the complete history of Bollywood — from the first Hindi talkie Alam Ara in 1931 to today's modern blockbusters. A definitive timeline of Hindi cinema.",
+    h1: "History of Bollywood — From 1931 to the Modern Era",
     keywords: ["history of bollywood", "hindi cinema history", "bollywood timeline"],
     relatedLinks: [
       { label: "Know About Hindi Movies", href: "/blog/bollywood-guides/bollywood-movies" },
       { label: "Top 10 Hindi Movies",     href: "/blog/bollywood-guides/top-10-bollywood-movies" },
-      { label: "Famous bollywood Actors",     href: "/blog/bollywood-guides/bollywood-actors" },
+      { label: "Famous Bollywood Actors",     href: "/blog/bollywood-guides/bollywood-actors" },
     ],
     sections: [
       {
-        heading: "The Birth of bollywood Talkies (1930s–1940s)",
-        body: "The first bollywood feature film, Sita Bibaha (1936), directed by Mohan Sundar Deb Goswami, established the blueprint for early hindi cinema: mythological narratives, classical music, and stories drawn from Hindu epics. The film was produced in Kolkata, as Odisha lacked its own studio infrastructure at the time. The 1940s brought gradual growth, with studios and distribution networks slowly taking shape within the state.",
+        heading: "The Birth of Bollywood Talkies (1930s–1940s)",
+        body: "The first Indian talkie, Alam Ara (1931), directed by Ardeshir Irani, established the blueprint for Hindi cinema: emotion-driven narratives, classical music, and stories drawn from Indian epics and folklore. The film was produced in Bombay (Mumbai) and created the foundational model of the song-driven Bollywood film. The 1940s brought rapid expansion, with studios like Bombay Talkies and New Theatres producing a steady stream of socially conscious dramas and mythologicals.",
       },
       {
-        heading: "The Golden Age (1960s–1970s)",
-        body: "This era produced bollywood's most enduring cultural icons. Legendary actors became household names, while composers created soundtracks that bollywood families still play at weddings and festivals decades later. Social themes entered the bollywood screen for the first time, with films tackling poverty, untouchability, and women's rights alongside the popular romantic dramas that dominated the box office.",
+        heading: "The Golden Age (1950s–1970s)",
+        body: "This era produced Bollywood's most enduring cultural icons. Legendary actors like Dilip Kumar, Dev Anand, Raj Kapoor, Guru Dutt, and later Amitabh Bachchan became household names, while composers like S.D. Burman, R.D. Burman, and Laxmikant–Pyarelal created soundtracks that Indian families still play at weddings and festivals decades later. Social themes entered Bollywood for the first time, with films tackling poverty, partition, and women's rights alongside the popular romantic dramas that dominated the box office.",
       },
       {
-        heading: "The Transition Years (1980s–1990s)",
-        body: "Cable television and VHS tapes disrupted the theatrical business, forcing bollywood to adapt. Action films with flashy stunts and catchy soundtracks emerged as the dominant format, catering to mass audiences hungry for escapist entertainment. This era minted a new generation of superstars who would define hindi cinema for the next two decades.",
+        heading: "The Masala and Romance Era (1980s–1990s)",
+        body: "Cable television and VHS tapes disrupted the theatrical business, forcing Bollywood to adapt. Action films starring Amitabh Bachchan defined the 1980s, followed by a resurgence of romantic blockbusters in the 1990s led by Shah Rukh Khan, Salman Khan, and Aamir Khan. This era minted a new generation of superstars who would define Hindi cinema for the next two decades. Films like Dilwale Dulhania Le Jayenge and Hum Aapke Hain Koun..! redefined the Bollywood love story for a global audience.",
       },
       {
-        heading: "The Digital Revolution (2000s–2010s)",
-        body: "Digital cameras, non-linear editing, and affordable distribution changed the game entirely. Low-budget films with strong scripts could now compete with big-budget productions. A new wave of directors brought fresh sensibilities — urban stories, horror films, and youth romances — expanding bollywood's audience beyond its traditional demographic.",
+        heading: "The New Wave (2000s–2010s)",
+        body: "Digital cameras, multiplexes, and OTT platforms changed the game entirely. Low-budget films with strong scripts could now compete with big-budget productions. A new wave of directors like Anurag Kashyap, Zoya Akhtar, and Imtiaz Ali brought fresh sensibilities — urban stories, realistic dramas, and youth romances — expanding Bollywood's audience beyond its traditional demographic. Pan-India blockbusters like 3 Idiots and Dangal crossed ₹300 crore at the box office.",
       },
       {
-        heading: "bollywood Today (2020s)",
-        body: "Today's bollywood is a confident, ambitious industry. Pan-India releases, OTT premieres, and international film festival selections are no longer anomalies but expectations. Streaming platforms like MX Player, ZEE5, and Amazon Prime Video have given hindi films unprecedented global reach. The next chapter — being written right now with the current year's releases — promises to be the most exciting yet.",
+        heading: "Bollywood Today (2020s)",
+        body: "Today's Bollywood is a confident, ambitious industry. Pan-India releases, OTT premieres on Netflix and Amazon Prime Video, and international film festival selections are no longer anomalies but expectations. Stars like Shah Rukh Khan, Deepika Padukone, and Ranveer Singh are global names. The next chapter — being written right now with the current year's releases — promises to be the most exciting yet.",
       },
     ],
   },
@@ -114,10 +114,10 @@ const GUIDES: Record<string, GuideConfig> = {
     ],
   },
   "best-bollywood-songs": {
-    title: "Best bollywood Songs List",
-    metaTitle: "Best bollywood Songs of All Time | Greatest bollywood Music Ever",
-    metaDesc: "Discover the best bollywood songs ever recorded. A curated list of iconic bollywood tracks across decades with artist details and movie names.",
-    h1: "Best bollywood Songs — The Greatest bollywood Music of All Time",
+    title: "Best Bollywood Songs List",
+    metaTitle: "Best Bollywood Songs of All Time | Greatest Hindi Film Music Ever",
+    metaDesc: "Discover the best Bollywood songs ever recorded. A curated list of iconic Hindi film tracks across decades with artist details and movie names.",
+    h1: "Best Bollywood Songs — The Greatest Hindi Film Music of All Time",
     keywords: ["best bollywood songs", "greatest bollywood songs", "top bollywood songs list"],
     relatedLinks: [
       { label: "Classic Old Songs",  href: "/songs/category/classics" },
@@ -127,28 +127,28 @@ const GUIDES: Record<string, GuideConfig> = {
     ],
     sections: [
       {
-        heading: "What Makes a Great bollywood Song?",
-        body: "bollywood music is one of India's richest regional musical traditions, blending classical Odissi ragas, devotional bhajans, folk rhythms, and contemporary pop into a sound that is instantly recognisable and deeply emotive. The best hindi film songs combine melodic sophistication with lyrical poetry — bollywood is a language of extraordinary literary richness, and the finest songwriters harness that tradition in every line.",
+        heading: "What Makes a Great Bollywood Song?",
+        body: "Bollywood music is one of India's richest musical traditions, blending classical ragas, devotional bhajans, folk rhythms, and contemporary pop into a sound that is instantly recognisable and deeply emotive. The best Hindi film songs combine melodic sophistication with lyrical poetry — Hindi and Urdu are languages of extraordinary literary richness, and the finest songwriters like Gulzar, Javed Akhtar, and Prasoon Joshi harness that tradition in every line.",
       },
       {
-        heading: "The Golden Era (1960s–70s)",
-        body: "Soulful melodies composed by masters featured classical-influenced arrangements and poetic lyrics rooted in the bollywood literary tradition. These songs are the backbone of The Cinema Verse's classics collection — tracks that have been played at bollywood festivals and family gatherings for half a century without losing any of their power.",
+        heading: "The Golden Era (1950s–70s)",
+        body: "Soulful melodies composed by masters like S.D. Burman, Shankar-Jaikishan, and Madan Mohan featured classical-influenced arrangements and poetic lyrics. Legendary voices like Lata Mangeshkar, Mohammed Rafi, Kishore Kumar, and Asha Bhosle defined the sound of an era. These songs are the backbone of The Cinema Verse's classics collection — tracks that have been cherished at Indian festivals and family gatherings for over half a century.",
       },
       {
         heading: "The Masala Era (1980s–90s)",
-        body: "High-energy numbers with synthesiser-driven beats were designed for mass-audience appeal. Many became folk anthems sung at bollywood festivals and cultural programmes. Despite their commercial origins, the best songs from this era demonstrate remarkable melodic inventiveness and are now recognised as classics in their own right.",
+        body: "High-energy numbers with synthesiser-driven beats composed by R.D. Burman and Laxmikant-Pyarelal were designed for mass-audience appeal. Voices like Kumar Sanu, Udit Narayan, and Alka Yagnik dominated the charts. Many became anthems played at weddings and cultural programmes. Despite their commercial origins, the best songs from this era demonstrate remarkable melodic inventiveness and are now recognised as classics.",
       },
       {
         heading: "The Modern Era (2000s–present)",
-        body: "Today's hindi film music is a confident fusion of traditional sounds with contemporary pop, hip-hop, and EDM production. Young composers are unafraid to experiment while remaining rooted in the bollywood musical tradition. The result is a stream of songs that top streaming charts while still sounding unmistakably bollywood.",
+        body: "Today's Bollywood music is a confident fusion of traditional sounds with contemporary pop, hip-hop, and EDM production. Composers like Pritam, A.R. Rahman, Vishal-Shekhar, and Shankar-Ehsaan-Loy craft songs that top streaming charts globally. Singers like Arijit Singh, Shreya Ghoshal, and Badshah bring a new generation of listeners to Bollywood music while remaining rooted in the Hindi film tradition.",
       },
     ],
   },
   "bollywood-actors": {
-    title: "Famous bollywood Actors",
-    metaTitle: "Famous bollywood Actors | Top bollywood Stars & Their Best Movies",
-    metaDesc: "Meet the most famous bollywood actors in bollywood. Profiles of top stars with their best movies, hit songs, awards, and career highlights.",
-    h1: "Famous bollywood Actors — The Stars of bollywood",
+    title: "Famous Bollywood Actors",
+    metaTitle: "Famous Bollywood Actors | Top Hindi Film Stars & Their Best Movies",
+    metaDesc: "Meet the most famous Bollywood actors in Hindi cinema. Profiles of top stars with their best movies, hit songs, awards, and career highlights.",
+    h1: "Famous Bollywood Actors — The Stars of Hindi Cinema",
     keywords: ["famous bollywood actors", "bollywood actors", "hindi film stars"],
     relatedLinks: [
       { label: "Cast & Crew",         href: "/cast" },
@@ -159,19 +159,19 @@ const GUIDES: Record<string, GuideConfig> = {
     sections: [
       {
         heading: "The Legends",
-        body: "The foundation of bollywood's acting tradition was laid by icons whose screen presence redefined bollywood heroism. These veterans set a standard of craft and professionalism that every subsequent generation of bollywood actors has aspired to match. Their films remain essential viewing for anyone seeking to understand the cultural heritage of hindi cinema.",
+        body: "The foundation of Bollywood's acting tradition was laid by icons like Dilip Kumar, Raj Kapoor, Dev Anand, Nargis, and Guru Dutt. Their screen presence redefined Indian heroism and femininity. These veterans set a standard of craft and professionalism that every subsequent generation of Bollywood actors has aspired to match. Their films remain essential viewing for anyone seeking to understand the cultural heritage of Hindi cinema.",
       },
       {
         heading: "The Modern Superstars",
-        body: "Today's bollywood is driven by a new generation of bankable stars who combine acting ability with social media savvy and pan-India ambitions. These actors consistently deliver films that break box-office records and generate chart-topping soundtracks, making them cultural phenomena beyond the screen. Many have expanded into production and direction, shaping the industry's future as well as its present.",
+        body: "Today's Bollywood is driven by the Khans — Shah Rukh Khan, Salman Khan, and Aamir Khan — as well as a powerhouse new generation including Ranveer Singh, Ranbir Kapoor, Deepika Padukone, and Alia Bhatt. These actors consistently deliver films that break box-office records and generate chart-topping soundtracks, making them cultural phenomena beyond the screen. Many have expanded into production, shaping the industry's future.",
       },
       {
         heading: "Rising Stars",
-        body: "Every year, bollywood discovers fresh talent through debut films, web series, and reality shows. These rising stars bring contemporary sensibilities and new storytelling possibilities to hindi cinema, ensuring the industry's creative vitality for years to come. Several have already demonstrated range and charisma that suggest major careers ahead.",
+        body: "Every year, Bollywood discovers fresh talent through debut films, web series, and reality shows. Stars like Kartik Aaryan, Sara Ali Khan, Janhvi Kapoor, and Siddhant Chaturvedi bring contemporary sensibilities and new storytelling possibilities to Hindi cinema, ensuring the industry's creative vitality for years to come.",
       },
       {
         heading: "Explore on The Cinema Verse",
-        body: "Each actor on The Cinema Verse has a dedicated profile page featuring their complete filmography, awards history, and song appearances. The Cast & Crew section covers every bollywood actor, director, cinematographer, and music composer in our comprehensive database — the most complete record of bollywood talent available anywhere.",
+        body: "Each actor on The Cinema Verse has a dedicated profile page featuring their complete filmography, awards history, and song appearances. The Cast & Crew section covers every Bollywood actor, director, cinematographer, and music composer in our comprehensive database — the most complete record of Hindi film talent available anywhere.",
       },
     ],
   },
@@ -184,7 +184,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
-  const base = "https://thecinemaverse.com";
+  const base = "https://thecinemaverses.in";
   const article = {
     "@context": "https://schema.org", "@type": "Article",
     headline: cfg.h1, url: `${base}/blog/bollywood-guides/${slug}`,
@@ -195,7 +195,7 @@ function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: base },
       { "@type": "ListItem", position: 2, name: "Blog", item: `${base}/blog` },
-      { "@type": "ListItem", position: 3, name: "bollywood Guides", item: `${base}/blog/bollywood-guides` },
+      { "@type": "ListItem", position: 3, name: "Bollywood Guides", item: `${base}/blog/bollywood-guides` },
       { "@type": "ListItem", position: 4, name: cfg.title, item: `${base}/blog/bollywood-guides/${slug}` },
     ],
   };

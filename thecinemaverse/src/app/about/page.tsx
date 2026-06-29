@@ -24,18 +24,18 @@ export default function AboutPage() {
       <div className="prose-bollywood mb-12">
         <h2>Our Mission</h2>
         <p>
-          The Cinema Verse was founded with a singular mission: to create the definitive online resource for hindi cinema
-          (bollywood) — a platform where fans, film professionals, researchers, and enthusiasts can discover,
-          explore, and celebrate the rich heritage of hindi films. We believe that hindi cinema, one of India's
-          oldest regional film industries, deserves a dedicated space that honours its past, celebrates its present,
+          The Cinema Verse was founded with a singular mission: to create the definitive online resource for Hindi cinema
+          (Bollywood) — a platform where fans, film professionals, researchers, and enthusiasts can discover,
+          explore, and celebrate the rich heritage of Hindi films. We believe that Bollywood, one of the world's
+          largest film industries, deserves a dedicated space that honours its past, celebrates its present,
           and looks forward to its future.
         </p>
 
         <h2>What We Offer</h2>
         <p>
           The Cinema Verse is more than just a movie database. We are a comprehensive knowledge hub for everything
-          related to hindi cinema. Our platform provides detailed information on thousands of hindi films spanning
-          over eight decades, from the first bollywood talkie <em>Sita Bibaha</em> (1936) to the latest bollywood
+          related to Hindi cinema. Our platform provides detailed information on thousands of Bollywood films spanning
+          over a century, from the classics of early Bollywood to the latest
           blockbusters. For each film, we provide complete cast and crew details, songs, trailer, box office
           collection data, synopsis, plot analysis, critical reviews, and user ratings.
         </p>
@@ -53,10 +53,11 @@ export default function AboutPage() {
 
         <h2>Celebrating Hindi Film Heritage</h2>
         <p>
-          hindi cinema has a rich and storied history. Over nine decades, bollywood has produced hundreds of films
-          that reflect the culture, traditions, mythology, and social fabric of Odisha. From devotional films
-          based on Lord Jagannath's stories to contemporary action thrillers set in modern Odisha, hindi films
-          have always carried a distinct identity that resonates with millions of viewers.
+          Bollywood — India's Hindi-language film industry — has a rich and storied history spanning over a century. From the era of silent films to the golden age of playback singing, and from the blockbuster era of the 1990s to today's pan-India releases,
+          Bollywood has produced thousands of films
+          that reflect the culture, traditions, mythology, and social fabric of India. From devotional classics
+          to contemporary action thrillers, Hindi films
+          have always carried a distinct identity that resonates with hundreds of millions of viewers worldwide.
         </p>
         <p>
           The Cinema Verse is committed to documenting this heritage comprehensively. We work to ensure that even older,

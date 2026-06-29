@@ -433,13 +433,13 @@ export async function Footer() {
             itemType="https://schema.org/Organization"
           >
             <meta itemProp="name" content="The Cinema Verse" />
-            <meta itemProp="description" content="Odisha's most complete online encyclopedia for hindi movies and the bollywood film industry." />
+            <meta itemProp="description" content="India's most complete online encyclopedia for Hindi movies and the Bollywood film industry." />
             <p>
-              <strong className="text-gray-500" itemProp="name">The Cinema Verse</strong> is Odisha&apos;s most
+              <strong className="text-gray-500" itemProp="name">The Cinema Verse</strong> is India&apos;s most
               complete online encyclopedia for{" "}
-              <strong className="text-gray-500">hindi movies</strong> and the{" "}
-              <strong className="text-gray-500">bollywood film industry</strong>. From classic films of the
-              1950s to the latest blockbusters of 2026, we catalogue every hindi film with full cast, crew,
+              <strong className="text-gray-500">Hindi movies</strong> and the{" "}
+              <strong className="text-gray-500">Bollywood film industry</strong>. From classic films of the
+              1950s to the latest blockbusters of 2026, we catalogue every Hindi film with full cast, crew,
               songs, box office data, and reviews — all in one place.
             </p>
             <p>
@@ -494,7 +494,7 @@ export async function Footer() {
               The most comprehensive encyclopedia of{" "}
               <strong className="font-medium text-gray-400">hindi cinema</strong> — covering
               bollywood movies, songs, actors, box office results, and industry news from
-              Odisha&apos;s vibrant film industry since its founding.
+              India's vibrant Bollywood film industry since its founding.
             </p>
 
             {/* SEO keyword pills */}

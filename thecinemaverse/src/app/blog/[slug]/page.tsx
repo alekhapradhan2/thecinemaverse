@@ -172,7 +172,6 @@ const description = (
     "bollywood news",
     year && `hindi movie ${year}`,
     year && `bollywood ${year}`,
-    "Odisha film",
     "hindi movie blog",
     ...(blog.tags || []),
   ].filter(Boolean) as string[];

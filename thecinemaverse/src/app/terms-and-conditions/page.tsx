@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     "no data collection policy",
   ],
   alternates: {
-    canonical: "https://thecinemaverse.com/terms-and-conditions",
+    canonical: "https://thecinemaverses.in/terms-and-conditions",
   },
   openGraph: {
     title: "Terms & Conditions | The Cinema Verse",
     description:
       "Our Terms & Conditions are simple: use the site freely, we respect your privacy and collect no personal data.",
-    url: "https://thecinemaverse.com/terms-and-conditions",
+    url: "https://thecinemaverses.in/terms-and-conditions",
     siteName: "The Cinema Verse",
     type: "website",
   },

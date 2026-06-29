@@ -730,25 +730,25 @@ export default async function MoviesByYearPage({
                     `${year} Hindi Movie Download`,
                     `${year} Hindi Movie Watch Online`,
                     `Hindi Cinema ${year}`,
-                    `bollywood Films ${year}`,
-                    `${year} bollywood Romantic Movies`,
-                    `${year} bollywood Action Movies`,
-                    `${year} bollywood Comedy Movies`,
-                    `${year} bollywood Family Movies`,
+                    `Bollywood Films ${year}`,
+                    `${year} Bollywood Romantic Movies`,
+                    `${year} Bollywood Action Movies`,
+                    `${year} Bollywood Comedy Movies`,
+                    `${year} Bollywood Family Movies`,
                     `Hindi Movie Director ${year}`,
                     `Hindi Film Industry ${year}`,
-                    `Babushaan Mohanty Movies ${year}`,
-                    `Sabyasachi Mishra Movies ${year}`,
-                    `Elina Samantray Movies ${year}`,
-                    `bollywood Blockbuster ${year}`,
-                    `Aao NXT Hindi Movies ${year}`,
-                    `Kanccha Lannka Hindi Movies ${year}`,
-                    `Tarang Plus Hindi Movies ${year}`,
+                    `Shah Rukh Khan Movies ${year}`,
+                    `Salman Khan Movies ${year}`,
+                    `Deepika Padukone Movies ${year}`,
+                    `Bollywood Blockbuster ${year}`,
+                    `Amazon Prime Hindi Movies ${year}`,
+                    `Netflix Hindi Movies ${year}`,
+                    `Disney Plus Hotstar Hindi Movies ${year}`,
                     `Hindi Films ${year} IMDb`,
-                    `${year} bollywood Mythological Movies`,
-                    `${year} bollywood Thriller Movies`,
-                    `Sarthak Music ${year}`,
-                    `${year} bollywood Superhit`,
+                    `${year} Bollywood Mythological Movies`,
+                    `${year} Bollywood Thriller Movies`,
+                    `Pritam Music ${year}`,
+                    `${year} Bollywood Superhit`,
                     `Hindi Movie Trailer ${year}`,
                     `${year} Hindi Film Songs`,
                   ].map((tag) => (
@@ -797,9 +797,9 @@ export default async function MoviesByYearPage({
                       })}
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Out of <strong className="text-gray-300">{total} hindi movies in {year}</strong>,
+                    Out of <strong className="text-gray-300">{total} Hindi movies in {year}</strong>,
                     the box office verdicts above reflect audience turnout and theatrical collection
-                    across Odisha. Blockbuster and Superhit films typically run for 4–8 weeks in
+                    across India. Blockbuster and Superhit films typically run for 4–8 weeks in
                     theatres, while Average and Flop films have shorter runs. Upcoming films have
                     not yet been released and their verdict will be updated post-release.
                   </p>
@@ -822,26 +822,26 @@ export default async function MoviesByYearPage({
                 </h2>
                 <div className="space-y-3 text-sm text-gray-400 leading-relaxed">
                   <p>
-                    <strong className="text-gray-200">bollywood</strong> is the colloquial name for
-                    the <strong className="text-gray-200">bollywood-language film industry</strong> based
-                    in <strong className="text-gray-200">Bhubaneswar and Cuttack</strong>, Odisha,
-                    India. The industry produces over 30–50 films annually and has a dedicated
-                    audience base of over 45 million bollywood speakers in Odisha as well as bollywood
-                    diaspora communities across India and abroad.
+                    <strong className="text-gray-200">Bollywood</strong> is the colloquial name for
+                    the <strong className="text-gray-200">Hindi-language film industry</strong> based
+                    in <strong className="text-gray-200">Mumbai</strong>, India.
+                    The industry produces over 300–400 films annually and has a dedicated
+                    audience base of over a billion Hindi speakers across India as well as
+                    diaspora communities worldwide.
                   </p>
                   <p>
-                    bollywood films are primarily exhibited in single-screen and multiplex theatres
-                    across Odisha, with major centres in Bhubaneswar, Cuttack, Berhampur,
-                    Sambalpur, Rourkela, and Balasore. Popular bollywood stars include actors such
-                    as Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, Elina Samantray,
-                    Sivani Sangita, and Archita Sahu, among many others.
+                    Bollywood films are exhibited in single-screen and multiplex theatres
+                    across India, with major centres in Mumbai, Delhi, Chennai,
+                    Bangalore, Hyderabad, and Kolkata. Popular Bollywood stars include actors such
+                    as Shah Rukh Khan, Salman Khan, Aamir Khan, Deepika Padukone,
+                    Ranveer Singh, and Alia Bhatt, among many others.
                   </p>
                   <p>
-                    Major hindi film production houses active in {year} include bollywood studios and
-                    independent producers who collaborate with dedicated bollywood OTT platforms —{" "}
-                    <strong className="text-gray-200">Aao NXT</strong>,{" "}
-                    <strong className="text-gray-200">Kanccha Lannka</strong>, and{" "}
-                    <strong className="text-gray-200">Tarang Plus</strong> — for digital releases
+                    Major Hindi film production houses active in {year} include Dharma Productions,
+                    Yash Raj Films, T-Series, and many independent producers who collaborate with leading OTT platforms —{" "}
+                    <strong className="text-gray-200">Netflix</strong>,{" "}
+                    <strong className="text-gray-200">Amazon Prime Video</strong>, and{" "}
+                    <strong className="text-gray-200">Disney+ Hotstar</strong> — for digital releases
                     following their theatrical run.
                   </p>
                   <p>
@@ -890,7 +890,7 @@ export default async function MoviesByYearPage({
                           name: `How many hindi movies were released in ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `A total of ${total} bollywood (bollywood) movies were released in ${year}. These films span a range of genres including action, romance, drama, comedy, mythology, and thriller.`,
+                            text: `A total of ${total} bollywood movies were released in ${year}. These films span a range of genres including action, romance, drama, comedy, mythology, and thriller.`,
                           },
                         },
                         {
@@ -922,7 +922,7 @@ export default async function MoviesByYearPage({
                           name: `Where can I watch hindi movies of ${year} online?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `${year} hindi movies are available to stream on bollywood OTT platforms including Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) following their theatrical release. Check individual movie pages on The Cinema Verse for streaming availability.`,
+                            text: `${year} Hindi movies are available to stream on OTT platforms including Netflix, Amazon Prime Video, and Disney+ Hotstar following their theatrical release. Check individual movie pages on The Cinema Verse for streaming availability.`,
                           },
                         },
                         {
@@ -938,7 +938,7 @@ export default async function MoviesByYearPage({
                           name: `What is bollywood?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `bollywood is the informal name for the bollywood-language film industry based in Odisha, India. It produces films primarily in the bollywood language for audiences in Odisha and the global bollywood diaspora.`,
+                            text: `Bollywood is the informal name for the Hindi-language film industry based in Mumbai, India. It produces films primarily in the Hindi language for audiences across India and the global Hindi diaspora.`,
                           },
                         },
                         {
@@ -946,7 +946,7 @@ export default async function MoviesByYearPage({
                           name: `Which OTT platform has the most ${year} hindi movies?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `The dedicated bollywood OTT platforms for ${year} bollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in bollywood content and carry the most complete catalogues of ${year} hindi films.`,
+                            text: `The leading Bollywood OTT platforms for ${year} Hindi movies are Netflix, Amazon Prime Video, and Disney+ Hotstar. These platforms carry the most complete catalogues of ${year} Hindi films after theatrical release.`,
                           },
                         },
                         {
@@ -954,7 +954,7 @@ export default async function MoviesByYearPage({
                           name: `Who are the top bollywood actors of ${year}?`,
                           acceptedAnswer: {
                             "@type": "Answer",
-                            text: `Leading bollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey.`,
+                            text: `Leading Bollywood actors in ${year} include Shah Rukh Khan, Salman Khan, Aamir Khan, and Ranveer Singh. Top actresses include Deepika Padukone, Alia Bhatt, Katrina Kaif, and Priyanka Chopra.`,
                           },
                         },
                         {
@@ -1002,7 +1002,7 @@ export default async function MoviesByYearPage({
                     },
                     {
                       q: `Where can I watch hindi movies of ${year} online?`,
-                      a: `Most ${year} hindi movies are available to stream on dedicated bollywood OTT platforms — Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in) — after their theatrical run. Individual movie pages on The Cinema Verse include direct streaming links where available.`,
+                      a: `Most ${year} Hindi movies are available to stream on Netflix, Amazon Prime Video, and Disney+ Hotstar after their theatrical run. Individual movie pages on The Cinema Verse include direct streaming links where available.`,
                     },
                     {
                       q: `Which upcoming hindi movies are releasing in ${year}?`,
@@ -1010,15 +1010,15 @@ export default async function MoviesByYearPage({
                     },
                     {
                       q: `What is bollywood?`,
-                      a: `bollywood is the name for the bollywood-language film industry based in Bhubaneswar and Cuttack, Odisha. It produces 30–50 films annually for bollywood-speaking audiences across India and the global diaspora.`,
+                      a: `Bollywood is the name for the Hindi-language film industry based in Mumbai, India. It produces 300–400 films annually for Hindi-speaking audiences across India and the global diaspora.`,
                     },
                     {
                       q: `Which OTT platform has the most ${year} hindi movies?`,
-                      a: `The dedicated bollywood OTT platforms for ${year} bollywood movies are Aao NXT (aaonxt.com), Kanccha Lannka (kancchalannka.com), and Tarang Plus (tarangplus.in). These platforms specialise in bollywood content and carry the most complete catalogues of ${year} hindi films. Visit individual movie pages on The Cinema Verse for direct streaming links.`,
+                      a: `The leading OTT platforms for ${year} Hindi movies are Netflix, Amazon Prime Video, and Disney+ Hotstar. These platforms carry the most complete catalogues of ${year} Hindi films. Visit individual movie pages on The Cinema Verse for direct streaming links.`,
                     },
                     {
                       q: `Who are the top bollywood actors of ${year}?`,
-                      a: `Leading bollywood actors in ${year} include Babushaan Mohanty, Sabyasachi Mishra, Anubhav Mohanty, and Sidhant Mohapatra, among others. Top actresses include Elina Samantray, Sivani Sangita, Archita Sahu, and Riya Dey. See all cast details on individual movie pages on The Cinema Verse.`,
+                      a: `Leading Bollywood actors in ${year} include Shah Rukh Khan, Salman Khan, Aamir Khan, and Ranveer Singh. Top actresses include Deepika Padukone, Alia Bhatt, Katrina Kaif, and Priyanka Chopra. See all cast details on individual movie pages on The Cinema Verse.`,
                     },
                     {
                       q: `What genres are popular in ${year} hindi cinema?`,

@@ -20,13 +20,14 @@ import { TRIVIA_EMOJIS } from "@/lib/trivia-constants";
 export const revalidate = 600;
 
 export const metadata: Metadata = buildMeta({
-  title: `${SITE_NAME} – The Hindi Film Encyclopedia`,
+  title: `${SITE_NAME} – #1 Bollywood Movie Database | Hindi Films, Songs & Box Office`,
   description:
-    "The Cinema Verse is Odisha's most comprehensive hindi film database. Discover latest bollywood movies, songs, actor biographies, box office collection, reviews and hindi film blogs.",
+    "The Cinema Verse is India's most comprehensive Bollywood movie database. Discover latest Hindi films, songs, actor biographies, box office collections, reviews, OTT dates and film news — all in one place.",
   keywords: [
-    "hindi movies 2025", "bollywood", "hindi cinema", "hindi films", "Babushaan",
-    "Elina Samantray", "bollywood actor", "bollywood songs", "hindi movie reviews",
-    "bollywood box office", "hindi film blog",
+    "bollywood movies 2026", "hindi movies 2026", "bollywood", "hindi cinema", "hindi films",
+    "bollywood actors", "bollywood songs", "hindi movie reviews", "bollywood box office",
+    "hindi film blog", "new bollywood movies", "upcoming hindi films", "hindi movie database",
+    "bollywood news", "hindi film cast", "bollywood OTT release",
   ],
   url: "/",
 });

@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy | The Cinema Verse",
   description:
-    "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse Odisha's most complete hindi cinema encyclopedia.",
+    "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse India's most complete Bollywood cinema encyclopedia.",
   alternates: {
     canonical: "https://thecinemaverses.in/privacy",
   },

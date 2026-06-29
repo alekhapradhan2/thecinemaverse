@@ -58,7 +58,7 @@ function getMisspellings(title: string): string[] {
     "collection", "rating", "release date", "full movie",
     "movie review", "public review", "movie story", "movie cast",
     "movie trailer", "movie details", "worth watching",
-    "movie rating thecinemaverse", "movie in odisha", "bhubaneswar release",
+    "movie rating thecinemaverse", "bollywood cinema", "mumbai release",
     "hindi cinema", "hindi movie review", "bollywood movie",
   ];
 
@@ -247,8 +247,8 @@ export async function generateMetadata({
     `${movie.title} bollywood`,
     `${movie.title} bollywood movie`,
     `${movie.title} hindi cinema`,
-    `${movie.title} movie in odisha`,
-    `${movie.title} bhubaneswar release`,
+    `${movie.title} bollywood release`,
+    `${movie.title} mumbai release`,
     `hindi movie ${movie.title} review`,
 
     // ── Long-tail intent ───────────────────────────────────────────────────

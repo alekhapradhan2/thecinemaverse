@@ -405,9 +405,9 @@ export default async function CastPage({
                       backed with filmography data, career highlights, and biographical details.
                     </p>
                     <p>
-                      Whether you're looking for celebrated <strong className="text-zinc-200">bollywood actors</strong> like
-                      Babushaan Mohanty and Sabyasachi Mishra, iconic <strong className="text-zinc-200">bollywood actresses</strong>{" "}
-                      like Elina Samantray and Archita Sahu, or the talented directors and music composers behind bollywood's
+                      Whether you're looking for celebrated <strong className="text-zinc-200">Bollywood actors</strong> like
+                      Shah Rukh Khan and Salman Khan, iconic <strong className="text-zinc-200">Bollywood actresses</strong>{" "}
+                      like Deepika Padukone and Alia Bhatt, or the talented directors and music composers behind Bollywood's
                       biggest hits — you'll find them all here.
                     </p>
                   </div>

@@ -539,19 +539,19 @@ export default async function MoviesPage({
                 <em>Sita Bibaha</em> became the first bollywood feature film ever produced.
               </p>
               <p>
-                Today, bollywood produces between <strong className="text-white">40 to 60 hindi films every year</strong>,
+                Today, Bollywood produces between <strong className="text-white">300 to 400 Hindi films every year</strong>,
                 spanning genres like action, romance, drama, comedy, devotional, thriller and historical.
-                The industry is closely tied to Odisha's culture — featuring stories rooted in Odishan
-                traditions, temples, folklore, and everyday life.
+                The industry is deeply connected to India's culture — featuring stories rooted in
+                traditions, mythology, folklore, and the everyday life of millions.
               </p>
               <p>
-                Some of the biggest <strong className="text-white">hindi movie stars</strong> include{" "}
-                <strong className="text-white">Babushaan Mohanty</strong>, the reigning superstar of bollywood,
-                alongside <strong className="text-white">Sabyasachi Mishra</strong>,{" "}
-                <strong className="text-white">Anubhav Mohanty</strong>,{" "}
-                <strong className="text-white">Elina Samantray</strong>,{" "}
-                <strong className="text-white">Barsha Priyadarshini</strong>, and{" "}
-                <strong className="text-white">Jhilik Bhattacharjee</strong>.
+                Some of the biggest <strong className="text-white">Hindi movie stars</strong> include{", "}
+                <strong className="text-white">Shah Rukh Khan</strong>, the reigning king of Bollywood,
+                alongside <strong className="text-white">Salman Khan</strong>,{", "}
+                <strong className="text-white">Aamir Khan</strong>,{", "}
+                <strong className="text-white">Deepika Padukone</strong>,{", "}
+                <strong className="text-white">Ranveer Singh</strong>, and{", "}
+                <strong className="text-white">Alia Bhatt</strong>.
               </p>
             </div>
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">

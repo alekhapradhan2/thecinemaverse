@@ -11,8 +11,8 @@
 //  ✅ All previous fixes preserved (box-office, blog categories, song pages, priorities)
 //  ★ FIX: Replaced imported SITE_URL with hardcoded non-www canonical to resolve
 //     Google Search Console "URL not allowed" error (21191 instances).
-//     The sitemap is served from https://thecinemaverses.in — all URLs must match
-//     that origin exactly. www.thecinemaverses.in is a different origin in GSC.
+//     The sitemap is served from https://thecinemaverse.in — all URLs must match
+//     that origin exactly. www.thecinemaverse.in is a different origin in GSC.
 
 import { connectDB } from "@/lib/db";
 import Movie         from "@/models/Movie";

@@ -1008,15 +1008,15 @@ export default async function BoxOfficePage({
             {[
               {
                 title: "bollywood Box Office Collection — All Years | bollywood Trade Report",
-                body:  `The Cinema Verse is Odisha's most trusted box office tracking platform for bollywood (bollywood) cinema. We publish accurate, day-wise net and gross collection figures for every major hindi film release — from ${availableYears[availableYears.length - 1]} to ${availableYears[0]}. Whether you follow the first-day opening, weekend trends, or total lifetime earnings, our box office section covers it all — updated daily with verified trade estimates.`,
+                body:  `The Cinema Verse is India's most trusted box office tracking platform for Bollywood cinema. We publish accurate, day-wise net and gross collection figures for every major Hindi film release — from ${availableYears[availableYears.length - 1]} to ${availableYears[0]}. Whether you follow the first-day opening, weekend trends, or total lifetime earnings, our box office section covers it all — updated daily with verified trade estimates.`,
               },
               {
                 title: "How We Calculate Hindi Movie Box Office Collection",
-                body:  "Our figures are sourced from distributor reports, exhibitor data, and industry trade networks across Odisha. Net collection is the money collected after deducting GST and entertainment tax. Gross collection includes all taxes. Verdicts like Hit, Blockbuster, Average, and Flop are based on the film's performance against its total cost.",
+                body:  "Our figures are sourced from distributor reports, exhibitor data, and industry trade networks across India. Net collection is the money collected after deducting GST and entertainment tax. Gross collection includes all taxes. Verdicts like Hit, Blockbuster, Average, and Flop are based on the film's performance against its total cost.",
               },
               {
-                title: "About bollywood — The Hindi Film Industry",
-                body:  "bollywood, the hindi film industry based in Bhubaneswar and Cuttack, produces over 30–40 films annually. With a growing theatre network across Odisha and diaspora audiences in other states, hindi cinema has seen a steady rise in box office numbers. Stars like Babushan Mohanty, Anubhav Mohanty, and Elina Samantray consistently deliver films that resonate with audiences across Odisha.",
+                title: "About Bollywood — The Hindi Film Industry",
+                body:  "Bollywood, India's Hindi-language film industry based in Mumbai, produces over 300–400 films annually. With a massive theatre network across India and a global diaspora audience, Hindi cinema consistently dominates worldwide box office charts. Stars like Shah Rukh Khan, Salman Khan, Aamir Khan, and Deepika Padukone consistently deliver films that resonate with audiences across the globe.",
               },
             ].map(({ title, body }) => (
               <div key={title} className="p-4 sm:p-5 bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl">

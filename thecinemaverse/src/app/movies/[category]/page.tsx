@@ -177,7 +177,7 @@ function JsonLd({
   category: string;
   cfg: (typeof CATEGORY_CONFIG)[string];
 }) {
-  const base = "https://thecinemaverse.com";
+  const base = "https://thecinemaverses.in";
 
   const itemList = {
     "@context": "https://schema.org",
