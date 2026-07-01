@@ -7,14 +7,14 @@ import { Film, ChevronRight, Shield, Eye, FileText, AlertCircle, Scale, Mail } f
 
 // ── SEO Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: "Terms & Conditions | The Cinema Verse — Hindi Cinema Encyclopedia",
+  title: "Terms & Conditions | The Cinema Verse — Indian Cinema Encyclopedia",
   description:
-    "Read the Terms and Conditions for using The Cinema Verse, the most complete online encyclopedia for hindi movies and the bollywood film industry. We do not collect any personal user data.",
+    "Read the Terms and Conditions for using The Cinema Verse, the most complete online encyclopedia for Indian movies. We do not collect any personal user data.",
   keywords: [
-    "The Cinema Verse terms and conditions",
-    "The Cinema Verse terms of use",
-    "bollywood website terms",
-    "hindi cinema website policy",
+    "terms and conditions",
+    "privacy policy",
+    "indian movie website terms",
+    "the cinema verse terms policy",
     "no data collection policy",
   ],
   alternates: {

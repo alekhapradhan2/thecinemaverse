@@ -156,23 +156,23 @@ const description = (
     blog.title,
     movieName,
     movieName && `${movieName} review`,
-    movieName && `${movieName} hindi movie`,
-    movieName && `${movieName} hindi film`,
-    movieName && `${movieName} bollywood`,
+    movieName && `${movieName} movie`,
+    movieName && `${movieName} film`,
+    movieName && `${movieName} Indian`,
     movieName && `${movieName} songs`,
     movieName && `${movieName} cast`,
     movieName && `${movieName} box office collection`,
     movieName && `${movieName} story`,
     movieName && `${movieName} ${year}`,
     movieName && `is ${movieName} worth watching`,
-    "hindi movie review",
-    "bollywood movie review",
-    "hindi film news",
-    "hindi cinema",
-    "bollywood news",
-    year && `hindi movie ${year}`,
-    year && `bollywood ${year}`,
-    "hindi movie blog",
+    "movie review",
+    "Indian movie review",
+    "film news",
+    "Indian cinema",
+    "Indian news",
+    year && `movie ${year}`,
+    year && `Indian ${year}`,
+    "movie blog",
     ...(blog.tags || []),
   ].filter(Boolean) as string[];
 
@@ -237,12 +237,12 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
         <div className="text-gray-400 text-sm leading-relaxed">
           {blog.excerpt ||
             blog.content?.replace(/<[^>]+>/g, "").slice(0, 200) ||
-            `${blog.title} — Read the full story on The Cinema Verse, your home for hindi cinema news, reviews, and entertainment.`}
+            `${blog.title} — Read the full story on The Cinema Verse, your home for Indian cinema news, reviews, and entertainment.`}
           {movie && (
             <>
               {" "}This article is related to the{" "}
               {movie.genre?.length ? `${movie.genre[0]} ` : ""}
-              hindi film{" "}
+              film{" "}
               <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline font-semibold">
                 {movie.title}{movieYear ? ` (${movieYear})` : ""}
               </Link>
@@ -560,16 +560,16 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   // ─── FAQ items for JSON-LD ───────────────────────────────────
   const faqItems = blog.movieTitle
     ? [
-        { q: `What is ${blog.movieTitle} hindi movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an bollywood (bollywood) film covered on The Cinema Verse.` },
+        { q: `What is ${blog.movieTitle} movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an Indian (Indian) film covered on The Cinema Verse.` },
         { q: `Is ${blog.movieTitle} worth watching?`,                  a: `Read the full review and audience ratings for ${blog.movieTitle} on this The Cinema Verse article.` },
         { q: `Who is in the cast of ${blog.movieTitle}?`,             a: `Full cast and crew of ${blog.movieTitle} are listed on the movie page on The Cinema Verse.` },
         { q: `What is ${blog.movieTitle} box office collection?`,      a: `Day-wise box office collection of ${blog.movieTitle} is tracked on The Cinema Verse's box office page.` },
         { q: `Where can I watch songs from ${blog.movieTitle}?`,       a: `All songs from ${blog.movieTitle} with YouTube videos are on The Cinema Verse.` },
       ]
     : [
-        { q: "What is The Cinema Verse?",                                     a: "The Cinema Verse is Odisha's complete hindi cinema encyclopedia — movies, actors, songs, box office and news." },
-        { q: "What kind of articles does The Cinema Verse publish?",          a: "Movie reviews, top 10 lists, actor spotlights, box office reports and bollywood entertainment news." },
-        { q: "How can I find reviews for a specific hindi movie?",      a: "Search for the movie on The Cinema Verse's blog or visit the movie's dedicated page for ratings and articles." },
+        { q: "What is The Cinema Verse?",                                     a: "The Cinema Verse is Odisha's complete Indian cinema encyclopedia — movies, actors, songs, box office and news." },
+        { q: "What kind of articles does The Cinema Verse publish?",          a: "Movie reviews, top 10 lists, actor spotlights, box office reports and entertainment news." },
+        { q: "How can I find reviews for a specific movie?",      a: "Search for the movie on The Cinema Verse's blog or visit the movie's dedicated page for ratings and articles." },
       ];
 
   // word count for content depth signal
@@ -647,8 +647,8 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         "keywords": [
           blog.title, movie?.title,
           movie && `${movie.title} review`,
-          movie && `${movie.title} bollywood`,
-          "hindi movie", "bollywood", "hindi cinema",
+          movie && `${movie.title} Indian`,
+          "movie", "Indian", "Indian cinema",
           ...(blog.tags || []),
         ].filter(Boolean).join(", "),
       },
@@ -761,9 +761,9 @@ export default async function BlogPage({ params }: { params: { slug: string } })
               `${blog.movieTitle} songs`,
               `${blog.movieTitle} story`,
             ] : []),
-            "Latest hindi movies 2026",
-            "bollywood box office collection",
-            "Best hindi films to watch",
+            "Latest movies 2026",
+            "Indian box office collection",
+            "Best films to watch",
           ].slice(0, 7).map((term, i) => (
             <div key={i} style={{
               display: "flex", alignItems: "center", gap: 8,
@@ -803,8 +803,8 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         <div className="bp-sidebar-hd">📖 About The Cinema Verse</div>
         <div className="bp-sidebar-body" style={{ paddingTop: 10 }}>
           <div style={{ fontSize: ".72rem", color: "rgba(255,255,255,.38)", lineHeight: 1.8, margin: "0 0 10px" }}>
-            The Cinema Verse is Odisha&apos;s complete hindi cinema database — covering{" "}
-            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>bollywood movies</Link>,
+            The Cinema Verse is Odisha&apos;s complete Indian cinema database — covering{" "}
+            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>Indian movies</Link>,
             {" "}actors, songs, box office and news.
             {blog.movieTitle && (
               <>{" "}Explore all{" "}
@@ -847,7 +847,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
               {blog.author || "The Cinema Verse Editorial Team"}
             </div>
             <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.3)", marginTop: 2 }}>
-              Specialists in hindi cinema coverage
+              Specialists in Indian cinema coverage
             </div>
             {blog.createdAt && (
               <div style={{ fontSize: ".62rem", color: "rgba(255,255,255,.22)", marginTop: 4 }}>

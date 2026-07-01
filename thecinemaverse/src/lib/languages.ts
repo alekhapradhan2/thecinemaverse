@@ -33,7 +33,7 @@ export const LANGUAGES: LanguageConfig[] = [
     short:     "Hindi",
     industry:  "Bollywood",
     adjective: "Bollywood",
-    dbValue:   "bollywood",
+    dbValue:   "Hindi",
     locale:    "hi-IN",
     country:   "IN",
     flag:      "IN",

@@ -275,7 +275,7 @@ function getMisspellings(title: string): string[] {
   variants.forEach((v) => {
     if (v && v !== title.toLowerCase() && v.length > 2) {
       result.push(v);
-      result.push(`${v} hindi movie`);
+      result.push(`${v} movie`);
     }
   });
   return result;
@@ -322,7 +322,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const description = (
     movie.synopsis
       ? movie.synopsis.slice(0, 130) + ottDescPart
-      : `Complete info about hindi film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on The Cinema Verse.`
+      : `Complete info about film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on The Cinema Verse.`
   ).slice(0, 160);
 
   const image     = movie.posterUrl || movie.thumbnailUrl || "https://thecinemaverses.in/default.jpg";
@@ -360,12 +360,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     year ? `${movie.title} ${year} ${movie.streamingOn}` : "",
     year ? `${movie.title} ${year} streaming` : "",
     year ? `${movie.title} ${year} digital release` : "",
-    // bollywood-specific OTT queries
-    `${movie.title} hindi movie ott`,
-    `${movie.title} hindi film ott`,
-    `${movie.title} hindi movie watch online`,
-    `${movie.title} hindi movie streaming`,
-    `${movie.title} hindi movie digital release`,
+    // Indian-specific OTT queries
+    `${movie.title} movie ott`,
+    `${movie.title} film ott`,
+    `${movie.title} movie watch online`,
+    `${movie.title} movie streaming`,
+    `${movie.title} movie digital release`,
     // Status-specific keywords
     ...(isOttLive ? [
       `${movie.title} now streaming`,
@@ -383,11 +383,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       `when will ${movie.title} release on ott`,
       `${movie.title} ott announced`,
     ] : []),
-    // bollywood OTT platform generics (helps rank for category searches)
-    `aao nxt hindi movies`, `tarang plus hindi movies`, `kanccha lannka movies`,
-    `hindi movie ott release ${year || ""}`.trim(),
-    `bollywood ott release ${year || ""}`.trim(),
-    `hindi film streaming platform`,
+    // Indian OTT platform generics (helps rank for category searches)
+    `aao nxt movies`, `tarang plus movies`, `kanccha lannka movies`,
+    `movie ott release ${year || ""}`.trim(),
+    `ott release ${year || ""}`.trim(),
+    `film streaming platform`,
   ].filter(Boolean) as string[] : [
     // No platform yet — rank for "where to watch" queries anyway
     `${movie.title} ott`,
@@ -396,8 +396,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     `${movie.title} ott release date`,
     `${movie.title} where to watch`,
     `${movie.title} digital release date`,
-    `hindi movie ott release`,
-    `bollywood ott`,
+    `movie ott release`,
+    `ott`,
   ];
 
   // ── Core keyword matrix ─────────────────────────────────────────────────────
@@ -406,9 +406,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const keywords = [
     movie.title,
-    `${movie.title} hindi movie`,
-    `${movie.title} hindi film`,
-    `${movie.title} bollywood`,
+    `${movie.title} movie`,
+    `${movie.title} film`,
+    `${movie.title} Indian`,
     `${movie.title} review`,
     `${movie.title} songs`,
     `${movie.title} cast`,
@@ -417,22 +417,22 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     `${movie.title} box office collection`,
     `${movie.title} collection`,
     year ? `${movie.title} ${year}` : null,
-    year ? `${movie.title} hindi movie ${year}` : null,
+    year ? `${movie.title} movie ${year}` : null,
     year ? `${movie.title} ${year} release` : null,
     directorName ? `${movie.title} directed by ${directorName}` : null,
     directorName ? `${directorName} movie` : null,
-    directorName ? `${directorName} hindi film` : null,
+    directorName ? `${directorName} film` : null,
     directorName ? `${directorName} new movie` : null,
     producerName ? `${producerName} production` : null,
-    producerName ? `${producerName} hindi film` : null,
-    "hindi movie", "bollywood", "hindi film", "hindi cinema", "bollywood movies",
-    year ? `hindi movie ${year}` : null,
-    year ? `bollywood ${year}` : null,
+    producerName ? `${producerName} film` : null,
+    "movie", "Indian", "film", "cinema", "movies",
+    year ? `movie ${year}` : null,
+    year ? `Indian ${year}` : null,
     `${movie.title} rating`,
     `${movie.title} hit or flop`,
     movie.verdict ? `${movie.title} ${movie.verdict.toLowerCase()}` : null,
-    ...(movie.genre || []).flatMap((g: string) => [`${g} hindi film`, `${g} bollywood movie`, `bollywood ${g} film ${year || ""}`.trim()]),
-    ...(movie.cast || []).slice(0, 5).map((c: any) => c.name).filter(Boolean).flatMap((n: string) => [n, `${n} hindi movie`, `${n} new movie`]),
+    ...(movie.genre || []).flatMap((g: string) => [`${g} film`, `${g} movie`, `Indian ${g} film ${year || ""}`.trim()]),
+    ...(movie.cast || []).slice(0, 5).map((c: any) => c.name).filter(Boolean).flatMap((n: string) => [n, `${n} movie`, `${n} new movie`]),
     ...getMisspellings(movie.title),
     // OTT keyword matrix
     ...ottKw,
@@ -458,7 +458,7 @@ function buildFaqJsonLd(movie: any, year: string | number, avgRating: number | n
     {
       question: `What is ${movie.title} movie about?`,
       answer: movie.synopsis?.slice(0, 300) ||
-        `${movie.title} is an bollywood ${movie.genre?.join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${directorName ? `, directed by ${directorName}` : ""}.`,
+        `${movie.title} is an Indian ${movie.genre?.join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${directorName ? `, directed by ${directorName}` : ""}.`,
     },
     ...(movie.cast?.length ? [{
       question: `Who is in the cast of ${movie.title}?`,
@@ -466,7 +466,7 @@ function buildFaqJsonLd(movie: any, year: string | number, avgRating: number | n
     }] : []),
     ...(movie.verdict ? [{
       question: `What is the box office verdict of ${movie.title}?`,
-      answer: `${movie.title} was declared a ${movie.verdict} at the bollywood box office.`,
+      answer: `${movie.title} was declared a ${movie.verdict} at the box office.`,
     }] : []),
     ...(avgRating !== null ? [{
       question: `Is ${movie.title} worth watching?`,
@@ -634,7 +634,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
     ...(movie.posterUrl || movie.thumbnailUrl ? { image: movie.posterUrl || movie.thumbnailUrl } : {}),
     ...(movie.synopsis ? { description: movie.synopsis.slice(0, 300) } : {}),
     ...(movie.releaseDate ? { datePublished: movie.releaseDate } : {}),
-    inLanguage: movie.language || "bollywood",
+    inLanguage: movie.language || "Indian",
     countryOfOrigin: { "@type": "Country", name: "India" },
     ...(movie.contentRating ? { contentRating: movie.contentRating } : {}),
     ...(movie.genre?.length ? { genre: movie.genre } : {}),
@@ -720,7 +720,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
           {(movie.bannerUrl || movie.thumbnailUrl || movie.posterUrl) && (
             <Image
               src={movie.bannerUrl || movie.thumbnailUrl || movie.posterUrl}
-              alt={`${movie.title}${year ? ` ${year}` : ""} – hindi film banner`}
+              alt={`${movie.title}${year ? ` ${year}` : ""} – film banner`}
               fill className="object-cover object-top" priority
             />
           )}
@@ -748,7 +748,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 style={{ aspectRatio: "2/3" }}>
                 <Image
                   src={movie.posterUrl || movie.thumbnailUrl || "/placeholder-movie.svg"}
-                  alt={`${movie.title}${year ? ` (${year})` : ""} hindi movie poster`}
+                  alt={`${movie.title}${year ? ` (${year})` : ""} movie poster`}
                   fill className="object-cover" priority
                   sizes="(max-width: 640px) 96px, (max-width: 768px) 144px, 208px"
                 />
@@ -804,7 +804,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
               {year && (
                 <p className="text-zinc-500 text-xs sm:text-sm md:text-base mb-3">
-                  ({year}) · Hindi Film
+                  ({year}) · Film
                 </p>
               )}
 
@@ -903,7 +903,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               {/* Share buttons + OTT Watch button */}
               <div className="flex flex-wrap items-center gap-2 mt-3">
                 <ShareButtons
-                  title={`${movie.title}${year ? ` (${year})` : ""} – Hindi Movie`}
+                  title={`${movie.title}${year ? ` (${year})` : ""} – Movie`}
                   url={canonical}
                 />
                 {movie.streamingOn && movie.streamingUrl && (
@@ -1023,7 +1023,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </h2>
               <InfoRow icon={Calendar}     label="Release Date"  value={fmtDate(movie.releaseDate) || (movie.releaseTBA ? "TBA" : undefined)} />
               <InfoRow icon={Clock}        label="Runtime"       value={movie.runtime} />
-              <InfoRow icon={Globe}        label="Language"      value={movie.language || "bollywood"} />
+              <InfoRow icon={Globe}        label="Language"      value={movie.language || "Indian"} />
               <InfoRow icon={Clapperboard} label="Director"      value={getDirectorFromCast(movie.cast || []) || movie.director} />
               <InfoRow icon={User}         label="Producer"      value={getProducerFromCast(movie.cast || []) || movie.producer} />
               <InfoRow icon={DollarSign}   label="Budget"        value={movie.budget} />
@@ -1142,11 +1142,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </h2>
               <div className="flex flex-col gap-1">
                 {[
-                  { label: "Latest Hindi Movies",    href: "/movies?sort=latest" },
-                  { label: "bollywood Songs",             href: "/songs" },
+                  { label: "Latest Movies",    href: "/movies?sort=latest" },
+                  { label: "Indian Songs",             href: "/songs" },
                   { label: "Movie Reviews",          href: "/blog/category/movie-review" },
-                  ...(year ? [{ label: `Hindi Movies ${year}`, href: `/movies/year/${year}` }] : []),
-                  ...(movie.genre?.[0] ? [{ label: `${movie.genre[0]} Hindi Films`, href: `/movies?genre=${encodeURIComponent(movie.genre[0])}` }] : []),
+                  ...(year ? [{ label: `Movies ${year}`, href: `/movies/year/${year}` }] : []),
+                  ...(movie.genre?.[0] ? [{ label: `${movie.genre[0]} Films`, href: `/movies?genre=${encodeURIComponent(movie.genre[0])}` }] : []),
                   ...(directorName ? [{ label: `${directorName} Films`, href: `/movies?director=${encodeURIComponent(directorName)}` }] : []),
                   // Dynamic: top 2 cast members
                   ...((movie.cast || [])
@@ -1170,7 +1170,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               <div>
                 <p className="text-xs text-gray-300 font-semibold">The Cinema Verse Editorial Team</p>
                 <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">
-                  Reviewed & verified by our hindi cinema experts
+                  Reviewed & verified by our cinema experts
                 </p>
                 {(movie.updatedAt || year) && (
                   <p className="text-[10px] text-gray-600 mt-1">
@@ -1208,7 +1208,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       { icon: "🎬", label: "Genre",    value: (movie.genre||[]).join(", ") || "Drama" },
                       { icon: "📅", label: "Year",     value: year ? String(year) : null },
                       { icon: "⏱",  label: "Runtime",  value: movie.runtime || null },
-                      { icon: "🌐", label: "Language", value: movie.language || "bollywood" },
+                      { icon: "🌐", label: "Language", value: movie.language || "Indian" },
                     ].filter(f => f.value).map(f => (
                       <div key={f.label} className="flex items-center gap-2 px-4 py-2.5 flex-1 min-w-[120px]">
                         <span className="text-base">{f.icon}</span>
@@ -1253,7 +1253,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               <section aria-label={`${movie.title} full story`}>
                 <SectionHeading icon={BookOpen} title="Story" />
                 <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
-                  <div className="prose-bollywood" dangerouslySetInnerHTML={{ __html: movie.story }} />
+                  <div className="prose-Indian" dangerouslySetInnerHTML={{ __html: movie.story }} />
                 </div>
               </section>
             )}
@@ -1486,7 +1486,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               <section aria-label={`The Cinema Verse review of ${movie.title}`}>
                 <SectionHeading icon={Award} title="The Cinema Verse Review" />
                 <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
-                  <div className="prose-bollywood" dangerouslySetInnerHTML={{ __html: movie.review }} />
+                  <div className="prose-Indian" dangerouslySetInnerHTML={{ __html: movie.review }} />
                 </div>
               </section>
             )}
@@ -1524,7 +1524,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
             )}
 
             {/* ══ SEO CONTENT BLOCK ══ */}
-            <section aria-label={`About ${movie.title} hindi film`} className="space-y-5">
+            <section aria-label={`About ${movie.title} film`} className="space-y-5">
 
               {/* About this film — editorial SEO prose */}
               <div className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-6">
@@ -1533,12 +1533,12 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   <p>
                     <strong className="text-white">{movie.title}</strong> is{" "}
                     {(movie.genre || []).length > 0
-                      ? `a ${(movie.genre as string[]).join(", ")} hindi film`
-                      : "an hindi film"}
+                      ? `a ${(movie.genre as string[]).join(", ")} film`
+                      : "an film"}
                     {year ? ` released in ${year}` : ""}{directorName ? `, directed by ${directorName}` : ""}
                     {producerName ? ` and produced by ${producerName}` : ""}.
-                    {movie.language ? ` The film is in the ${movie.language} language` : " The film is in the bollywood language"},
-                    making it a part of the <strong className="text-white">bollywood film industry</strong> — the bollywood language cinema based in Bhubaneswar, Odisha.
+                    {movie.language ? ` The film is in the ${movie.language} language` : " The film is in the Indian language"},
+                    making it a part of the <strong className="text-white">film industry</strong> — the Indian language cinema based in Bhubaneswar, Odisha.
                   </p>
                   {movie.synopsis && (
                     <p>
@@ -1581,7 +1581,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                         const live = !tba && (!od || new Date(od) <= new Date());
                         const coming = !tba && !!od && new Date(od) > new Date();
                         const fmtD = od && od !== "TBA" ? new Date(od).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "";
-                        if (live) return <><strong className="text-white">{movie.title}</strong> is now available to <strong className="text-white">watch online on {movie.streamingOn}</strong>. Fans can stream the full movie on {movie.streamingOn}{movie.streamingUrl ? <> — <a href={movie.streamingUrl} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">watch it here</a></> : ""}. This is one of the most searched hindi movies on OTT platforms in {year || "recent years"}.</>;
+                        if (live) return <><strong className="text-white">{movie.title}</strong> is now available to <strong className="text-white">watch online on {movie.streamingOn}</strong>. Fans can stream the full movie on {movie.streamingOn}{movie.streamingUrl ? <> — <a href={movie.streamingUrl} target="_blank" rel="noopener noreferrer" className="text-brand-400 hover:underline">watch it here</a></> : ""}. This is one of the most searched movies on OTT platforms in {year || "recent years"}.</>;
                         if (coming) return <><strong className="text-white">{movie.title}</strong> is set to release on <strong className="text-white">{movie.streamingOn}</strong> on <strong className="text-white">{fmtD}</strong>. Fans searching for the OTT release date of {movie.title} can bookmark The Cinema Verse for the latest updates on its digital streaming availability.</>;
                         if (tba) return <><strong className="text-white">{movie.title}</strong> is confirmed for <strong className="text-white">OTT release on {movie.streamingOn}</strong>. The exact digital release date has not been announced yet. The Cinema Verse will update this page as soon as the OTT release date for {movie.title} is confirmed.</>;
                         return null;
@@ -1595,7 +1595,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   {year && (
                     <Link href={`/movies/year/${year}`}
                       className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
-                      📅 Hindi Movies {year}
+                      📅 Movies {year}
                     </Link>
                   )}
                   {(movie.genre || []).map((g: string) => (
@@ -1606,11 +1606,11 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   ))}
                   <Link href="/movies"
                     className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
-                    🎬 All Hindi Movies
+                    🎬 All Movies
                   </Link>
                   <Link href="/songs"
                     className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
-                    🎵 bollywood Songs
+                    🎵 Indian Songs
                   </Link>
                   <Link href="/box-office"
                     className="text-xs text-brand-400/80 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
@@ -1619,7 +1619,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                   {movie.streamingOn && (
                     <Link href="/movies?filter=ott"
                       className="text-xs text-emerald-400/80 hover:text-emerald-400 bg-emerald-500/8 border border-emerald-500/15 px-2.5 py-1 rounded-full transition-colors">
-                      📺 Hindi Movies on OTT
+                      📺 Movies on OTT
                     </Link>
                   )}
                   {movie.streamingOn && movie.streamingUrl && (
@@ -1650,7 +1650,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     {
                       q: `What is ${movie.title} movie about?`,
                       a: movie.synopsis?.slice(0, 250) ||
-                        `${movie.title} is an bollywood ${(movie.genre || []).join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${movie.director ? `, directed by ${movie.director}` : ""}.`,
+                        `${movie.title} is an Indian ${(movie.genre || []).join(", ") || "drama"} film${year ? ` released in ${year}` : ""}${movie.director ? `, directed by ${movie.director}` : ""}.`,
                     },
                     ...(movie.cast?.length ? [{
                       q: `Who are the main cast of ${movie.title}?`,
@@ -1658,7 +1658,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                     }] : []),
                     ...(movie.verdict ? [{
                       q: `What is the box office verdict of ${movie.title}?`,
-                      a: `${movie.title} was declared a ${movie.verdict} at the bollywood box office${movie.boxOffice?.total ? `, collecting a total of ${movie.boxOffice.total}` : ""}.`,
+                      a: `${movie.title} was declared a ${movie.verdict} at the box office${movie.boxOffice?.total ? `, collecting a total of ${movie.boxOffice.total}` : ""}.`,
                     }] : []),
                     ...(songs.length > 0 ? [{
                       q: `How many songs does ${movie.title} have?`,
@@ -1713,13 +1713,13 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       q: `On which platform can I watch ${movie.title} online?`,
                       a: movie.streamingOn
                         ? `You can watch ${movie.title} online on ${movie.streamingOn}${movie.streamingUrl ? ` (${movie.streamingUrl})` : ""}. ${movie.streamingOn} is the official OTT platform for ${movie.title} in India.`
-                        : `The official OTT platform for ${movie.title} has not been announced yet. hindi movies typically stream on platforms like Aao NXT, Tarang Plus, Kanccha Lannka, SonyLIV, or ZEE5. Check back on The Cinema Verse for updates.`,
+                        : `The official OTT platform for ${movie.title} has not been announced yet. movies typically stream on platforms like Aao NXT, Tarang Plus, Kanccha Lannka, SonyLIV, or ZEE5. Check back on The Cinema Verse for updates.`,
                     },
                     {
                       q: `Can I watch ${movie.title} for free online?`,
                       a: movie.streamingOn
                         ? `${movie.title} is available on ${movie.streamingOn}. Please check ${movie.streamingOn}'s subscription plans — some platforms offer a free trial or ad-supported viewing. Visit ${movie.streamingUrl || `the ${movie.streamingOn} platform`} to check current availability and pricing.`
-                        : `${movie.title} has not been officially released on any free OTT platform. Watching from unofficial or pirated sources is illegal. Support hindi cinema by watching from official platforms.`,
+                        : `${movie.title} has not been officially released on any free OTT platform. Watching from unofficial or pirated sources is illegal. Support cinema by watching from official platforms.`,
                     },
                   ].map((faq, i) => (
                     <details key={i} className="group border border-[#1a1a1a] rounded-xl overflow-hidden">
@@ -1772,12 +1772,12 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
         {/* ══ RELATED MOVIES ══ */}
         {(related as any[]).length > 0 && (
-          <section className="mt-8 sm:mt-14 pt-8 sm:pt-10 border-t border-[#1f1f1f]" aria-label="Similar hindi movies">
+          <section className="mt-8 sm:mt-14 pt-8 sm:pt-10 border-t border-[#1f1f1f]" aria-label="Similar movies">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
                 <div className="w-1 h-6 bg-brand-500 rounded-full" />
                 <h2 className="font-display font-bold text-2xl text-white">
-                  More {(movie.genre?.[0] || "bollywood")} Movies
+                  More {(movie.genre?.[0] || "Indian")} Movies
                 </h2>
               </div>
               <Link href={movie.genre?.[0] ? `/movies?genre=${movie.genre[0]}` : "/movies"}

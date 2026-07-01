@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy | The Cinema Verse",
   description:
-    "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse India's most complete Bollywood cinema encyclopedia.",
+    "Read The Cinema Verse's Privacy Policy to learn how we collect, use, and protect your information while you browse India's most complete Indian cinema encyclopedia.",
   alternates: {
     canonical: "https://thecinemaverses.in/privacy",
   },
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     heading: "1. Introduction",
-    body: `The Cinema Verse ("we", "us", or "our") operates thecinemaverses.in, an online encyclopedia for hindi cinema (bollywood), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
+    body: `The Cinema Verse ("we", "us", or "our") operates thecinemaverses.in, an online encyclopedia for Indian cinema (Indian), covering movies, songs, cast and crew profiles, box office data, and industry news. This Privacy Policy explains how we collect, use, and safeguard information when you visit our website.`,
   },
   {
     heading: "2. Information We Collect",

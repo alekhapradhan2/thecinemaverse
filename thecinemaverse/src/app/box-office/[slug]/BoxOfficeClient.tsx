@@ -130,14 +130,14 @@ function buildPerformanceSummary(movie: Movie, days: BoxOfficeDay[], totalNet: n
   const trend     = dayCount > 1 ? (latestNet >= day1Net * 0.6 ? "holding steady" : "following a natural decline") : "";
   const releaseYear = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
 
-  let para = `${title}${releaseYear ? ` (${releaseYear})` : ""} has collected ${netFmt} net and ${grossFmt} gross at the bollywood (bollywood) box office`;
+  let para = `${title}${releaseYear ? ` (${releaseYear})` : ""} has collected ${netFmt} net and ${grossFmt} gross at the domestic box office`;
   para += dayCount === 1 ? ` on its opening day.` : ` across ${dayCount} days of its theatrical run.`;
   if (day1Net) {
     para += ` The film opened with ${fmtINR(day1Net)} net on Day 1`;
     para += dayCount > 1 && trend ? ` and has been ${trend} in subsequent days.` : `.`;
   }
   if (movie.budget) {
-    para += ` Produced on a budget of ${movie.budget}, the film's box office journey is being closely tracked by bollywood enthusiasts.`;
+    para += ` Produced on a budget of ${movie.budget}, the film's box office journey is being closely tracked by cinema enthusiasts.`;
   }
   return para;
 }
@@ -327,7 +327,7 @@ function QuickLinksSidebar({ movie }: { movie: Movie }) {
           <BarChart3 className="w-4 h-4 text-sky-400 flex-shrink-0" />
           <div>
             <div className="text-xs font-semibold text-gray-300 group-hover:text-white">All Box Office</div>
-            <div className="text-[10px] text-gray-500">bollywood &amp; bollywood collections</div>
+            <div className="text-[10px] text-gray-500">Indian box office collections</div>
           </div>
           <ExternalLink className="w-3 h-3 text-gray-600 group-hover:text-brand-400 ml-auto transition-colors" />
         </Link>
@@ -337,8 +337,8 @@ function QuickLinksSidebar({ movie }: { movie: Movie }) {
             className="flex items-center gap-2.5 px-3 py-2.5 bg-[#111] hover:bg-[#181818] border border-[#1f1f1f] hover:border-brand-500/20 rounded-lg transition-all group">
             <Calendar className="w-4 h-4 text-yellow-400 flex-shrink-0" />
             <div>
-              <div className="text-xs font-semibold text-gray-300 group-hover:text-white">More Hindi Movies {year}</div>
-              <div className="text-[10px] text-gray-500">All bollywood releases {year}</div>
+              <div className="text-xs font-semibold text-gray-300 group-hover:text-white">More Movies {year}</div>
+              <div className="text-[10px] text-gray-500">All releases {year}</div>
             </div>
             <ExternalLink className="w-3 h-3 text-gray-600 group-hover:text-brand-400 ml-auto transition-colors" />
           </Link>
@@ -667,9 +667,9 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                     <p className="text-gray-300 text-sm leading-relaxed">{summary}</p>
                     {days.length >= 2 && (
                       <p className="text-gray-400 text-sm leading-relaxed mt-3">
-                        The <strong className="text-gray-300">{movie.title} hindi movie</strong> released
-                        {movie.releaseDate ? ` on ${fmtDate(movie.releaseDate)}` : ""} in bollywood (bollywood) cinemas.
-                        {" "}Day-wise collection data is tracked and updated on The Cinema Verse, Odisha&apos;s dedicated hindi film database.
+                        The <strong className="text-gray-300">{movie.title}</strong> released
+                        {movie.releaseDate ? ` on ${fmtDate(movie.releaseDate)}` : ""} in cinemas.
+                        {" "}Day-wise collection data is tracked and updated on The Cinema Verse, The Cinema Verse&apos;s dedicated film database.
                       </p>
                     )}
                     {/* Cross-links within SEO summary */}
@@ -694,15 +694,15 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                   {/* ── SEO keyword-rich paragraph 1 — movie overview ── */}
                   <div className="bg-[#0d0d0d] border border-[#181818] rounded-xl p-5">
                     <p className="text-sm text-gray-400 leading-relaxed">
-                      The <strong className="text-gray-200">{movie.title} hindi movie</strong> is one of the notable
-                      {year ? ` bollywood films of ${year}` : " bollywood films"}.
+                      The <strong className="text-gray-200">{movie.title}</strong> is one of the notable
+                      {year ? ` films of ${year}` : " films"}.
                       {" "}If you are searching for <em className="text-gray-300">{movie.title} box office collection</em>,{" "}
                       <em className="text-gray-300">{movie.title} first day collection</em>, or the{" "}
                       <em className="text-gray-300">{movie.title} total collection</em>, The Cinema Verse provides verified
                       day-wise figures updated regularly.
                       {movie.director ? (
                         <>{" "}Directed by <strong className="text-gray-200">{movie.director}</strong>, this{" "}
-                        {(movie.genre || []).join("/") || "bollywood"} film has been tracked since its theatrical release.</>
+                        {(movie.genre || []).join("/") || "Indian"} film has been tracked since its theatrical release.</>
                       ) : null}
                     </p>
                   </div>
@@ -713,10 +713,10 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       Looking for the <em className="text-gray-300">{movie.title} movie review</em>,{" "}
                       <em className="text-gray-300">{movie.title} cast and crew</em>, or{" "}
                       <em className="text-gray-300">{movie.title} story details</em>?
-                      {" "}The Cinema Verse covers the complete <strong className="text-gray-200">{movie.title} bollywood movie</strong> — from release date and trailer
+                      {" "}The Cinema Verse covers the complete <strong className="text-gray-200">{movie.title}</strong> — from release date and trailer
                       to songs and public reviews. This page specifically tracks the{" "}
                       <em className="text-gray-300">{movie.title} day-wise box office collection</em>{" "}
-                      including net and gross earnings at hindi cinemas across Odisha.
+                      including net and gross earnings at cinemas across India.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs">
                       <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline">
@@ -838,7 +838,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                     <div className="bg-[#111] border border-[#1f1f1f] rounded-xl p-5">
                       <h3 className="text-sm font-bold text-brand-300 mb-2">{movie.title} Opening Day Collection</h3>
                       <p className="text-sm text-gray-300 leading-relaxed">
-                        {movie.title} opened to {fmtINR(days[0].net)} net ({fmtINR(days[0].gross)} gross) on its first day in hindi cinemas
+                        {movie.title} opened to {fmtINR(days[0].net)} net ({fmtINR(days[0].gross)} gross) on its first day in cinemas
                         {days[0].date ? <> on <time dateTime={days[0].date}>{fmtDate(days[0].date)}</time></> : ""}.
                         {days[0].screens   ? ` The film ran across ${days[0].screens} screens` : ""}
                         {days[0].occupancy ? ` with ${days[0].occupancy} occupancy` : ""}.
@@ -857,7 +857,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                         <p className="text-sm text-gray-300 leading-relaxed">
                           In its first week (7 days), <strong className="text-white">{movie.title}</strong> collected{" "}
                           <strong className="text-brand-400">{fmtINR(w1net)}</strong> net and{" "}
-                          <strong className="text-sky-300">{fmtINR(w1gross)}</strong> gross at the bollywood box office.
+                          <strong className="text-sky-300">{fmtINR(w1gross)}</strong> gross at the box office.
                           {days.length > 7 && ` The film continued its theatrical run beyond the first week, bringing its total to ${fmtINR(totalNet)} net.`}
                         </p>
                       </div>
@@ -873,7 +873,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       has earned a total of <strong className="text-brand-400">{fmtINR(totalNet)} net</strong> and{" "}
                       <strong className="text-sky-300">{fmtINR(totalGross)} gross</strong> at the worldwide box office.
                       {movie.budget ? ` The film was produced on a budget of ${movie.budget}.` : ""}
-                      {" "}The Cinema Verse tracks day-wise collection data for all bollywood (bollywood) movies.
+                      {" "}The Cinema Verse tracks day-wise collection data for all Indian movies.
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       <Link href={`/movie/${movie.slug}`}
@@ -1066,12 +1066,12 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                   </section>
                 )}
 
-                {/* ── Other Hindi Movies Releasing Around Same Time ── */}
+                {/* ── Other Movies Releasing Around Same Time ── */}
                 {competingMovies.length > 0 && (
                   <section>
                     <h2 className="text-lg font-bold mb-4 text-white flex items-center gap-2">
                       <Film className="w-5 h-5 text-brand-400" />
-                      Other Hindi Movies — Box Office {year || ""}
+                      Other Movies — Box Office {year || ""}
                     </h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       {competingMovies.map((m) => {
@@ -1098,7 +1098,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                     </div>
                     {/* Crawlable text — targets "hindi movies [year]" searches */}
                     <p className="text-[11px] text-gray-700 mt-3">
-                      Other bollywood (bollywood) films releasing around the same time as {movie.title}:{" "}
+                      Other Indian films releasing around the same time as {movie.title}:{" "}
                       {competingMovies.map((m, i) => (
                         <span key={m._id}>
                           <Link href={`/box-office/${m.slug}`} className="text-gray-600 hover:text-brand-400 transition-colors">
@@ -1121,7 +1121,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                     {([
                       {
                         q: `What is the total box office collection of ${movie.title}?`,
-                        a: `${movie.title} has collected a total of ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross at the bollywood (bollywood) box office in ${days.length} day${days.length !== 1 ? "s" : ""}. The Cinema Verse tracks daily earnings for all hindi films.`,
+                        a: `${movie.title} has collected a total of ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross at the domestic box office in ${days.length} day${days.length !== 1 ? "s" : ""}. The Cinema Verse tracks daily earnings for all films.`,
                       },
                       ...(days[0] ? [{
                         q: `What was ${movie.title} Day 1 opening box office collection?`,
@@ -1129,7 +1129,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       }] : []),
                       ...(days.length >= 7 ? [{
                         q: `What is ${movie.title} first week collection?`,
-                        a: `In its first 7 days, ${movie.title} collected ${fmtINR(days.slice(0,7).reduce((s,d)=>s+parseN(d.net),0))} net at the bollywood box office.`,
+                        a: `In its first 7 days, ${movie.title} collected ${fmtINR(days.slice(0,7).reduce((s,d)=>s+parseN(d.net),0))} net at the box office.`,
                       }] : []),
                       {
                         q: `Is ${movie.title} a hit or flop?`,
@@ -1139,7 +1139,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       },
                       {
                         q: `What is ${movie.title} story and cast?`,
-                        a: `${movie.title} is ${movie.genre?.length ? `a ${movie.genre.join("/")} ` : "an "}hindi film${movie.director ? ` directed by ${movie.director}` : ""}. ${cast.length > 0 ? `It stars ${cast.slice(0,3).map((c:any)=>c.name).join(", ")} in lead roles.` : ""} ${movie.synopsis ? movie.synopsis.slice(0,140)+"…" : "Visit the movie page for the full story and cast details."}`,
+                        a: `${movie.title} is ${movie.genre?.length ? `a ${movie.genre.join("/")} ` : " "}film${movie.director ? ` directed by ${movie.director}` : ""}. ${cast.length > 0 ? `It stars ${cast.slice(0,3).map((c:any)=>c.name).join(", ")} in lead roles.` : ""} ${movie.synopsis ? movie.synopsis.slice(0,140)+"…" : "Visit the movie page for the full story and cast details."}`,
                       },
                       {
                         q: `Where can I watch ${movie.title} trailer and songs?`,
@@ -1151,7 +1151,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                       },
                       {
                         q: `Where can I read ${movie.title} movie review?`,
-                        a: `Full ${movie.title} movie review, cast analysis and bollywood articles are on The Cinema Verse's blog at thecinemaverses.in/blog. User ratings and public reviews are also on the movie page.`,
+                        a: `Full ${movie.title} movie review, cast analysis and articles are on The Cinema Verse's blog at thecinemaverses.in/blog. User ratings and public reviews are also on the movie page.`,
                       },
                     ] as {q:string;a:string}[]).map(({ q, a }, i) => (
                       <FaqItem key={i} q={q} a={a} />
@@ -1184,7 +1184,7 @@ export default function BoxOfficeClient({ movie, initialDays, totalNet, totalGro
                     {year && (
                       <Link href={`/movies/year/${year}`}
                         className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-semibold text-gray-400 transition-all">
-                        🗓 Hindi Movies {year}
+                        🗓 Movies {year}
                       </Link>
                     )}
                   </div>

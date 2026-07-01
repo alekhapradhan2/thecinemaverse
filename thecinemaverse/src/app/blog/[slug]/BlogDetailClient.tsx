@@ -111,8 +111,8 @@ const catStyle = (cat?: string) => {
 
 // ─── Keyword highlight ────────────────────────────────────────────────────────
 const ACCENT_COLORS = ["text-gold", "text-purple", "text-green", "text-pink", "text-blue"];
-const bollywood_KEYWORDS = [
-  "bollywood","bollywood","Odisha","Bhubaneswar","Cuttack","blockbuster","superhit","hit",
+const Indian_KEYWORDS = [
+  "Indian","Indian","Odisha","Bhubaneswar","Cuttack","blockbuster","superhit","hit",
   "director","producer","cinematography","soundtrack","music director","choreography",
   "debut","award","release","theatre","cast","crew",
   "action","drama","romance","comedy","thriller","family","historical","devotional",
@@ -135,7 +135,7 @@ const ACCENT_CSS: Record<string, string> = {
 function HighlightedPara({ text }: { text: string }) {
   type Seg = { text: string; color: string | null };
   let segments: Seg[] = [{ text, color: null }];
-  bollywood_KEYWORDS.forEach((kw, ki) => {
+  Indian_KEYWORDS.forEach((kw, ki) => {
     const colorKey = ACCENT_COLORS[ki % ACCENT_COLORS.length];
     const regex = new RegExp(`(${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
     const next: Seg[] = [];
@@ -274,10 +274,10 @@ function plainTextToHtml(raw: string): string {
   const topic = titleMatch ? titleMatch.replace(/<\/?h[23][^>]*>/g, "").split(/[–—|]/)[0].trim() : "this film";
   if (faqItems.length === 0) {
     faqItems.push(
-      { q: `What is ${topic} about?`, a: `${topic} is an bollywood (bollywood) production covered in depth on The Cinema Verse — including story, cast, music and more.` },
+      { q: `What is ${topic} about?`, a: `${topic} is an Indian (Indian) production covered in depth on The Cinema Verse — including story, cast, music and more.` },
       { q: `Is ${topic} worth watching?`, a: `Read the full review and audience ratings on this page to decide if ${topic} is worth your time.` },
       { q: `Who is in the cast of ${topic}?`, a: `The complete cast and crew details of ${topic} are available on the movie page on The Cinema Verse.` },
-      { q: `Where can I find more articles about ${topic}?`, a: `The Cinema Verse publishes reviews, box office reports and cast spotlights for all hindi films.` },
+      { q: `Where can I find more articles about ${topic}?`, a: `The Cinema Verse publishes reviews, box office reports and cast spotlights for all films.` },
     );
   }
 
@@ -889,13 +889,13 @@ export default function BlogDetailClient({
                 background: "var(--bg3)", border: "1px solid var(--border)", borderRadius: 12,
               }}>
                 <p style={{ fontSize: ".83rem", color: "rgba(255,255,255,.55)", lineHeight: 1.85, margin: 0 }}>
-                  The <strong style={{ color: "var(--text)" }}>{post.movieTitle} hindi movie</strong> has been
+                  The <strong style={{ color: "var(--text)" }}>{post.movieTitle} movie</strong> has been
                   covered extensively on The Cinema Verse. If you are looking for{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} movie review</em>,{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} story</em>,{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} cast and crew</em>, or the{" "}
                   <em style={{ color: "rgba(255,255,255,.7)" }}>{post.movieTitle} box office collection</em>,
-                  {" "}you will find all of it on The Cinema Verse — Odisha&apos;s complete hindi cinema database.
+                  {" "}you will find all of it on The Cinema Verse — Odisha&apos;s complete Indian cinema database.
                 </p>
               </div>
             )}
@@ -1029,8 +1029,8 @@ export default function BlogDetailClient({
                 <div style={{ padding: "10px 14px" }}>
                   {post.movieTitle ? (
                     <>
-                      <FaqItem q={`What is ${post.movieTitle} hindi movie about?`}
-                        a={post.excerpt || (post.content?.slice(0, 220).replace(/\n/g, " ").trim() + "…") || `${post.movieTitle} is an hindi film.`} />
+                      <FaqItem q={`What is ${post.movieTitle} movie about?`}
+                        a={post.excerpt || (post.content?.slice(0, 220).replace(/\n/g, " ").trim() + "…") || `${post.movieTitle} is an film.`} />
                       <FaqItem q={`Is ${post.movieTitle} worth watching?`}
                         a={`Based on user reviews on The Cinema Verse, you can decide if ${post.movieTitle} is worth watching.`} />
                       <FaqItem q={`Who is in the cast of ${post.movieTitle}?`}
@@ -1043,10 +1043,10 @@ export default function BlogDetailClient({
                   ) : (
                     <>
                       <FaqItem q="What is The Cinema Verse?"
-                        a="The Cinema Verse is Odisha’s complete hindi cinema encyclopedia — movies, actors, songs, box office and news." />
+                        a="The Cinema Verse is Odisha’s complete Indian cinema encyclopedia — movies, actors, songs, box office and news." />
                       <FaqItem q="What kind of articles does The Cinema Verse publish?"
-                        a="Movie reviews, top 10 lists, actor spotlights, box office reports and bollywood entertainment news." />
-                      <FaqItem q="How can I find reviews for a specific hindi movie?"
+                        a="Movie reviews, top 10 lists, actor spotlights, box office reports and entertainment news." />
+                      <FaqItem q="How can I find reviews for a specific movie?"
                         a="Search for the movie on The Cinema Verse’s blog or visit the movie’s dedicated page for ratings and articles." />
                     </>
                   )}

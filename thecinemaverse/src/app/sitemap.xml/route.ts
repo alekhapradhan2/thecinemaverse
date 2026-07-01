@@ -19,6 +19,7 @@ import Movie         from "@/models/Movie";
 import Cast          from "@/models/Cast";
 import Blog          from "@/models/Blog";
 import News          from "@/models/News";
+import { LANGUAGES } from "@/lib/languages";
 
 // ★ Hardcoded to non-www canonical — must exactly match the origin this
 //   sitemap is served from. Do NOT use SITE_URL from @/lib/seo if that
@@ -88,9 +89,25 @@ export async function GET() {
     ["/search",               "monthly", "0.3"],
   ];
 
-  const entries: string[] = statics.map(([p, f, pr]) =>
-    urlEntry(`${CANONICAL_ORIGIN}${p}`, today, f, pr)
-  );
+  const entries: string[] = [];
+
+  // Add the base URLs (which default to Indian/Indian)
+  statics.forEach(([p, f, pr]) => {
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}${p}`, today, f, pr));
+  });
+
+  // Add URLs for each supported language explicitly
+  LANGUAGES.forEach(lang => {
+    // Only generate lang params for core content pages, not /about, /contact, etc.
+    const corePages = statics.filter(([p]) => ["", "/movies", "/movies/upcoming", "/movies/latest", "/box-office", "/cast", "/songs", "/news"].includes(p));
+    
+    corePages.forEach(([p, f, pr]) => {
+      const char = p.includes("?") ? "&" : "?";
+      // We lower priority slightly for non-default language to ensure canonical hierarchy
+      const langPriority = lang.key === "Indian" ? pr : (parseFloat(pr) * 0.9).toFixed(2);
+      entries.push(urlEntry(`${CANONICAL_ORIGIN}${p}${char}lang=${lang.key}`, today, f, langPriority));
+    });
+  });
 
   // ── Genre pages ────────────────────────────────────────────────────────────
   const genres = [
@@ -98,7 +115,12 @@ export async function GET() {
     "Thriller", "Mythological", "Horror", "Social", "Devotional",
   ];
   genres.forEach((g) => {
-    entries.push(urlEntry(`${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`, today, "weekly", "0.75"));
+    const baseUrl = `${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`;
+    entries.push(urlEntry(baseUrl, today, "weekly", "0.75"));
+    LANGUAGES.forEach(lang => {
+      const p = lang.key === "Indian" ? "0.75" : "0.65";
+      entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, "weekly", p));
+    });
   });
 
   // ── Blog category pages ────────────────────────────────────────────────────
@@ -141,13 +163,24 @@ export async function GET() {
   for (let yr = YEAR_END; yr >= YEAR_START; yr--) {
     const freq = yr >= YEAR_END - 1 ? "daily"   : yr >= YEAR_END - 4 ? "monthly" : "yearly";
     const pri  = yr >= YEAR_END - 1 ? "0.85"    : yr >= YEAR_END - 4 ? "0.75"    : "0.6";
-    entries.push(urlEntry(`${CANONICAL_ORIGIN}/movies/year/${yr}`, today, freq, pri));
+    const baseUrl = `${CANONICAL_ORIGIN}/movies/year/${yr}`;
+    
+    entries.push(urlEntry(baseUrl, today, freq, pri));
+    LANGUAGES.forEach(lang => {
+      const p = lang.key === "Indian" ? pri : (parseFloat(pri) * 0.9).toFixed(2);
+      entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, freq, p));
+    });
   }
 
   // ── Box office by year pages ───────────────────────────────────────────────
   const BOX_OFFICE_YEAR_START = 2020;
   for (let yr = YEAR_END - 1; yr >= BOX_OFFICE_YEAR_START; yr--) {
-    entries.push(urlEntry(`${CANONICAL_ORIGIN}/box-office?year=${yr}`, today, "weekly", "0.75"));
+    const baseUrl = `${CANONICAL_ORIGIN}/box-office`;
+    entries.push(urlEntry(`${baseUrl}?year=${yr}`, today, "weekly", "0.75"));
+    LANGUAGES.forEach(lang => {
+      const p = lang.key === "Indian" ? "0.75" : "0.65";
+      entries.push(urlEntry(`${baseUrl}?year=${yr}&lang=${lang.key}`, today, "weekly", p));
+    });
   }
 
   try {
@@ -234,11 +267,11 @@ export async function GET() {
   }
 
   // ── Evergreen guide pages (add once created) ──────────────────────────────
-  //  /blog/bollywood-guides/bollywood-movies
-  //  /blog/bollywood-guides/history-of-bollywood
-  //  /blog/bollywood-guides/top-10-bollywood-movies
-  //  /blog/bollywood-guides/best-bollywood-songs
-  //  /blog/bollywood-guides/bollywood-actors
+  //  /blog/Indian-guides/Indian-movies
+  //  /blog/Indian-guides/history-of-Indian
+  //  /blog/Indian-guides/top-10-Indian-movies
+  //  /blog/Indian-guides/best-Indian-songs
+  //  /blog/Indian-guides/Indian-actors
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

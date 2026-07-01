@@ -99,7 +99,7 @@ async function getRelatedBlogs(movie: MovieData): Promise<any[]> {
 // ─── Metadata ─────────────────────────────────────────────────
 
 // --- Fuzzy misspelling generator ---
-function getMisspellings(title: string): string[] {
+function getMisspellings(title: string, lang: string): string[] {
   if (!title) return [];
   const variants = new Set<string>();
   const words = title.trim().split(/\s+/);
@@ -125,8 +125,8 @@ function getMisspellings(title: string): string[] {
   variants.forEach((v) => {
     if (v && v !== title.toLowerCase() && v.length > 2) {
       result.push(v);
-      result.push(`${v} hindi movie`);
-      result.push(`${v} hindi film`);
+      result.push(`${v} ${lang.toLowerCase()} movie`);
+      result.push(`${v} ${lang.toLowerCase()} film`);
     }
   });
   return result;
@@ -152,11 +152,14 @@ export async function generateMetadata({
     || movie.posterUrl
     || "https://thecinemaverses.in/og-default.jpg";
 
+  const langStr = movie.language || "Hindi";
+  const indStr  = langStr === "Hindi" ? "Bollywood" : langStr;
+
   // ★ Rich title — song + singer + movie + year for long-tail capture
-  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | bollywood Song | The Cinema Verse`;
+  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | ${indStr} Song | The Cinema Verse`;
 
   const descParts = [
-    `Listen to "${song.title}"${singerStr} from the hindi film "${movie.title}"${year ? ` (${year})` : ""}.`,
+    `Listen to "${song.title}"${singerStr} from the ${langStr.toLowerCase()} film "${movie.title}"${year ? ` (${year})` : ""}.`,
     song.musicDirector ? ` Music by ${song.musicDirector}.` : "",
     song.lyrics?.trim() ? " Full lyrics available." : "",
     " Watch on YouTube and explore the full soundtrack on The Cinema Verse.",
@@ -170,29 +173,29 @@ export async function generateMetadata({
   const keywords = [
     song.title,
     `${song.title} lyrics`,
-    `${song.title} bollywood song`,
+    `${song.title} ${indStr.toLowerCase()} song`,
     `${song.title} ${movie.title}`,
     song.singer ? `${song.singer} songs`       : null,
-    song.singer ? `${song.singer} bollywood songs`  : null,
+    song.singer ? `${song.singer} ${indStr.toLowerCase()} songs`  : null,
     song.musicDirector ? `${song.musicDirector} music`      : null,
-    song.musicDirector ? `${song.musicDirector} bollywood music` : null,
+    song.musicDirector ? `${song.musicDirector} ${indStr.toLowerCase()} music` : null,
     `${movie.title} songs`,
     `${movie.title} album`,
     `${movie.title} songs download`,
-    `${movie.title} hindi movie songs`,
+    `${movie.title} ${langStr.toLowerCase()} movie songs`,
     movie.title,
-    `${movie.title} hindi movie`,
-    `${movie.title} hindi film`,
+    `${movie.title} ${langStr.toLowerCase()} movie`,
+    `${movie.title} ${langStr.toLowerCase()} film`,
     `${movie.title} review`,
-    "bollywood song",
-    "bollywood song",
-    "hindi film song",
-    "hindi movie song",
-    year ? `bollywood songs ${year}` : null,
-    year ? `bollywood songs ${year}` : null,
-    ...(movie.genre || []).map((g: string) => `${g} hindi film`),
-    ...getMisspellings(movie.title),
-    ...getMisspellings(song.title),
+    `${indStr.toLowerCase()} song`,
+    `${indStr.toLowerCase()} song`,
+    `${langStr.toLowerCase()} film song`,
+    `${langStr.toLowerCase()} movie song`,
+    year ? `${indStr.toLowerCase()} songs ${year}` : null,
+    year ? `${indStr.toLowerCase()} songs ${year}` : null,
+    ...(movie.genre || []).map((g: string) => `${g} ${langStr.toLowerCase()} film`),
+    ...getMisspellings(movie.title, langStr),
+    ...getMisspellings(song.title, langStr),
   ].filter(Boolean) as string[];
 
   return {
@@ -233,6 +236,8 @@ function SeoProseBlock({
   otherSongs: Array<{ title: string; slug: string; index: number }>;
   relatedBlogs: any[];
 }) {
+  const langStr = movie.language || "Hindi";
+
   return (
     <section
       aria-label="About this song"
@@ -248,8 +253,8 @@ function SeoProseBlock({
           {song.singer && (
             <> is sung by <strong className="text-white">{song.singer}</strong></>
           )}
-          {!song.singer && " is an hindi film song"} from the{" "}
-          {movie.genre?.length ? `${movie.genre.join(", ")} ` : ""}hindi film{" "}
+          {!song.singer && ` is an ${langStr.toLowerCase()} film song`} from the{" "}
+          {movie.genre?.length ? `${movie.genre.join(", ")} ` : ""}{langStr.toLowerCase()} film{" "}
           <Link href={`/movie/${movie.slug}`} className="text-brand-400 hover:underline font-semibold">
             {movie.title}
           </Link>
@@ -403,7 +408,7 @@ export default async function SongDetailSlugPage({
         "@type": "MusicRecording",
         "name": song.title,
         "description": song.description
-          || `${song.title} is a song from the hindi film ${movie.title}${year ? ` (${year})` : ""}.`,
+          || `${song.title} is a song from the ${movie.language?.toLowerCase() || "hindi"} film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer     && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
         ...(thumb           && { "thumbnailUrl": thumb }),
         ...(song.ytId       && { "sameAs": `https://www.youtube.com/watch?v=${song.ytId}` }),

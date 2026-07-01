@@ -74,12 +74,15 @@ export async function generateMetadata({
     || (song.ytId ? `https://img.youtube.com/vi/${song.ytId}/hqdefault.jpg` : null)
     || movie.posterUrl;
 
-  const title       = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} bollywood Song`;
+  const langStr = movie.language || "Hindi";
+  const indStr  = langStr === "Hindi" ? "Bollywood" : langStr;
+
+  const title       = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} ${indStr} Song`;
   const description = [
-    `Listen to "${song.title}"${singerStr} from the hindi film "${movie.title}"${year ? ` (${year})` : ""}.`,
+    `Listen to "${song.title}"${singerStr} from the ${langStr.toLowerCase()} film "${movie.title}"${year ? ` (${year})` : ""}.`,
     song.lyrics?.trim() ? " Read the full lyrics." : "",
     song.description ? ` ${song.description.slice(0, 120)}` : "",
-    ` ${mdStr}. Watch on YouTube, explore the full playlist and related bollywood songs on The Cinema Verse.`,
+    ` ${mdStr}. Watch on YouTube, explore the full playlist and related ${indStr.toLowerCase()} songs on The Cinema Verse.`,
   ].join("").replace(/\s+/g, " ").trim();
 
   const keywords = [
@@ -90,11 +93,11 @@ export async function generateMetadata({
     song.musicDirector && `${song.musicDirector} music`,
     `${movie.title} songs`,
     `${movie.title} album`,
-    "bollywood song",
-    "bollywood song",
-    "hindi film song",
-    year && `bollywood songs ${year}`,
-    ...(movie.genre || []).map((g: string) => `${g} hindi film`),
+    `${indStr.toLowerCase()} song`,
+    `${indStr.toLowerCase()} song`,
+    `${langStr.toLowerCase()} film song`,
+    year && `${indStr.toLowerCase()} songs ${year}`,
+    ...(movie.genre || []).map((g: string) => `${g} ${langStr.toLowerCase()} film`),
   ].filter(Boolean) as string[];
 
   const url = `/songs/${movie.slug}/${idx}`;
@@ -140,6 +143,8 @@ export default async function SongDetailPage({
     || movie.posterUrl;
   const year  = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : undefined;
 
+  const langStr = movie.language || "Hindi";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -147,7 +152,7 @@ export default async function SongDetailPage({
         "@type": "MusicRecording",
         "@id": `https://thecinemaverses.in/songs/${movie.slug}/${idx}#song`,
         "name": song.title,
-        "description": song.description || `${song.title} is a song from the hindi film ${movie.title}${year ? ` (${year})` : ""}.`,
+        "description": song.description || `${song.title} is a song from the ${langStr.toLowerCase()} film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
         ...(thumb && { "thumbnailUrl": thumb }),
         ...(song.ytId && {

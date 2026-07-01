@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
+import { resolveLanguage } from "@/lib/languages";
+import { getLangMeta } from "@/lib/seo";
 import { SongsClient } from "./SongsClient";
 import {
   Music, Mic2, Radio, ChevronRight, Headphones,
@@ -18,32 +20,37 @@ export async function generateMetadata({
 }: {
   searchParams: Record<string, string | undefined>;
 }): Promise<Metadata> {
-  const { singer, year, q } = searchParams || {};
+  const { singer, year, q, lang: urlLang } = searchParams || {};
+  const lang = resolveLanguage(urlLang);
+  const s = getLangMeta(lang);
 
-  let title       = "bollywood Songs 2026 – Latest bollywood Music & Film Songs | The Cinema Verse";
-  let description = "Browse thousands of bollywood songs from bollywood films. Listen to the latest hindi movie songs, romantic tracks, devotional music and dance numbers. Find songs by singer, film or music director.";
+  let title       = `${s.songs} 2026 – Latest ${s.industry} Music & Film Songs | The Cinema Verse`;
+  let description = `Browse thousands of ${s.industry} songs from ${s.industry} films. Listen to the latest ${lang.short.toLowerCase()} movie songs, romantic tracks, devotional music and dance numbers. Find songs by singer, film or music director.`;
 
   if (q) {
-    title       = `"${q}" – bollywood Songs Search | The Cinema Verse`;
-    description = `Search results for "${q}" in The Cinema Verse's bollywood songs database. Find matching songs, singers and hindi movies.`;
+    title       = `"${q}" – ${s.songs} Search | The Cinema Verse`;
+    description = `Search results for "${q}" in The Cinema Verse's ${s.songs.toLowerCase()} database. Find matching songs, singers and ${lang.short.toLowerCase()} movies.`;
   } else if (singer) {
-    title       = `${singer} Songs – Hindi Movie Songs | The Cinema Verse`;
-    description = `Listen to all ${singer} bollywood songs. Watch YouTube videos, read lyrics and explore every film song by ${singer}.`;
+    title       = `${singer} Songs – ${lang.short} Movie Songs | The Cinema Verse`;
+    description = `Listen to all ${singer} ${s.industry.toLowerCase()} songs. Watch YouTube videos, read lyrics and explore every film song by ${singer}.`;
   } else if (year) {
-    title       = `bollywood Songs ${year} – Latest bollywood Music | The Cinema Verse`;
-    description = `Explore all bollywood songs released in ${year}. Find the best bollywood songs and music videos of ${year}.`;
+    title       = `${s.songs} ${year} – Latest ${s.industry} Music | The Cinema Verse`;
+    description = `Explore all ${s.industry.toLowerCase()} songs released in ${year}. Find the best ${s.industry.toLowerCase()} songs and music videos of ${year}.`;
   }
+  
+  const queryStr = urlLang ? `?lang=${urlLang}` : "";
+  const canonicalUrl = `https://thecinemaverses.in/songs${queryStr}`;
 
   return {
     title,
     description,
     keywords: [
-      "bollywood songs", "bollywood songs", "hindi film songs", "latest bollywood songs 2026",
-      "hindi movie songs", "bollywood music", "new bollywood songs", "bollywood romantic songs",
-      "Arijit Singh songs", "bollywood devotional songs", "bollywood dance songs",
+      `${s.industry.toLowerCase()} songs`, `${lang.short.toLowerCase()} film songs`, `latest ${s.industry.toLowerCase()} songs 2026`,
+      `${lang.short.toLowerCase()} movie songs`, `${s.industry.toLowerCase()} music`, `new ${s.industry.toLowerCase()} songs`, `${s.industry.toLowerCase()} romantic songs`,
+      "Arijit Singh songs", `${s.industry.toLowerCase()} devotional songs`, `${s.industry.toLowerCase()} dance songs`,
     ],
-    alternates: { canonical: "https://thecinemaverses.in/songs" },
-    openGraph: { title, description, url: "https://thecinemaverses.in/songs", type: "website" },
+    alternates: { canonical: canonicalUrl },
+    openGraph: { title, description, url: canonicalUrl, type: "website" },
   };
 }
 
@@ -142,27 +149,9 @@ async function getSongs({
   return { songs, total, currentPage: page, totalPages: Math.ceil(total / PAGE_SIZE) };
 }
 
-// ── Static content ────────────────────────────────────────────────────────────
-const MUSIC_GENRES = [
-  { label: "Romantic",    emoji: "❤️",  desc: "Soulful bollywood love songs" },
-  { label: "Dance",       emoji: "💃",  desc: "Energetic bollywood dance numbers" },
-  { label: "Devotional",  emoji: "🪔",  desc: "Spiritual bollywood bhajans" },
-  { label: "Sad",         emoji: "😢",  desc: "Emotional bollywood sad songs" },
-  { label: "Folk",        emoji: "🥁",  desc: "Traditional bollywood folk music" },
-  { label: "Title Track", emoji: "🎬",  desc: "hindi movie title songs" },
-];
+// ── Static content (dynamic per lang) ────────────────────────────────────────────────────
 
-const TOP_SINGERS = [
-  "Human Sagar", "Ira Mohanty", "Tapu Mishra", "Diptirekha",
-  "Nibedita", "Humane Sagar", "Satyajit", "Asima Panda",
-];
-
-const MUSIC_FACTS = [
-  { icon: Music,      stat: "5000+", label: "bollywood Songs",      note: "Songs from hundreds of bollywood films" },
-  { icon: Mic2,       stat: "200+",  label: "bollywood Singers",    note: "Playback singers across all eras" },
-  { icon: Radio,      stat: "150+",  label: "Music Directors", note: "Composers who shaped bollywood music" },
-  { icon: Headphones, stat: "85+",   label: "Years of Music",  note: "hindi film music since 1936" },
-];
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default async function SongsPage({
@@ -174,6 +163,28 @@ export default async function SongsPage({
   const singerFilter  = searchParams?.singer;
   const dirFilter     = searchParams?.musicDirector;
   const qFilter       = searchParams?.q;
+  const urlLang       = searchParams?.lang;
+  const lang          = resolveLanguage(urlLang);
+  const s             = getLangMeta(lang);
+
+  const MUSIC_GENRES = [
+    { label: "Romantic",    emoji: "❤️",  desc: `Soulful ${s.industry.toLowerCase()} love songs` },
+    { label: "Dance",       emoji: "💃",  desc: `Energetic ${s.industry.toLowerCase()} dance numbers` },
+    { label: "Devotional",  emoji: "🪔",  desc: `Spiritual ${s.industry.toLowerCase()} bhajans` },
+    { label: "Sad",         emoji: "😢",  desc: `Emotional ${s.industry.toLowerCase()} sad songs` },
+    { label: "Folk",        emoji: "🥁",  desc: `Traditional ${s.industry.toLowerCase()} folk music` },
+    { label: "Title Track", emoji: "🎬",  desc: `${lang.short.toLowerCase()} movie title songs` },
+  ];
+  const TOP_SINGERS = [
+    "Human Sagar", "Ira Mohanty", "Tapu Mishra", "Diptirekha",
+    "Nibedita", "Humane Sagar", "Satyajit", "Asima Panda",
+  ];
+  const MUSIC_FACTS = [
+    { icon: Music,      stat: "5000+", label: `${s.industry} Songs`,      note: `Songs from hundreds of ${s.industry} films` },
+    { icon: Mic2,       stat: "200+",  label: `${s.industry} Singers`,    note: "Playback singers across all eras" },
+    { icon: Radio,      stat: "150+",  label: "Music Directors", note: `Composers who shaped ${s.industry.toLowerCase()} music` },
+    { icon: Headphones, stat: "85+",   label: "Years of Music",  note: `${lang.short.toLowerCase()} film music since 1936` },
+  ];
 
   const [{ upcoming, latest }, songData] = await Promise.all([
     getSongsSections(),
@@ -185,8 +196,9 @@ export default async function SongsPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Hindi Film Songs – The Cinema Verse",
-    description: "Complete list of hindi movie songs from bollywood films",
+    name: `${lang.short} Film Songs – The Cinema Verse`,
+    description: `Complete list of ${lang.short.toLowerCase()} movie songs from ${s.industry} films`,
+    url: `https://thecinemaverses.in/songs${urlLang ? `?lang=${urlLang}` : ""}`,
     numberOfItems: total,
     itemListElement: songs.slice(0, 20).map((s: any, i: number) => ({
       "@type": "MusicRecording",
@@ -194,7 +206,7 @@ export default async function SongsPage({
       name: s.title,
       byArtist: { "@type": "Person", name: s.singer },
       inAlbum: { "@type": "MusicAlbum", name: s.movieTitle },
-      url: `https://thecinemaverse.com/songs/${s.movieSlug}/${s.songIndex}`,
+      url: `https://thecinemaverses.in/songs/${s.movieSlug}/${s.songIndex}`,
     })),
   };
 
@@ -231,14 +243,14 @@ export default async function SongsPage({
                   <Music className="w-5 h-5 text-brand-500" />
                 </div>
                 <h1 className="font-display text-3xl md:text-4xl font-black text-white">
-                  {singerFilter ? `${singerFilter} Songs` : "bollywood Songs"}
+                  {singerFilter ? `${singerFilter} Songs` : `${s.industry} Songs`}
                 </h1>
               </div>
 
               <p className="text-gray-400 text-sm md:text-base max-w-xl leading-relaxed">
                 {singerFilter
-                  ? `All hindi film songs by ${singerFilter} — with YouTube videos, movie details and full credits.`
-                  : "The most complete hindi film music library — browse thousands of songs with YouTube videos, lyrics, singer profiles and more."}
+                  ? `All ${lang.short.toLowerCase()} film songs by ${singerFilter} — with YouTube videos, movie details and full credits.`
+                  : `The most complete ${lang.short.toLowerCase()} film music library — browse thousands of songs with YouTube videos, lyrics, singer profiles and more.`}
               </p>
 
               {/* Singer quick-links */}
@@ -310,11 +322,11 @@ export default async function SongsPage({
 
         {/* ══ LATEST ══ */}
         {latest.length > 0 && !qFilter && (
-          <section aria-label="Latest hindi movie songs">
+          <section aria-label={`Latest ${lang.short.toLowerCase()} movie songs`}>
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-2">
                 <div className="w-1 h-5 bg-brand-500 rounded-full" />
-                <h2 className="font-display text-xl font-bold text-white">Latest bollywood Songs</h2>
+                <h2 className="font-display text-xl font-bold text-white">Latest {s.industry} Songs</h2>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -345,7 +357,7 @@ export default async function SongsPage({
         )}
 
         {/* ══ SONGS CLIENT — Search + Grid + Pagination ══ */}
-        <section aria-label="All bollywood songs database">
+        <section aria-label={`All ${s.industry.toLowerCase()} songs database`}>
           <SongsClient
             songs={songs}
             singers={[]}
@@ -359,54 +371,43 @@ export default async function SongsPage({
         </section>
 
         {/* ══ SEO BLOCK 1 — About Hindi Film Music ══ */}
-        <section aria-label="About hindi film music" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8 md:p-10">
+        <section aria-label={`About ${lang.short.toLowerCase()} film music`} className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8 md:p-10">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 className="font-display text-xl md:text-2xl font-bold text-white">
-              About Hindi Film Music — The Soul of bollywood
+              About {lang.short} Film Music — The Soul of {s.industry}
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                <strong className="text-white">hindi film songs</strong> have been an integral part of
-                bollywood since the very first hindi movie <em>Sita Bibaha</em> in 1936. Over the decades,
-                hindi cinema music has evolved from classical and devotional compositions to modern
+                <strong className="text-white">{lang.short.toLowerCase()} film songs</strong> have been an integral part of
+                {s.industry} for decades. Over the years,
+                {lang.short.toLowerCase()} cinema music has evolved from classical and devotional compositions to modern
                 romantic tracks, energetic dance numbers and experimental fusion music.
               </p>
               <p>
-                The golden voice of <strong className="text-white">Human Sagar</strong> — often called
-                the melody king of bollywood — has defined a generation of bollywood romantic songs. Alongside
-                him, singers like <strong className="text-white">Ira Mohanty</strong>,{" "}
-                <strong className="text-white">Tapu Mishra</strong>,{" "}
-                <strong className="text-white">Diptirekha Padhi</strong>, and{" "}
-                <strong className="text-white">Nibedita</strong> have given bollywood music its distinctive identity.
-              </p>
-              <p>
-                <strong className="text-white">bollywood devotional songs</strong> hold a special place in
-                Odisha's culture, with bhajans dedicated to Lord Jagannath consistently topping charts.
-                Every major hindi film released around the Rath Yatra festival features at least one
+                <strong className="text-white">{s.industry} devotional songs</strong> hold a special place in
+                the culture, with bhajans and spiritual songs consistently topping charts.
+                Every major {lang.short.toLowerCase()} film released around key festivals features at least one
                 devotional track.
               </p>
             </div>
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                Music directors like <strong className="text-white">Prem Anand</strong>,{" "}
-                <strong className="text-white">Sourin Bhatt</strong>, and{" "}
-                <strong className="text-white">Abhijit Majumdar</strong> have been the creative forces
-                behind some of the most beloved hindi film songs, blending traditional bollywood musical
+                Music directors have been the creative forces
+                behind some of the most beloved {lang.short.toLowerCase()} film songs, blending traditional {s.industry.toLowerCase()} musical
                 elements with contemporary sounds.
               </p>
               <p>
-                The rise of YouTube and digital platforms has transformed how bollywood songs reach audiences.
-                Many hindi film songs now clock millions of YouTube views within days of release, with
-                tracks like <em>Mo Mana Jhuri Jauchhi</em> becoming viral hits that transcended regional
-                boundaries.
+                The rise of YouTube and digital platforms has transformed how {s.industry.toLowerCase()} songs reach audiences.
+                Many {lang.short.toLowerCase()} film songs now clock millions of YouTube views within days of release, with
+                tracks becoming viral hits that transcend regional boundaries.
               </p>
               <p>
                 The Cinema Verse's songs database features{" "}
-                <strong className="text-white">{total.toLocaleString()}+ bollywood songs</strong> from
-                bollywood films — each with YouTube video links, singer credits, music director details,
+                <strong className="text-white">{total.toLocaleString()}+ {s.industry.toLowerCase()} songs</strong> from
+                {s.industry.toLowerCase()} films — each with YouTube video links, singer credits, music director details,
                 and original movie information.
               </p>
             </div>
@@ -426,10 +427,10 @@ export default async function SongsPage({
         </section>
 
         {/* ══ SEO BLOCK 2 — Genre grid ══ */}
-        <section aria-label="Browse bollywood songs by genre">
+        <section aria-label={`Browse ${s.industry.toLowerCase()} songs by genre`}>
           <div className="flex items-center gap-2 mb-5">
             <div className="w-1 h-5 bg-brand-500 rounded-full" />
-            <h2 className="font-display text-xl font-bold text-white">bollywood Songs by Genre</h2>
+            <h2 className="font-display text-xl font-bold text-white">{s.industry} Songs by Genre</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {MUSIC_GENRES.map((g) => (
@@ -444,10 +445,10 @@ export default async function SongsPage({
         </section>
 
         {/* ══ SEO BLOCK 3 — Top Singers ══ */}
-        <section aria-label="Top bollywood singers" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8">
+        <section aria-label={`Top ${s.industry.toLowerCase()} singers`} className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
-            <h2 className="font-display text-xl font-bold text-white">Popular bollywood Playback Singers</h2>
+            <h2 className="font-display text-xl font-bold text-white">Popular {s.industry} Playback Singers</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {TOP_SINGERS.map((singer) => (
@@ -458,7 +459,7 @@ export default async function SongsPage({
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-white group-hover:text-brand-300 transition-colors truncate">{singer}</p>
-                  <p className="text-[10px] text-gray-500">bollywood singer</p>
+                  <p className="text-[10px] text-gray-500">{s.industry} singer</p>
                 </div>
                 <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 transition-colors ml-auto flex-shrink-0" />
               </Link>
@@ -467,21 +468,20 @@ export default async function SongsPage({
         </section>
 
         {/* ══ SEO BLOCK 4 — FAQ ══ */}
-        <section aria-label="FAQ about bollywood songs" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8 md:p-10">
+        <section aria-label={`FAQ about ${s.industry.toLowerCase()} songs`} className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-8 md:p-10">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 className="font-display text-xl md:text-2xl font-bold text-white">
-              Frequently Asked Questions — bollywood Songs
+              Frequently Asked Questions — {s.industry} Songs
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
             {[
-              { q: "Where can I find all hindi movie songs in one place?", a: "The Cinema Verse is the most complete bollywood songs database, featuring songs from hundreds of hindi films. Every song comes with a YouTube video, singer name, music director, and the original movie details. Use the search bar to find any song across our entire database." },
-              { q: "Who is the most popular bollywood singer?", a: "Human Sagar is widely considered the melody king of bollywood. Other beloved bollywood singers include Ira Mohanty, Tapu Mishra, Diptirekha Padhi, Nibedita, and Asima Panda." },
-              { q: "What are the latest bollywood songs of 2026?", a: "The Cinema Verse updates its songs database regularly. Use the search or browse the 'Latest bollywood Songs' section on this page to find the newest bollywood tracks of 2026." },
-              { q: "Can I watch bollywood song videos on The Cinema Verse?", a: "Yes — every bollywood song in our database includes a YouTube video link. Click any song card to watch the official music video directly from the movie's YouTube channel." },
-              { q: "Who are the best bollywood music directors?", a: "Prominent bollywood music directors include Prem Anand, Sourin Bhatt, Abhijit Majumdar, Bikram Pati, and Baidyanath Mishra — each known for iconic hindi film soundtracks." },
-              { q: "Are there devotional bollywood songs on The Cinema Verse?", a: "Yes — devotional songs dedicated to Lord Jagannath and other deities are a major part of hindi film music. You can search for specific devotional tracks directly from the search bar above." },
+              { q: `Where can I find all ${lang.short.toLowerCase()} movie songs in one place?`, a: `The Cinema Verse is the most complete ${s.industry.toLowerCase()} songs database, featuring songs from hundreds of ${lang.short.toLowerCase()} films. Every song comes with a YouTube video, singer name, music director, and the original movie details. Use the search bar to find any song across our entire database.` },
+              { q: `Who is the most popular ${s.industry.toLowerCase()} singer?`, a: `We feature songs from all popular ${s.industry.toLowerCase()} playback singers. You can browse tracks by your favorite artists directly from the search bar.` },
+              { q: `What are the latest ${s.industry.toLowerCase()} songs of 2026?`, a: `The Cinema Verse updates its songs database regularly. Use the search or browse the 'Latest ${s.industry.toLowerCase()} Songs' section on this page to find the newest ${s.industry.toLowerCase()} tracks of 2026.` },
+              { q: `Can I watch ${s.industry.toLowerCase()} song videos on The Cinema Verse?`, a: `Yes — every ${s.industry.toLowerCase()} song in our database includes a YouTube video link. Click any song card to watch the official music video directly from the movie's YouTube channel.` },
+              { q: `Are there devotional ${s.industry.toLowerCase()} songs on The Cinema Verse?`, a: `Yes — devotional songs are a major part of ${lang.short.toLowerCase()} film music. You can search for specific devotional tracks directly from the search bar above.` },
             ].map(({ q, a }) => (
               <div key={q} className="border-b border-[#1f1f1f] pb-5 last:border-0">
                 <h3 className="font-bold text-white text-sm mb-2 flex items-start gap-2">
@@ -494,17 +494,17 @@ export default async function SongsPage({
         </section>
 
         {/* ══ SEO BLOCK 5 — Internal links ══ */}
-        <section aria-label="Explore more hindi cinema">
+        <section aria-label={`Explore more ${lang.short.toLowerCase()} cinema`}>
           <div className="flex items-center gap-2 mb-5">
             <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 className="font-display text-xl font-bold text-white">Explore More on The Cinema Verse</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: Film,       href: "/movies",     title: "Hindi Movies",    desc: "Complete database of hindi films with cast, synopsis, trailers and reviews.",                      cta: "Browse Movies"   },
-              { icon: TrendingUp, href: "/box-office", title: "Box Office",     desc: "Day-wise net and gross collection figures for every hindi film currently running.",               cta: "View Box Office" },
-              { icon: Star,       href: "/cast",       title: "Cast Profiles",  desc: "Detailed profiles of bollywood actors, actresses and film professionals with full filmographies.",    cta: "Browse Cast"     },
-              { icon: Headphones, href: "/blog",       title: "Hindi Film Blog", desc: "In-depth reviews, singer spotlights, top 10 song lists and bollywood music opinion pieces.",     cta: "Read Blog"       },
+              { icon: Film,       href: "/movies",     title: `${lang.short} Movies`,    desc: `Complete database of ${lang.short.toLowerCase()} films with cast, synopsis, trailers and reviews.`,                      cta: "Browse Movies"   },
+              { icon: TrendingUp, href: "/box-office", title: "Box Office",     desc: `Day-wise net and gross collection figures for every ${lang.short.toLowerCase()} film currently running.`,               cta: "View Box Office" },
+              { icon: Star,       href: "/cast",       title: "Cast Profiles",  desc: `Detailed profiles of ${s.industry.toLowerCase()} actors, actresses and film professionals with full filmographies.`,    cta: "Browse Cast"     },
+              { icon: Headphones, href: "/blog",       title: `${lang.short} Film Blog`, desc: `In-depth reviews, singer spotlights, top 10 song lists and ${s.industry.toLowerCase()} music opinion pieces.`,     cta: "Read Blog"       },
             ].map(({ icon: Icon, href, title, desc, cta }) => (
               <Link key={title} href={href}
                 className="group bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-5 transition-all hover:-translate-y-0.5 flex flex-col">

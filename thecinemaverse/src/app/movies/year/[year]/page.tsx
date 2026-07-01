@@ -62,14 +62,14 @@ export async function generateMetadata({
 }
 
 // ─── JSON-LD structured data ────────────────────────────────────────────────────
-function MovieListJsonLd({ movies, year }: { movies: any[]; year: number }) {
+function MovieListJsonLd({ movies, year, langShort, indStr }: { movies: any[]; year: number; langShort: string; indStr: string }) {
   const itemList = movies.slice(0, 50).map((m, i) => ({
     "@type": "ListItem",
     position: i + 1,
     item: {
       "@type": "Movie",
       name: m.title,
-      url: `https://thecinemaverse.com/movie/${m.slug}`,
+      url: `https://thecinemaverses.in/movie/${m.slug}`,
       datePublished: m.releaseDate,
       director: m.director
         ? { "@type": "Person", name: m.director }
@@ -80,9 +80,9 @@ function MovieListJsonLd({ movies, year }: { movies: any[]; year: number }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: `Hindi Movies ${year}`,
-    description: `Complete list of bollywood (bollywood) films released in ${year}`,
-    url: `https://thecinemaverse.com/movies/year/${year}`,
+    name: `${langShort} Movies ${year}`,
+    description: `Complete list of ${langShort.toLowerCase()} (${indStr}) films released in ${year}`,
+    url: `https://thecinemaverses.in/movies/year/${year}`,
     numberOfItems: movies.length,
     itemListElement: itemList,
   };
@@ -96,19 +96,19 @@ function MovieListJsonLd({ movies, year }: { movies: any[]; year: number }) {
 }
 
 // ─── WebPage JSON-LD (enhances Google sitelinks / knowledge panel) ─────────────
-function WebPageJsonLd({ year, total }: { year: number; total: number }) {
+function WebPageJsonLd({ year, total, langShort, indStr, langDb }: { year: number; total: number; langShort: string; indStr: string; langDb: string }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: `Hindi Movies ${year} – Complete A to Z bollywood Films List`,
-    description: `Full list of ${total} hindi movies released in ${year}. Browse all bollywood films with director, release date, box office verdict, cast and songs.`,
-    url: `https://thecinemaverse.com/movies/year/${year}`,
+    name: `${langShort} Movies ${year} – Complete A to Z ${indStr} Films List`,
+    description: `Full list of ${total} ${langShort.toLowerCase()} movies released in ${year}. Browse all ${indStr.toLowerCase()} films with director, release date, box office verdict, cast and songs.`,
+    url: `https://thecinemaverses.in/movies/year/${year}`,
     inLanguage: "en-IN",
-    isPartOf: { "@type": "WebSite", name: "The Cinema Verse", url: "https://thecinemaverse.com" },
+    isPartOf: { "@type": "WebSite", name: "The Cinema Verse", url: "https://thecinemaverses.in" },
     about: {
       "@type": "Thing",
-      name: "bollywood",
-      description: "bollywood-language film industry based in Odisha, India",
+      name: indStr,
+      description: `${langDb}-language film industry based in India`,
     },
     dateModified: new Date().toISOString(),
   };
@@ -121,14 +121,14 @@ function WebPageJsonLd({ year, total }: { year: number; total: number }) {
 }
 
 // ─── BreadcrumbList JSON-LD ────────────────────────────────────────────────────
-function BreadcrumbJsonLd({ year }: { year: number }) {
+function BreadcrumbJsonLd({ year, langShort }: { year: number; langShort: string }) {
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverse.com" },
-      { "@type": "ListItem", position: 2, name: "Movies", item: "https://thecinemaverse.com/movies" },
-      { "@type": "ListItem", position: 3, name: `Hindi Movies ${year}`, item: `https://thecinemaverse.com/movies/year/${year}` },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://thecinemaverses.in" },
+      { "@type": "ListItem", position: 2, name: "Movies", item: "https://thecinemaverses.in/movies" },
+      { "@type": "ListItem", position: 3, name: `${langShort} Movies ${year}`, item: `https://thecinemaverses.in/movies/year/${year}` },
     ],
   };
   return (
@@ -181,7 +181,7 @@ async function getMoviesByYear(year: number, langKey?: string) {
 
   // Merge language filter if present
   const matchStage = langDbValue
-    ? { $and: [dateMatch, { language: langDbValue }] }
+    ? { $and: [dateMatch, { language: { $regex: new RegExp(`^${langDbValue}$`, "i") } }] }
     : dateMatch;
 
   const movies = await Movie.aggregate([
@@ -232,7 +232,7 @@ async function getMoviesByYear(year: number, langKey?: string) {
     { $sort: { _releaseDateObj: -1, _id: -1 } },
   ]);
 
-  return movies;
+  return JSON.parse(JSON.stringify(movies));
 }
 
 // ─── Fetch top cast members who appear most in that year's movies ──────────────
@@ -263,7 +263,7 @@ async function getTopCastByYear(movies: any[], limit = 12) {
     .map(id => castMembers.find((c: any) => String(c._id) === id))
     .filter(Boolean) as any[];
 
-  return ordered;
+  return JSON.parse(JSON.stringify(ordered));
 }
 const VERDICT_CONFIG: Record<string, { color: string; icon: React.ElementType }> = {
   Blockbuster: { color: "text-brand-400 bg-brand-500/15 border-brand-500/30", icon: Flame },
@@ -324,9 +324,9 @@ export default async function MoviesByYearPage({
   return (
     <>
       {/* ── JSON-LD Structured Data ── */}
-      <BreadcrumbJsonLd year={year} />
-      <WebPageJsonLd year={year} total={total} />
-      {total > 0 && <MovieListJsonLd movies={movies} year={year} />}
+      <BreadcrumbJsonLd year={year} langShort={activeLang.short} />
+      <WebPageJsonLd year={year} total={total} langShort={activeLang.short} indStr={s.industry} langDb={activeLang.dbValue} />
+      {total > 0 && <MovieListJsonLd movies={movies} year={year} langShort={activeLang.short} indStr={s.industry} />}
 
       <div className="min-h-screen bg-[#0a0a0a]">
 

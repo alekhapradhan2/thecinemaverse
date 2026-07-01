@@ -18,12 +18,12 @@ export const revalidate = 600;
 // ── SEO METADATA ──────────────────────────────────────────────────────────────
 
 const CATEGORY_DESCRIPTIONS: Record<string, string> = {
-  "Box Office":   "Day-wise hindi movie box office collection reports, hit/flop verdicts, and trade analysis for bollywood films.",
-  "Reviews":      "In-depth hindi movie reviews — honest, spoiler-aware breakdowns of the latest bollywood releases.",
-  "Actor":        "Actor profiles, filmographies, and career spotlights for hindi cinema stars.",
-  "Songs":        "Top bollywood song lists, music guides, and behind-the-scenes coverage from bollywood.",
-  "News":         "Latest bollywood news, announcements, and industry updates from hindi cinema.",
-  "Top Lists":    "Curated top 10 lists covering the best of bollywood — movies, songs, actors, and more.",
+  "Box Office":   "Day-wise movie box office collection reports, hit/flop verdicts, and trade analysis for Indian films.",
+  "Reviews":      "In-depth movie reviews — honest, spoiler-aware breakdowns of the latest Indian releases.",
+  "Actor":        "Actor profiles, filmographies, and career spotlights for Indian cinema stars.",
+  "Songs":        "Top Indian song lists, music guides, and behind-the-scenes coverage from Indian.",
+  "News":         "Latest Indian news, announcements, and industry updates from Indian cinema.",
+  "Top Lists":    "Curated top 10 lists covering the best of Indian — movies, songs, actors, and more.",
 };
 
 export async function generateMetadata({
@@ -49,13 +49,13 @@ export async function generateMetadata({
     ? `Search: "${query}" | The Cinema Verse Blog`
     : category
     ? `${category} Articles${pageLabel} | The Cinema Verse Blog`
-    : `bollywood Blog${catLabel}${pageLabel} | Hindi Cinema News, Reviews & Guides`;
+    : `Indian Blog${catLabel}${pageLabel} | Hindi Cinema News, Reviews & Guides`;
 
   const description = category && CATEGORY_DESCRIPTIONS[category]
     ? CATEGORY_DESCRIPTIONS[category]
     : query
-    ? `Search results for "${query}" on the The Cinema Verse Blog — hindi cinema news, reviews, and guides.`
-    : "Explore the latest bollywood blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of hindi cinema. Updated weekly.";
+    ? `Search results for "${query}" on the The Cinema Verse Blog — Indian cinema news, reviews, and guides.`
+    : "Explore the latest Indian blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of Indian cinema. Updated weekly.";
 
   const canonical = category
     ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
@@ -87,10 +87,10 @@ export async function generateMetadata({
     },
     robots: query ? { index: false, follow: true } : { index: true, follow: true },
     keywords: [
-      "bollywood blog", "hindi cinema news", "hindi movie reviews", "bollywood updates",
-      "hindi film industry", "bollywood actor profiles", "bollywood songs guide",
-      "bollywood box office blog", "bollywood top 10", "hindi cinema 2026",
-      ...(category ? [category, `${category} hindi movies`, `bollywood ${category.toLowerCase()}`] : []),
+      "Indian blog", "Indian cinema news", "movie reviews", "Indian updates",
+      "Indian film industry", "Indian actor profiles", "Indian songs guide",
+      "Indian box office blog", "Indian top 10", "Indian cinema 2026",
+      ...(category ? [category, `${category} movies`, `Indian ${category.toLowerCase()}`] : []),
     ],
     openGraph: {
       title,
@@ -126,7 +126,7 @@ function BlogSchema({
     "@context": "https://schema.org",
     "@type": "Blog",
     name: "The Cinema Verse Blog",
-    description: "News, reviews, and guides about bollywood — the bollywood-language film industry based in Bhubaneswar, Odisha.",
+    description: "News, reviews, and guides about Indian — the Indian-language film industry based in Bhubaneswar, Odisha.",
     url: "https://thecinemaverses.in/blog",
     dateModified: mostRecentDate,
     publisher: {
@@ -145,16 +145,16 @@ function BlogSchema({
     genre: "Entertainment",
     about: {
       "@type": "Thing",
-      name: "bollywood",
-      description: "The bollywood-language film industry",
-      sameAs: "https://en.wikipedia.org/wiki/bollywood_cinema",
+      name: "Indian",
+      description: "The Indian-language film industry",
+      sameAs: "https://en.wikipedia.org/wiki/Indian_cinema",
     },
   };
 
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Latest bollywood Blog Posts",
+    name: "Latest Indian Blog Posts",
     numberOfItems: blogs.length,
     itemListElement: blogs.slice(0, 10).map((b: any, i: number) => ({
       "@type": "ListItem",
@@ -420,16 +420,16 @@ export default async function BlogPage({
                   ) : query ? (
                     <>Search <span className="text-brand-400">Results</span></>
                   ) : (
-                    <>bollywood <span className="text-brand-400">Blog</span></>
+                    <>Indian <span className="text-brand-400">Blog</span></>
                   )}
                 </h1>
                 <p className="text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed">
                   {category && CATEGORY_DESCRIPTIONS[category]
                     ? CATEGORY_DESCRIPTIONS[category]
                     : query
-                    ? `Showing results for "${query}" across all hindi cinema articles.`
+                    ? `Showing results for "${query}" across all Indian cinema articles.`
                     : <>In-depth movie reviews, actor profiles, top lists, song breakdowns and news
-                      from <strong className="text-gray-300 font-medium">hindi cinema</strong> — updated every week.</>
+                      from <strong className="text-gray-300 font-medium">Indian cinema</strong> — updated every week.</>
                   }
                 </p>
 
@@ -742,16 +742,16 @@ export default async function BlogPage({
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
                       The <strong className="text-gray-300">The Cinema Verse Blog</strong> is your definitive guide to{" "}
-                      <strong className="text-gray-300">hindi cinema</strong>, popularly known as{" "}
-                      <strong className="text-gray-300">bollywood</strong>. We cover everything from blockbuster
+                      <strong className="text-gray-300">Indian cinema</strong>, popularly known as{" "}
+                      <strong className="text-gray-300">Indian</strong>. We cover everything from blockbuster
                       movie releases to indie films, from celebrated actors to emerging talent shaping the
-                      future of India's Bollywood film industry.
+                      future of India's Indian film industry.
                     </p>
                     <p>
                       Our <strong className="text-gray-300">movie reviews</strong> give you honest, spoiler-aware
-                      breakdowns of the latest hindi films. Our{" "}
+                      breakdowns of the latest films. Our{" "}
                       <strong className="text-gray-300">actor spotlights</strong> go deep into the careers and
-                       filmographies of Bollywood stars like Shah Rukh Khan, Deepika Padukone, Ranveer
+                       filmographies of Indian stars like Shah Rukh Khan, Deepika Padukone, Ranveer
                       Singh, and many more.
                     </p>
                   </div>
@@ -776,15 +776,15 @@ export default async function BlogPage({
                   <h3 className="text-base font-bold text-white mb-4">What You'll Find Here</h3>
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
-                      Looking for the best bollywood songs? Our{" "}
+                      Looking for the best Indian songs? Our{" "}
                       <strong className="text-gray-300">song guides and top 10 lists</strong> curate the finest
-                      music from decades of bollywood — from classical devotional numbers to modern romantic
+                      music from decades of Indian — from classical devotional numbers to modern romantic
                       hits and high-energy dance numbers.
                     </p>
                     <p>
                       Bookmark this page and return every week for fresh{" "}
-                      <strong className="text-gray-300">bollywood news, reviews, and analysis</strong> — all
-                      written by passionate fans and experts of hindi cinema culture.
+                      <strong className="text-gray-300">Indian news, reviews, and analysis</strong> — all
+                      written by passionate fans and experts of Indian cinema culture.
                     </p>
                   </div>
 
@@ -797,7 +797,7 @@ export default async function BlogPage({
                       { label: "Movie Reviews",   href: "/blog?category=Reviews" },
                       { label: "Actor Profiles",  href: "/blog?category=Actor" },
                       { label: "Top Lists",       href: "/blog?category=Top+Lists" },
-                      { label: "bollywood Songs",      href: "/blog?category=Songs" },
+                      { label: "Indian Songs",      href: "/blog?category=Songs" },
                     ].map((link) => (
                       <a
                         key={link.href}

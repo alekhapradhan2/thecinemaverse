@@ -86,6 +86,7 @@ export function articleJsonLd(blog: any) {
     description: blog.excerpt || blog.seoDesc,
     url: `${SITE_URL}/blog/${blog.slug}`,
     image: blog.coverImage,
+    inLanguage: blog.language || "Hindi",
     datePublished: blog.createdAt,
     dateModified: blog.updatedAt,
     author: { "@type": "Organization", name: blog.author || SITE_NAME },

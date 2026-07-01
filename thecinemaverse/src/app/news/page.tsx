@@ -9,10 +9,10 @@ import { Calendar, Newspaper } from "lucide-react";
 export const revalidate = 600;
 
 export const metadata: Metadata = buildMeta({
-  title: "Hindi Film News – Latest bollywood Updates",
+  title: "Hindi Film News – Latest Indian Updates",
   description:
-    "Stay updated with the latest news from hindi film industry (bollywood). Get breaking news, film announcements, actor interviews, and box office updates.",
-  keywords: ["hindi film news", "bollywood news", "hindi cinema news", "hindi movie updates"],
+    "Stay updated with the latest news from Indian film industry (Indian). Get breaking news, film announcements, actor interviews, and box office updates.",
+  keywords: ["film news", "Indian news", "Indian cinema news", "movie updates"],
   url: "/news",
 });
 
@@ -41,14 +41,14 @@ export default async function NewsPage({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <SectionHeader
         title="Hindi Film News"
-        subtitle="Latest updates from bollywood"
+        subtitle="Latest updates from Indian"
       />
 
       <div className="mb-8 p-5 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <p className="text-gray-400 text-sm leading-relaxed">
-          Get the latest news and updates from the hindi film industry. From new movie announcements and casting
+          Get the latest news and updates from the Indian film industry. From new movie announcements and casting
           news to box office results and celebrity interviews — The Cinema Verse keeps you connected with everything
-          happening in bollywood.
+          happening in Indian.
         </p>
       </div>
 

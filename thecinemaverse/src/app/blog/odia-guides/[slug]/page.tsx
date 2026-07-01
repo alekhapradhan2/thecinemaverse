@@ -1,6 +1,6 @@
-// src/app/blog/bollywood-guides/[slug]/page.tsx
+// src/app/blog/Indian-guides/[slug]/page.tsx
 //
-// Route: /blog/bollywood-guides/bollywood-movies, /blog/bollywood-guides/history-of-bollywood, etc.
+// Route: /blog/Indian-guides/Indian-movies, /blog/Indian-guides/history-of-Indian, etc.
 // These are STATIC SEO landing pages — separate from your DB-driven /blog/[slug] route.
 //
 import type { Metadata } from "next";
@@ -21,87 +21,87 @@ interface GuideConfig {
 }
 
 const GUIDES: Record<string, GuideConfig> = {
-  "bollywood-movies": {
+  "Indian-movies": {
     title: "Know About Hindi Movies",
-    metaTitle: "Hindi Movies — Everything You Need to Know About Bollywood",
-    metaDesc: "A complete guide to Hindi movies and Bollywood cinema. History, best films, top actors, and how to explore Hindi cinema on The Cinema Verse.",
-    h1: "Hindi Movies — A Complete Guide to Bollywood Cinema",
-    keywords: ["hindi movies", "bollywood", "what is bollywood", "hindi cinema guide"],
+    metaTitle: "Hindi Movies — Everything You Need to Know About Indian",
+    metaDesc: "A complete guide to Hindi movies and Indian cinema. History, best films, top actors, and how to explore Hindi cinema on The Cinema Verse.",
+    h1: "Hindi Movies — A Complete Guide to Indian Cinema",
+    keywords: ["movies", "Indian", "what is Indian", "Indian cinema guide"],
     relatedLinks: [
       { label: "Hindi Movies 2026",   href: "/movies/2026" },
       { label: "Latest Hindi Movies", href: "/movies/latest" },
       { label: "Upcoming Movies",    href: "/movies/upcoming" },
-      { label: "Best Bollywood Songs",    href: "/blog/bollywood-guides/best-bollywood-songs" },
+      { label: "Best Indian Songs",    href: "/blog/Indian-guides/best-Indian-songs" },
     ],
     sections: [
       {
-        heading: "What Is Bollywood?",
-        body: "The term 'Bollywood' is a portmanteau of Bombay (now Mumbai) and Hollywood, coined to describe the Hindi-language film industry based in Mumbai, Maharashtra. Bollywood is the largest film industry in India by number of films produced, churning out over 300 films annually across genres including romance, action, drama, comedy, thriller, and mythological. Hindi films are distributed across India, South Asia, and to the Indian diaspora worldwide, making Bollywood one of the most-watched film industries on the planet.",
+        heading: "What Is Indian?",
+        body: "The term 'Indian' is a portmanteau of Bombay (now Mumbai) and Hollywood, coined to describe the Hindi-language film industry based in Mumbai, Maharashtra. Indian is the largest film industry in India by number of films produced, churning out over 300 films annually across genres including romance, action, drama, comedy, thriller, and mythological. Hindi films are distributed across India, South Asia, and to the Indian diaspora worldwide, making Indian one of the most-watched film industries on the planet.",
       },
       {
         heading: "History of Hindi Cinema",
-        body: "The first Indian sound film, Alam Ara (1931), directed by Ardeshir Irani, marked the dawn of the Hindi talkie era. Through the 1940s and 50s, mythological epics and social dramas dominated, drawing massive crowds to cinema halls. The 1960s and 70s ushered in Bollywood's golden age of romantic melodramas, with legendary actors like Dilip Kumar, Dev Anand, and Rajesh Khanna and legendary playback singers like Lata Mangeshkar and Mohammed Rafi creating songs that remain beloved classics to this day. The 21st century saw Bollywood embrace modern production values, CGI, and international co-productions.",
+        body: "The first Indian sound film, Alam Ara (1931), directed by Ardeshir Irani, marked the dawn of the Hindi talkie era. Through the 1940s and 50s, mythological epics and social dramas dominated, drawing massive crowds to cinema halls. The 1960s and 70s ushered in Indian's golden age of romantic melodramas, with legendary actors like Dilip Kumar, Dev Anand, and Rajesh Khanna and legendary playback singers like Lata Mangeshkar and Mohammed Rafi creating songs that remain beloved classics to this day. The 21st century saw Indian embrace modern production values, CGI, and international co-productions.",
       },
       {
         heading: "Top Genres in Hindi Cinema",
-        body: "Action films with high-octane sequences dominate the Bollywood box office, while romantic films set against India's diverse landscapes attract family audiences. Mythological and biographical films based on Indian history maintain a dedicated following, and a growing wave of social dramas address contemporary issues like gender equality and social justice. Comedy films rooted in Indian humour, and suspense thrillers round out the vibrant genre landscape of Hindi cinema.",
+        body: "Action films with high-octane sequences dominate the Indian box office, while romantic films set against India's diverse landscapes attract family audiences. Mythological and biographical films based on Indian history maintain a dedicated following, and a growing wave of social dramas address contemporary issues like gender equality and social justice. Comedy films rooted in Indian humour, and suspense thrillers round out the vibrant genre landscape of Hindi cinema.",
       },
       {
         heading: "How to Explore Hindi Movies on The Cinema Verse",
-        body: "The Cinema Verse is the most comprehensive database of Bollywood cinema. Browse films by release year, explore blockbuster hits, or check out upcoming releases. Each movie page includes the full song list, cast details, director credits, and audience ratings — everything you need to decide what to watch next.",
+        body: "The Cinema Verse is the most comprehensive database of Indian cinema. Browse films by release year, explore blockbuster hits, or check out upcoming releases. Each movie page includes the full song list, cast details, director credits, and audience ratings — everything you need to decide what to watch next.",
       },
     ],
   },
-  "history-of-bollywood": {
-    title: "History of Bollywood",
-    metaTitle: "History of Bollywood | The Complete Story of Hindi Cinema",
-    metaDesc: "Explore the complete history of Bollywood — from the first Hindi talkie Alam Ara in 1931 to today's modern blockbusters. A definitive timeline of Hindi cinema.",
-    h1: "History of Bollywood — From 1931 to the Modern Era",
-    keywords: ["history of bollywood", "hindi cinema history", "bollywood timeline"],
+  "history-of-Indian": {
+    title: "History of Indian",
+    metaTitle: "History of Indian | The Complete Story of Hindi Cinema",
+    metaDesc: "Explore the complete history of Indian — from the first Hindi talkie Alam Ara in 1931 to today's modern blockbusters. A definitive timeline of Hindi cinema.",
+    h1: "History of Indian — From 1931 to the Modern Era",
+    keywords: ["history of Indian", "Indian cinema history", "Indian timeline"],
     relatedLinks: [
-      { label: "Know About Hindi Movies", href: "/blog/bollywood-guides/bollywood-movies" },
-      { label: "Top 10 Hindi Movies",     href: "/blog/bollywood-guides/top-10-bollywood-movies" },
-      { label: "Famous Bollywood Actors",     href: "/blog/bollywood-guides/bollywood-actors" },
+      { label: "Know About Hindi Movies", href: "/blog/Indian-guides/Indian-movies" },
+      { label: "Top 10 Hindi Movies",     href: "/blog/Indian-guides/top-10-Indian-movies" },
+      { label: "Famous Indian Actors",     href: "/blog/Indian-guides/Indian-actors" },
     ],
     sections: [
       {
-        heading: "The Birth of Bollywood Talkies (1930s–1940s)",
-        body: "The first Indian talkie, Alam Ara (1931), directed by Ardeshir Irani, established the blueprint for Hindi cinema: emotion-driven narratives, classical music, and stories drawn from Indian epics and folklore. The film was produced in Bombay (Mumbai) and created the foundational model of the song-driven Bollywood film. The 1940s brought rapid expansion, with studios like Bombay Talkies and New Theatres producing a steady stream of socially conscious dramas and mythologicals.",
+        heading: "The Birth of Indian Talkies (1930s–1940s)",
+        body: "The first Indian talkie, Alam Ara (1931), directed by Ardeshir Irani, established the blueprint for Hindi cinema: emotion-driven narratives, classical music, and stories drawn from Indian epics and folklore. The film was produced in Bombay (Mumbai) and created the foundational model of the song-driven Indian film. The 1940s brought rapid expansion, with studios like Bombay Talkies and New Theatres producing a steady stream of socially conscious dramas and mythologicals.",
       },
       {
         heading: "The Golden Age (1950s–1970s)",
-        body: "This era produced Bollywood's most enduring cultural icons. Legendary actors like Dilip Kumar, Dev Anand, Raj Kapoor, Guru Dutt, and later Amitabh Bachchan became household names, while composers like S.D. Burman, R.D. Burman, and Laxmikant–Pyarelal created soundtracks that Indian families still play at weddings and festivals decades later. Social themes entered Bollywood for the first time, with films tackling poverty, partition, and women's rights alongside the popular romantic dramas that dominated the box office.",
+        body: "This era produced Indian's most enduring cultural icons. Legendary actors like Dilip Kumar, Dev Anand, Raj Kapoor, Guru Dutt, and later Amitabh Bachchan became household names, while composers like S.D. Burman, R.D. Burman, and Laxmikant–Pyarelal created soundtracks that Indian families still play at weddings and festivals decades later. Social themes entered Indian for the first time, with films tackling poverty, partition, and women's rights alongside the popular romantic dramas that dominated the box office.",
       },
       {
         heading: "The Masala and Romance Era (1980s–1990s)",
-        body: "Cable television and VHS tapes disrupted the theatrical business, forcing Bollywood to adapt. Action films starring Amitabh Bachchan defined the 1980s, followed by a resurgence of romantic blockbusters in the 1990s led by Shah Rukh Khan, Salman Khan, and Aamir Khan. This era minted a new generation of superstars who would define Hindi cinema for the next two decades. Films like Dilwale Dulhania Le Jayenge and Hum Aapke Hain Koun..! redefined the Bollywood love story for a global audience.",
+        body: "Cable television and VHS tapes disrupted the theatrical business, forcing Indian to adapt. Action films starring Amitabh Bachchan defined the 1980s, followed by a resurgence of romantic blockbusters in the 1990s led by Shah Rukh Khan, Salman Khan, and Aamir Khan. This era minted a new generation of superstars who would define Hindi cinema for the next two decades. Films like Dilwale Dulhania Le Jayenge and Hum Aapke Hain Koun..! redefined the Indian love story for a global audience.",
       },
       {
         heading: "The New Wave (2000s–2010s)",
-        body: "Digital cameras, multiplexes, and OTT platforms changed the game entirely. Low-budget films with strong scripts could now compete with big-budget productions. A new wave of directors like Anurag Kashyap, Zoya Akhtar, and Imtiaz Ali brought fresh sensibilities — urban stories, realistic dramas, and youth romances — expanding Bollywood's audience beyond its traditional demographic. Pan-India blockbusters like 3 Idiots and Dangal crossed ₹300 crore at the box office.",
+        body: "Digital cameras, multiplexes, and OTT platforms changed the game entirely. Low-budget films with strong scripts could now compete with big-budget productions. A new wave of directors like Anurag Kashyap, Zoya Akhtar, and Imtiaz Ali brought fresh sensibilities — urban stories, realistic dramas, and youth romances — expanding Indian's audience beyond its traditional demographic. Pan-India blockbusters like 3 Idiots and Dangal crossed ₹300 crore at the box office.",
       },
       {
-        heading: "Bollywood Today (2020s)",
-        body: "Today's Bollywood is a confident, ambitious industry. Pan-India releases, OTT premieres on Netflix and Amazon Prime Video, and international film festival selections are no longer anomalies but expectations. Stars like Shah Rukh Khan, Deepika Padukone, and Ranveer Singh are global names. The next chapter — being written right now with the current year's releases — promises to be the most exciting yet.",
+        heading: "Indian Today (2020s)",
+        body: "Today's Indian is a confident, ambitious industry. Pan-India releases, OTT premieres on Netflix and Amazon Prime Video, and international film festival selections are no longer anomalies but expectations. Stars like Shah Rukh Khan, Deepika Padukone, and Ranveer Singh are global names. The next chapter — being written right now with the current year's releases — promises to be the most exciting yet.",
       },
     ],
   },
-  "top-10-bollywood-movies": {
+  "top-10-Indian-movies": {
     title: "Top 10 Hindi Movies",
-    metaTitle: "Top 10 Hindi Movies of All Time | Best bollywood Films You Must Watch",
-    metaDesc: "The definitive list of top 10 hindi movies ever made. Best bollywood films ranked by audience ratings, box office, and cultural impact.",
+    metaTitle: "Top 10 Hindi Movies of All Time | Best Indian Films You Must Watch",
+    metaDesc: "The definitive list of top 10 movies ever made. Best Indian films ranked by audience ratings, box office, and cultural impact.",
     h1: "Top 10 Hindi Movies of All Time",
-    keywords: ["top 10 hindi movies", "best hindi movies ever", "must watch bollywood films"],
+    keywords: ["top 10 movies", "best movies ever", "must watch Indian films"],
     relatedLinks: [
       { label: "Blockbuster Movies",  href: "/movies/blockbuster" },
-      { label: "Best bollywood Songs",     href: "/blog/bollywood-guides/best-bollywood-songs" },
-      { label: "Famous bollywood Actors",  href: "/blog/bollywood-guides/bollywood-actors" },
+      { label: "Best Indian Songs",     href: "/blog/Indian-guides/best-Indian-songs" },
+      { label: "Famous Indian Actors",  href: "/blog/Indian-guides/Indian-actors" },
       { label: "Hindi Movies 2024",    href: "/movies/2024" },
     ],
     sections: [
       {
         heading: "What Makes a Great Hindi Film?",
-        body: "The best hindi movies share certain qualities: an authentic connection to bollywood culture and landscape, memorable music that transcends the screen, and performances that resonate across generations. They capture the spirit of Odisha — its festivals, its folk traditions, its social contradictions — with honesty and artistry. The films that endure are those that balance commercial appeal with genuine storytelling craft.",
+        body: "The best movies share certain qualities: an authentic connection to Indian culture and landscape, memorable music that transcends the screen, and performances that resonate across generations. They capture the spirit of Odisha — its festivals, its folk traditions, its social contradictions — with honesty and artistry. The films that endure are those that balance commercial appeal with genuine storytelling craft.",
       },
       {
         heading: "The Criteria for This List",
@@ -109,16 +109,16 @@ const GUIDES: Record<string, GuideConfig> = {
       },
       {
         heading: "Explore the Full Catalogue",
-        body: "While this guide highlights the all-time greats, The Cinema Verse's full catalogue covers every hindi film ever documented. Browse blockbuster films, discover recent releases, or explore the upcoming slate. Each film page includes the full soundtrack — because in hindi cinema, the songs are always as important as the story. The live rankings on the blockbuster page are updated in real time based on the latest audience data.",
+        body: "While this guide highlights the all-time greats, The Cinema Verse's full catalogue covers every film ever documented. Browse blockbuster films, discover recent releases, or explore the upcoming slate. Each film page includes the full soundtrack — because in Indian cinema, the songs are always as important as the story. The live rankings on the blockbuster page are updated in real time based on the latest audience data.",
       },
     ],
   },
-  "best-bollywood-songs": {
-    title: "Best Bollywood Songs List",
-    metaTitle: "Best Bollywood Songs of All Time | Greatest Hindi Film Music Ever",
-    metaDesc: "Discover the best Bollywood songs ever recorded. A curated list of iconic Hindi film tracks across decades with artist details and movie names.",
-    h1: "Best Bollywood Songs — The Greatest Hindi Film Music of All Time",
-    keywords: ["best bollywood songs", "greatest bollywood songs", "top bollywood songs list"],
+  "best-Indian-songs": {
+    title: "Best Indian Songs List",
+    metaTitle: "Best Indian Songs of All Time | Greatest Hindi Film Music Ever",
+    metaDesc: "Discover the best Indian songs ever recorded. A curated list of iconic Hindi film tracks across decades with artist details and movie names.",
+    h1: "Best Indian Songs — The Greatest Hindi Film Music of All Time",
+    keywords: ["best Indian songs", "greatest Indian songs", "top Indian songs list"],
     relatedLinks: [
       { label: "Classic Old Songs",  href: "/songs/category/classics" },
       { label: "Trending Songs",     href: "/songs/category/trending" },
@@ -127,8 +127,8 @@ const GUIDES: Record<string, GuideConfig> = {
     ],
     sections: [
       {
-        heading: "What Makes a Great Bollywood Song?",
-        body: "Bollywood music is one of India's richest musical traditions, blending classical ragas, devotional bhajans, folk rhythms, and contemporary pop into a sound that is instantly recognisable and deeply emotive. The best Hindi film songs combine melodic sophistication with lyrical poetry — Hindi and Urdu are languages of extraordinary literary richness, and the finest songwriters like Gulzar, Javed Akhtar, and Prasoon Joshi harness that tradition in every line.",
+        heading: "What Makes a Great Indian Song?",
+        body: "Indian music is one of India's richest musical traditions, blending classical ragas, devotional bhajans, folk rhythms, and contemporary pop into a sound that is instantly recognisable and deeply emotive. The best Hindi film songs combine melodic sophistication with lyrical poetry — Hindi and Urdu are languages of extraordinary literary richness, and the finest songwriters like Gulzar, Javed Akhtar, and Prasoon Joshi harness that tradition in every line.",
       },
       {
         heading: "The Golden Era (1950s–70s)",
@@ -140,38 +140,38 @@ const GUIDES: Record<string, GuideConfig> = {
       },
       {
         heading: "The Modern Era (2000s–present)",
-        body: "Today's Bollywood music is a confident fusion of traditional sounds with contemporary pop, hip-hop, and EDM production. Composers like Pritam, A.R. Rahman, Vishal-Shekhar, and Shankar-Ehsaan-Loy craft songs that top streaming charts globally. Singers like Arijit Singh, Shreya Ghoshal, and Badshah bring a new generation of listeners to Bollywood music while remaining rooted in the Hindi film tradition.",
+        body: "Today's Indian music is a confident fusion of traditional sounds with contemporary pop, hip-hop, and EDM production. Composers like Pritam, A.R. Rahman, Vishal-Shekhar, and Shankar-Ehsaan-Loy craft songs that top streaming charts globally. Singers like Arijit Singh, Shreya Ghoshal, and Badshah bring a new generation of listeners to Indian music while remaining rooted in the Hindi film tradition.",
       },
     ],
   },
-  "bollywood-actors": {
-    title: "Famous Bollywood Actors",
-    metaTitle: "Famous Bollywood Actors | Top Hindi Film Stars & Their Best Movies",
-    metaDesc: "Meet the most famous Bollywood actors in Hindi cinema. Profiles of top stars with their best movies, hit songs, awards, and career highlights.",
-    h1: "Famous Bollywood Actors — The Stars of Hindi Cinema",
-    keywords: ["famous bollywood actors", "bollywood actors", "hindi film stars"],
+  "Indian-actors": {
+    title: "Famous Indian Actors",
+    metaTitle: "Famous Indian Actors | Top Hindi Film Stars & Their Best Movies",
+    metaDesc: "Meet the most famous Indian actors in Hindi cinema. Profiles of top stars with their best movies, hit songs, awards, and career highlights.",
+    h1: "Famous Indian Actors — The Stars of Hindi Cinema",
+    keywords: ["famous Indian actors", "Indian actors", "film stars"],
     relatedLinks: [
       { label: "Cast & Crew",         href: "/cast" },
-      { label: "Top 10 Hindi Movies",  href: "/blog/bollywood-guides/top-10-bollywood-movies" },
+      { label: "Top 10 Hindi Movies",  href: "/blog/Indian-guides/top-10-Indian-movies" },
       { label: "Blockbuster Movies",  href: "/movies/blockbuster" },
       { label: "Top Singers",         href: "/songs/category/singers" },
     ],
     sections: [
       {
         heading: "The Legends",
-        body: "The foundation of Bollywood's acting tradition was laid by icons like Dilip Kumar, Raj Kapoor, Dev Anand, Nargis, and Guru Dutt. Their screen presence redefined Indian heroism and femininity. These veterans set a standard of craft and professionalism that every subsequent generation of Bollywood actors has aspired to match. Their films remain essential viewing for anyone seeking to understand the cultural heritage of Hindi cinema.",
+        body: "The foundation of Indian's acting tradition was laid by icons like Dilip Kumar, Raj Kapoor, Dev Anand, Nargis, and Guru Dutt. Their screen presence redefined Indian heroism and femininity. These veterans set a standard of craft and professionalism that every subsequent generation of Indian actors has aspired to match. Their films remain essential viewing for anyone seeking to understand the cultural heritage of Hindi cinema.",
       },
       {
         heading: "The Modern Superstars",
-        body: "Today's Bollywood is driven by the Khans — Shah Rukh Khan, Salman Khan, and Aamir Khan — as well as a powerhouse new generation including Ranveer Singh, Ranbir Kapoor, Deepika Padukone, and Alia Bhatt. These actors consistently deliver films that break box-office records and generate chart-topping soundtracks, making them cultural phenomena beyond the screen. Many have expanded into production, shaping the industry's future.",
+        body: "Today's Indian is driven by the Khans — Shah Rukh Khan, Salman Khan, and Aamir Khan — as well as a powerhouse new generation including Ranveer Singh, Ranbir Kapoor, Deepika Padukone, and Alia Bhatt. These actors consistently deliver films that break box-office records and generate chart-topping soundtracks, making them cultural phenomena beyond the screen. Many have expanded into production, shaping the industry's future.",
       },
       {
         heading: "Rising Stars",
-        body: "Every year, Bollywood discovers fresh talent through debut films, web series, and reality shows. Stars like Kartik Aaryan, Sara Ali Khan, Janhvi Kapoor, and Siddhant Chaturvedi bring contemporary sensibilities and new storytelling possibilities to Hindi cinema, ensuring the industry's creative vitality for years to come.",
+        body: "Every year, Indian discovers fresh talent through debut films, web series, and reality shows. Stars like Kartik Aaryan, Sara Ali Khan, Janhvi Kapoor, and Siddhant Chaturvedi bring contemporary sensibilities and new storytelling possibilities to Hindi cinema, ensuring the industry's creative vitality for years to come.",
       },
       {
         heading: "Explore on The Cinema Verse",
-        body: "Each actor on The Cinema Verse has a dedicated profile page featuring their complete filmography, awards history, and song appearances. The Cast & Crew section covers every Bollywood actor, director, cinematographer, and music composer in our comprehensive database — the most complete record of Hindi film talent available anywhere.",
+        body: "Each actor on The Cinema Verse has a dedicated profile page featuring their complete filmography, awards history, and song appearances. The Cast & Crew section covers every Indian actor, director, cinematographer, and music composer in our comprehensive database — the most complete record of Hindi film talent available anywhere.",
       },
     ],
   },
@@ -180,14 +180,14 @@ const GUIDES: Record<string, GuideConfig> = {
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const cfg = GUIDES[params.slug];
   if (!cfg) return {};
-  return buildMeta({ title: cfg.metaTitle, description: cfg.metaDesc, keywords: cfg.keywords, url: `/blog/bollywood-guides/${params.slug}` });
+  return buildMeta({ title: cfg.metaTitle, description: cfg.metaDesc, keywords: cfg.keywords, url: `/blog/Indian-guides/${params.slug}` });
 }
 
 function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
   const base = "https://thecinemaverses.in";
   const article = {
     "@context": "https://schema.org", "@type": "Article",
-    headline: cfg.h1, url: `${base}/blog/bollywood-guides/${slug}`,
+    headline: cfg.h1, url: `${base}/blog/Indian-guides/${slug}`,
     publisher: { "@type": "Organization", name: "The Cinema Verse", url: base },
   };
   const breadcrumb = {
@@ -195,8 +195,8 @@ function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: base },
       { "@type": "ListItem", position: 2, name: "Blog", item: `${base}/blog` },
-      { "@type": "ListItem", position: 3, name: "Bollywood Guides", item: `${base}/blog/bollywood-guides` },
-      { "@type": "ListItem", position: 4, name: cfg.title, item: `${base}/blog/bollywood-guides/${slug}` },
+      { "@type": "ListItem", position: 3, name: "Indian Guides", item: `${base}/blog/Indian-guides` },
+      { "@type": "ListItem", position: 4, name: cfg.title, item: `${base}/blog/Indian-guides/${slug}` },
     ],
   };
   return (
@@ -207,7 +207,7 @@ function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
   );
 }
 
-export default function bollywoodGuidePage({ params }: { params: { slug: string } }) {
+export default function IndianGuidePage({ params }: { params: { slug: string } }) {
   const cfg = GUIDES[params.slug];
   if (!cfg) notFound();
 
@@ -218,7 +218,7 @@ export default function bollywoodGuidePage({ params }: { params: { slug: string 
       <JsonLd slug={params.slug} cfg={cfg} />
       <main className="min-h-screen bg-[#0a0a0a] text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <Breadcrumb crumbs={[{ label: "Blog", href: "/blog" }, { label: "bollywood Guides", href: "/blog/bollywood-guides" }, { label: cfg.title }]} />
+          <Breadcrumb crumbs={[{ label: "Blog", href: "/blog" }, { label: "Indian Guides", href: "/blog/Indian-guides" }, { label: cfg.title }]} />
 
           <div className="flex items-center gap-3 mt-6 mb-5">
             <div className="w-10 h-10 bg-brand-500/10 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -257,7 +257,7 @@ export default function bollywoodGuidePage({ params }: { params: { slug: string 
           {/* Other guides */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {otherGuides.slice(0, 4).map(([slug, guide]) => (
-              <Link key={slug} href={`/blog/bollywood-guides/${slug}`}
+              <Link key={slug} href={`/blog/Indian-guides/${slug}`}
                 className="flex items-center gap-3 p-4 bg-[#111] border border-[#1e1e1e] rounded-xl hover:border-brand-500/30 transition-all group">
                 <BookOpen className="w-4 h-4 text-brand-500 flex-shrink-0" />
                 <span className="text-sm text-gray-400 group-hover:text-white transition-colors line-clamp-1">{guide.title}</span>

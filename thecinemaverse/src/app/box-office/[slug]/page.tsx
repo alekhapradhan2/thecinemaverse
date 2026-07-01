@@ -8,6 +8,7 @@ import { connectDB }      from "@/lib/db";
 import Movie              from "@/models/Movie";
 import Blog               from "@/models/Blog";
 import BoxOfficeClient    from "./BoxOfficeClient";
+import { resolveLanguage } from "@/lib/languages";
 
 export const revalidate    = 3600;        // 1hr — BO data updates once/day; 60s was hammering DB
 export const dynamicParams = true;
@@ -190,14 +191,18 @@ export async function generateMetadata({
   const year       = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
   const day1Net    = days[0] ? parseNum(days[0].net) : 0;
 
+  const lang = resolveLanguage(movie.language);
+  const langShort = lang.short;
+  const indStr = langShort === "Hindi" ? "Bollywood" : langShort;
+
   // SEO title: movie name first → highest relevance signal
   const title = lastDay
     ? `${movie.title} Box Office Collection Day ${lastDay} — ${fmtINR(totalNet)} Net | The Cinema Verse`
-    : `${movie.title} Box Office Collection | Hindi Film | The Cinema Verse`;
+    : `${movie.title} Box Office Collection | ${langShort} Film | The Cinema Verse`;
 
   const description = totalNet
-    ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise bollywood (bollywood) box office data on The Cinema Verse.`
-    : `Track ${movie.title} day-wise box office collection — net and gross earnings updated daily. bollywood (bollywood) cinema box office data on The Cinema Verse.`;
+    ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise ${indStr.toLowerCase()} box office data on The Cinema Verse.`
+    : `Track ${movie.title} day-wise box office collection — net and gross earnings updated daily. ${indStr.toLowerCase()} cinema box office data on The Cinema Verse.`;
 
   const image     = movie.bannerUrl || movie.posterUrl || "https://thecinemaverses.in/default.jpg";
   const canonical = `https://thecinemaverses.in/box-office/${slug}`;
@@ -242,55 +247,55 @@ export async function generateMetadata({
     `${movie.title} movie rating thecinemaverse`,
 
     // ── Regional + language ────────────────────────────────────────────────
-    `${movie.title} hindi movie`,
-    `${movie.title} hindi film`,
-    `${movie.title} bollywood`,
-    `${movie.title} bollywood movie`,
-    `${movie.title} hindi cinema`,
-    `${movie.title} bollywood release`,
-    `${movie.title} mumbai release`,
-    `hindi movie ${movie.title} review`,
+    `${movie.title} ${langShort.toLowerCase()} movie`,
+    `${movie.title} ${langShort.toLowerCase()} film`,
+    `${movie.title} ${indStr.toLowerCase()}`,
+    `${movie.title} ${indStr.toLowerCase()} movie`,
+    `${movie.title} ${langShort.toLowerCase()} cinema`,
+    `${movie.title} ${indStr.toLowerCase()} release`,
+    `${movie.title} release`,
+    `${langShort.toLowerCase()} movie ${movie.title} review`,
 
     // ── Long-tail intent ───────────────────────────────────────────────────
-    `${movie.title} movie review in bollywood`,
+    `${movie.title} movie review in ${indStr.toLowerCase()}`,
     `${movie.title} movie public review`,
     `${movie.title} movie worth watching`,
     `${movie.title} movie rating thecinemaverse`,
-    year ? `latest hindi movie ${movie.title} review ${year}` : "",
+    year ? `latest ${langShort.toLowerCase()} movie ${movie.title} review ${year}` : "",
     year ? `${movie.title} ${year} box office` : "",
     year ? `${movie.title} ${year} collection` : "",
     year ? `${movie.title} ${year} review` : "",
-    year ? `${movie.title} hindi movie ${year}` : "",
+    year ? `${movie.title} ${langShort.toLowerCase()} movie ${year}` : "",
 
     // ── Director-based ────────────────────────────────────────────────────
     movie.director ? `${movie.director} movie collection` : "",
-    movie.director ? `${movie.director} hindi film` : "",
+    movie.director ? `${movie.director} ${langShort.toLowerCase()} film` : "",
     movie.director ? `${movie.director} new movie` : "",
     movie.director ? `${movie.director} movie review` : "",
 
-    // ── General bollywood box office ───────────────────────────────────────────
-    "bollywood box office collection",
-    "bollywood box office",
-    "hindi film collection",
-    "hindi movie box office",
-    "hindi film box office report",
-    "bollywood hit movie",
-    year ? `hindi movies ${year}` : "",
-    year ? `bollywood ${year} collection` : "",
-    year ? `bollywood box office ${year}` : "",
-    year ? `best hindi movie ${year}` : "",
+    // ── General box office ───────────────────────────────────────────
+    `${indStr.toLowerCase()} box office collection`,
+    `${indStr.toLowerCase()} box office`,
+    `${langShort.toLowerCase()} film collection`,
+    `${langShort.toLowerCase()} movie box office`,
+    `${langShort.toLowerCase()} film box office report`,
+    `${indStr.toLowerCase()} hit movie`,
+    year ? `${langShort.toLowerCase()} movies ${year}` : "",
+    year ? `${indStr.toLowerCase()} ${year} collection` : "",
+    year ? `${indStr.toLowerCase()} box office ${year}` : "",
+    year ? `best ${langShort.toLowerCase()} movie ${year}` : "",
 
     // ── Cast-based keywords — actor name + "new movie collection" = top search type ──
     ...(movie.cast || []).slice(0, 4).flatMap((c: any) => [
       `${c.name} new movie`,
       `${c.name} new movie collection`,
       `${c.name} movie ${year || ""}`.trim(),
-      `${c.name} hindi movie`,
+      `${c.name} ${langShort.toLowerCase()} movie`,
     ]),
 
     // ── Genre-based ──────────────────────────────────────────────────────
-    ...(movie.genre || []).map((g: string) => `${g} hindi film box office`),
-    ...(movie.genre || []).map((g: string) => `${g} bollywood movie`),
+    ...(movie.genre || []).map((g: string) => `${g} ${langShort.toLowerCase()} film box office`),
+    ...(movie.genre || []).map((g: string) => `${g} ${indStr.toLowerCase()} movie`),
 
     // ── Fuzzy typo variants with intent phrases ───────────────────────────
     ...getMisspellings(movie.title),
@@ -340,6 +345,9 @@ export default async function BoxOfficePage({
   const lastDay    = days[days.length - 1]?.day || 0;
   const year       = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
   const songs      = movie.media?.songs || [];
+  const langObj    = resolveLanguage(movie.language);
+  const langShort  = langObj.short;
+  const indStr     = langShort === "Hindi" ? "Bollywood" : langShort;
 
   const [relatedBlogs, competingMovies] = await Promise.all([
     getRelatedBlogs(movie.title, 6),
@@ -418,7 +426,7 @@ export default async function BoxOfficePage({
         "name":  `What is the total box office collection of ${movie.title}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} has earned ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross in ${lastDay} days at the bollywood box office.`,
+          "text":  `${movie.title} has earned ${fmtINR(totalNet)} net and ${fmtINR(totalGross)} gross in ${lastDay} days at the ${indStr.toLowerCase()} box office.`,
         },
       },
       ...(days[0] ? [{
@@ -426,7 +434,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} Day 1 box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} collected ${fmtINR(days[0].net)} net on Day 1 at the bollywood box office.`,
+          "text":  `${movie.title} collected ${fmtINR(days[0].net)} net on Day 1 at the ${indStr.toLowerCase()} box office.`,
         },
       }] : []),
       ...(days.length >= 7 ? [{
@@ -434,7 +442,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} first week collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} earned ${fmtINR(week1Total)} net in its first week (Day 1–7) at the bollywood box office.`,
+          "text":  `${movie.title} earned ${fmtINR(week1Total)} net in its first week (Day 1–7) at the ${indStr.toLowerCase()} box office.`,
         },
       }] : []),
       ...(days.length >= 14 ? [{
@@ -458,7 +466,7 @@ export default async function BoxOfficePage({
         "name":  `What is ${movie.title} total 30-day box office collection?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text":  `${movie.title} collected a total of ${fmtINR(month1Total)} net in its first 30 days of theatrical run at the bollywood (bollywood) box office.`,
+          "text":  `${movie.title} collected a total of ${fmtINR(month1Total)} net in its first 30 days of theatrical run at the ${indStr.toLowerCase()} box office.`,
         },
       }] : []),
       {
@@ -497,7 +505,7 @@ export default async function BoxOfficePage({
     "@context":     "https://schema.org",
     "@type":        "VideoObject",
     "name":         `${movie.title} Official Trailer`,
-    "description":  `Watch the official trailer of ${movie.title}, an hindi film${movie.director ? ` directed by ${movie.director}` : ""}.`,
+    "description":  `Watch the official trailer of ${movie.title}, a ${langShort.toLowerCase()} film${movie.director ? ` directed by ${movie.director}` : ""}.`,
     "thumbnailUrl": `https://img.youtube.com/vi/${trailerYtId}/maxresdefault.jpg`,
     "uploadDate":   movie.releaseDate ? new Date(movie.releaseDate).toISOString() : new Date().toISOString(),
     "contentUrl":   `https://www.youtube.com/watch?v=${trailerYtId}`,
@@ -539,7 +547,7 @@ export default async function BoxOfficePage({
            aria-hidden="true">
         <h1>{movie.title} Box Office Collection — Total {fmtINR(totalNet)} Net</h1>
         <p>{movie.title} has collected {fmtINR(totalNet)} net and {fmtINR(totalGross)} gross
-           in {lastDay} days at the bollywood (bollywood) box office.</p>
+           in {lastDay} days at the {indStr.toLowerCase()} box office.</p>
         <table>
           <caption>{movie.title} Day-wise Box Office Collection</caption>
           <thead><tr><th>Day</th><th>India Net</th><th>Overseas</th><th>Total Gross</th></tr></thead>

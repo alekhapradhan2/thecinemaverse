@@ -96,19 +96,19 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     : null;
   const genres = [...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ");
 
-  const title = `${person.name} – bollywood ${roles} | Biography, Movies & Career | The Cinema Verse`;
+  const title = `${person.name} – Indian ${roles} | Biography, Movies & Career | The Cinema Verse`;
   const description =
     person.bio?.slice(0, 155) ||
-    `${person.name} is a celebrated bollywood ${roles.toLowerCase()} in bollywood with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
+    `${person.name} is a celebrated Indian ${roles.toLowerCase()} in Indian with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
   const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
 
   return {
     title, description,
     keywords: [
       person.name, `${person.name} movies`, `${person.name} biography`,
-      `${person.name} bollywood`, `${person.name} hindi film`,
-      `bollywood ${person.type?.toLowerCase() || "artist"}`,
-      "bollywood cast", "hindi cinema", genres,
+      `${person.name} Indian`, `${person.name} film`,
+      `Indian ${person.type?.toLowerCase() || "artist"}`,
+      "Indian cast", "Indian cinema", genres,
     ].filter(Boolean),
     alternates: { canonical },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
@@ -148,29 +148,29 @@ function generateRichBio(person: any, movies: any[]): string {
   const topCostar = Object.values(coMap).sort((a, b) => b.count - a.count)[0];
   const paras: string[] = [];
   paras.push(
-    `${person.name} is a prominent ${roles} in the hindi film industry (bollywood), known for their remarkable contributions to hindi cinema.` +
-    (debutYear ? ` Having debuted in ${debutYear}${debutMovie ? ` with the film "${debutMovie.title}"` : ""}, ${person.name} has steadily built a distinguished career in bollywood entertainment.` : "")
+    `${person.name} is a prominent ${roles} in the Indian film industry, known for their remarkable contributions to Indian cinema.` +
+    (debutYear ? ` Having debuted in ${debutYear}${debutMovie ? ` with the film "${debutMovie.title}"` : ""}, ${person.name} has steadily built a distinguished career in entertainment.` : "")
   );
   if (movies.length > 0) {
     paras.push(
-      `Over the course of their career, ${person.name} has been associated with ${movies.length} hindi film${movies.length !== 1 ? "s" : ""}.` +
+      `Over the course of their career, ${person.name} has been associated with ${movies.length} film${movies.length !== 1 ? "s" : ""}.` +
       (genreStr ? ` ${person.name} has worked across genres including ${genreStr}, demonstrating remarkable versatility.` : "")
     );
   }
   if (topCostar) {
-    paras.push(`${person.name} is widely recognized for their on-screen chemistry with fellow bollywood artists. Their most frequent collaboration has been with ${topCostar.name}, having appeared together in ${topCostar.count} film${topCostar.count !== 1 ? "s" : ""}. These collaborations have become highlights of bollywood and are celebrated by fans across Odisha.`);
+    paras.push(`${person.name} is widely recognized for their on-screen chemistry with fellow artists. Their most frequent collaboration has been with ${topCostar.name}, having appeared together in ${topCostar.count} film${topCostar.count !== 1 ? "s" : ""}. These collaborations have become highlights of Indian and are celebrated by fans across Odisha.`);
   }
   if (latestMovie) {
     paras.push(
-      `${person.name}'s most recent work includes the hindi film "${latestMovie.title}"` +
+      `${person.name}'s most recent work includes the film "${latestMovie.title}"` +
       (latestMovie.releaseDate ? ` (${new Date(latestMovie.releaseDate).getFullYear()})` : "") +
       (latestMovie.verdict && latestMovie.verdict !== "Upcoming" ? `, which received a "${latestMovie.verdict}" verdict` : "") +
-      `. Their performances continue to resonate deeply with bollywood audiences, making them a household name across Odisha.`
+      `. Their performances continue to resonate deeply with audiences, making them a household name across Odisha.`
     );
   }
   paras.push(
-    `As one of bollywood's celebrated ${roles}s, ${person.name}'s dedication to the craft has earned them critical acclaim and a loyal fanbase that extends beyond the borders of Odisha.` +
-    (person.location ? ` Originally from ${person.location}, they continue to inspire the next generation of hindi film artists.` : "")
+    `As one of Indian cinema's celebrated ${roles}s, ${person.name}'s dedication to the craft has earned them critical acclaim and a loyal fanbase that extends beyond the borders of Odisha.` +
+    (person.location ? ` Originally from ${person.location}, they continue to inspire the next generation of film artists.` : "")
   );
   return paras.join("\n\n");
 }
@@ -270,7 +270,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
   const personLd = {
     "@context": "https://schema.org", "@type": "Person",
     name: person.name, image: person.photo || undefined,
-    description: person.bio || `bollywood ${rolesStr} in bollywood`,
+    description: person.bio || `Indian ${rolesStr} in Indian`,
     jobTitle: rolesStr,
     nationality: { "@type": "Country", name: "India" },
     birthDate: person.dob || undefined,
@@ -280,7 +280,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
       person.instagram ? `https://instagram.com/${person.instagram.replace("@", "")}` : null,
       person.website ?? null,
     ].filter(Boolean),
-    memberOf: { "@type": "Organization", name: "bollywood – Hindi Film Industry" },
+    memberOf: { "@type": "Organization", name: "Indian Film Industry" },
   };
   const breadcrumbLd = {
     "@context": "https://schema.org", "@type": "BreadcrumbList",
@@ -295,22 +295,22 @@ export default async function CastDetailPage({ params }: { params: { id: string 
     mainEntity: [
       {
         "@type": "Question",
-        name: `How many hindi films has ${person.name} acted in?`,
+        name: `How many films has ${person.name} acted in?`,
         acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name} has been part of ${movies.length} hindi film${movies.length !== 1 ? "s" : ""} in bollywood, spanning genres such as ${genres || "drama, action and romance"}.`
-          : `${person.name} is associated with bollywood, the hindi film industry.` },
+          ? `${person.name} has been part of ${movies.length} film${movies.length !== 1 ? "s" : ""} in Indian, spanning genres such as ${genres || "drama, action and romance"}.`
+          : `${person.name} is associated with Indian, the Indian film industry.` },
       },
       {
         "@type": "Question",
-        name: `What is ${person.name}'s most popular hindi film?`,
+        name: `What is ${person.name}'s most popular film?`,
         acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name}'s notable hindi films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
+          ? `${person.name}'s notable films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
           : `Check The Cinema Verse for the latest updates on ${person.name}'s filmography.` },
       },
       {
         "@type": "Question",
-        name: `What is ${person.name}'s role in hindi cinema?`,
-        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in the hindi film industry (bollywood).` },
+        name: `What is ${person.name}'s role in Indian cinema?`,
+        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in the Indian film industry.` },
       },
     ],
   };
@@ -364,7 +364,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 marginBottom: "-44px",
               }}>
               {person.photo ? (
-                <Image src={person.photo} alt={`${person.name} – bollywood ${rolesStr}`}
+                <Image src={person.photo} alt={`${person.name} – Indian ${rolesStr}`}
                   fill className="object-cover object-top" priority />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-4xl" style={{ background: "#1a1a1a" }}>{icon}</div>
@@ -487,7 +487,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 boxShadow: "0 0 50px rgba(249,115,22,0.18), 0 28px 64px rgba(0,0,0,0.85)",
               }}>
               {person.photo ? (
-                <Image src={person.photo} alt={`${person.name} – bollywood ${rolesStr}`}
+                <Image src={person.photo} alt={`${person.name} – Indian ${rolesStr}`}
                   fill className="object-cover object-top" priority />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-6xl" style={{ background: "#1a1a1a" }}>{icon}</div>
@@ -624,7 +624,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
               <InfoRow icon={Calendar}    label="Date of Birth" value={fmtDate(person.dob)} />
               <InfoRow icon={MapPin}      label="Location"     value={person.location} />
               <InfoRow icon={User}        label="Gender"       value={person.gender} />
-              <InfoRow icon={Film}        label="Total Films"  value={movies.length ? `${movies.length} hindi films` : undefined} />
+              <InfoRow icon={Film}        label="Total Films"  value={movies.length ? `${movies.length} films` : undefined} />
               <InfoRow icon={Award}       label="Genres" value={genres.length ? genres.map(([g]) => g).join(", ") : undefined} />
             </div>
 
@@ -684,7 +684,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
               <div className="flex flex-col gap-1">
                 {[
                   { label: "All Hindi Movies",    href: "/movies" },
-                  { label: "bollywood Songs",         href: "/songs" },
+                  { label: "Indian Songs",         href: "/songs" },
                   { label: "Box Office",         href: "/box-office" },
                   { label: "Cast & Crew",        href: "/cast" },
                   { label: "Hindi Film Reviews",  href: "/blog/category/movie-review" },
@@ -705,7 +705,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
               <div>
                 <p className="text-xs text-gray-300 font-semibold">The Cinema Verse Editorial Team</p>
                 <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">
-                  Verified by our hindi cinema experts
+                  Verified by our cinema experts
                 </p>
                 <p className="text-[10px] text-gray-600 mt-1">
                   Updated: {new Date().toLocaleDateString("en-IN", { month: "long", year: "numeric" })}
@@ -1075,8 +1075,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 {/* SEO internal link */}
                 <div className="mt-4 p-4 bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl text-[11px] text-gray-500 leading-relaxed">
                   <strong className="text-gray-300">{person.name}</strong> features in multiple articles published
-                  on The Cinema Verse — Odisha&apos;s complete hindi cinema encyclopedia. Browse movie reviews, actor
-                  spotlights, box office reports and the latest bollywood entertainment news.{" "}
+                  on The Cinema Verse — Odisha&apos;s complete Indian cinema encyclopedia. Browse movie reviews, actor
+                  spotlights, box office reports and the latest entertainment news.{" "}
                   <Link href="/blog" className="text-brand-400/80 hover:text-brand-400 underline transition-colors">
                     Explore all blogs →
                   </Link>
@@ -1092,17 +1092,17 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 <SectionHeading title={`${person.name} – Career & Contributions to Hindi Cinema`} />
                 <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                   <p>
-                    <strong className="text-white">{person.name}</strong> is one of bollywood's celebrated{" "}
+                    <strong className="text-white">{person.name}</strong> is one of Indian cinema's celebrated{" "}
                     <strong className="text-white">{rolesStr.toLowerCase()}s</strong>, having contributed
-                    to <strong className="text-white">{movies.length} hindi films</strong> in the{" "}
-                    <strong className="text-white">hindi film industry</strong> (popularly known as{" "}
-                    <strong className="text-white">bollywood</strong>), headquartered in Bhubaneswar, Odisha.
+                    to <strong className="text-white">{movies.length} films</strong> in the{" "}
+                    <strong className="text-white">Indian film industry</strong> (popularly known as{" "}
+                    <strong className="text-white">Indian</strong>), headquartered in Bhubaneswar, Odisha.
                   </p>
 
                   {costars.length > 0 && (
                     <p>
                       Throughout their career, <strong className="text-white">{person.name}</strong> has
-                      collaborated with some of bollywood's finest artists, including{" "}
+                      collaborated with some of Indian cinema's finest artists, including{" "}
                       {costars.slice(0, 3).map((c: any, i: number) => (
                         <span key={String(c.castId || i)}>
                           {c.castId
@@ -1111,22 +1111,22 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                           {i < Math.min(costars.length, 3) - 1 ? ", " : ""}
                         </span>
                       ))}.
-                      These on-screen partnerships have resonated strongly with bollywood audiences.
+                      These on-screen partnerships have resonated strongly with audiences.
                     </p>
                   )}
 
                   {genres.length > 0 && (
                     <p>
-                      {person.name} has worked across multiple genres in hindi cinema, including{" "}
+                      {person.name} has worked across multiple genres in Indian cinema, including{" "}
                       <strong className="text-white">{genres.map(([g]) => g).join(", ")}</strong>.
                       This versatility has made them a sought-after name across all kinds of{" "}
-                      <strong className="text-white">bollywood productions</strong>.
+                      <strong className="text-white">productions</strong>.
                     </p>
                   )}
 
                   {debutMovie && (
                     <p>
-                      {person.name} made their hindi film debut{debutMovie.releaseDate
+                      {person.name} made their film debut{debutMovie.releaseDate
                         ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}`
                         : ""}{" "}
                       with the film{" "}
@@ -1134,14 +1134,14 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                         className="text-brand-400 hover:text-brand-300 transition-colors">
                         {debutMovie.title}
                       </Link>.
-                      Since then, they have steadily grown into one of bollywood's most recognised faces,
-                      building a loyal fanbase across Odisha and among the global bollywood diaspora.
+                      Since then, they have steadily grown into one of Indian cinema's most recognised faces,
+                      building a loyal fanbase across Odisha and among the global diaspora.
                     </p>
                   )}
 
                   <p>
                     Follow <strong className="text-white">{person.name}</strong>'s complete filmography,
-                    songs, trailers and box office records on The Cinema Verse — the most comprehensive bollywood
+                    songs, trailers and box office records on The Cinema Verse — the most comprehensive Indian
                     cinema database online.
                   </p>
                 </div>
@@ -1175,32 +1175,32 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 <div className="space-y-2">
                   {[
                     {
-                      q: `How many hindi films has ${person.name} acted in?`,
+                      q: `How many films has ${person.name} acted in?`,
                       a: movies.length > 0
-                        ? `${person.name} has been part of ${movies.length} hindi film${movies.length !== 1 ? "s" : ""} in bollywood, spanning genres such as ${[...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ") || "drama and action"}.`
-                        : `${person.name} is associated with bollywood. Stay tuned to The Cinema Verse for their latest updates.`,
+                        ? `${person.name} has been part of ${movies.length} film${movies.length !== 1 ? "s" : ""} in Indian, spanning genres such as ${[...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ") || "drama and action"}.`
+                        : `${person.name} is associated with Indian. Stay tuned to The Cinema Verse for their latest updates.`,
                     },
                     {
-                      q: `What is ${person.name}'s most popular hindi film?`,
+                      q: `What is ${person.name}'s most popular film?`,
                       a: movies.length > 0
-                        ? `${person.name}'s notable hindi films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
+                        ? `${person.name}'s notable films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
                         : `Check The Cinema Verse for the latest updates on ${person.name}'s filmography.`,
                     },
                     {
-                      q: `What is ${person.name}'s role in hindi cinema?`,
-                      a: `${person.name} works as a ${rolesStr} in the hindi film industry (bollywood). ${person.bio ? person.bio.slice(0, 150) + "..." : `They have made significant contributions to hindi cinema and remain a beloved figure among bollywood audiences.`}`,
+                      q: `What is ${person.name}'s role in Indian cinema?`,
+                      a: `${person.name} works as a ${rolesStr} in the Indian film industry. ${person.bio ? person.bio.slice(0, 150) + "..." : `They have made significant contributions to Indian cinema and remain a beloved figure among audiences.`}`,
                     },
                     {
-                      q: `When did ${person.name} debut in bollywood?`,
+                      q: `When did ${person.name} debut in Indian?`,
                       a: debutMovie
-                        ? `${person.name} made their bollywood debut${debutMovie.releaseDate ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}` : ""} with the film "${debutMovie.title}".`
+                        ? `${person.name} made their Indian debut${debutMovie.releaseDate ? ` in ${new Date(debutMovie.releaseDate).getFullYear()}` : ""} with the film "${debutMovie.title}".`
                         : `Debut information for ${person.name} is available on The Cinema Verse's cast profile page.`,
                     },
                     {
                       q: `What genres has ${person.name} worked in?`,
                       a: genres.length > 0
-                        ? `${person.name} has worked in ${genres.map(([g, c]) => `${g} (${c} film${c !== 1 ? "s" : ""})`).join(", ")} in their hindi film career.`
-                        : `${person.name} has worked across various genres in hindi cinema. Explore their full filmography on The Cinema Verse.`,
+                        ? `${person.name} has worked in ${genres.map(([g, c]) => `${g} (${c} film${c !== 1 ? "s" : ""})`).join(", ")} in their film career.`
+                        : `${person.name} has worked across various genres in Indian cinema. Explore their full filmography on The Cinema Verse.`,
                     },
                   ].map((faq, i) => (
                     <details key={i} className="group border border-[#1a1a1a] rounded-xl overflow-hidden">

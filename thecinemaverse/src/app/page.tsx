@@ -89,7 +89,7 @@ async function getHomeData(langKey?: string) {
   const langDbValue = getLanguageFilter(langKey);
   const movieQuery = langDbValue ? { language: langDbValue } : {};
 
-  const [allMovies, upcomingMovies, latestBlogs] = await Promise.all([
+  const [allMoviesRaw, upcomingMoviesRaw, latestBlogsRaw] = await Promise.all([
     Movie.find(movieQuery, "-reviews -media.songs")
       .sort({ releaseDate: -1 })
       .limit(80)
@@ -135,9 +135,14 @@ async function getHomeData(langKey?: string) {
     // Latest blogs for the main grid
     Blog.find({ published: true }, "-content -reviews")
       .sort({ createdAt: -1 })
-      .limit(6)
+      .limit(3)
       .lean(),
   ]);
+
+  const serializeMongoIds = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+  const allMovies = serializeMongoIds(allMoviesRaw);
+  const upcomingMovies = serializeMongoIds(upcomingMoviesRaw);
+  const latestBlogs = serializeMongoIds(latestBlogsRaw);
 
   // ── Hero movies ───────────────────────────────────────────────
   const heroMovies: HeroMovie[] = (allMovies as any[])
@@ -222,7 +227,7 @@ async function getHomeData(langKey?: string) {
     return 0;                                  // both TBA: keep order
   });
 
-  // ── This Month in bollywood ──────────────────────────────────
+  // ── This Month ──────────────────────────────────
   const thisMonthReleased = (allMovies as any[])
     .filter((m) => isThisMonth(m.releaseDate) && m.releaseDate && new Date(m.releaseDate) <= _now)
     .sort((a: any, b: any) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime());
@@ -253,35 +258,35 @@ async function getHomeData(langKey?: string) {
     });
 
   // ── Did You Know — trivia extracted from synopses ─────────────
-  // Static bollywood facts always shown (guaranteed content)
+  // Static facts always shown (guaranteed content)
   const staticTrivia: TriviaCard[] = [
     {
-      fact:   "Hindi cinema, known as Bollywood, traces its roots to 1913 when Dadasaheb Phalke's silent film 'Raja Harishchandra' was released — marking the birth of Indian cinema.",
-      source: "About Bollywood",
+      fact:   "Indian cinema traces its roots to 1913 when Dadasaheb Phalke's silent film 'Raja Harishchandra' was released — marking the birth of a historic industry.",
+      source: "Indian Cinema",
       href:   "/movies",
       emoji:  TRIVIA_EMOJIS[0],
     },
     {
-      fact:   "The Hindi film industry is headquartered in Mumbai, Maharashtra (formerly Bombay), producing hundreds of films annually for global audiences.",
-      source: "Bollywood Industry",
+      fact:   "The Indian film industry is one of the largest in the world, producing thousands of films annually across multiple languages for global audiences.",
+      source: "Film Industry",
       href:   "/movies",
       emoji:  TRIVIA_EMOJIS[1],
     },
     {
-      fact:   "In 1931, 'Alam Ara' directed by Ardeshir Irani became the first Indian sound film (talkie), paving the way for Bollywood's signature musical style.",
+      fact:   "In 1931, 'Alam Ara' directed by Ardeshir Irani became the first Indian sound film (talkie), paving the way for the signature musical style of Indian films.",
       source: "Film Milestones",
       href:   "/movies",
       emoji:  TRIVIA_EMOJIS[2],
     },
     {
-      fact:   "Bollywood films like 'Dangal', 'Jawan', and 'Pathaan' hold global box office records, drawing millions of viewers across international markets.",
-      source: "Bollywood Box Office",
+      fact:   "Indian films hold impressive global box office records, drawing millions of viewers across international markets.",
+      source: "Box Office",
       href:   "/box-office",
       emoji:  TRIVIA_EMOJIS[3],
     },
     {
-      fact:   "The Bollywood music industry is massive — legendary playback singers and composers like A.R. Rahman, Kishore Kumar, and Lata Mangeshkar have defined generations of music.",
-      source: "Bollywood Music",
+      fact:   "The Indian music industry is massive — legendary playback singers and composers have defined generations of music across various regional cinemas.",
+      source: "Film Music",
       href:   "/songs",
       emoji:  TRIVIA_EMOJIS[4],
     },
@@ -298,7 +303,7 @@ async function getHomeData(langKey?: string) {
     .slice(0, 8)
     .map((m: any, i: number) => {
       // Extract a clean first sentence (up to 180 chars) from synopsis
-      const raw = String(m.synopsis || "").replace(/\(.*?\)/g, "").trim(); // strip parens like (bollywood: ...)
+      const raw = String(m.synopsis || "").replace(/\(.*?\)/g, "").trim(); // strip parens
       const sentMatch = raw.match(/^[^.!?]{40,180}[.!?]/);
       const fact = sentMatch
         ? sentMatch[0].trim()
@@ -630,10 +635,10 @@ export default async function HomePage({
           };
 
           return (
-            <section aria-label="Currently running hindi movies at box office">
+            <section aria-label="Currently running movies at box office">
               <SectionHeader
-                title="Currently Running"
-                subtitle="hindi films live at the box office right now"
+                title="Live at Box Office"
+                subtitle="Films live at the box office right now"
                 href="/box-office"
               />
 
@@ -825,7 +830,7 @@ export default async function HomePage({
           </div>
         </section>
 
-        {/* ══ THIS MONTH IN BOLLYWOOD ══ */}
+        {/* ══ THIS MONTH ══ */}
         {thisMonthAll.length > 0 && (() => {
           const monthName = _now.toLocaleDateString("en-IN", { month: "long" });
           const year      = _now.getFullYear();
@@ -957,10 +962,10 @@ export default async function HomePage({
 
         {/* ══ BLOG — LATEST ARTICLES GRID ══ */}
         {latestBlogs.length > 0 && (
-          <section aria-label="Latest hindi cinema blog posts">
+          <section aria-label="Latest cinema blog posts">
             <SectionHeader
-              title="Latest from the Blog"
-              subtitle="In-depth reviews, cast spotlights and bollywood stories"
+              title="From the Blog"
+              subtitle="In-depth reviews, cast spotlights and stories"
               href="/blog"
             />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -979,10 +984,10 @@ export default async function HomePage({
 
         {/* ══ BLOCKBUSTER / TOP MOVIES (SEO + AdSense filler) ══ */}
         {topMovies.length > 0 && (
-          <section aria-label="Blockbuster and superhit hindi movies">
+          <section aria-label="Blockbuster and superhit movies">
             <SectionHeader
               title="Blockbuster Hits"
-              subtitle="Top-performing hindi films of recent years"
+              subtitle="Top-performing films of recent years"
               href="/movies"
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">

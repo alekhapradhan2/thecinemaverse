@@ -12,8 +12,8 @@ import Image from "next/image";
 
 export async function generateMetadata({ searchParams }: { searchParams: { q?: string } }): Promise<Metadata> {
   return buildMeta({
-    title: searchParams.q ? `Search results for "${searchParams.q}"` : "Search Hindi Movies, Actors & More",
-    description: "Search The Cinema Verse's database of hindi movies, actors, directors, songs, and blog articles.",
+    title: searchParams.q ? `Search results for "${searchParams.q}"` : "Search Indian Movies, Actors & More",
+    description: "Search The Cinema Verse's database of Indian movies, actors, directors, songs, and blog articles.",
     url: "/search",
   });
 }
@@ -52,7 +52,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { q?:
       {!q && (
         <div className="text-center py-20">
           <Search className="w-16 h-16 text-gray-700 mx-auto mb-4" />
-          <p className="text-gray-400 text-lg mb-2">Search for hindi movies, actors, and more</p>
+          <p className="text-gray-400 text-lg mb-2">Search for movies, actors, and more</p>
           <p className="text-gray-600 text-sm">Use the search bar in the header to get started</p>
         </div>
       )}

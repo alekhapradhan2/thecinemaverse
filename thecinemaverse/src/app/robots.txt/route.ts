@@ -44,10 +44,11 @@ Allow: /movies/year/
 Allow: /movies/genre/
 Allow: /box-office?year=
 Allow: /blog?category=
+Allow: /*?lang=
 
 # ── AI training scrapers — block content harvesting ─────
 # These bots scrape content to train AI models without compensation.
-# Blocking them protects your original hindi cinema writing.
+# Blocking them protects your original Indian cinema writing.
 # NOTE: PerplexityBot and Google-Extended are NOT blocked here —
 # they are AI search engines that cite sources and drive traffic,
 # not training scrapers.

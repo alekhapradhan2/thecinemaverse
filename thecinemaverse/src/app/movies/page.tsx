@@ -125,7 +125,8 @@ async function getMovies({ genre, verdict, sort, page, langKey }: {
       ]),
       Movie.countDocuments(filter),
     ]);
-    return { movies, total, pages: Math.ceil(total / LIMIT) };
+    const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+    return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
   }
 
   if (!sort || sort === "latest") {
@@ -146,7 +147,8 @@ async function getMovies({ genre, verdict, sort, page, langKey }: {
       ]),
       Movie.countDocuments(filter),
     ]);
-    return { movies, total, pages: Math.ceil(total / LIMIT) };
+    const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+    return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
   }
 
   const sortBy = sortMap[sort] || sortMap.az;
@@ -155,7 +157,8 @@ async function getMovies({ genre, verdict, sort, page, langKey }: {
     Movie.countDocuments(filter),
   ]);
 
-  return { movies, total, pages: Math.ceil(total / LIMIT) };
+  const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+  return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
 }
 
 /* ─── ADSENSE COMPONENT (replace data-ad-slot with real slot IDs) ── */
@@ -743,11 +746,13 @@ async function UpcomingStrip() {
   ]);
 
   if (!upcoming.length) return null;
+  const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
+  const serializedUpcoming = serialize(upcoming);
 
   return (
     <div className="relative">
       <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
-        {upcoming.map((m: any) => (
+        {serializedUpcoming.map((m: any) => (
           <div key={String(m._id)} className="flex-shrink-0 w-32 sm:w-36">
             <LoadingCard borderRadius={10}>
               <MovieCard movie={m} />

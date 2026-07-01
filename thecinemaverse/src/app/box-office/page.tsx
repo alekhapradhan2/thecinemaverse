@@ -32,8 +32,8 @@ export async function generateMetadata(
     description,
     alternates:  {
       canonical: isCurrentYear
-        ? "https://thecinemaverses.in/box-office"
-        : `https://thecinemaverses.in/box-office?year=${year}`,
+        ? searchParams?.lang ? `https://thecinemaverses.in/box-office?lang=${searchParams.lang}` : "https://thecinemaverses.in/box-office"
+        : searchParams?.lang ? `https://thecinemaverses.in/box-office?year=${year}&lang=${searchParams.lang}` : `https://thecinemaverses.in/box-office?year=${year}`,
     },
     robots:      { index: true, follow: true },
     keywords:    [
@@ -48,8 +48,8 @@ export async function generateMetadata(
       title,
       description,
       url: isCurrentYear
-        ? "https://thecinemaverses.in/box-office"
-        : `https://thecinemaverses.in/box-office?year=${year}`,
+        ? searchParams?.lang ? `https://thecinemaverses.in/box-office?lang=${searchParams.lang}` : "https://thecinemaverses.in/box-office"
+        : searchParams?.lang ? `https://thecinemaverses.in/box-office?year=${year}&lang=${searchParams.lang}` : `https://thecinemaverses.in/box-office?year=${year}`,
       siteName:    "The Cinema Verse",
       type:        "website",
       locale:      "en_IN",

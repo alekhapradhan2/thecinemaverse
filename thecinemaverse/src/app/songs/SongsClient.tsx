@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Play, Music, Search, ChevronLeft, ChevronRight, X, Loader2, Mic2, Music2 } from "lucide-react";
 import clsx from "clsx";
+import { resolveLanguage } from "@/lib/languages";
 
 interface Song {
   title: string;
@@ -620,14 +621,14 @@ export function SongsClient({
       {/* SEO content block */}
       <div className="mt-2 p-4 sm:p-6 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <h3 className="font-display font-bold text-white text-sm sm:text-base mb-2 sm:mb-3">
-          Hindi Film Songs — Complete bollywood Music Database
+          {searchParams.get("lang") ? `${resolveLanguage(searchParams.get("lang") || "").short} Film Songs` : "Hindi Film Songs"} — Complete {searchParams.get("lang") ? (resolveLanguage(searchParams.get("lang") || "").short === "Hindi" ? "Bollywood" : resolveLanguage(searchParams.get("lang") || "").short) : "Bollywood"} Music Database
         </h3>
         <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
           The Cinema Verse features the most extensive collection of{" "}
-          <strong className="text-gray-300">hindi film songs</strong> available online. From timeless
+          <strong className="text-gray-300">{searchParams.get("lang") ? resolveLanguage(searchParams.get("lang") || "").short.toLowerCase() : "hindi"} film songs</strong> available online. From timeless
           classics by legendary singers to the latest{" "}
-          <strong className="text-gray-300">new bollywood songs 2026</strong>, every track is catalogued
-          with full credits — singer, music director, lyricist and the original hindi movie. Use the
+          <strong className="text-gray-300">new {searchParams.get("lang") ? (resolveLanguage(searchParams.get("lang") || "").short === "Hindi" ? "bollywood" : resolveLanguage(searchParams.get("lang") || "").short.toLowerCase()) : "bollywood"} songs 2026</strong>, every track is catalogued
+          with full credits — singer, music director, lyricist and the original {searchParams.get("lang") ? resolveLanguage(searchParams.get("lang") || "").short.toLowerCase() : "hindi"} movie. Use the
           search above to find any song across our entire database, or filter by your favourite singer
           or music director.
         </p>

@@ -55,7 +55,7 @@ export default function ContactPage() {
             <p className="text-sm text-gray-400 leading-relaxed">
               We welcome contributions from fans, film researchers, and industry professionals.
               If you have information to add or corrections to suggest, reach out and help us build
-              the best hindi cinema resource.
+              the best Indian cinema resource.
             </p>
           </div>
         </div>

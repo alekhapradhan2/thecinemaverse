@@ -30,7 +30,7 @@ const SECTIONS = [
     icon: Info,
     title: "General Information",
     body: [
-      "The information provided on The Cinema Verse is for general informational and entertainment purposes only. We are an independent encyclopedia covering hindi cinema and are not affiliated with any production house, studio, or distributor unless explicitly stated.",
+      "The information provided on The Cinema Verse is for general informational and entertainment purposes only. We are an independent encyclopedia covering Indian cinema and are not affiliated with any production house, studio, or distributor unless explicitly stated.",
       "While we strive to keep information accurate and up to date, we make no representations or warranties of any kind, express or implied, about the completeness, reliability, or accuracy of any content on this website.",
     ],
   },
@@ -166,7 +166,7 @@ export default function DisclaimerPage() {
             Disclaimer
           </h1>
           <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
-            The Cinema Verse is an independent hindi cinema encyclopedia. This page explains how we source our
+            The Cinema Verse is an independent Indian cinema encyclopedia. This page explains how we source our
             content, the limits of our box office data, and how copyright and third-party material are
             handled across the site.
           </p>

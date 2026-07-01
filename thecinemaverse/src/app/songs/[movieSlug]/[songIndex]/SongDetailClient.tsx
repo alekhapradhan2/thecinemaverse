@@ -884,15 +884,15 @@ export function SongDetailClient({ movie, initialSongIndex, relatedMovies }: Pro
             About "{activeSong.title}" — {movie.title}
           </h2>
           <p className="text-gray-400 text-sm leading-relaxed">
-            "{activeSong.title}" is{activeSong.singer ? ` sung by ${activeSong.singer}` : " an hindi film song"} from the{" "}
+            "{activeSong.title}" is{activeSong.singer ? ` sung by ${activeSong.singer}` : ` an ${movie.language?.toLowerCase() || "hindi"} film song`} from the{" "}
             {movie.genre?.length ? movie.genre.join(", ") + " " : ""}
-            hindi film <strong className="text-white">{movie.title}</strong>
+            {movie.language?.toLowerCase() || "hindi"} film <strong className="text-white">{movie.title}</strong>
             {movie.releaseDate ? ` (${new Date(movie.releaseDate).getFullYear()})` : ""}.
             {activeSong.musicDirector ? ` Music is composed by ${activeSong.musicDirector}.` : ""}
             {activeSong.lyricist ? ` Lyrics are written by ${activeSong.lyricist}.` : ""}
             {" "}This is track #{activeIdx + 1} of {songs.length} songs in the movie.
             {movie.director ? ` The film is directed by ${movie.director}.` : ""}
-            {" "}Explore the full playlist, read lyrics, and discover more bollywood songs on The Cinema Verse — your complete guide to bollywood music.
+            {" "}Explore the full playlist, read lyrics, and discover more {(movie.language === "Hindi" ? "Bollywood" : movie.language)?.toLowerCase() || "bollywood"} songs on The Cinema Verse — your complete guide to {(movie.language === "Hindi" ? "Bollywood" : movie.language)?.toLowerCase() || "bollywood"} music.
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 // app/blog/feed.xml/route.ts
-// Serve an RSS 2.0 feed for the latest 20 bollywood blog posts.
+// Serve an RSS 2.0 feed for the latest 20 Indian blog posts.
 // Add <link rel="alternate" type="application/rss+xml" title="The Cinema Verse Blog" href="/blog/feed.xml">
 // to your root layout's <head> so browsers and crawlers discover it automatically.
 
@@ -68,7 +68,7 @@ export async function GET() {
   <channel>
     <title>The Cinema Verse Blog — Hindi Cinema News &amp; Reviews</title>
     <link>${SITE_URL}/blog</link>
-    <description>In-depth movie reviews, actor profiles, top lists, song breakdowns and news from hindi cinema — updated every week.</description>
+    <description>In-depth movie reviews, actor profiles, top lists, song breakdowns and news from Indian cinema — updated every week.</description>
     <language>en-in</language>
     <copyright>Copyright ${new Date().getFullYear()} The Cinema Verse</copyright>
     <lastBuildDate>${mostRecent}</lastBuildDate>
