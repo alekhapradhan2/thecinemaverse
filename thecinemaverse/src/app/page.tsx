@@ -7,7 +7,9 @@ import Blog from "@/models/Blog";
 import { MovieCard } from "@/components/movie/MovieCard";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { buildMeta, SITE_NAME } from "@/lib/seo";
+import { buildMeta, SITE_NAME, getLangMeta } from "@/lib/seo";
+import { resolveLanguage, getLanguageFilter } from "@/lib/languages";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import {
   Film, Star, Music, TrendingUp, Award, BookOpen,
   ChevronRight, Clapperboard, Users, Mic2, Trophy,
@@ -19,18 +21,27 @@ import { TRIVIA_EMOJIS } from "@/lib/trivia-constants";
 
 export const revalidate = 600;
 
-export const metadata: Metadata = buildMeta({
-  title: `${SITE_NAME} – #1 Bollywood Movie Database | Hindi Films, Songs & Box Office`,
-  description:
-    "The Cinema Verse is India's most comprehensive Bollywood movie database. Discover latest Hindi films, songs, actor biographies, box office collections, reviews, OTT dates and film news — all in one place.",
-  keywords: [
-    "bollywood movies 2026", "hindi movies 2026", "bollywood", "hindi cinema", "hindi films",
-    "bollywood actors", "bollywood songs", "hindi movie reviews", "bollywood box office",
-    "hindi film blog", "new bollywood movies", "upcoming hindi films", "hindi movie database",
-    "bollywood news", "hindi film cast", "bollywood OTT release",
-  ],
-  url: "/",
-});
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}): Promise<Metadata> {
+  const lang = resolveLanguage(searchParams?.lang);
+  const s = getLangMeta(lang);
+  
+  return buildMeta({
+    title: `${SITE_NAME} – #1 ${s.industry} Movie Database | ${lang.short} Films, Songs & Box Office`,
+    description:
+      `The Cinema Verse is India's most comprehensive ${s.industry} movie database. Discover latest ${lang.short} films, songs, actor biographies, box office collections, reviews, OTT dates and film news — all in one place.`,
+    keywords: [
+      `${s.adj.toLowerCase()} movies 2026`, `${lang.short.toLowerCase()} movies 2026`, `${s.adj.toLowerCase()}`, `${lang.short.toLowerCase()} cinema`, `${lang.short.toLowerCase()} films`,
+      `${s.adj.toLowerCase()} actors`, `${s.adj.toLowerCase()} songs`, `${lang.short.toLowerCase()} movie reviews`, `${s.boxOffice.toLowerCase()}`,
+      `${lang.short.toLowerCase()} film blog`, `new ${s.adj.toLowerCase()} movies`, `upcoming ${lang.short.toLowerCase()} films`, `${lang.short.toLowerCase()} movie database`,
+      `${s.adj.toLowerCase()} news`, `${lang.short.toLowerCase()} film cast`, `${s.adj.toLowerCase()} OTT release`,
+    ],
+    url: searchParams?.lang ? `/?lang=${searchParams.lang}` : "/",
+  });
+}
 
 // ── Date helpers ─────────────────────────────────────────────────
 const _now = new Date();
@@ -73,10 +84,13 @@ function fmtINR(n: number): string {
   return `₹${n.toLocaleString("en-IN")}`;
 }
 
-async function getHomeData() {
+async function getHomeData(langKey?: string) {
   await connectDB();
+  const langDbValue = getLanguageFilter(langKey);
+  const movieQuery = langDbValue ? { language: langDbValue } : {};
+
   const [allMovies, upcomingMovies, latestBlogs] = await Promise.all([
-    Movie.find({}, "-reviews -media.songs")
+    Movie.find(movieQuery, "-reviews -media.songs")
       .sort({ releaseDate: -1 })
       .limit(80)
       .lean(),
@@ -85,7 +99,10 @@ async function getHomeData() {
     Movie.aggregate([
       {
         $match: {
-          $or: [{ verdict: "Upcoming" }, { verdict: { $exists: false } }, { verdict: null }],
+          $and: [
+            movieQuery,
+            { $or: [{ verdict: "Upcoming" }, { verdict: { $exists: false } }, { verdict: null }] }
+          ]
         },
       },
       { $project: { reviews: 0, "media.songs": 0 } },
@@ -313,9 +330,17 @@ const BLOG_CATEGORIES = [
   { label: "Industry News",   href: "/blog?cat=Industry+News",   emoji: "📰" },
 ];
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}) {
+  const lang       = searchParams?.lang;
+  const activeLang = resolveLanguage(lang);
+  const s          = getLangMeta(activeLang);
+
   const { heroMovies, latestMovies, upcomingMovies, latestBlogs, topMovies, boxOfficeMovies, thisMonthAll, randomMoviePool, triviaCards, currentYear } =
-    await getHomeData();
+    await getHomeData(lang);
 
   return (
     <div className="min-h-screen">
@@ -328,12 +353,12 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-br from-brand-900/20 via-[#0a0a0a] to-[#0a0a0a]" />
           <div className="relative z-10 text-center px-4">
             <h1 className="font-display text-5xl md:text-7xl font-black text-white leading-none mb-4">
-              Discover <span className="text-brand-500">bollywood</span> Cinema
+              Discover <span className="text-brand-500">{s.adj.toLowerCase()}</span> Cinema
             </h1>
             <p className="text-gray-300 text-lg mb-6">
-              Your ultimate guide to bollywood — movies, actors, songs, and more.
+              Your ultimate guide to {s.adj.toLowerCase()} — movies, actors, songs, and more.
             </p>
-            <Link href="/movies" className="btn-primary inline-flex items-center gap-2">
+            <Link href={lang ? `/movies?lang=${lang}` : "/movies"} className="btn-primary inline-flex items-center gap-2">
               <Film className="w-4 h-4" /> Explore Movies
             </Link>
           </div>
@@ -341,24 +366,10 @@ export default async function HomePage() {
       )}
 
       {/* ══ STATS BAR ══ */}
-      <section className="bg-[#111] border-y border-[#1f1f1f]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-[#1f1f1f]">
-            {[
-              { icon: Film,      label: "Hindi Movies",   value: "500+"  },
-              { icon: Users,     label: "Cast Profiles",  value: "1000+" },
-              { icon: Music,     label: "bollywood Songs",    value: "5000+" },
-              { icon: BookOpen,  label: "Blog Articles", value: "100+"  },
-            ].map(({ icon: Icon, label, value }) => (
-              <div key={label} className="flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-3 sm:py-4">
-                <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-500 flex-shrink-0" />
-                <div>
-                  <p className="text-base sm:text-lg font-bold text-white font-display">{value}</p>
-                  <p className="text-[10px] sm:text-xs text-gray-500">{label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      <section className="bg-[#050505]">
+        {/* Language Selector placed visibly under Hero */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 mt-2 border-b border-[#1f1f1f]">
+          <LanguageSelector activeLang={lang} showAll={true} />
         </div>
       </section>
 
@@ -366,11 +377,11 @@ export default async function HomePage() {
 
         {/* ══ LATEST RELEASES ══ */}
         {latestMovies.length > 0 && (
-          <section aria-label="Latest hindi movie releases">
+          <section aria-labelledby="latest-movies">
             <SectionHeader
-              title="Latest Releases"
-              subtitle="Newest hindi films from bollywood"
-              href="/movies"
+              title={`New Releases in ${s.industry}`}
+              subtitle={`Newest ${activeLang.short.toLowerCase()} films from ${s.industry}`}
+              href={lang ? `/movies?lang=${lang}` : "/movies"}
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
               {latestMovies.slice(0, 10).map((m: any) => (
@@ -378,9 +389,9 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="mt-6 text-center">
-              <Link href="/movies"
+              <Link href={lang ? `/movies?lang=${lang}` : "/movies"}
                 className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 text-sm font-semibold transition-colors">
-                View all hindi movies <ChevronRight className="w-4 h-4" />
+                View all {activeLang.short.toLowerCase()} movies <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
           </section>
@@ -388,11 +399,11 @@ export default async function HomePage() {
 
         {/* ══ BOX OFFICE COLLECTION ══ */}
         {boxOfficeMovies.length > 0 && (
-          <section aria-label="hindi movie box office collection">
+          <section aria-labelledby="box-office-reports">
             <SectionHeader
-              title="Box Office Collection"
-              subtitle="Latest hindi film box office figures & verdicts"
-              href="/box-office"
+              title={`${s.adj} Box Office Reports`}
+              subtitle={`Latest ${activeLang.short.toLowerCase()} film box office figures & verdicts`}
+              href={lang ? `/box-office?lang=${lang}` : "/box-office"}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5">
@@ -775,8 +786,7 @@ export default async function HomePage() {
                     })}
 
                   {/* View all CTA */}
-                  <Link
-                    href="/box-office"
+                  <Link href={lang ? `/box-office?lang=${lang}` : "/box-office"}
                     className="sm:col-span-2 flex items-center justify-between rounded-xl
                       bg-gradient-to-br from-brand-500/8 to-transparent border border-brand-500/20
                       hover:border-brand-500/50 px-4 py-3 group transition-all"
@@ -820,11 +830,11 @@ export default async function HomePage() {
           const monthName = _now.toLocaleDateString("en-IN", { month: "long" });
           const year      = _now.getFullYear();
           return (
-            <section aria-label={`hindi movies releasing in ${monthName} ${year}`}>
+            <section aria-labelledby="this-month">
               <SectionHeader
-                title={`This Month in bollywood`}
+                title={`This Month in ${s.industry}`}
                 subtitle={`${monthName} ${year} releases — what's out and what's coming`}
-                href="/movies"
+                href={lang ? `/movies/year/${year}?lang=${lang}` : `/movies/year/${year}`}
               />
 
               {/* Timeline */}
@@ -917,7 +927,7 @@ export default async function HomePage() {
 
         {/* ══ DISCOVER + DID YOU KNOW — 2 col grid ══ */}
         {(randomMoviePool.length > 0 || triviaCards.length > 0) && (
-          <section aria-label="Discover hindi movies and bollywood trivia">
+          <section aria-label={`Discover ${activeLang.short.toLowerCase()} movies and trivia`}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
               {randomMoviePool.length > 0 && (
                 <RandomMoviePicker movies={randomMoviePool} currentYear={currentYear} />
@@ -931,11 +941,11 @@ export default async function HomePage() {
 
         {/* ══ UPCOMING MOVIES ══ */}
         {upcomingMovies.length > 0 && (
-          <section aria-label="Upcoming hindi movies">
+          <section aria-labelledby="upcoming-movies">
             <SectionHeader
-              title="Upcoming Movies"
-              subtitle="hindi films releasing soon — mark your calendar"
-              href="/movies?verdict=Upcoming"
+              title={`Upcoming ${activeLang.short} Movies`}
+              subtitle={`${activeLang.short.toLowerCase()} films releasing soon — mark your calendar`}
+              href={lang ? `/movies?verdict=Upcoming&lang=${lang}` : "/movies?verdict=Upcoming"}
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
               {upcomingMovies.map((m: any) => (

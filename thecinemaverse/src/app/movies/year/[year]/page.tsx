@@ -6,7 +6,9 @@ import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import Cast from "@/models/Cast";
-import { buildMeta } from "@/lib/seo";
+import { buildMeta, getLangMeta } from "@/lib/seo";
+import { resolveLanguage, getLanguageFilter } from "@/lib/languages";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import {
   Film, Calendar, ChevronRight, Clapperboard,
   TrendingUp, Star, Flame, Clock, Zap, User, ExternalLink,
@@ -31,49 +33,31 @@ export async function generateStaticParams() {
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
-  params: { year: string };
+  params:       { year: string };
+  searchParams: { lang?: string };
 }): Promise<Metadata> {
   const year = Number(params.year);
+  const lang = resolveLanguage(searchParams.lang);
+  const s    = getLangMeta(lang);
   return buildMeta({
-    title: `Hindi Movies ${year} A to Z – Complete bollywood Films List | The Cinema Verse`,
-    description: `${year} Hindi Movies A to Z full list – Browse all bollywood films released in ${year} with movie names, directors, release dates, box office collection, cast, songs, and reviews. Complete ${year} hindi movie list.`,
+    title: `${lang.short} Movies ${year} A to Z – Complete ${lang.industry} Films List | The Cinema Verse`,
+    description: `${year} ${lang.short} Movies A to Z full list – Browse all ${lang.industry} films released in ${year} with movie names, directors, release dates, box office collection, cast, songs, and reviews.`,
     keywords: [
-      // A-to-Z / list variants
-      `hindi movies ${year} A to Z`,
-      `A to Z hindi movies`,
-      `${year} hindi movies list`,
-      `${year} hindi films list`,
-      `hindi movies list ${year}`,
-      `bollywood movies ${year} list`,
-      `all hindi movies ${year}`,
-      `complete list of hindi movies ${year}`,
-      `hindi movies ${year} full list`,
-      // Core year keywords
-      `hindi movies ${year}`,
-      `bollywood ${year}`,
-      `hindi films ${year}`,
-      `hindi cinema ${year}`,
-      `new hindi movies ${year}`,
-      // Box office
-      `bollywood box office ${year}`,
-      `hindi movie box office collection ${year}`,
-      `${year} bollywood blockbuster`,
-      `${year} bollywood hit movies`,
-      // Cast & crew
-      `bollywood director ${year}`,
-      `hindi movie release date ${year}`,
-      `${year} hindi movie cast`,
-      // Upcoming
-      `upcoming hindi movies ${year}`,
-      `new bollywood movies ${year}`,
-      `${year} hindi movies TBA`,
-      // Generic bollywood
-      `bollywood films`,
-      `hindi film industry`,
-      `hindi cinema`,
+      `${lang.short.toLowerCase()} movies ${year} A to Z`,
+      `${year} ${lang.short.toLowerCase()} movies list`,
+      `${year} ${lang.short.toLowerCase()} films list`,
+      `${s.adj} movies ${year} list`,
+      `all ${lang.short.toLowerCase()} movies ${year}`,
+      `${lang.short.toLowerCase()} movies ${year}`,
+      `${s.adj} ${year}`,
+      `${lang.short.toLowerCase()} films ${year}`,
+      `new ${lang.short.toLowerCase()} movies ${year}`,
+      `${s.boxOffice.toLowerCase()} ${year}`,
+      `upcoming ${lang.short.toLowerCase()} movies ${year}`,
     ],
-    url: `/movies/year/${year}`,
+    url: searchParams.lang ? `/movies/year/${year}?lang=${searchParams.lang}` : `/movies/year/${year}`,
   });
 }
 
@@ -156,17 +140,20 @@ function BreadcrumbJsonLd({ year }: { year: number }) {
 }
 
 // ─── Data fetch ────────────────────────────────────────────────────────────────
-async function getMoviesByYear(year: number) {
+async function getMoviesByYear(year: number, langKey?: string) {
   await connectDB();
 
   const startDate = new Date(`${year}-01-01`);
   const endDate   = new Date(`${year}-12-31T23:59:59`);
   const currentYear = new Date().getFullYear();
 
+  // Optional language filter
+  const langDbValue = getLanguageFilter(langKey);
+
   // For the current year we also include TBA movies (releaseTBA:true or
   // releaseDate:"") that are marked Upcoming — they have no date yet but
   // clearly belong to this year's slate.
-  const matchStage =
+  const dateMatch =
     year === currentYear
       ? {
           $or: [
@@ -191,6 +178,11 @@ async function getMoviesByYear(year: number) {
             $lte: endDate.toISOString().split("T")[0],
           },
         };
+
+  // Merge language filter if present
+  const matchStage = langDbValue
+    ? { $and: [dateMatch, { language: langDbValue }] }
+    : dateMatch;
 
   const movies = await Movie.aggregate([
     { $match: matchStage },
@@ -301,17 +293,22 @@ function formatReleaseDate(dateStr: string, isTBA?: boolean): string {
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default async function MoviesByYearPage({
   params,
+  searchParams,
 }: {
-  params: { year: string };
+  params:       { year: string };
+  searchParams: { lang?: string };
 }) {
-  const year = Number(params.year);
+  const year       = Number(params.year);
+  const lang       = searchParams.lang;
+  const activeLang = resolveLanguage(lang);
+  const s          = getLangMeta(activeLang);
 
   if (isNaN(year) || !VALID_YEARS.includes(year)) {
     notFound();
   }
 
-  const movies = await getMoviesByYear(year);
-  const total  = movies.length;
+  const movies  = await getMoviesByYear(year, lang);
+  const total   = movies.length;
   const topCast = await getTopCastByYear(movies);
 
   const verdictCounts: Record<string, number> = {};
@@ -338,7 +335,7 @@ export default async function MoviesByYearPage({
         ══════════════════════════════════════════════════════════ */}
         <section
           className="relative overflow-hidden bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] border-b border-[#1f1f1f]"
-          aria-label={`hindi movies from ${year}`}
+          aria-label={`${activeLang.short} movies from ${year}`}
         >
           {/* Decorative glows */}
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -367,13 +364,17 @@ export default async function MoviesByYearPage({
                   </div>
                   {/* H1 — primary SEO heading */}
                   <h1 className="font-display text-3xl md:text-4xl font-black text-white leading-tight">
-                    Hindi Movies {year} – A to Z bollywood Films List
+                    {activeLang.short} Movies {year} – A to Z {activeLang.industry} Films List
                   </h1>
+                </div>
+                {/* Language selector */}
+                <div className="mb-3">
+                  <LanguageSelector activeLang={lang} />
                 </div>
                 <p className="text-gray-400 text-sm md:text-base max-w-2xl leading-relaxed">
                   {year === currentYear
-                    ? `Complete A to Z list of all bollywood (bollywood) movies released in ${year}. Every ${year} hindi film listed with movie name, director, and release date — updated regularly as new films hit theatres.`
-                    : `Complete A to Z list of all bollywood (bollywood) movies released in ${year}. Find every bollywood film from ${year} with director names, release dates, box office verdict, cast details, and reviews.`}
+                    ? `Complete A to Z list of all ${activeLang.industry} films released in ${year}. Every ${year} ${activeLang.short.toLowerCase()} film listed with movie name, director, and release date — updated regularly as new films hit theatres.`
+                    : `Complete A to Z list of all ${activeLang.industry} films released in ${year}. Find every ${activeLang.short.toLowerCase()} film from ${year} with director names, release dates, box office verdict, cast details, and reviews.`}
                 </p>
               </div>
 
@@ -381,7 +382,7 @@ export default async function MoviesByYearPage({
               <div className="flex items-center gap-2 bg-[#111] border border-[#1f1f1f] rounded-xl px-5 py-3 self-start md:self-auto flex-shrink-0">
                 <Film className="w-4 h-4 text-brand-500" />
                 <span className="text-2xl font-black text-white font-display">{total}</span>
-                <span className="text-xs text-gray-500 leading-tight">bollywood<br />films</span>
+                <span className="text-xs text-gray-500 leading-tight">{activeLang.short}<br />films</span>
               </div>
             </div>
 
@@ -391,8 +392,8 @@ export default async function MoviesByYearPage({
               {VALID_YEARS.map((yr) => (
                 <Link
                   key={yr}
-                  href={`/movies/year/${yr}`}
-                  aria-label={`hindi movies of ${yr}`}
+                  href={lang ? `/movies/year/${yr}?lang=${lang}` : `/movies/year/${yr}`}
+                  aria-label={`${activeLang.short} movies of ${yr}`}
                   aria-current={yr === year ? "page" : undefined}
                   className={[
                     "px-3 py-1 rounded-lg text-xs font-semibold transition-all",

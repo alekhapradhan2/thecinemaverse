@@ -6,7 +6,9 @@ import Movie from "@/models/Movie";
 import { MovieCard } from "@/components/movie/MovieCard";
 import { MoviesFilter } from "./MoviesFilter";
 import { LoadingCard } from "@/components/ui/LoadingCard";
-import { buildMeta } from "@/lib/seo";
+import { buildMeta, getLangMeta } from "@/lib/seo";
+import { resolveLanguage, getLanguageFilter } from "@/lib/languages";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import {
   Film, Star, TrendingUp, Calendar, Filter, Award,
   ChevronRight, Clapperboard, Globe, Users, Zap,
@@ -15,18 +17,28 @@ import {
 
 export const revalidate = 600;
 
-export const metadata: Metadata = buildMeta({
-  title: "Hindi Movies – Complete bollywood Film Database | The Cinema Verse",
-  description:
-    "Browse the complete list of bollywood (bollywood) movies. Filter by genre, year, verdict and more. Find your favourite hindi films with full cast, songs, box office collection, trailers and reviews.",
-  keywords: [
-    "hindi movies list", "bollywood films", "hindi movies 2024", "hindi movies 2025",
-    "hindi cinema database", "bollywood box office", "hindi film reviews",
-    "best hindi movies", "new hindi movies", "hindi movie cast",
-    "upcoming hindi movies", "bollywood blockbuster movies", "latest bollywood films",
-  ],
-  url: "/movies",
-});
+// Dynamic metadata — reflects active language
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { lang?: string; genre?: string; verdict?: string };
+}): Promise<Metadata> {
+  const lang = resolveLanguage(searchParams.lang);
+  const s    = getLangMeta(lang);
+  return buildMeta({
+    title: `${s.movies} – Complete ${s.industry} Film Database | The Cinema Verse`,
+    description:
+      `Browse the complete list of ${s.movies.toLowerCase()}. Filter by genre, year, verdict and more. Find your favourite ${lang.short.toLowerCase()} films with full cast, songs, box office collection, trailers and reviews.`,
+    keywords: [
+      `${lang.short.toLowerCase()} movies list`, `${s.adj} films`,
+      `${lang.short.toLowerCase()} cinema database`, `${s.boxOffice.toLowerCase()}`,
+      `best ${lang.short.toLowerCase()} movies`, `new ${lang.short.toLowerCase()} movies`,
+      `upcoming ${lang.short.toLowerCase()} movies`, `${s.adj} blockbuster movies`,
+      `latest ${s.adj} films`,
+    ],
+    url: searchParams.lang ? `/movies?lang=${searchParams.lang}` : "/movies",
+  });
+}
 
 /* ─── CONSTANTS ──────────────────────────────────────────── */
 const GENRES   = ["Action", "Romance", "Drama", "Comedy", "Thriller", "Horror", "Devotional", "Family", "Historical"];
@@ -66,14 +78,18 @@ function hasRealDate(releaseDate: any) {
   return { $and: [{ $ifNull: [releaseDate, false] }, { $ne: [releaseDate, ""] }] };
 }
 
-async function getMovies({ genre, verdict, sort, page }: {
-  genre?: string; verdict?: string; sort?: string; page?: number;
+async function getMovies({ genre, verdict, sort, page, langKey }: {
+  genre?: string; verdict?: string; sort?: string; page?: number; langKey?: string;
 }) {
   await connectDB();
   const LIMIT = 20;
   const skip  = ((page || 1) - 1) * LIMIT;
   const filter: any = {};
   if (genre) filter.genre = { $in: [genre] };
+
+  // Language filter — apply only when a specific language is requested
+  const langDbValue = getLanguageFilter(langKey);
+  if (langDbValue) filter.language = langDbValue;
 
   if (verdict) {
     if (verdict === "Upcoming") {
@@ -167,11 +183,13 @@ function AdBanner({ slot, format = "auto", className = "" }: {
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: { genre?: string; verdict?: string; sort?: string; page?: string };
+  searchParams: { genre?: string; verdict?: string; sort?: string; page?: string; lang?: string };
 }) {
-  const { genre, verdict, sort, page } = searchParams;
+  const { genre, verdict, sort, page, lang } = searchParams;
+  const activeLang = resolveLanguage(lang);
+  const s          = getLangMeta(activeLang);
   const { movies, total, pages } = await getMovies({
-    genre, verdict, sort, page: Number(page) || 1,
+    genre, verdict, sort, page: Number(page) || 1, langKey: lang,
   });
 
   const currentPage = Number(page) || 1;
@@ -227,18 +245,22 @@ export default async function MoviesPage({
                 </div>
                 <h1 className="font-display text-3xl md:text-4xl font-black text-white leading-tight">
                   {genre
-                    ? `${genre} Hindi Movies`
+                    ? `${genre} ${activeLang.short} Movies`
                     : verdict
-                      ? `${activeVerdictLabel} Hindi Movies`
-                      : "Hindi Movies — bollywood Film Database"}
+                      ? `${activeVerdictLabel} ${activeLang.short} Movies`
+                      : `${activeLang.short} Movies — ${activeLang.industry} Film Database`}
                 </h1>
+              </div>
+              {/* Language selector */}
+              <div className="mb-3">
+                <LanguageSelector activeLang={lang} />
               </div>
               <p className="text-gray-400 text-sm md:text-base max-w-xl leading-relaxed">
                 {genre
-                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from bollywood`}. Discover the best ${genre.toLowerCase()} hindi movies with cast, box office and reviews.`
+                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from ${activeLang.industry}`}. Discover the best ${genre.toLowerCase()} ${lang ? activeLang.short.toLowerCase() : "hindi"} movies with cast, box office and reviews.`
                   : verdict === "Upcoming"
-                    ? "All confirmed upcoming hindi movies with release dates, cast details and trailers. Stay ahead of every new bollywood release."
-                    : "The most complete bollywood film database — browse every hindi movie with cast, songs, box office collection, trailers and reviews."}
+                    ? `All confirmed upcoming ${activeLang.short.toLowerCase()} movies with release dates, cast details and trailers. Stay ahead of every new ${activeLang.industry} release.`
+                    : `The most complete ${activeLang.industry} film database — browse every ${activeLang.short.toLowerCase()} movie with cast, songs, box office collection, trailers and reviews.`}
               </p>
             </div>
 
@@ -246,7 +268,7 @@ export default async function MoviesPage({
             <div className="flex items-center gap-2 bg-[#111] border border-[#1f1f1f] rounded-xl px-5 py-3 self-start md:self-auto flex-shrink-0">
               <Film className="w-4 h-4 text-brand-500" />
               <span className="text-2xl font-black text-white font-display">{total}</span>
-              <span className="text-xs text-gray-500 leading-tight">bollywood<br />films</span>
+              <span className="text-xs text-gray-500 leading-tight">{activeLang.short}<br />films</span>
             </div>
           </div>
         </div>

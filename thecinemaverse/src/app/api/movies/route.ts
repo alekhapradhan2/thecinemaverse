@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
+import { getLanguageFilter } from "@/lib/languages";
 
 export async function GET(req: NextRequest) {
   try {
@@ -11,11 +12,16 @@ export async function GET(req: NextRequest) {
     const genre   = searchParams.get("genre");
     const verdict = searchParams.get("verdict");
     const sort    = searchParams.get("sort") || "-createdAt";
+    const lang    = searchParams.get("language") || searchParams.get("lang");
     const skip    = (page - 1) * limit;
 
     const filter: any = {};
     if (genre)   filter.genre   = { $in: [genre] };
     if (verdict) filter.verdict = verdict;
+
+    // Language filter — optional; if absent, returns all languages (backward-compat)
+    const langDbValue = getLanguageFilter(lang);
+    if (langDbValue) filter.language = langDbValue;
 
     const [movies, total] = await Promise.all([
       Movie.find(filter, "-reviews")
@@ -35,3 +41,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+

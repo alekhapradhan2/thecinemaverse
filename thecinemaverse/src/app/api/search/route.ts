@@ -3,6 +3,7 @@ import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import Cast from "@/models/Cast";
 import Blog from "@/models/Blog";
+import { getLanguageFilter } from "@/lib/languages";
 
 // ─── Build a fuzzy regex from the query ──────────────────────────────────────
 // "avngers" → /a.*v.*n.*g.*e.*r.*s/i  so typos/missing chars still match
@@ -29,6 +30,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ movies: [], cast: [], blogs: [], songs: [], boxOffice: [] });
     }
 
+    // Optional language boost — if provided, prioritize that language in results
+    const langKey      = searchParams.get("lang");
+    const langDbValue  = getLanguageFilter(langKey);
+
     const exact = exactRegex(q);
     const fuzzy = fuzzyRegex(q);
 
@@ -42,9 +47,9 @@ export async function GET(req: NextRequest) {
     const [movies, cast, blogs, songMovies] = await Promise.all([
       Movie.find(
         orFilter("title", "director", "genre"),
-        "title slug posterUrl thumbnailUrl releaseDate genre verdict"
+        "title slug posterUrl thumbnailUrl releaseDate genre verdict language"
       )
-        .limit(6)
+        .limit(langDbValue ? 12 : 6) // fetch more when language-boosting so we can sort
         .lean(),
 
       Cast.find(
@@ -69,6 +74,15 @@ export async function GET(req: NextRequest) {
         .lean(),
     ]);
 
+    // Language boost: if lang param present, sort matching-language movies first
+    let sortedMovies = movies as any[];
+    if (langDbValue) {
+      sortedMovies = [
+        ...sortedMovies.filter((m: any) => m.language === langDbValue),
+        ...sortedMovies.filter((m: any) => m.language !== langDbValue),
+      ].slice(0, 6);
+    }
+
     // Flatten matching songs from movie documents
     const songs = (songMovies as any[]).flatMap((m: any) =>
       (m.media?.songs || [])
@@ -84,8 +98,8 @@ export async function GET(req: NextRequest) {
         }))
     ).slice(0, 5);
 
-    return NextResponse.json({ movies, cast, blogs, songs, query: q });
+    return NextResponse.json({ movies: sortedMovies, cast, blogs, songs, query: q });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
-}
+}

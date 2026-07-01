@@ -6,9 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
   Search, Menu, X, Film,
-  Clapperboard, Users, BookOpen, Music2, TrendingUp, ChevronRight, ArrowRight, Calendar,
+  Clapperboard, Users, BookOpen, Music2, TrendingUp, ChevronRight, ArrowRight, Calendar, Globe,
 } from "lucide-react";
 import clsx from "clsx";
+import { LANGUAGES, DEFAULT_LANGUAGE } from "@/lib/languages";
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Nav links
@@ -378,37 +380,68 @@ function SearchDropdown({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Movies By Year Mega Dropdown
+// Movies By Language × Year Mega Dropdown
 // ─────────────────────────────────────────────────────────────────────────────
 
-function MoviesYearDropdown({ onClose }: { onClose: () => void }) {
+function MoviesYearDropdown({
+  onClose,
+  activeLangKey,
+  onLangSelect,
+}: {
+  onClose: () => void;
+  activeLangKey: string;
+  onLangSelect: (key: string) => void;
+}) {
   const currentYear = new Date().getFullYear();
+  const activeLang  = LANGUAGES.find((l) => l.key === activeLangKey) ?? DEFAULT_LANGUAGE;
 
   return (
     <div
-      className="absolute top-[calc(100%+8px)] left-0 w-[340px] bg-[#0d0d0d] border border-white/10 rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.8)] overflow-hidden z-50"
+      className="absolute top-[calc(100%+8px)] left-0 w-[380px] bg-[#0d0d0d] border border-white/10 rounded-2xl shadow-[0_24px_64px_rgba(0,0,0,0.8)] overflow-hidden z-50"
       onMouseLeave={onClose}
     >
       {/* Header */}
       <div className="flex items-center gap-2.5 px-4 py-3.5 border-b border-white/[0.07] bg-brand-500/5">
         <div className="w-7 h-7 bg-brand-500/20 rounded-lg flex items-center justify-center">
-          <Calendar className="w-3.5 h-3.5 text-brand-400" />
+          <Globe className="w-3.5 h-3.5 text-brand-400" />
         </div>
         <div>
-          <p className="text-xs font-bold text-white tracking-wide">Movies by Year</p>
-          <p className="text-[10px] text-gray-500 mt-0.5">Browse hindi films by release year</p>
+          <p className="text-xs font-bold text-white tracking-wide">Movies by Language & Year</p>
+          <p className="text-[10px] text-gray-500 mt-0.5">Select language, then browse by year</p>
         </div>
       </div>
 
+      {/* Language tabs */}
+      <div className="flex items-center gap-1.5 px-3 pt-3 pb-2 flex-wrap">
+        {LANGUAGES.map((lang) => (
+          <button
+            key={lang.key}
+            onClick={() => onLangSelect(lang.key)}
+            className={clsx(
+              "inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border",
+              lang.key === activeLangKey
+                ? "bg-brand-500/20 border-brand-500/40 text-brand-300"
+                : "bg-white/[0.04] border-white/[0.07] text-gray-400 hover:text-white hover:bg-white/[0.08]"
+            )}
+          >
+            <span>{lang.flag}</span>
+            {lang.short}
+          </button>
+        ))}
+      </div>
+
       {/* Year grid */}
-      <div className="p-3">
+      <div className="p-3 pt-1">
+        <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest px-1 mb-2">
+          {activeLang.short} Films by Year
+        </p>
         <div className="grid grid-cols-3 gap-1.5">
           {MOVIE_YEARS.map((yr) => {
             const isCurrent = yr === currentYear;
             return (
               <Link
                 key={yr}
-                href={`/movies/year/${yr}`}
+                href={`/movies/year/${yr}?lang=${activeLangKey}`}
                 onClick={onClose}
                 className={clsx(
                   "group relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-150 text-center overflow-hidden",
@@ -437,14 +470,14 @@ function MoviesYearDropdown({ onClose }: { onClose: () => void }) {
         {/* View all movies link */}
         <div className="mt-2 pt-2 border-t border-white/[0.06]">
           <Link
-            href="/movies"
+            href={`/movies?lang=${activeLangKey}`}
             onClick={onClose}
             className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group"
           >
             <div className="flex items-center gap-2">
               <Film className="w-3.5 h-3.5 text-brand-500" />
               <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors">
-                All Hindi Movies
+                All {activeLang.short} Movies
               </span>
             </div>
             <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
@@ -564,6 +597,9 @@ export function Navbar() {
   const [boDropOpen,       setBoDropOpen]       = useState(false);
   const [mobileYearsOpen,  setMobileYearsOpen]  = useState(false);
   const [mobileBoOpen,     setMobileBoOpen]     = useState(false);
+  // Active language tab in Movies dropdown (persisted in state for this session)
+  const [navLangKey,       setNavLangKey]       = useState(DEFAULT_LANGUAGE.key);
+  const [mobileNavLang,    setMobileNavLang]    = useState(DEFAULT_LANGUAGE.key);
 
   const inputRef       = useRef<HTMLInputElement>(null);
   const containerRef   = useRef<HTMLDivElement>(null);
@@ -750,7 +786,11 @@ export function Navbar() {
                       />
                     </Link>
                     {moviesDropOpen && (
-                      <MoviesYearDropdown onClose={() => setMoviesDropOpen(false)} />
+                      <MoviesYearDropdown
+                        onClose={() => setMoviesDropOpen(false)}
+                        activeLangKey={navLangKey}
+                        onLangSelect={setNavLangKey}
+                      />
                     )}
                   </div>
                 );
@@ -960,14 +1000,32 @@ export function Navbar() {
                     </button>
                     {mobileYearsOpen && (
                       <div className="mb-2 mx-2 p-3 bg-white/[0.03] border border-white/[0.07] rounded-xl">
+                        {/* Language tabs inside mobile years panel */}
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          {LANGUAGES.map((lang) => (
+                            <button
+                              key={lang.key}
+                              onClick={() => setMobileNavLang(lang.key)}
+                              className={clsx(
+                                "inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all border",
+                                lang.key === mobileNavLang
+                                  ? "bg-brand-500/20 border-brand-500/40 text-brand-300"
+                                  : "bg-white/[0.04] border-white/[0.07] text-gray-400 hover:text-white"
+                              )}
+                            >
+                              <span>{lang.flag}</span>
+                              {lang.short}
+                            </button>
+                          ))}
+                        </div>
                         <p className="text-[10px] font-bold text-brand-400 uppercase tracking-widest mb-2 px-1">
-                          Browse by Year
+                          Browse {LANGUAGES.find(l => l.key === mobileNavLang)?.short ?? ""} by Year
                         </p>
                         <div className="grid grid-cols-4 gap-1.5">
                           {MOVIE_YEARS.map((yr) => (
                             <Link
                               key={yr}
-                              href={`/movies/year/${yr}`}
+                              href={`/movies/year/${yr}?lang=${mobileNavLang}`}
                               onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
                               className="flex items-center justify-center py-2 rounded-lg bg-white/[0.04] border border-white/[0.07] hover:bg-brand-500/15 hover:border-brand-500/30 text-xs font-semibold text-gray-400 hover:text-brand-400 transition-all"
                             >
@@ -976,12 +1034,12 @@ export function Navbar() {
                           ))}
                         </div>
                         <Link
-                          href="/movies"
+                          href={`/movies?lang=${mobileNavLang}`}
                           onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
                           className="flex items-center justify-center gap-1.5 mt-2 py-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
                         >
                           <Film className="w-3 h-3" />
-                          All Movies
+                          All {LANGUAGES.find(l => l.key === mobileNavLang)?.short} Movies
                         </Link>
                       </div>
                     )}

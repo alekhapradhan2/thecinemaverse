@@ -6,22 +6,26 @@ import Link              from "next/link";
 import { connectDB }     from "@/lib/db";
 import Movie             from "@/models/Movie";
 import Blog              from "@/models/Blog";
+import { resolveLanguage, getLanguageFilter, DEFAULT_LANGUAGE } from "@/lib/languages";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 
 export const revalidate = 600;
 
 /* ─── Dynamic metadata ──────────────────────────────────────────────────────── */
 
 export async function generateMetadata(
-  { searchParams }: { searchParams: { year?: string } }
+  { searchParams }: { searchParams: { year?: string; lang?: string } }
 ): Promise<Metadata> {
   const year = searchParams?.year ? parseInt(searchParams.year, 10) : new Date().getFullYear();
+  const lang = resolveLanguage(searchParams?.lang);
   const isCurrentYear = year === new Date().getFullYear();
+  const adj  = lang.adjective;
   const title = isCurrentYear
-    ? `bollywood Box Office Collection ${year} | The Cinema Verse`
-    : `bollywood Box Office Collection ${year} | bollywood Hit Flop List | The Cinema Verse`;
+    ? `${adj} Box Office Collection ${year} | The Cinema Verse`
+    : `${adj} Box Office Collection ${year} | ${adj} Hit Flop List | The Cinema Verse`;
   const description = isCurrentYear
-    ? `Complete bollywood (bollywood) box office collection report ${year}. Day-wise net and gross earnings for all latest hindi movies — updated daily on The Cinema Verse.`
-    : `bollywood (bollywood) box office collection ${year} — all movies, hit & flop verdict, day-wise net and gross earnings. Complete bollywood ${year} trade report on The Cinema Verse.`;
+    ? `Complete ${adj} box office collection report ${year}. Day-wise net and gross earnings for all latest ${lang.short.toLowerCase()} movies — updated daily on The Cinema Verse.`
+    : `${adj} box office collection ${year} — all movies, hit & flop verdict, day-wise net and gross earnings. Complete ${lang.industry} ${year} trade report on The Cinema Verse.`;
 
   return {
     title,
@@ -33,14 +37,12 @@ export async function generateMetadata(
     },
     robots:      { index: true, follow: true },
     keywords:    [
-      "bollywood box office", "bollywood collection", `hindi movie collection ${year}`,
-      "hindi cinema box office", `bollywood box office ${year}`, "hindi film earnings",
-      "bollywood hit flop verdict", "hindi movie first day collection",
-      `bollywood movie verdict ${year}`, "hindi film box office report",
-      "bollywood hit or flop", "hindi movie total collection",
-      "today bollywood box office", "hindi movie this week collection",
-      `bollywood ${year} hit flop list`, "hindi cinema earnings report",
-      "all time highest grossing hindi film", "bollywood blockbuster list",
+      `${adj.toLowerCase()} box office`, `${adj.toLowerCase()} collection`,
+      `${lang.short.toLowerCase()} movie collection ${year}`,
+      `${lang.short.toLowerCase()} cinema box office`,
+      `${adj.toLowerCase()} box office ${year}`, `${lang.short.toLowerCase()} film earnings`,
+      `${adj.toLowerCase()} hit flop verdict`, `${lang.short.toLowerCase()} movie first day collection`,
+      `${adj.toLowerCase()} movie verdict ${year}`, `${lang.short.toLowerCase()} film box office report`,
     ],
     openGraph: {
       title,
@@ -51,12 +53,12 @@ export async function generateMetadata(
       siteName:    "The Cinema Verse",
       type:        "website",
       locale:      "en_IN",
-      images: [{ url: "https://thecinemaverses.in/og-box-office.jpg", width: 1200, height: 630, alt: `bollywood Box Office Collection ${year} — The Cinema Verse` }],
+      images: [{ url: "https://thecinemaverses.in/og-box-office.jpg", width: 1200, height: 630, alt: `${adj} Box Office Collection ${year} — The Cinema Verse` }],
     },
     twitter: {
       card:        "summary_large_image",
       title,
-      description: `Day-wise net & gross earnings for all bollywood (bollywood) movies ${year}. Updated daily.`,
+      description: `Day-wise net & gross earnings for all ${adj.toLowerCase()} movies ${year}. Updated daily.`,
       images:      ["https://thecinemaverses.in/og-box-office.jpg"],
       site:        "@thecinemaverse",
     },
@@ -159,17 +161,20 @@ async function getBoxOfficeBlogs() {
 export default async function BoxOfficePage({
   searchParams,
 }: {
-  searchParams: { year?: string };
+  searchParams: { year?: string; lang?: string };
 }) {
   const currentYear = new Date().getFullYear();
   const selectedYear = searchParams?.year
     ? parseInt(searchParams.year, 10)
     : currentYear;
+  const lang         = searchParams?.lang;
+  const activeLang   = resolveLanguage(lang);
+  const langDbValue  = getLanguageFilter(lang); // undefined = show all
 
   const [movies, blogs] = await Promise.all([getBoxOfficeMovies(), getBoxOfficeBlogs()]);
 
   // Enrich ALL movies (needed for all-time stats)
-  const enriched = movies.map((m: any) => {
+  const enrichedAll = movies.map((m: any) => {
     const days         = (m.boxOfficeDays || []).sort((a: any, b: any) => a.day - b.day);
     const totalNet     = days.reduce((s: number, d: any) => s + parseNum(d.net),     0);
     const totalGross   = days.reduce((s: number, d: any) => s + parseNum(d.gross),   0);
@@ -181,6 +186,11 @@ export default async function BoxOfficePage({
     const year         = getYear(m.releaseDate);
     return { ...m, days, totalNet, totalGross, totalOverseas, lastDay, year };
   });
+
+  // Apply language filter if selected ("All" or absent = no filter)
+  const enriched = langDbValue
+    ? enrichedAll.filter((m: any) => m.language === langDbValue)
+    : enrichedAll;
 
   // Available years (for tabs)
  const availableYears = [
@@ -342,8 +352,8 @@ export default async function BoxOfficePage({
     "mainEntity": [
       {
         "@type":          "Question",
-        "name":           "Where can I find the latest hindi movie box office collection?",
-        "acceptedAnswer": { "@type": "Answer", "text": "The Cinema Verse publishes daily box office updates for all hindi movies. Bookmark this page and check back every day for fresh figures." },
+        "name":           `Where can I find the latest ${activeLang.short.toLowerCase()} movie box office collection?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `The Cinema Verse publishes daily box office updates for all ${activeLang.short.toLowerCase()} movies. Bookmark this page and check back every day for fresh figures.` },
       },
       {
         "@type":          "Question",
@@ -352,28 +362,28 @@ export default async function BoxOfficePage({
       },
       {
         "@type":          "Question",
-        "name":           "How is an hindi movie verdict decided?",
+        "name":           `How is a ${activeLang.short.toLowerCase()} movie verdict decided?`,
         "acceptedAnswer": { "@type": "Answer", "text": "A verdict is based on earnings vs total cost (production + prints + publicity). A film recovering more than twice its cost is called a Blockbuster; failing to recover costs is a Flop." },
       },
       {
         "@type":          "Question",
-        "name":           "Does The Cinema Verse track worldwide collection of hindi movies?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes, where data is available we include worldwide figures covering Odisha, rest of India, and international markets." },
+        "name":           `Does The Cinema Verse track worldwide collection of ${activeLang.short.toLowerCase()} movies?`,
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, where data is available we include worldwide figures covering regional, rest of India, and international markets." },
       },
       {
         "@type":          "Question",
-        "name":           "Which hindi movie has the highest box office collection ever?",
-        "acceptedAnswer": { "@type": "Answer", "text": allTimeTop ? `${allTimeTop.title} holds the record for the highest net collection among all hindi films tracked on The Cinema Verse, with a total of ${fmtINR(allTimeTop.totalNet)}.` : "The Cinema Verse tracks all hindi films and the all-time highest grosser is updated regularly on this page." },
+        "name":           `Which ${activeLang.short.toLowerCase()} movie has the highest box office collection ever?`,
+        "acceptedAnswer": { "@type": "Answer", "text": allTimeTop ? `${allTimeTop.title} holds the record for the highest net collection among all ${activeLang.short.toLowerCase()} films tracked on The Cinema Verse, with a total of ${fmtINR(allTimeTop.totalNet)}.` : `The Cinema Verse tracks all ${activeLang.short.toLowerCase()} films and the all-time highest grosser is updated regularly on this page.` },
       },
       {
         "@type":          "Question",
-        "name":           `How many hindi movies are tracked on The Cinema Verse?`,
-        "acceptedAnswer": { "@type": "Answer", "text": `The Cinema Verse is currently tracking ${enriched.length} hindi films with box office data across all years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.` },
+        "name":           `How many ${activeLang.short.toLowerCase()} movies are tracked on The Cinema Verse?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `The Cinema Verse is currently tracking ${enriched.length} ${activeLang.short.toLowerCase()} films with box office data across all years (${availableYears[availableYears.length - 1]}–${availableYears[0]}). New releases are added as they hit theatres.` },
       },
       {
         "@type":          "Question",
-        "name":           "What does 'Day 1 collection' mean for hindi movies?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Day 1 collection refers to box office earnings on a film's first day of release, including morning, afternoon, and evening shows across all theatres in Odisha and other regions." },
+        "name":           `What does 'Day 1 collection' mean for ${activeLang.short.toLowerCase()} movies?`,
+        "acceptedAnswer": { "@type": "Answer", "text": "Day 1 collection refers to box office earnings on a film's first day of release, including morning, afternoon, and evening shows across all theatres." },
       },
       {
         "@type":          "Question",
@@ -386,7 +396,7 @@ export default async function BoxOfficePage({
   const blogListJsonLd = blogs.length > 0 ? {
     "@context": "https://schema.org",
     "@type":    "ItemList",
-    "name":     "bollywood Box Office News & Analysis",
+    "name":     `${activeLang.adjective} Box Office News & Analysis`,
     "itemListElement": blogs.map((b: any, i: number) => ({
       "@type":    "ListItem",
       "position": i + 1,
@@ -413,7 +423,7 @@ export default async function BoxOfficePage({
             <nav className="flex items-center gap-1.5 text-xs text-gray-600 mb-3">
               <Link href="/" className="hover:text-brand-400 transition-colors">Home</Link>
               <span>/</span>
-              <Link href="/box-office" className="hover:text-brand-400 transition-colors">Box Office</Link>
+              <Link href={lang ? `/box-office?lang=${lang}` : "/box-office"} className="hover:text-brand-400 transition-colors">Box Office</Link>
               {selectedYear !== currentYear && (
                 <>
                   <span>/</span>
@@ -421,7 +431,20 @@ export default async function BoxOfficePage({
                 </>
               )}
             </nav>
-            <div className="flex items-center gap-3 mb-2">
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight mb-3">
+              {activeLang.adjective} Box Office Collection <span className="text-brand-500">{selectedYear}</span>
+            </h1>
+            
+            {/* Language Selector */}
+            <div className="mb-4">
+              <LanguageSelector activeLang={lang} showAll={true} />
+            </div>
+
+            <p className="text-sm sm:text-base text-gray-400 max-w-3xl leading-relaxed">
+              Complete {activeLang.short.toLowerCase()} movie box office collection report {selectedYear}. Find day-wise net and gross earnings, hit/flop verdict, and all-time highest-grossing {activeLang.short.toLowerCase()} films — updated daily on The Cinema Verse.
+            </p>
+            <div className="flex items-center gap-3 mb-2 mt-4">
               <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-widest
                 uppercase text-brand-400 bg-brand-500/10 border border-brand-500/20
                 rounded-full px-2.5 py-0.5">

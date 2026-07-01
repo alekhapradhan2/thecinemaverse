@@ -6,9 +6,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Cast from "@/models/Cast";
-import { buildMeta } from "@/lib/seo";
+import { buildMeta, getLangMeta } from "@/lib/seo";
+import { resolveLanguage, getLanguageFilter, DEFAULT_LANGUAGE } from "@/lib/languages";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import CastSearchBar from "@/components/cast/CastSearchBar";
 import CastCard      from "@/components/cast/CastCard";
+
 
 export const revalidate = 600;
 
@@ -65,27 +68,85 @@ function serialise(docs: any[]): PlainPerson[] {
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { type?: string };
+  searchParams: { type?: string; lang?: string };
 }): Promise<Metadata> {
-  const { type } = searchParams;
+  const { type, lang } = searchParams;
+  const activeLang = resolveLanguage(lang);
+  const s = getLangMeta(activeLang);
   const seo = type ? ROLE_SEO[type] : null;
+
   return buildMeta({
     title: seo
-      ? `${seo.title} – bollywood Directory | The Cinema Verse`
-      : "bollywood Actors, Actresses & Crew – Complete bollywood Cast Directory | The Cinema Verse",
+      ? `${seo.title.replace("bollywood", s.adj).replace("Hindi", s.adj)} – ${s.industry} Directory | The Cinema Verse`
+      : `${s.actors}, Actresses & Crew – Complete ${s.industry} Cast Directory | The Cinema Verse`,
     description: seo
-      ? `${seo.description} View complete filmographies, biographies and career highlights on The Cinema Verse.`
-      : "Explore the complete directory of hindi film actors, actresses, directors, singers and crew. Browse profiles with filmographies and career stats of bollywood celebrities.",
-    url: type ? `/cast?type=${type}` : "/cast",
+      ? `${seo.description.replace(/bollywood/g, s.adj).replace(/hindi/gi, s.adj)} View complete filmographies, biographies and career highlights on The Cinema Verse.`
+      : `Explore the complete directory of ${s.adj.toLowerCase()} film actors, actresses, directors, singers and crew. Browse profiles with filmographies and career stats of ${s.industry} celebrities.`,
+    url: searchParams.lang 
+      ? `/cast?${type ? `type=${type}&` : ''}lang=${searchParams.lang}` 
+      : (type ? `/cast?type=${type}` : "/cast"),
   });
 }
 
+
 // ── Data fetching ──────────────────────────────────────────────────────────────
 
-async function getPageData(type?: string) {
+async function getPageData(type?: string, langKey?: string) {
   await connectDB();
-  const proj = "name photo type movies";
+  const proj = "name photo type movies roles";
+  const langDbValue = getLanguageFilter(langKey);
 
+  // If a language is selected, we need an aggregation to filter by movie language
+  if (langDbValue) {
+    const buildPipeline = (matchConditions: any, sortLimit: any) => [
+      { $match: matchConditions },
+      // Lookup the movies array to get the full movie docs
+      {
+        $lookup: {
+          from: "movies", // Assuming the collection is named 'movies'
+          localField: "movies",
+          foreignField: "_id",
+          as: "movieDocs"
+        }
+      },
+      // Keep only casts where at least one movie matches the language
+      { $match: { "movieDocs.language": langDbValue } },
+      // Project back to normal shape (exclude large movieDocs)
+      { $project: { name: 1, photo: 1, type: 1, movies: 1, roles: 1 } },
+      ...sortLimit
+    ];
+
+    if (type) {
+      const match = { $or: [{ type }, { roles: type }] };
+      const raw = await Cast.aggregate(buildPipeline(match, [{ $sort: { name: 1 } }, { $limit: 48 }]));
+      return { mode: "filtered" as const, cast: serialise(raw), total: raw.length };
+    }
+
+    const actorFilter = { type: { $in: ["Actor", "Actress"] } };
+    
+    // For homepage sections, run the aggregations
+    const [topStars, directors, veterans, musicians, risingNew, crew] = await Promise.all([
+      Cast.aggregate(buildPipeline(actorFilter, [{ $addFields: { movieCount: { $size: { $ifNull: ["$movies", []] } } } }, { $sort: { movieCount: -1 } }, { $limit: SECTION_LIMIT }])),
+      Cast.aggregate(buildPipeline({ type: "Director" }, [{ $sort: { name: 1 } }, { $limit: SECTION_LIMIT }])),
+      Cast.aggregate(buildPipeline({ $expr: { $gte: [{ $size: { $ifNull: ["$movies", []] } }, 5] } }, [{ $sort: { name: 1 } }, { $limit: SECTION_LIMIT }])),
+      Cast.aggregate(buildPipeline({ type: { $in: ["Music Director", "Singer", "Lyricist"] } }, [{ $sort: { name: 1 } }, { $limit: SECTION_LIMIT }])),
+      Cast.aggregate(buildPipeline({ $expr: { $eq: [{ $size: { $ifNull: ["$movies", []] } }, 1] } }, [{ $sort: { name: 1 } }, { $limit: SECTION_LIMIT }])),
+      Cast.aggregate(buildPipeline({ type: { $in: ["Producer", "Cinematographer", "Choreographer", "Editor"] } }, [{ $sort: { name: 1 } }, { $limit: SECTION_LIMIT }])),
+    ]);
+
+    return {
+      mode:      "trending" as const,
+      topStars:  serialise(topStars),
+      directors: serialise(directors),
+      veterans:  serialise(veterans),
+      musicians: serialise(musicians),
+      risingNew: serialise(risingNew),
+      crew:      serialise(crew),
+      total:     topStars.length + directors.length + veterans.length + musicians.length + risingNew.length + crew.length,
+    };
+  }
+
+  // --- Fast path for "All" languages (default) ---
   if (type) {
     const filter = { $or: [{ type }, { roles: type }] };
     const [raw, total] = await Promise.all([
@@ -183,7 +244,8 @@ function CastSection({
 
 // ── JSON-LD Schema ─────────────────────────────────────────────────────────────
 
-function CastSchema({ type, total }: { type?: string; total: number }) {
+function CastSchema({ type, total, activeLang }: { type?: string; total: number; activeLang: any }) {
+  const s = getLangMeta(activeLang);
   const schema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -197,10 +259,10 @@ function CastSchema({ type, total }: { type?: string; total: number }) {
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: type ? `bollywood ${type}s in bollywood` : "bollywood Cast & Crew Directory",
+    name: type ? `${s.adj} ${type}s in ${s.industry}` : `${s.industry} Cast & Crew Directory`,
     description: type
-      ? `Complete list of bollywood ${type}s in bollywood cinema`
-      : "Complete directory of actors, actresses, directors and crew in hindi cinema",
+      ? `Complete list of ${s.adj.toLowerCase()} ${type}s in ${s.industry} cinema`
+      : `Complete directory of actors, actresses, directors and crew in ${s.adj.toLowerCase()} cinema`,
     numberOfItems: total,
     url: type ? `https://thecinemaverses.in/cast?type=${type}` : "https://thecinemaverses.in/cast",
   };
@@ -218,15 +280,17 @@ function CastSchema({ type, total }: { type?: string; total: number }) {
 export default async function CastPage({
   searchParams,
 }: {
-  searchParams: { type?: string };
+  searchParams: { type?: string; lang?: string };
 }) {
-  const { type } = searchParams;
-  const data = await getPageData(type);
+  const { type, lang } = searchParams;
+  const data = await getPageData(type, lang);
   const seo  = type ? ROLE_SEO[type] : null;
+  const activeLang = resolveLanguage(lang);
+  const s = getLangMeta(activeLang);
 
   return (
     <>
-      <CastSchema type={type} total={data.total} />
+      <CastSchema type={type} total={data.total} activeLang={activeLang} />
 
       <main className="min-h-screen bg-[#0a0a0a] text-white">
 
@@ -280,13 +344,19 @@ export default async function CastPage({
                 <h1 className="text-3xl md:text-4xl font-black text-white leading-tight mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
                   {type
                     ? <>{ROLE_ICON[type] || "🎭"} <span className="text-brand-400">{type}s</span></>
-                    : <>Cast <span className="text-brand-400">&amp;</span> Crew</>
+                    : <>{activeLang.short} Cast <span className="text-brand-400">&amp;</span> Crew</>
                   }
                 </h1>
+                
+                {/* Language Selector */}
+                <div className="mb-4">
+                  <LanguageSelector activeLang={lang} showAll={true} />
+                </div>
+
                 <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
                   {seo
-                    ? seo.description
-                    : "Complete directory of hindi film actors, actresses, directors, singers and crew from bollywood."
+                    ? seo.description.replace(/bollywood/g, s.adj).replace(/hindi/gi, s.adj)
+                    : `Complete directory of ${s.adj.toLowerCase()} film actors, actresses, directors, singers and crew from ${s.industry}.`
                   }
                 </p>
                 <div className="flex items-center gap-2 mt-3">

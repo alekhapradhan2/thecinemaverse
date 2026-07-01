@@ -1,8 +1,12 @@
 export const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  || "https://thecinemaverses.in";
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "The Cinema Verse";
 
+/**
+ * Build a page <title>. The subtitle defaults to the site name only;
+ * each page supplies its own language-specific subtitle via the title string.
+ */
 export function buildTitle(pageTitle: string) {
-  return `${pageTitle} | ${SITE_NAME} – Hindi Film Encyclopedia`;
+  return `${pageTitle} | ${SITE_NAME}`;
 }
 
 export function buildMeta({
@@ -116,5 +120,35 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
       name: item.name,
       item: `${SITE_URL}${item.url}`,
     })),
+  };
+}
+
+/**
+ * Returns language-aware SEO copy strings for use in generateMetadata().
+ * Safe to call with any LanguageConfig from src/lib/languages.ts.
+ * Defaults to Bollywood terms if lang is not provided.
+ */
+export function getLangMeta(lang?: {
+  adjective: string;
+  industry: string;
+  locale?: string;
+}) {
+  const adj = lang?.adjective ?? "Bollywood";
+  const industry = lang?.industry  ?? "Bollywood";
+  const loc = lang?.locale    ?? "en_IN";
+  return {
+    adj,
+    industry,
+    loc,
+    movies:    `${adj} Movies`,
+    actors:    `${adj} Actors`,
+    actresses: `${adj} Actresses`,
+    songs:     `${adj} Songs`,
+    boxOffice: `${adj} Box Office`,
+    news:      `${adj} News`,
+    /** e.g. "Latest Bollywood Movies" section heading */
+    latestMovies:   `Latest ${adj} Movies`,
+    upcomingMovies: `Upcoming ${adj} Movies`,
+    currentRunning: `Currently Running ${adj} Movies`,
   };
 }
