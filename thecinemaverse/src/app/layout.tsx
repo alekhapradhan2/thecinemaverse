@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ></script>
       </head>
       <body className="grain min-h-screen flex flex-col bg-[#0F0F10]">
+        <ScrollToTop />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

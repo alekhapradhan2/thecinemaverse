@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import Link              from "next/link";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 import { connectDB }     from "@/lib/db";
 import Movie             from "@/models/Movie";
 import Blog              from "@/models/Blog";
@@ -600,10 +601,10 @@ export default async function BoxOfficePage({
 
               {/* This Week's Top Performer */}
               {weekTop && (
-                <Link
+                <TransitionLink
                   href={`/box-office/${movieSlug(weekTop)}`}
                   className="group relative overflow-hidden bg-gradient-to-br from-brand-500/10 via-[#111] to-[#0f0f0f]
-                    border border-brand-500/20 rounded-2xl p-4 hover:border-brand-500/40 transition-all"
+                    border border-brand-500/20 rounded-2xl p-4 hover:border-brand-500/40 transition-all block"
                 >
                   <p className="text-[10px] font-black uppercase tracking-widest text-brand-400 mb-2">
                     🔥 This Week's Top Performer
@@ -634,15 +635,15 @@ export default async function BoxOfficePage({
                   </div>
                   <div className="absolute bottom-3 right-4 text-brand-500/15 text-5xl font-black
                     pointer-events-none select-none group-hover:text-brand-500/25 transition-colors">🔥</div>
-                </Link>
+                </TransitionLink>
               )}
 
               {/* All-Time #1 */}
               {allTimeTop && (
-                <Link
+                <TransitionLink
                   href={`/box-office/${movieSlug(allTimeTop)}`}
                   className="group relative overflow-hidden bg-gradient-to-br from-yellow-500/10 via-[#111] to-[#0f0f0f]
-                    border border-yellow-500/20 rounded-2xl p-4 hover:border-yellow-500/40 transition-all"
+                    border border-yellow-500/20 rounded-2xl p-4 hover:border-yellow-500/40 transition-all block"
                 >
                   <p className="text-[10px] font-black uppercase tracking-widest text-yellow-400 mb-2">
                     👑 All-Time Highest Grosser
@@ -675,7 +676,7 @@ export default async function BoxOfficePage({
                   </div>
                   <div className="absolute bottom-3 right-4 text-yellow-500/20 text-5xl font-black
                     pointer-events-none select-none group-hover:text-yellow-500/30 transition-colors">👑</div>
-                </Link>
+                </TransitionLink>
               )}
             </div>
           )}
@@ -699,7 +700,7 @@ export default async function BoxOfficePage({
                   const daysAgo   = Math.floor((now - lastDayTs) / oneDay);
                   const daysAgoLabel = daysAgo === 0 ? "Updated today" : daysAgo === 1 ? "Updated yesterday" : `Updated ${daysAgo}d ago`;
                   return (
-                    <Link
+                    <TransitionLink
                       key={m._id}
                       href={`/box-office/${slug}`}
                       className="group bg-[#0f0f0f] border border-[#1c1c1c] rounded-xl p-2.5
@@ -729,7 +730,7 @@ export default async function BoxOfficePage({
                           {daysAgoLabel}
                         </p>
                       </div>
-                    </Link>
+                    </TransitionLink>
                   );
                 })}
               </div>
@@ -769,7 +770,7 @@ export default async function BoxOfficePage({
                       const vColor        = storedVerdict ? verdictColor(storedVerdict) : "";
                       const medal         = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : null;
                       return (
-                        <Link key={m._id} href={`/box-office/${slug}`}
+                        <TransitionLink key={m._id} href={`/box-office/${slug}`}
                           className="group flex items-center gap-2 sm:gap-3 py-3 px-3 sm:px-4
                             hover:bg-yellow-500/[0.04] transition-colors duration-100">
                           <span className="w-6 text-center text-xs font-black text-gray-700
@@ -813,7 +814,7 @@ export default async function BoxOfficePage({
                               </span>
                             )}
                           </div>
-                        </Link>
+                        </TransitionLink>
                       );
                     })}
                 </div>
@@ -902,7 +903,7 @@ export default async function BoxOfficePage({
                         const globalRank    = offset + idx + 1;
 
                         return (
-                          <Link key={m._id} href={`/box-office/${slug}`}
+                          <TransitionLink key={m._id} href={`/box-office/${slug}`}
                             className="group flex items-center gap-2 sm:gap-3 py-2.5 px-2 rounded-lg
                               hover:bg-white/[0.03] transition-colors duration-100">
                             <span className="w-6 text-center text-xs font-black text-gray-700
@@ -964,7 +965,7 @@ export default async function BoxOfficePage({
                             </div>
                             <span className="w-4 text-right text-gray-700 group-hover:text-brand-400
                               transition-colors text-xs flex-shrink-0">→</span>
-                          </Link>
+                          </TransitionLink>
                         );
                       })}
                     </div>

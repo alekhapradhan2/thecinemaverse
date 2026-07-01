@@ -5,20 +5,38 @@ import Cast from "@/models/Cast";
 import Blog from "@/models/Blog";
 import { getLanguageFilter } from "@/lib/languages";
 
-// ─── Build a fuzzy regex from the query ──────────────────────────────────────
-// "avngers" → /a.*v.*n.*g.*e.*r.*s/i  so typos/missing chars still match
+// ─── Regex builders ───────────────────────────────────────────────────────────
+
+// Exact substring match (fast, highest priority)
+function exactRegex(q: string) {
+  return { $regex: q.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" };
+}
+
+// Character-sequence fuzzy: "avngers" → /a.*v.*n.*g.*e.*r.*s/i
+// Good for missing / reordered chars. Only used for queries ≥ 3 chars.
 function fuzzyRegex(q: string) {
-  const escaped = q
-    .trim()
+  const s = q.trim();
+  if (s.length < 3) return exactRegex(s);
+  const escaped = s
     .split("")
     .map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
     .join(".*");
   return { $regex: escaped, $options: "i" };
 }
 
-// Exact-prefix / contains regex (fast, used alongside fuzzy on OR)
-function exactRegex(q: string) {
-  return { $regex: q.trim(), $options: "i" };
+// Drop-ONE-char variants only (not every char optional — that matches everything)
+// For each position we build a regex with that ONE character dropped.
+// We OR them all together at the MongoDB level.
+function dropOneRegexes(q: string): Record<string, any>[] {
+  const s = q.trim();
+  if (s.length <= 3) return [];
+  const variants: string[] = [];
+  for (let i = 0; i < s.length; i++) {
+    const dropped = s.slice(0, i) + s.slice(i + 1);
+    variants.push(dropped.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  }
+  // Return as array of $regex objects to be used in $or
+  return variants.map((v) => ({ $regex: v, $options: "i" }));
 }
 
 export async function GET(req: NextRequest) {
@@ -30,30 +48,37 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ movies: [], cast: [], blogs: [], songs: [], boxOffice: [] });
     }
 
-    // Optional language boost — if provided, prioritize that language in results
-    const langKey      = searchParams.get("lang");
-    const langDbValue  = getLanguageFilter(langKey);
+    // Optional language boost
+    const langKey     = searchParams.get("lang");
+    const langDbValue = getLanguageFilter(langKey);
 
-    const exact = exactRegex(q);
-    const fuzzy = fuzzyRegex(q);
+    const exact    = exactRegex(q);
+    const fuzzy    = fuzzyRegex(q);
+    const dropOnes = dropOneRegexes(q); // array of {$regex,...}
 
-    // Helper: build an OR filter that checks both exact and fuzzy on every field
+    // Build an OR filter across the given fields, combining all match strategies
     function orFilter(...fields: string[]) {
-      return {
-        $or: fields.flatMap((f) => [{ [f]: exact }, { [f]: fuzzy }]),
-      };
+      const conditions: Record<string, any>[] = [];
+      for (const f of fields) {
+        conditions.push({ [f]: exact });
+        conditions.push({ [f]: fuzzy });
+        for (const d of dropOnes) {
+          conditions.push({ [f]: d });
+        }
+      }
+      return { $or: conditions };
     }
 
     const [movies, cast, blogs, songMovies] = await Promise.all([
       Movie.find(
-        orFilter("title", "director", "genre"),
+        orFilter("title", "director"),
         "title slug posterUrl thumbnailUrl releaseDate genre verdict language"
       )
-        .limit(langDbValue ? 12 : 6) // fetch more when language-boosting so we can sort
+        .limit(langDbValue ? 12 : 8)
         .lean(),
 
       Cast.find(
-        orFilter("name", "type"),
+        orFilter("name"),
         "name photo type roles slug"
       )
         .limit(5)
@@ -67,26 +92,32 @@ export async function GET(req: NextRequest) {
         .lean(),
 
       Movie.find(
-        { "media.songs.title": exact },
+        { $or: [{ "media.songs.title": exact }, { "media.songs.title": fuzzy }] },
         "title slug media.songs posterUrl"
       )
         .limit(5)
         .lean(),
     ]);
 
-    // Language boost: if lang param present, sort matching-language movies first
+    // Language boost: sort matching-language movies first
     let sortedMovies = movies as any[];
     if (langDbValue) {
       sortedMovies = [
         ...sortedMovies.filter((m: any) => m.language === langDbValue),
         ...sortedMovies.filter((m: any) => m.language !== langDbValue),
-      ].slice(0, 6);
+      ].slice(0, 8);
     }
 
-    // Flatten matching songs from movie documents
+    // Flatten matching songs from movie documents using fuzzy regex in JS
+    const fuzzyRe = new RegExp(
+      q.split("").map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join(".*"),
+      "i"
+    );
+    const exactRe = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+
     const songs = (songMovies as any[]).flatMap((m: any) =>
       (m.media?.songs || [])
-        .filter((s: any) => new RegExp(q, "i").test(s.title || ""))
+        .filter((s: any) => exactRe.test(s.title || "") || fuzzyRe.test(s.title || ""))
         .slice(0, 2)
         .map((s: any, i: number) => ({
           title: s.title,
@@ -102,4 +133,4 @@ export async function GET(req: NextRequest) {
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
-}
+}

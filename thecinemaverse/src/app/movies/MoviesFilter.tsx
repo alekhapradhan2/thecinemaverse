@@ -23,15 +23,6 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
     router.push(`/movies?${params.toString()}`);
   }
 
-  function gotoPage(p: number) {
-    const params = new URLSearchParams();
-    if (active.genre)   params.set("genre",   active.genre);
-    if (active.verdict) params.set("verdict", active.verdict);
-    if (active.sort)    params.set("sort",    active.sort);
-    params.set("page", String(p));
-    router.push(`/movies?${params.toString()}`);
-  }
-
   const pillBase = "px-3 py-1.5 text-xs font-medium rounded-full border transition-all cursor-pointer";
   const pillActive = "bg-brand-500/20 border-brand-500/50 text-brand-400";
   const pillIdle   = "bg-transparent border-[#2a2a2a] text-gray-400 hover:border-brand-500/30 hover:text-brand-400";
@@ -97,42 +88,6 @@ export function MoviesFilter({ genres, verdicts, active, totalPages }: MoviesFil
         </select>
       </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center gap-2 pt-2">
-          <button
-            onClick={() => gotoPage(active.page - 1)}
-            disabled={active.page <= 1}
-            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-brand-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => i + 1).map((p) => (
-            <button
-              key={p}
-              onClick={() => gotoPage(p)}
-              className={clsx(
-                "w-8 h-8 text-xs rounded-lg border transition-all",
-                p === active.page
-                  ? "bg-brand-500 border-brand-500 text-white font-bold"
-                  : "border-[#2a2a2a] text-gray-400 hover:border-brand-500/40 hover:text-white"
-              )}
-            >
-              {p}
-            </button>
-          ))}
-          <button
-            onClick={() => gotoPage(active.page + 1)}
-            disabled={active.page >= totalPages}
-            className="p-1.5 border border-[#2a2a2a] rounded-lg text-gray-400 hover:text-white hover:border-brand-500/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-          <span className="text-xs text-gray-500 ml-2">
-            Page {active.page} of {totalPages}
-          </span>
-        </div>
-      )}
     </div>
   );
 }

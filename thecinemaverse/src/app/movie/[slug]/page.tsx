@@ -18,6 +18,7 @@ import { ReleaseCountdown }  from "@/components/movie/ReleaseCountdown";
 import { ShareButtons }      from "@/components/movie/ShareButtons";
 import { StarRating }    from "@/components/ui/StarRating";
 import { SongRowClient } from "@/components/movie/SongRowClient";
+import { CastCrewLink }  from "@/components/movie/CastCrewLink";
 import { BoxOfficeDaysChart } from "@/components/movie/BoxOfficeDaysChart";
 import {
   Calendar, Clock, User, DollarSign, Film, Star,
@@ -1378,20 +1379,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                                 </td>
                                 {/* Photo + Name */}
                                 <td className="px-4 py-2.5 align-middle">
-                                  <Link href={member.castId ? `/cast/${member.castId}` : "#"}
-                                    className="flex items-start gap-2.5 group/link"
-                                    aria-disabled={!member.castId}>
-                                    <div className="relative w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border border-[#333]">
-                                      <Image
-                                        src={member.photo || "/placeholder-person.svg"}
-                                        alt={member.name}
-                                        fill className="object-cover"
-                                      />
-                                    </div>
-                                    <span className="text-sm font-semibold text-white group-hover/link:text-brand-400 transition-colors break-words min-w-0">
-                                      {member.name}
-                                    </span>
-                                  </Link>
+                                  <CastCrewLink member={member} isSmall={true} />
                                 </td>
                               </tr>
                             ))}
@@ -1419,20 +1407,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                               <tr key={i} className="group border-b border-[#1a1a1a] last:border-0 hover:bg-brand-500/3 transition-colors">
                                 {/* Photo + Name */}
                                 <td className="px-4 py-2.5 align-middle">
-                                  <Link href={member.castId ? `/cast/${member.castId}` : "#"}
-                                    className="flex items-start gap-2.5 group/link"
-                                    aria-disabled={!member.castId}>
-                                    <div className="relative w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-[#333]">
-                                      <Image
-                                        src={member.photo || "/placeholder-person.svg"}
-                                        alt={`${member.name} in ${movie.title}`}
-                                        fill className="object-cover"
-                                      />
-                                    </div>
-                                    <span className="text-sm font-semibold text-white group-hover/link:text-brand-400 transition-colors break-words min-w-0">
-                                      {member.name}
-                                    </span>
-                                  </Link>
+                                  <CastCrewLink member={member} />
                                 </td>
                                 {/* Role / Type */}
                                 <td className="px-4 py-2.5 align-middle">

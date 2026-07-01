@@ -3,10 +3,10 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useTransition } from "react";
 import {
   Search, Menu, X, Film,
-  Clapperboard, Users, BookOpen, Music2, TrendingUp, ChevronRight, ArrowRight, Calendar, Globe,
+  Clapperboard, Users, BookOpen, Music2, TrendingUp, ChevronRight, ArrowRight, Calendar, Globe, Loader2
 } from "lucide-react";
 import clsx from "clsx";
 import { LANGUAGES, DEFAULT_LANGUAGE } from "@/lib/languages";
@@ -119,9 +119,7 @@ function toSuggestions(data: ApiResponse): Suggestion[] {
     id:       c._id,
     title:    c.name,
     subtitle: c.type ?? "Cast",
-    href:     c.slug
-                ? `/cast/${c.slug}`
-                : `/cast/${c.name.toLowerCase().replace(/\s+/g, "-")}`,
+    href:     `/cast/${c._id}`,
     image:    c.photo,
     category: "cast",
   }));
@@ -224,14 +222,31 @@ function SuggestionRow({
   item: Suggestion; query: string; active: boolean; onSelect: () => void;
 }) {
   const c = CAT[item.category];
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  const handleClick = (e: React.MouseEvent) => {
+    // If user is trying to open in new tab with Cmd/Ctrl, let default anchor behavior happen
+    if (e.metaKey || e.ctrlKey) return;
+    
+    e.preventDefault();
+    // Do NOT call onSelect() here so the dropdown stays open and shows the loading spinner.
+    // The dropdown will close automatically when the page transition completes because
+    // the pathname will change and the useEffect in Navbar will trigger.
+    startTransition(() => {
+      router.push(item.href);
+    });
+  };
+
   return (
-    <Link
+    <a
       href={item.href}
-      onClick={onSelect}
+      onClick={handleClick}
       aria-selected={active}
       className={clsx(
-        "group flex items-center gap-3 px-3 py-2 mx-1.5 rounded-xl transition-all duration-100",
+        "group flex items-center gap-3 px-3 py-2 mx-1.5 rounded-xl transition-all duration-100 cursor-pointer",
         active ? "bg-white/10" : "hover:bg-white/6",
+        isPending && "opacity-60 pointer-events-none",
       )}
     >
       {/* Thumbnail or icon */}
@@ -239,9 +254,11 @@ function SuggestionRow({
         "flex-shrink-0 w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center",
         item.image ? "" : c.iconBg,
       )}>
-        {item.image
-          ? <img src={item.image} alt="" className="w-full h-full object-cover" />
-          : <c.Icon className={clsx("w-4.5 h-4.5", c.color)} aria-hidden="true" />
+        {isPending
+          ? <Loader2 className={clsx("w-4 h-4 animate-spin", c.color)} aria-hidden="true" />
+          : item.image
+            ? <img src={item.image} alt="" className="w-full h-full object-cover" />
+            : <c.Icon className={clsx("w-4.5 h-4.5", c.color)} aria-hidden="true" />
         }
       </div>
 
@@ -266,7 +283,7 @@ function SuggestionRow({
         active ? "opacity-100 translate-x-0" : "",
         c.color,
       )} aria-hidden="true" />
-    </Link>
+    </a>
   );
 }
 
@@ -394,6 +411,26 @@ function MoviesYearDropdown({
 }) {
   const currentYear = new Date().getFullYear();
   const activeLang  = LANGUAGES.find((l) => l.key === activeLangKey) ?? DEFAULT_LANGUAGE;
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [loadingYear, setLoadingYear] = useState<number | string | null>(null);
+
+  const prevPending = useRef(isPending);
+  useEffect(() => {
+    if (prevPending.current && !isPending && loadingYear !== null) {
+      onClose();
+      setLoadingYear(null);
+    }
+    prevPending.current = isPending;
+  }, [isPending, loadingYear, onClose]);
+
+  const handleNav = (e: React.MouseEvent, href: string, id: number | string) => {
+    e.preventDefault();
+    setLoadingYear(id);
+    startTransition(() => {
+      router.push(href);
+    });
+  };
 
   return (
     <div
@@ -438,20 +475,25 @@ function MoviesYearDropdown({
         <div className="grid grid-cols-3 gap-1.5">
           {MOVIE_YEARS.map((yr) => {
             const isCurrent = yr === currentYear;
+            const isLoading = isPending && loadingYear === yr;
             return (
-              <Link
+              <a
                 key={yr}
                 href={`/movies/year/${yr}?lang=${activeLangKey}`}
-                onClick={onClose}
+                onClick={(e) => handleNav(e, `/movies/year/${yr}?lang=${activeLangKey}`, yr)}
                 className={clsx(
                   "group relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-150 text-center overflow-hidden",
                   isCurrent
                     ? "bg-brand-500/20 border border-brand-500/40 hover:bg-brand-500/30"
                     : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-brand-500/25",
+                  isLoading && "opacity-50 pointer-events-none"
                 )}
               >
-                {isCurrent && (
+                {isCurrent && !isLoading && (
                   <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full" />
+                )}
+                {isLoading && (
+                   <span className="absolute top-1.5 right-1.5"><Loader2 className="w-3 h-3 text-brand-400 animate-spin" /></span>
                 )}
                 <span className={clsx(
                   "text-sm font-bold transition-colors",
@@ -462,26 +504,29 @@ function MoviesYearDropdown({
                 {isCurrent && (
                   <span className="text-[9px] text-brand-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
                 )}
-              </Link>
+              </a>
             );
           })}
         </div>
 
         {/* View all movies link */}
         <div className="mt-2 pt-2 border-t border-white/[0.06]">
-          <Link
+          <a
             href={`/movies?lang=${activeLangKey}`}
-            onClick={onClose}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group"
+            onClick={(e) => handleNav(e, `/movies?lang=${activeLangKey}`, 'all')}
+            className={clsx(
+              "flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group",
+              isPending && loadingYear === 'all' && "opacity-50 pointer-events-none cursor-not-allowed"
+            )}
           >
             <div className="flex items-center gap-2">
-              <Film className="w-3.5 h-3.5 text-brand-500" />
+              {isPending && loadingYear === 'all' ? <Loader2 className="w-3.5 h-3.5 text-brand-500 animate-spin" /> : <Film className="w-3.5 h-3.5 text-brand-500" />}
               <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors">
                 All {activeLang.short} Movies
               </span>
             </div>
             <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
-          </Link>
+          </a>
         </div>
       </div>
     </div>
@@ -494,6 +539,26 @@ function MoviesYearDropdown({
 
 function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
   const currentYear = new Date().getFullYear();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [loadingYear, setLoadingYear] = useState<number | string | null>(null);
+
+  const prevPending = useRef(isPending);
+  useEffect(() => {
+    if (prevPending.current && !isPending && loadingYear !== null) {
+      onClose();
+      setLoadingYear(null);
+    }
+    prevPending.current = isPending;
+  }, [isPending, loadingYear, onClose]);
+
+  const handleNav = (e: React.MouseEvent, href: string, id: number | string) => {
+    e.preventDefault();
+    setLoadingYear(id);
+    startTransition(() => {
+      router.push(href);
+    });
+  };
 
   return (
     <div
@@ -516,20 +581,26 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
         <div className="grid grid-cols-3 gap-1.5">
           {BOX_OFFICE_YEARS.map((yr) => {
             const isCurrent = yr === currentYear;
+            const isLoading = isPending && loadingYear === yr;
+            const href = yr === currentYear ? "/box-office" : `/box-office?year=${yr}`;
             return (
-              <Link
+              <a
                 key={yr}
-                href={yr === currentYear ? "/box-office" : `/box-office?year=${yr}`}
-                onClick={onClose}
+                href={href}
+                onClick={(e) => handleNav(e, href, yr)}
                 className={clsx(
                   "group relative flex flex-col items-center justify-center py-3 px-2 rounded-xl transition-all duration-150 text-center overflow-hidden",
                   isCurrent
                     ? "bg-brand-500/20 border border-brand-500/40 hover:bg-brand-500/30"
                     : "bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.07] hover:border-brand-500/25",
+                  isLoading && "opacity-50 pointer-events-none"
                 )}
               >
-                {isCurrent && (
+                {isCurrent && !isLoading && (
                   <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-brand-500 rounded-full animate-pulse" />
+                )}
+                {isLoading && (
+                   <span className="absolute top-1.5 right-1.5"><Loader2 className="w-3 h-3 text-brand-400 animate-spin" /></span>
                 )}
                 <span className={clsx(
                   "text-sm font-bold transition-colors",
@@ -540,7 +611,7 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
                 {isCurrent && (
                   <span className="text-[9px] text-brand-500/80 font-semibold mt-0.5 uppercase tracking-wider">Latest</span>
                 )}
-              </Link>
+              </a>
             );
           })}
         </div>
@@ -549,30 +620,36 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
         <div className="mt-2 pt-2 border-t border-white/[0.06] space-y-1.5">
           <a
             href="/box-office#all-time"
-            onClick={onClose}
-            className="flex items-center justify-between w-full px-3 py-2 rounded-xl bg-yellow-500/5 hover:bg-yellow-500/10 border border-yellow-500/15 hover:border-yellow-500/30 transition-all group"
+            onClick={(e) => handleNav(e, "/box-office#all-time", "all-time")}
+            className={clsx(
+              "flex items-center justify-between w-full px-3 py-2 rounded-xl bg-yellow-500/5 hover:bg-yellow-500/10 border border-yellow-500/15 hover:border-yellow-500/30 transition-all group",
+              isPending && loadingYear === 'all-time' && "opacity-50 pointer-events-none cursor-not-allowed"
+            )}
           >
             <div className="flex items-center gap-2">
-              <span className="text-sm">👑</span>
+              {isPending && loadingYear === 'all-time' ? <Loader2 className="w-4 h-4 text-yellow-500 animate-spin" /> : <span className="text-sm">👑</span>}
               <span className="text-xs font-semibold text-yellow-400 group-hover:text-yellow-300 transition-colors">
                 All-Time Top Grossers
               </span>
             </div>
             <ChevronRight className="w-3.5 h-3.5 text-yellow-600 group-hover:text-yellow-400 group-hover:translate-x-0.5 transition-all" />
           </a>
-          <Link
+          <a
             href="/box-office"
-            onClick={onClose}
-            className="flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group"
+            onClick={(e) => handleNav(e, "/box-office", "all")}
+            className={clsx(
+              "flex items-center justify-between w-full px-3 py-2.5 rounded-xl bg-white/[0.03] hover:bg-brand-500/10 border border-white/[0.06] hover:border-brand-500/30 transition-all group",
+              isPending && loadingYear === 'all' && "opacity-50 pointer-events-none cursor-not-allowed"
+            )}
           >
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-3.5 h-3.5 text-brand-500" />
+              {isPending && loadingYear === 'all' ? <Loader2 className="w-3.5 h-3.5 text-brand-500 animate-spin" /> : <TrendingUp className="w-3.5 h-3.5 text-brand-500" />}
               <span className="text-xs font-semibold text-gray-300 group-hover:text-brand-400 transition-colors">
                 All Box Office Data
               </span>
             </div>
             <ChevronRight className="w-3.5 h-3.5 text-gray-600 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all" />
-          </Link>
+          </a>
         </div>
       </div>
     </div>
@@ -650,6 +727,12 @@ export function Navbar() {
   }, []);
 
   useEffect(() => { runSearch(query); }, [query, runSearch]);
+
+  // ── Close menus on route change ───────────────────────────────────────────
+  useEffect(() => {
+    closeSearch();
+    setMenuOpen(false);
+  }, [pathname]);
 
   // ── Click-outside ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -934,17 +1017,17 @@ export function Navbar() {
             aria-label="Mobile navigation"
           >
             {/* Mobile search */}
-            <div className="relative mb-3">
+            <div ref={containerRef} className="relative mb-3">
               <form
                 onSubmit={submitSearch}
                 role="search"
                 aria-label="Mobile search"
                 className="flex gap-2"
-                onClick={() => !searchOpen && setSearchOpen(true)}
               >
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" aria-hidden="true" />
                   <input
+                    ref={inputRef}
                     type="search"
                     value={query}
                     onChange={(e) => { setQuery(e.target.value); setSearchOpen(true); }}
@@ -954,6 +1037,9 @@ export function Navbar() {
                     autoComplete="off"
                     spellCheck={false}
                     aria-label="Search"
+                    aria-autocomplete="list"
+                    aria-expanded={showDropdown}
+                    aria-haspopup="listbox"
                     className={inputCls}
                   />
                 </div>
@@ -967,14 +1053,16 @@ export function Navbar() {
               </form>
 
               {showDropdown && (
-                <SearchDropdown
-                  query={query}
-                  results={results}
-                  loading={loading}
-                  activeIndex={activeIndex}
-                  onSelect={() => { closeSearch(); setMenuOpen(false); }}
-                  onViewAll={() => { submitSearch(); setMenuOpen(false); }}
-                />
+                <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50">
+                  <SearchDropdown
+                    query={query}
+                    results={results}
+                    loading={loading}
+                    activeIndex={activeIndex}
+                    onSelect={() => { closeSearch(); setMenuOpen(false); }}
+                    onViewAll={() => { submitSearch(); setMenuOpen(false); }}
+                  />
+                </div>
               )}
             </div>
 

@@ -11,6 +11,7 @@ import Movie from "@/models/Movie";
 import News from "@/models/News";
 import Blog from "@/models/Blog";
 import { buildMeta } from "@/lib/seo";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 import {
   Film, Calendar, MapPin, User,
   ChevronRight, Award, Music, Play, Newspaper,
@@ -253,7 +254,31 @@ export default async function CastDetailPage({ params }: { params: { id: string 
   const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
 
   const debutMovie  = movies.length ? movies[movies.length - 1] : null;
-  const latestMovie = movies[0];
+
+  // Smart "latest": prefer an upcoming movie within the next 30 days;
+  // otherwise fall back to the most recently released movie.
+  const now = new Date();
+  const soonThreshold = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
+
+  // 1. Find the most recently released (past) movie
+  const lastReleased = movies.find((m: any) => {
+    if (!m.releaseDate) return false;
+    return new Date(m.releaseDate) < now;
+  }) ?? movies[0];
+
+  // 2. Find the nearest upcoming movie
+  const upcomingMoviesSorted = movies
+    .filter((m: any) => m.releaseDate && new Date(m.releaseDate) >= now)
+    .sort((a: any, b: any) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime());
+  const nextUpcoming = upcomingMoviesSorted[0] ?? null;
+
+  // 3. If the nearest upcoming movie is within 30 days, show it; otherwise show the last released
+  let latestMovie = lastReleased;
+  if (nextUpcoming && new Date(nextUpcoming.releaseDate) <= soonThreshold) {
+    latestMovie = nextUpcoming;
+  }
+
+  const latestIsUpcoming = latestMovie && latestMovie.releaseDate && new Date(latestMovie.releaseDate) >= now;
 
   // Career timeline by year
   const byYear: Record<string | number, any[]> = {};
@@ -351,17 +376,17 @@ export default async function CastDetailPage({ params }: { params: { id: string 
         <div className="absolute inset-y-0 right-0 w-1/3 pointer-events-none hidden sm:block"
           style={{ background: "linear-gradient(to left, #0a0a0a 0%, transparent 100%)" }} />
 
-        {/* ── MOBILE layout: photo floats top-right, text fills left ── */}
-        <div className="relative z-10 sm:hidden px-4 pt-6 pb-16 min-h-[300px]">
-          {/* Photo — absolute top-right */}
-          <div className="absolute top-5 right-4" style={{ width: "120px" }}>
-            <div className="relative overflow-hidden"
+        {/* ── MOBILE layout: photo top-center, text below ── */}
+        <div className="relative z-10 sm:hidden px-4 pt-6 pb-16">
+          {/* Photo — centered at top */}
+          <div className="flex justify-center mb-4">
+            <div className="relative overflow-hidden flex-shrink-0"
               style={{
+                width: "110px",
                 aspectRatio: "3/4",
                 borderRadius: "14px",
                 border: "2px solid rgba(249,115,22,0.5)",
                 boxShadow: "0 0 30px rgba(249,115,22,0.18), 0 16px 40px rgba(0,0,0,0.85)",
-                marginBottom: "-44px",
               }}>
               {person.photo ? (
                 <Image src={person.photo} alt={`${person.name} – Indian ${rolesStr}`}
@@ -373,22 +398,22 @@ export default async function CastDetailPage({ params }: { params: { id: string 
             </div>
           </div>
 
-          {/* Text — left side, padded away from photo */}
-          <div style={{ paddingRight: "136px" }}>
+          {/* Text — full width, no padding squish */}
+          <div className="text-center">
             {/* Role chip */}
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full mb-3"
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full mb-2"
               style={{ background: "rgba(249,115,22,0.15)", border: "1px solid rgba(249,115,22,0.35)", color: "#fb923c" }}>
               {icon} {rolesStr}
             </span>
 
             {/* Name */}
             <h1 className="font-display font-black text-white leading-[1.05] mb-2"
-              style={{ fontSize: "clamp(1.7rem, 7.5vw, 2.4rem)", textShadow: "0 2px 16px rgba(0,0,0,0.9)" }}>
+              style={{ fontSize: "clamp(1.8rem, 8vw, 2.4rem)", textShadow: "0 2px 16px rgba(0,0,0,0.9)" }}>
               {person.name}
             </h1>
 
             {/* Location + year */}
-            <div className="flex flex-wrap gap-1.5 mb-3">
+            <div className="flex flex-wrap justify-center gap-1.5 mb-3">
               {person.location && (
                 <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full"
                   style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "#9ca3af" }}>
@@ -405,16 +430,16 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
             {/* Bio */}
             {person.bio && (
-              <p className="text-xs leading-relaxed"
+              <p className="text-xs leading-relaxed mb-4 px-2"
                 style={{ color: "rgba(209,213,219,0.7)", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                 {person.bio}
               </p>
             )}
           </div>
 
-          {/* Stat pills — full width below, clear of photo */}
+          {/* Stat pills — full width, scrollable */}
           {movies.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-5">
+            <div className="flex flex-wrap justify-center gap-2 mt-1">
               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                 style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}>
                 <Film className="w-3 h-3" style={{ color: "#f97316" }} />
@@ -438,12 +463,14 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                 </div>
               )}
               {latestMovie && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-                  style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                  <Clock className="w-3 h-3" style={{ color: "#34d399" }} />
-                  <span className="text-[11px]" style={{ color: "#6b7280" }}>Latest:</span>
-                  <span className="text-white font-semibold text-[11px]"
-                    style={{ maxWidth: "110px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full flex-shrink-0"
+                  style={{ background: latestIsUpcoming ? "rgba(59,130,246,0.12)" : "rgba(255,255,255,0.07)", border: latestIsUpcoming ? "1px solid rgba(59,130,246,0.3)" : "1px solid rgba(255,255,255,0.1)" }}>
+                  {latestIsUpcoming
+                    ? <Calendar className="w-3 h-3 flex-shrink-0" style={{ color: "#60a5fa" }} />
+                    : <Clock className="w-3 h-3 flex-shrink-0" style={{ color: "#34d399" }} />
+                  }
+                  <span className="text-[11px] flex-shrink-0" style={{ color: "#6b7280" }}>{latestIsUpcoming ? "Upcoming:" : "Latest:"}</span>
+                  <span className="text-white font-semibold text-[11px]">
                     {latestMovie.title}
                   </span>
                 </div>
@@ -453,7 +480,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
           {/* Social */}
           {(person.instagram || person.website) && (
-            <div className="flex gap-2 mt-3">
+            <div className="flex justify-center gap-2 mt-3">
               {person.instagram && (
                 <a href={`https://instagram.com/${person.instagram.replace("@", "")}`}
                   target="_blank" rel="noopener noreferrer"
@@ -559,12 +586,14 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                   </div>
                 )}
                 {latestMovie && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                    <Clock className="w-3.5 h-3.5" style={{ color: "#34d399" }} />
-                    <span className="text-xs" style={{ color: "#6b7280" }}>Latest:</span>
-                    <span className="text-white font-semibold text-xs"
-                      style={{ maxWidth: "150px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full flex-shrink-0"
+                    style={{ background: latestIsUpcoming ? "rgba(59,130,246,0.12)" : "rgba(255,255,255,0.06)", border: latestIsUpcoming ? "1px solid rgba(59,130,246,0.3)" : "1px solid rgba(255,255,255,0.1)" }}>
+                    {latestIsUpcoming
+                      ? <Calendar className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#60a5fa" }} />
+                      : <Clock className="w-3.5 h-3.5 flex-shrink-0" style={{ color: "#34d399" }} />
+                    }
+                    <span className="text-xs flex-shrink-0" style={{ color: "#6b7280" }}>{latestIsUpcoming ? "Upcoming:" : "Latest:"}</span>
+                    <span className="text-white font-semibold text-xs">
                       {latestMovie.title}
                     </span>
                   </div>
@@ -753,8 +782,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
 
                             {/* Poster + Title */}
                             <td className="px-4 py-3 align-middle">
-                              <Link href={`/movie/${m.slug || String(m._id)}`}
-                                className="flex items-center gap-3 group/link">
+                              <TransitionLink href={`/movie/${m.slug || String(m._id)}`}
+                                className="flex items-center gap-3 group/link rounded-md">
                                 <div className="relative w-8 h-11 rounded-md overflow-hidden flex-shrink-0 border border-[#2a2a2a]">
                                   {m.posterUrl ? (
                                     <Image src={m.posterUrl} alt={m.title}
@@ -771,7 +800,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                                     <p className="text-[10px] text-gray-600 mt-0.5">{m.genre[0]}</p>
                                   )}
                                 </div>
-                              </Link>
+                              </TransitionLink>
                             </td>
 
                             {/* Release Date */}
@@ -828,8 +857,8 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                             {byYear[yr].map((m: any) => {
                               const style = vs(m.verdict);
                               return (
-                                <Link key={String(m._id)} href={`/movie/${m.slug || String(m._id)}`}
-                                  className="flex items-center gap-2 px-2.5 py-1 bg-[#0d0d0d] border border-[#1f1f1f] hover:border-brand-500/30 rounded-full text-xs text-white hover:text-brand-400 transition-all">
+                                <TransitionLink key={String(m._id)} href={`/movie/${m.slug || String(m._id)}`}
+                                  className="flex items-center gap-2 px-2.5 py-1 bg-[#0d0d0d] border border-[#1f1f1f] hover:border-brand-500/30 rounded-full text-xs text-white hover:text-brand-400 transition-all overflow-hidden">
                                   {m.posterUrl && (
                                     <Image src={m.posterUrl} alt="" width={14} height={18}
                                       className="rounded-sm flex-shrink-0 object-cover" />
@@ -838,7 +867,7 @@ export default async function CastDetailPage({ params }: { params: { id: string 
                                   {m.verdict && m.verdict !== "Upcoming" && (
                                     <span className={`text-[9px] font-black ${style.text}`}>{m.verdict}</span>
                                   )}
-                                </Link>
+                                </TransitionLink>
                               );
                             })}
                           </div>

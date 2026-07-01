@@ -7,8 +7,10 @@ import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import Cast from "@/models/Cast";
 import { buildMeta, getLangMeta } from "@/lib/seo";
+import { TransitionLink } from "@/components/ui/TransitionLink";
 import { resolveLanguage, getLanguageFilter } from "@/lib/languages";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
+import { YearSelector } from "@/components/ui/YearSelector";
 import {
   Film, Calendar, ChevronRight, Clapperboard,
   TrendingUp, Star, Flame, Clock, Zap, User, ExternalLink,
@@ -387,25 +389,12 @@ export default async function MoviesByYearPage({
             </div>
 
             {/* Year navigator */}
-            <div className="flex items-center gap-2 mt-6 flex-wrap">
-              <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mr-1">Browse year:</span>
-              {VALID_YEARS.map((yr) => (
-                <Link
-                  key={yr}
-                  href={lang ? `/movies/year/${yr}?lang=${lang}` : `/movies/year/${yr}`}
-                  aria-label={`${activeLang.short} movies of ${yr}`}
-                  aria-current={yr === year ? "page" : undefined}
-                  className={[
-                    "px-3 py-1 rounded-lg text-xs font-semibold transition-all",
-                    yr === year
-                      ? "bg-brand-500 text-white shadow-md shadow-brand-500/25"
-                      : "bg-[#141414] border border-[#222] text-gray-400 hover:border-brand-500/40 hover:text-brand-400",
-                  ].join(" ")}
-                >
-                  {yr}
-                </Link>
-              ))}
-            </div>
+            <YearSelector
+              validYears={VALID_YEARS}
+              currentYear={year}
+              lang={lang}
+              activeLangShort={activeLang.short}
+            />
           </div>
         </section>
 
@@ -525,14 +514,14 @@ export default async function MoviesByYearPage({
 
                             {/* Movie name */}
                             <td className="px-2 sm:px-4 py-3 align-top">
-                              <Link
+                              <TransitionLink
                                 href={`/movie/${movie.slug}`}
                                 className="font-semibold text-white hover:text-brand-400 transition-colors inline-flex items-start gap-1 group/link"
                                 title={`${movie.title} – Hindi Movie ${year}`}
                               >
                                 <span className="leading-snug">{movie.title}</span>
                                 <ExternalLink className="w-3 h-3 mt-0.5 opacity-0 group-hover/link:opacity-50 transition-opacity flex-shrink-0" />
-                              </Link>
+                              </TransitionLink>
                             </td>
 
                             {/* Director */}

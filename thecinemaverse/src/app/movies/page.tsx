@@ -9,6 +9,9 @@ import { LoadingCard } from "@/components/ui/LoadingCard";
 import { buildMeta, getLangMeta } from "@/lib/seo";
 import { resolveLanguage, getLanguageFilter } from "@/lib/languages";
 import { LanguageSelector } from "@/components/ui/LanguageSelector";
+import { InfiniteMovieList } from "@/components/movie/InfiniteMovieList";
+import { AdBanner } from "@/components/ui/AdBanner";
+import { getMovies } from "./actions";
 import {
   Film, Star, TrendingUp, Calendar, Filter, Award,
   ChevronRight, Clapperboard, Globe, Users, Zap,
@@ -73,114 +76,7 @@ const VERDICT_TABS = [
   { label: "Flop",        value: "Flop",       icon: Clock,     color: "text-red-400"   },
 ];
 
-/* ─── HELPERS ────────────────────────────────────────────── */
-function hasRealDate(releaseDate: any) {
-  return { $and: [{ $ifNull: [releaseDate, false] }, { $ne: [releaseDate, ""] }] };
-}
-
-async function getMovies({ genre, verdict, sort, page, langKey }: {
-  genre?: string; verdict?: string; sort?: string; page?: number; langKey?: string;
-}) {
-  await connectDB();
-  const LIMIT = 20;
-  const skip  = ((page || 1) - 1) * LIMIT;
-  const filter: any = {};
-  if (genre) filter.genre = { $in: [genre] };
-
-  // Language filter — apply only when a specific language is requested
-  const langDbValue = getLanguageFilter(langKey);
-  if (langDbValue) filter.language = langDbValue;
-
-  if (verdict) {
-    if (verdict === "Upcoming") {
-      filter.$or = [{ verdict: "Upcoming" }, { verdict: { $exists: false } }, { verdict: null }];
-    } else {
-      filter.verdict = verdict;
-    }
-  }
-
-  const sortMap: Record<string, any> = {
-    oldest: { releaseDate:  1 },
-    az:     { title:        1 },
-    za:     { title:       -1 },
-    rating: { imdbRating:  -1 },
-  };
-
-  if (verdict === "Upcoming" && (!sort || sort === "latest")) {
-    const [movies, total] = await Promise.all([
-      Movie.aggregate([
-        { $match: filter },
-        { $project: { reviews: 0 } },
-        {
-          $addFields: {
-            _hasDated: { $cond: [hasRealDate("$releaseDate"), 1, 0] },
-            _releaseDateObj: {
-              $toDate: { $cond: [hasRealDate("$releaseDate"), "$releaseDate", "9999-12-31"] },
-            },
-          },
-        },
-        { $sort: { _hasDated: -1, _releaseDateObj: 1 } },
-        { $skip: skip },
-        { $limit: LIMIT },
-      ]),
-      Movie.countDocuments(filter),
-    ]);
-    const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
-    return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
-  }
-
-  if (!sort || sort === "latest") {
-    const [movies, total] = await Promise.all([
-      Movie.aggregate([
-        { $match: filter },
-        { $project: { reviews: 0 } },
-        {
-          $addFields: {
-            _releaseDateObj: {
-              $toDate: { $cond: [hasRealDate("$releaseDate"), "$releaseDate", "1900-01-01"] },
-            },
-          },
-        },
-        { $sort: { _releaseDateObj: -1, _id: -1 } },
-        { $skip: skip },
-        { $limit: LIMIT },
-      ]),
-      Movie.countDocuments(filter),
-    ]);
-    const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
-    return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
-  }
-
-  const sortBy = sortMap[sort] || sortMap.az;
-  const [movies, total] = await Promise.all([
-    Movie.find(filter, "-reviews").sort(sortBy).skip(skip).limit(LIMIT).lean(),
-    Movie.countDocuments(filter),
-  ]);
-
-  const serialize = (arr: any[]) => JSON.parse(JSON.stringify(arr));
-  return { movies: serialize(movies), total, pages: Math.ceil(total / LIMIT) };
-}
-
-/* ─── ADSENSE COMPONENT (replace data-ad-slot with real slot IDs) ── */
-function AdBanner({ slot, format = "auto", className = "" }: {
-  slot: string; format?: string; className?: string;
-}) {
-  return (
-    <div className={`adsense-container overflow-hidden rounded-xl ${className}`} aria-hidden="true">
-      {/* Replace the ins tag below with your real AdSense code */}
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-        data-ad-slot={slot}
-        data-ad-format={format}
-        data-full-width-responsive="true"
-      />
-      {/* Script to push AdSense — add once in _document.tsx instead of inline */}
-      {/* <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> */}
-    </div>
-  );
-}
+/* ─── CONSTANTS ──────────────────────────────────────────── */
 
 /* ─── PAGE ───────────────────────────────────────────────── */
 export default async function MoviesPage({
@@ -414,24 +310,15 @@ export default async function MoviesPage({
           </div>
 
           {movies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {movies.map((m: any, idx: number) => (
-                <React.Fragment key={String(m._id)}>
-                  <LoadingCard borderRadius={12}>
-                    <MovieCard movie={m} />
-                  </LoadingCard>
-
-                  {/* ── In-grid AdSense unit after every 10th card ── */}
-                  {(idx + 1) % 10 === 0 && (
-                    <div
-                      className="col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 my-2"
-                    >
-                      <AdBanner slot="0987654321" format="auto" />
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
+            <InfiniteMovieList 
+              initialMovies={movies}
+              initialPage={currentPage}
+              totalPages={pages}
+              genre={genre}
+              verdict={verdict}
+              sort={sort}
+              langKey={lang}
+            />
           ) : (
             <div className="text-center py-20 bg-[#111] border border-[#1f1f1f] rounded-2xl">
               <Film className="w-12 h-12 text-gray-700 mx-auto mb-4" />
