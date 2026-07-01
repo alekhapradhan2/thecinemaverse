@@ -401,23 +401,6 @@ export default async function BoxOfficePage({
     ],
   };
 
-  // ── Dataset JSON-LD — day-wise table as structured data ─────────────────────
-  // Google can render this as a data table in search results for collection queries
-  const datasetLd = days.length > 0 ? {
-    "@context":   "https://schema.org",
-    "@type":      "Dataset",
-    "name":       `${movie.title} Day-wise Box Office Collection`,
-    "description": `Complete day-wise net and gross box office collection of ${movie.title} at the bollywood (bollywood) box office.`,
-    "url":        `https://thecinemaverses.in/box-office/${slug}`,
-    "creator":    { "@type": "Organization", "name": "The Cinema Verse" },
-    "dateModified": movie.updatedAt ? new Date(movie.updatedAt).toISOString() : undefined,
-    "variableMeasured": ["Net Collection (INR)", "Gross Collection (INR)", "Day"],
-    "distribution": {
-      "@type":        "DataDownload",
-      "encodingFormat": "text/html",
-      "contentUrl":   `https://thecinemaverses.in/box-office/${slug}`,
-    },
-  } : null;
 
   // ── Compute week totals for FAQ ───────────────────────────────────────────────
   const week1Total  = days.slice(0,  7).reduce((s: number, d: any) => s + parseNum(d.net), 0);
@@ -543,9 +526,7 @@ export default async function BoxOfficePage({
       {faqLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       )}
-      {datasetLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetLd) }} />
-      )}
+
       {videoLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(videoLd) }} />
       )}
