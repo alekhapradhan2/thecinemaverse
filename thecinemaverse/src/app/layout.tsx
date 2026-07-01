@@ -4,7 +4,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "react-hot-toast";
 import { SITE_NAME, SITE_URL } from "@/lib/seo";
-import NextTopLoader from 'nextjs-toploader';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -41,19 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ></script>
       </head>
       <body className="grain min-h-screen flex flex-col bg-[#0F0F10]">
-        <NextTopLoader
-          color="#38bdf8"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={false}
-          easing="ease"
-          speed={200}
-          shadow="0 0 10px #38bdf8,0 0 5px #38bdf8"
-          zIndex={1600}
-          showAtBottom={false}
-        />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
