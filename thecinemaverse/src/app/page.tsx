@@ -345,7 +345,7 @@ export default async function HomePage({
   const s          = getLangMeta(activeLang);
 
   const { heroMovies, latestMovies, upcomingMovies, latestBlogs, topMovies, boxOfficeMovies, thisMonthAll, randomMoviePool, triviaCards, currentYear } =
-    await getHomeData(lang);
+    await getHomeData(lang || activeLang.key);
 
   return (
     <div className="min-h-screen">

@@ -18,6 +18,13 @@ export default function DidYouKnow({ cards }: { cards: TriviaCard[] }) {
   const [visible, setVisible] = useState(true);
   const [paused,  setPaused]  = useState(false);
 
+  // Clamp idx whenever the cards array length changes to avoid out-of-bounds
+  useEffect(() => {
+    if (cards.length > 0 && idx >= cards.length) {
+      setIdx(0);
+    }
+  }, [cards.length, idx]);
+
   const goTo = useCallback((next: number) => {
     setVisible(false);
     setTimeout(() => {
@@ -39,6 +46,8 @@ export default function DidYouKnow({ cards }: { cards: TriviaCard[] }) {
   if (cards.length === 0) return null;
 
   const card = cards[idx];
+  // Safety guard — card can be momentarily undefined during idx clamping
+  if (!card) return null;
 
   return (
     <div className="bg-gradient-to-br from-indigo-900/10 via-[#0f0f0f] to-[#0b0b0b]

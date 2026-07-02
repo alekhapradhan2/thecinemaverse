@@ -45,6 +45,8 @@ export function LanguageSelector({
       params.delete("page");
       if (key && key !== "all") {
         params.set("lang", key);
+      } else if (key === "all") {
+        params.set("lang", "all");
       } else {
         params.delete("lang");
       }
