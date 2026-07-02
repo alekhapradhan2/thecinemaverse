@@ -37,6 +37,7 @@ export interface HeroMovie {
   category?: string;
   genre?: string[];
   language?: string;
+  languages?: string[];
   releaseDate?: string;
   director?: string;
   verdict?: string;
@@ -162,7 +163,7 @@ export default function HeroCarousel({ movies }: { movies: HeroMovie[] }) {
                   <div className="hh-tags">
                     {movie.category   && <span className="hh-tag">{movie.category}</span>}
                     {movie.genre?.[0] && <span className="hh-tag-gl">{movie.genre[0]}</span>}
-                    {movie.language   && <span className="hh-tag-gl">{movie.languages?.length > 0 ? movie.languages.join(", ") : movie.language}</span>}
+                    {movie.language   && <span className="hh-tag-gl">{movie.languages && movie.languages.length > 0 ? movie.languages.join(", ") : movie.language}</span>}
                   </div>
 
                   {/* Title — h1 only on active slide for SEO */}
