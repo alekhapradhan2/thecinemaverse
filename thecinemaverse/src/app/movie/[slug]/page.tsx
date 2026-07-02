@@ -770,7 +770,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                 ))}
                 {movie.language && (
                   <span className="text-[10px] sm:text-xs font-semibold px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-950 border border-blue-900 text-blue-400 rounded-full">
-                    {movie.language}
+                    {movie.languages?.length > 0 ? movie.languages.join(", ") : movie.language}
                   </span>
                 )}
                 {movie.contentRating && (
@@ -1024,7 +1024,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
               </h2>
               <InfoRow icon={Calendar}     label="Release Date"  value={fmtDate(movie.releaseDate) || (movie.releaseTBA ? "TBA" : undefined)} />
               <InfoRow icon={Clock}        label="Runtime"       value={movie.runtime} />
-              <InfoRow icon={Globe}        label="Language"      value={movie.language || "Indian"} />
+              <InfoRow icon={Globe}        label="Language"      value={movie.languages?.length > 0 ? movie.languages.join(", ") : (movie.language || "Indian")} />
               <InfoRow icon={Clapperboard} label="Director"      value={getDirectorFromCast(movie.cast || []) || movie.director} />
               <InfoRow icon={User}         label="Producer"      value={getProducerFromCast(movie.cast || []) || movie.producer} />
               <InfoRow icon={DollarSign}   label="Budget"        value={movie.budget} />
@@ -1209,7 +1209,7 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                       { icon: "🎬", label: "Genre",    value: (movie.genre||[]).join(", ") || "Drama" },
                       { icon: "📅", label: "Year",     value: year ? String(year) : null },
                       { icon: "⏱",  label: "Runtime",  value: movie.runtime || null },
-                      { icon: "🌐", label: "Language", value: movie.language || "Indian" },
+                      { icon: "🌐", label: "Language", value: movie.languages?.length > 0 ? movie.languages.join(", ") : (movie.language || "Indian") },
                     ].filter(f => f.value).map(f => (
                       <div key={f.label} className="flex items-center gap-2 px-4 py-2.5 flex-1 min-w-[120px]">
                         <span className="text-base">{f.icon}</span>

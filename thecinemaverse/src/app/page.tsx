@@ -176,6 +176,7 @@ async function getHomeData(langKey?: string) {
       category:    m.category    || undefined,
       genre:       m.genre       || undefined,
       language:    m.language    || undefined,
+      languages:   m.languages   || [],
       releaseDate: m.releaseDate || undefined,
       director:    m.director    || undefined,
       verdict:     m.verdict     || undefined,
@@ -252,6 +253,7 @@ async function getHomeData(langKey?: string) {
         releaseDate: m.releaseDate || "",
         verdict:     m.verdict || "",
         language:    m.language || "",
+        languages:   m.languages || [],
         genre:       (m.genre || []).slice(0, 2),
         year:        y,
       };

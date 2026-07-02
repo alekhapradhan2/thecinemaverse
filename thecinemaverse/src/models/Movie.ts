@@ -45,6 +45,7 @@ const MovieSchema = new Schema(
     producer:      { type: String, default: "" },
     budget:        { type: String, default: "" },
     language:      { type: String, default: "bollywood" },
+    languages:     [{ type: String }],
     synopsis:      { type: String, default: "" },
     story:         { type: String, default: "" },         // long-form story (SEO)
     review:        { type: String, default: "" },         // editorial review (SEO)
@@ -53,6 +54,7 @@ const MovieSchema = new Schema(
     bannerUrl:     { type: String, default: "" },
     runtime:       { type: String, default: "" },
     imdbId:        { type: String, default: "" },
+    tmdbId:        { type: String, default: "" },
     imdbRating:    { type: String, default: "" },
     imdbVotes:     { type: String, default: "" },
     contentRating: { type: String, default: "" },
