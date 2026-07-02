@@ -15,6 +15,7 @@ export type PoolMovie = {
   releaseDate: string;
   verdict:     string;
   language:    string;
+  languages?:  string[];
   genre:       string[];
   year:        number; // pre-computed on server
 };
@@ -194,7 +195,7 @@ export default function RandomMoviePicker({
                     <span className="text-xs text-gray-500">{picked.year}</span>
                   )}
                   {picked.language && (
-                    <span className="text-xs text-gray-600">· {picked.languages?.length > 0 ? picked.languages.join(", ") : picked.language}</span>
+                    <span className="text-xs text-gray-600">· {picked.languages && picked.languages.length > 0 ? picked.languages.join(", ") : picked.language}</span>
                   )}
                   {picked.genre?.length > 0 && (
                     <span className="text-xs text-gray-600">· {picked.genre.join(", ")}</span>
