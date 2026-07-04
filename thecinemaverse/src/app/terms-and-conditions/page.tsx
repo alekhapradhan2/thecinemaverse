@@ -68,7 +68,7 @@ const sections = [
     title: "4. Intellectual Property",
     content: [
       "The The Cinema Verse name, logo, design, and original written content are the intellectual property of The Cinema Verse and may not be used without permission.",
-      "Movie titles, actor names, song titles, and other factual information about hindi films are not subject to copyright and are provided as factual reference. Reviews and editorial opinions expressed on this site are original works authored by The Cinema Verse.",
+      "Movie titles, actor names, song titles, and other factual information about films are not subject to copyright and are provided as factual reference. Reviews and editorial opinions expressed on this site are original works authored by The Cinema Verse.",
       "If you believe any content on The Cinema Verse infringes your copyright, please contact us at the email below and we will respond promptly.",
     ],
   },
@@ -77,7 +77,7 @@ const sections = [
     icon: AlertCircle,
     title: "5. Accuracy & Disclaimers",
     content: [
-      "The Cinema Verse strives to provide accurate, up-to-date information about hindi cinema. However, we cannot guarantee the completeness or accuracy of all information, especially for historical films or rapidly changing box office data.",
+      "The Cinema Verse strives to provide accurate, up-to-date information about Indian cinema. However, we cannot guarantee the completeness or accuracy of all information, especially for historical films or rapidly changing box office data.",
       "Box office figures, ratings, and verdicts are based on publicly available information and editorial judgment. They should not be taken as financial advice or definitive commercial assessments.",
       "External links on this site point to third-party websites. The Cinema Verse is not responsible for the content, accuracy, or privacy practices of any linked websites.",
     ],
@@ -265,7 +265,7 @@ export default function TermsAndConditionsPage() {
             <meta itemProp="name" content="Terms and Conditions — The Cinema Verse" />
             <meta
               itemProp="description"
-              content="Terms and Conditions for The Cinema Verse, the hindi cinema encyclopedia. No personal data is collected from users."
+              content="Terms and Conditions for The Cinema Verse, the Indian cinema encyclopedia. No personal data is collected from users."
             />
 
             <div className="space-y-10 sm:space-y-12">

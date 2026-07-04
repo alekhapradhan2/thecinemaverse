@@ -6,7 +6,8 @@ import Link from "next/link";
 import { ChevronRight, Star, Calendar, TrendingUp } from "lucide-react";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie"; // ← same pattern as your Blog model
-import { buildMeta } from "@/lib/seo";
+import { buildMeta, getLangMeta } from "@/lib/seo";
+import { resolveLanguage } from "@/lib/languages";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -23,7 +24,7 @@ interface MovieDoc {
 }
 
 // ─── Category Config ──────────────────────────────────────────────────────────
-const CATEGORY_CONFIG: Record<
+function getCategoryConfig(adj: string, industry: string, key?: string): Record<
   string,
   {
     title: string;
@@ -33,68 +34,74 @@ const CATEGORY_CONFIG: Record<
     intro: string;
     keywords: string[];
   }
-> = {
-  "2026": {
-    title: "Hindi Movies 2026",
-    metaTitle: "Hindi Movies 2026 List | Upcoming & Latest bollywood Films",
-    metaDesc:
-      "Explore all hindi movies released in 2026 including upcoming films, cast, songs, and trailers. Complete bollywood 2026 movie list with ratings and reviews.",
-    h1: "Hindi Movies 2026 — Complete bollywood Film List",
-    intro:
-      "The year 2026 is shaping up to be a landmark chapter in bollywood. From action blockbusters to heartfelt family dramas, hindi cinema in 2026 continues to push creative boundaries. Browse the full 2026 release list with cast details, ratings, and official songs.",
-    keywords: ["hindi movies 2026", "bollywood 2026", "new hindi films 2026"],
-  },
-  "2025": {
-    title: "Hindi Movies 2025",
-    metaTitle: "Hindi Movies 2025 — Full bollywood Film List with Ratings",
-    metaDesc:
-      "Complete list of hindi movies released in 2025. Browse bollywood films by genre, cast, and rating.",
-    h1: "Hindi Movies 2025 — Full bollywood Release List",
-    intro:
-      "2025 brought a rich and varied slate to bollywood, with filmmakers exploring genres from supernatural thrillers to romantic musicals. This page compiles every hindi movie released in 2025 with ratings, cast details, and song listings.",
-    keywords: ["hindi movies 2025", "bollywood 2025", "hindi films 2025"],
-  },
-  "2024": {
-    title: "Hindi Movies 2024",
-    metaTitle: "Hindi Movies 2024 — bollywood Hits, Flops & Reviews",
-    metaDesc:
-      "Browse all hindi movies of 2024 with cast, songs, box office, and reviews. The definitive bollywood 2024 archive.",
-    h1: "Hindi Movies 2024 — Complete bollywood Archive",
-    intro:
-      "2024 was a watershed year for hindi cinema, with several films achieving mainstream recognition. This comprehensive archive covers every hindi movie released in 2024 — from blockbusters to indie gems.",
-    keywords: ["hindi movies 2024", "bollywood 2024", "hindi films list 2024"],
-  },
-  upcoming: {
-    title: "Upcoming Hindi Movies",
-    metaTitle: "Upcoming Hindi Movies 2026 | Next bollywood Releases & Trailers",
-    metaDesc:
-      "Get the latest updates on upcoming hindi movies in 2026. Release dates, cast, trailers and songs for all announced bollywood films.",
-    h1: "Upcoming Hindi Movies — Next bollywood Releases",
-    intro:
-      "bollywood's upcoming slate is packed with anticipated releases across every genre. This page tracks every announced and scheduled hindi movie yet to hit screens, updated in real-time with release dates, first-look posters, and pre-release song details.",
-    keywords: ["upcoming hindi movies", "new bollywood releases", "hindi movies 2026 upcoming"],
-  },
-  latest: {
-    title: "Latest Hindi Movies",
-    metaTitle: "Latest Hindi Movies 2026 | Newest bollywood Releases This Week",
-    metaDesc:
-      "Watch the latest hindi movies released this week and month. Stay updated with the newest bollywood films, songs, and reviews.",
-    h1: "Latest Hindi Movies — Newest bollywood Releases",
-    intro:
-      "Stay ahead of the curve with The Cinema Verse's real-time tracker of the latest hindi movie releases. Updated every week, this page surfaces the freshest bollywood content from theatrical releases to OTT premieres.",
-    keywords: ["latest hindi movies", "new hindi films", "bollywood new release"],
-  },
-  blockbuster: {
-    title: "Blockbuster Hindi Movies",
-    metaTitle: "Blockbuster Hindi Movies | Top-Rated bollywood Hits of All Time",
-    metaDesc:
-      "Discover the biggest blockbuster hindi movies with top ratings and box office records. The ultimate list of hit bollywood films.",
-    h1: "Blockbuster Hindi Movies — bollywood's Greatest Hits",
-    intro:
-      "These are the films that defined generations of hindi moviegoers — blockbusters that smashed box-office records, produced timeless songs, and created cultural moments that resonate to this day.",
-    keywords: ["blockbuster hindi movies", "best bollywood films", "top rated hindi movies"],
-  },
-};
+> {
+  const isHindi = !key || key.toLowerCase() === "hindi";
+  // For Hindi we use "bollywood" for SEO if appropriate, otherwise just the adj/industry
+  const seoIndustry = isHindi ? "bollywood" : industry.toLowerCase();
+
+  return {
+    "2026": {
+      title: `${adj} Movies 2026`,
+      metaTitle: `${adj} Movies 2026 List | Upcoming & Latest ${seoIndustry} Films`,
+      metaDesc:
+        `Explore all ${adj.toLowerCase()} movies released in 2026 including upcoming films, cast, songs, and trailers. Complete ${seoIndustry} 2026 movie list with ratings and reviews.`,
+      h1: `${adj} Movies 2026 — Complete ${seoIndustry} Film List`,
+      intro:
+        `The year 2026 is shaping up to be a landmark chapter in ${seoIndustry}. From action blockbusters to heartfelt family dramas, ${adj.toLowerCase()} cinema in 2026 continues to push creative boundaries. Browse the full 2026 release list with cast details, ratings, and official songs.`,
+      keywords: [`${adj.toLowerCase()} movies 2026`, `${seoIndustry} 2026`, `new ${adj.toLowerCase()} films 2026`],
+    },
+    "2025": {
+      title: `${adj} Movies 2025`,
+      metaTitle: `${adj} Movies 2025 — Full ${seoIndustry} Film List with Ratings`,
+      metaDesc:
+        `Complete list of ${adj.toLowerCase()} movies released in 2025. Browse ${seoIndustry} films by genre, cast, and rating.`,
+      h1: `${adj} Movies 2025 — Full ${seoIndustry} Release List`,
+      intro:
+        `2025 brought a rich and varied slate to ${seoIndustry}, with filmmakers exploring genres from supernatural thrillers to romantic musicals. This page compiles every ${adj.toLowerCase()} movie released in 2025 with ratings, cast details, and song listings.`,
+      keywords: [`${adj.toLowerCase()} movies 2025`, `${seoIndustry} 2025`, `${adj.toLowerCase()} films 2025`],
+    },
+    "2024": {
+      title: `${adj} Movies 2024`,
+      metaTitle: `${adj} Movies 2024 — ${seoIndustry} Hits, Flops & Reviews`,
+      metaDesc:
+        `Browse all ${adj.toLowerCase()} movies of 2024 with cast, songs, box office, and reviews. The definitive ${seoIndustry} 2024 archive.`,
+      h1: `${adj} Movies 2024 — Complete ${seoIndustry} Archive`,
+      intro:
+        `2024 was a watershed year for ${adj.toLowerCase()} cinema, with several films achieving mainstream recognition. This comprehensive archive covers every ${adj.toLowerCase()} movie released in 2024 — from blockbusters to indie gems.`,
+      keywords: [`${adj.toLowerCase()} movies 2024`, `${seoIndustry} 2024`, `${adj.toLowerCase()} films list 2024`],
+    },
+    upcoming: {
+      title: `Upcoming ${adj} Movies`,
+      metaTitle: `Upcoming ${adj} Movies 2026 | Next ${seoIndustry} Releases & Trailers`,
+      metaDesc:
+        `Get the latest updates on upcoming ${adj.toLowerCase()} movies in 2026. Release dates, cast, trailers and songs for all announced ${seoIndustry} films.`,
+      h1: `Upcoming ${adj} Movies — Next ${seoIndustry} Releases`,
+      intro:
+        `${seoIndustry}'s upcoming slate is packed with anticipated releases across every genre. This page tracks every announced and scheduled ${adj.toLowerCase()} movie yet to hit screens, updated in real-time with release dates, first-look posters, and pre-release song details.`,
+      keywords: [`upcoming ${adj.toLowerCase()} movies`, `new ${seoIndustry} releases`, `${adj.toLowerCase()} movies 2026 upcoming`],
+    },
+    latest: {
+      title: `Latest ${adj} Movies`,
+      metaTitle: `Latest ${adj} Movies 2026 | Newest ${seoIndustry} Releases This Week`,
+      metaDesc:
+        `Watch the latest ${adj.toLowerCase()} movies released this week and month. Stay updated with the newest ${seoIndustry} films, songs, and reviews.`,
+      h1: `Latest ${adj} Movies — Newest ${seoIndustry} Releases`,
+      intro:
+        `Stay ahead of the curve with The Cinema Verse's real-time tracker of the latest ${adj.toLowerCase()} movie releases. Updated every week, this page surfaces the freshest ${seoIndustry} content from theatrical releases to OTT premieres.`,
+      keywords: [`latest ${adj.toLowerCase()} movies`, `new ${adj.toLowerCase()} films`, `${seoIndustry} new release`],
+    },
+    blockbuster: {
+      title: `Blockbuster ${adj} Movies`,
+      metaTitle: `Blockbuster ${adj} Movies | Top-Rated ${seoIndustry} Hits of All Time`,
+      metaDesc:
+        `Discover the biggest blockbuster ${adj.toLowerCase()} movies with top ratings and box office records. The ultimate list of hit ${seoIndustry} films.`,
+      h1: `Blockbuster ${adj} Movies — ${seoIndustry}'s Greatest Hits`,
+      intro:
+        `These are the films that defined generations of ${adj.toLowerCase()} moviegoers — blockbusters that smashed box-office records, produced timeless songs, and created cultural moments that resonate to this day.`,
+      keywords: [`blockbuster ${adj.toLowerCase()} movies`, `best ${seoIndustry} films`, `top rated ${adj.toLowerCase()} movies`],
+    },
+  };
+}
 
 export const revalidate = 600; // Revalidate every hour to keep data fresh
 
@@ -154,16 +161,23 @@ blockbuster: {
 // ─── Metadata — uses your existing buildMeta helper ──────────────────────────
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: { category: string };
+  searchParams: { lang?: string };
 }): Promise<Metadata> {
-  const cfg = CATEGORY_CONFIG[params.category];
+  const activeLang = resolveLanguage(searchParams?.lang);
+  const langMeta = getLangMeta(activeLang);
+  const cfgMap = getCategoryConfig(langMeta.adj, langMeta.industry, activeLang.key);
+  const cfg = cfgMap[params.category];
+  
   if (!cfg) return {};
   return buildMeta({
     title:       cfg.metaTitle,
     description: cfg.metaDesc,
     keywords:    cfg.keywords,
     url:         `/movies/${params.category}`,
+    activeLang,
   });
 }
 
@@ -175,7 +189,7 @@ function JsonLd({
 }: {
   movies: MovieDoc[];
   category: string;
-  cfg: (typeof CATEGORY_CONFIG)[string];
+  cfg: ReturnType<typeof getCategoryConfig>[string];
 }) {
   const base = "https://thecinemaverses.in";
 
@@ -255,10 +269,16 @@ function MovieCard({ movie }: { movie: MovieDoc }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function MovieCategoryPage({
   params,
+  searchParams,
 }: {
   params: { category: string };
+  searchParams: { lang?: string };
 }) {
-  const cfg = CATEGORY_CONFIG[params.category];
+  const activeLang = resolveLanguage(searchParams?.lang);
+  const langMeta = getLangMeta(activeLang);
+  const cfgMap = getCategoryConfig(langMeta.adj, langMeta.industry, activeLang.key);
+  const cfg = cfgMap[params.category];
+  
   if (!cfg) notFound();
 
   const movies = await getMovies(params.category);
@@ -342,14 +362,14 @@ export default async function MovieCategoryPage({
   </h2>
 
   <p className="mb-3">
-    {cfg.title} is a curated collection of bollywood (bollywood) films including
+    {cfg.title} is a curated collection of {langMeta.industry} ({langMeta.adj}) films including
     latest releases, upcoming movies, and blockbuster hits. Each movie
     includes detailed information such as cast, release date, songs,
     ratings, and storyline.
   </p>
 
   <p>
-    Stay updated with the latest trends in bollywood cinema, discover new
+    Stay updated with the latest trends in {langMeta.industry} cinema, discover new
     movies, and explore top-rated films all in one place on The Cinema Verse.
   </p>
 </div>
@@ -368,20 +388,18 @@ export default async function MovieCategoryPage({
 
           {/* Internal links */}
           <div className="mt-16 p-6 bg-[#111] border border-[#1e1e1e] rounded-2xl">
-            <h2 className="text-lg font-semibold text-white mb-4">Explore More bollywood Content</h2>
+            <h2 className="text-lg font-semibold text-white mb-4">Explore More {langMeta.industry} Content</h2>
             <div className="flex flex-wrap gap-2">
               {[
-                { label: "Hindi Movies 2025",       href: "/movies/2025" },
-                { label: "Hindi Movies 2024",       href: "/movies/2024" },
+                { label: `${langMeta.adj} Movies 2025`,       href: "/movies/2025" },
+                { label: `${langMeta.adj} Movies 2024`,       href: "/movies/2024" },
                 { label: "Upcoming Movies",        href: "/movies/upcoming" },
                 { label: "Latest Songs",           href: "/songs/latest" },
                 { label: "Trending Songs",         href: "/songs/trending" },
-                { label: "bollywood Songs 2026",        href: "/songs/2026" },
+                { label: `${langMeta.adj} Songs 2026`,        href: "/songs/2026" },
                 { label: "Top Singers",            href: "/songs/singers" },
                 { label: "Cast & Crew",            href: "/cast" },
-                { label: "bollywood News",          href: "/news" },
-                { label: "Know About Hindi Movies", href: "/blog/bollywood-movies" },
-                { label: "History of bollywood",    href: "/blog/history-of-bollywood" },
+                { label: `${langMeta.adj} News`,          href: "/news" },
               ].map((l) => (
                 <Link
                   key={l.href}
@@ -403,5 +421,5 @@ export default async function MovieCategoryPage({
 
 // ─── Static Params ────────────────────────────────────────────────────────────
 export function generateStaticParams() {
-  return Object.keys(CATEGORY_CONFIG).map((category) => ({ category }));
+  return Object.keys(getCategoryConfig("Hindi", "Bollywood")).map((category) => ({ category }));
 }

@@ -41,7 +41,7 @@ export default function CastCard({ person, priority = false }: CastCardProps) {
       <Link
         href={`/cast/${_id}`}
         className="block no-underline"
-        aria-label={`View profile of ${name}, bollywood ${role}`}
+        aria-label={`View profile of ${name}, ${role}`}
       >
         <div
           className="relative w-[136px] overflow-hidden rounded-xl bg-zinc-900 border border-zinc-800 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-2xl"
@@ -63,7 +63,7 @@ export default function CastCard({ person, priority = false }: CastCardProps) {
             {photo ? (
               <Image
                 src={photo}
-                alt={`${name} — bollywood ${role} in bollywood`}
+                alt={`${name} — ${role}`}
                 fill
                 sizes="136px"
                 priority={priority}

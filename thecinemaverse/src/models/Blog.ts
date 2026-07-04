@@ -26,6 +26,7 @@ const BlogSchema = new Schema(
     readTime:   { type: Number, default: 5 },
     seoTitle:   { type: String, default: "" },
     seoDesc:    { type: String, default: "" },
+    language:   { type: String, default: "Hindi" },
     reviews:    [ReviewSchema],
   },
   { timestamps: true }

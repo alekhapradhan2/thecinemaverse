@@ -1,3 +1,5 @@
+import { LANGUAGES, DEFAULT_LANGUAGE, LanguageConfig } from "@/lib/languages";
+
 export const SITE_URL  = process.env.NEXT_PUBLIC_SITE_URL  || "https://thecinemaverses.in";
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "The Cinema Verse";
 
@@ -16,6 +18,7 @@ export function buildMeta({
   image,
   url,
   type = "website",
+  activeLang,
 }: {
   title: string;
   description: string;
@@ -23,9 +26,29 @@ export function buildMeta({
   image?: string;
   url?: string;
   type?: string;
+  activeLang?: LanguageConfig;
 }) {
   const ogImage = image || `${SITE_URL}/og-default.jpg`;
-  const canonical = url ? `${SITE_URL}${url}` : SITE_URL;
+  
+  let canonical = url ? `${SITE_URL}${url}` : SITE_URL;
+  if (activeLang && activeLang.key !== DEFAULT_LANGUAGE.key && !canonical.includes("lang=")) {
+    canonical += canonical.includes("?") ? `&lang=${activeLang.key}` : `?lang=${activeLang.key}`;
+  }
+
+  const alternates: any = { canonical };
+  
+  if (activeLang && url !== undefined) {
+    alternates.languages = {};
+    alternates.languages["x-default"] = `${SITE_URL}${url}`;
+    LANGUAGES.forEach(lang => {
+      const char = url.includes("?") ? "&" : "?";
+      const langParam = lang.key === DEFAULT_LANGUAGE.key ? "" : `${char}lang=${lang.key}`;
+      alternates.languages[lang.locale] = `${SITE_URL}${url}${langParam}`;
+    });
+  }
+
+  const locale = activeLang?.locale || "en_IN";
+
   return {
     title,
     description,
@@ -37,6 +60,7 @@ export function buildMeta({
       siteName: SITE_NAME,
       images: [{ url: ogImage, width: 1200, height: 630 }],
       type,
+      locale,
     },
     twitter: {
       card: "summary_large_image",
@@ -44,7 +68,7 @@ export function buildMeta({
       description,
       images: [ogImage],
     },
-    alternates: { canonical },
+    alternates,
     robots: { index: true, follow: true },
   };
 }
@@ -59,7 +83,7 @@ export function movieJsonLd(movie: any) {
     url: `${SITE_URL}/movie/${movie.slug}`,
     image: movie.posterUrl || movie.thumbnailUrl,
     datePublished: movie.releaseDate,
-    inLanguage: movie.language || "Hindi",
+    inLanguage: movie.language || DEFAULT_LANGUAGE.dbValue,
     director: movie.director ? { "@type": "Person", name: movie.director } : undefined,
     genre: movie.genre,
     duration: movie.runtime,
@@ -86,7 +110,7 @@ export function articleJsonLd(blog: any) {
     description: blog.excerpt || blog.seoDesc,
     url: `${SITE_URL}/blog/${blog.slug}`,
     image: blog.coverImage,
-    inLanguage: blog.language || "Hindi",
+    inLanguage: blog.language || DEFAULT_LANGUAGE.dbValue,
     datePublished: blog.createdAt,
     dateModified: blog.updatedAt,
     author: { "@type": "Organization", name: blog.author || SITE_NAME },

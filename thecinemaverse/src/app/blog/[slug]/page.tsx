@@ -18,6 +18,7 @@ import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
 import Movie from "@/models/Movie";
 import BlogDetailClient from "./BlogDetailClient";
+import { resolveLanguage, getLangSeo } from "@/lib/languages";
 
 export const revalidate    = 60;   // ★ was 3600 — lowered to 1 min for news freshness
 export const dynamicParams = true;
@@ -98,13 +99,14 @@ async function getRelatedMovie(blog: any) {
   return null;
 }
 
-async function getRelatedBlogs(currentSlug: string, category?: string) {
+async function getRelatedBlogs(currentSlug: string, category?: string, language?: string) {
   await connectDB();
+  const langQuery = language ? { language: { $regex: new RegExp(`^${language}$`, "i") } } : {};
 
   // First: up to 4 same-category blogs (most relevant for bounce rate + dwell time)
   const sameCat = category
     ? await Blog.find(
-        { published: true, slug: { $ne: currentSlug }, category },
+        { published: true, slug: { $ne: currentSlug }, category, ...langQuery },
         "title slug excerpt coverImage category createdAt readTime"
       )
         .sort({ createdAt: -1 })
@@ -116,7 +118,7 @@ async function getRelatedBlogs(currentSlug: string, category?: string) {
   const excludeSlugs = [currentSlug, ...sameCat.map((b: any) => b.slug)];
   const needed = 6 - sameCat.length;
   const others = await Blog.find(
-    { published: true, slug: { $nin: excludeSlugs } },
+    { published: true, slug: { $nin: excludeSlugs }, ...langQuery },
     "title slug excerpt coverImage category createdAt readTime"
   )
     .sort({ createdAt: -1 })
@@ -134,6 +136,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const blog = await getBlog(params.slug);
   if (!blog) return { robots: { index: false, follow: false } };
+
+  const langConfig = resolveLanguage(blog.language);
+  const seo = getLangSeo(langConfig);
 
 // FIXED — uses seoTitle from BoxOfficePanel, falls back gracefully
 const title = blog.seoTitle || `${blog.title} | The Cinema Verse`;
@@ -158,7 +163,7 @@ const description = (
     movieName && `${movieName} review`,
     movieName && `${movieName} movie`,
     movieName && `${movieName} film`,
-    movieName && `${movieName} Indian`,
+    movieName && `${movieName} ${seo.adjective.toLowerCase()}`,
     movieName && `${movieName} songs`,
     movieName && `${movieName} cast`,
     movieName && `${movieName} box office collection`,
@@ -166,12 +171,12 @@ const description = (
     movieName && `${movieName} ${year}`,
     movieName && `is ${movieName} worth watching`,
     "movie review",
-    "Indian movie review",
+    `${seo.adjective.toLowerCase()} movie review`,
     "film news",
-    "Indian cinema",
-    "Indian news",
+    `${seo.industry.toLowerCase()}`,
+    `${seo.adjective.toLowerCase()} news`,
     year && `movie ${year}`,
-    year && `Indian ${year}`,
+    year && `${seo.adjective.toLowerCase()} ${year}`,
     "movie blog",
     ...(blog.tags || []),
   ].filter(Boolean) as string[];
@@ -220,7 +225,7 @@ const description = (
 }
 
 // ─── SEO Interlinks block (server-rendered) ────────────────────
-function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
+function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo: any }) {
   const movieYear = movie?.releaseDate
     ? new Date(movie.releaseDate).getFullYear()
     : "";
@@ -281,7 +286,7 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-5">
           <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
             <span className="w-4 h-[2.5px] bg-brand-500 rounded inline-block" />
-            Related Hindi Film
+            Related {seo.adjective} Film
           </h2>
           <Link href={`/movie/${movie.slug}`} className="flex items-center gap-4 group">
             {movie.posterUrl ? (
@@ -411,11 +416,11 @@ function SeoInterlinks({ blog, movie }: { blog: any; movie: any | null }) {
           Explore The Cinema Verse
         </h2>
         <div className="flex flex-wrap gap-2">
-          <Link href="/blog" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">📰 All Blogs</Link>
+          <Link href={`/blog?lang=${seo.locale.split('-')[0]}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">📰 All Blogs</Link>
           <Link href="/movies" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🎬 All Movies</Link>
           <Link href="/songs" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🎵 All Songs</Link>
-          <Link href="/blog?category=Reviews" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">⭐ Movie Reviews</Link>
-          <Link href="/blog?category=News" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🗞️ Hindi Cinema News</Link>
+          <Link href={`/blog?category=Reviews&lang=${seo.locale.split('-')[0]}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">⭐ Movie Reviews</Link>
+          <Link href={`/blog?category=News&lang=${seo.locale.split('-')[0]}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🗞️ {seo.adjective} Cinema News</Link>
           <Link href="/songs/category/latest" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🆕 Latest Songs</Link>
           <Link href="/songs/category/trending" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">🔥 Trending Songs</Link>
         </div>
@@ -548,9 +553,12 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   const blog = await getBlog(params.slug);
   if (!blog) notFound();
 
+  const langConfig = resolveLanguage(blog.language);
+  const seo = getLangSeo(langConfig);
+
   const [movie, recentBlogs] = await Promise.all([
     getRelatedMovie(blog),
-    getRelatedBlogs(params.slug, blog.category),
+    getRelatedBlogs(params.slug, blog.category, blog.language),
   ]);
 
   const movieYear  = movie?.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
@@ -560,14 +568,14 @@ export default async function BlogPage({ params }: { params: { slug: string } })
   // ─── FAQ items for JSON-LD ───────────────────────────────────
   const faqItems = blog.movieTitle
     ? [
-        { q: `What is ${blog.movieTitle} movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an Indian (Indian) film covered on The Cinema Verse.` },
+        { q: `What is ${blog.movieTitle} movie about?`,          a: blog.excerpt || `${blog.movieTitle} is an ${seo.adjective} film covered on The Cinema Verse.` },
         { q: `Is ${blog.movieTitle} worth watching?`,                  a: `Read the full review and audience ratings for ${blog.movieTitle} on this The Cinema Verse article.` },
         { q: `Who is in the cast of ${blog.movieTitle}?`,             a: `Full cast and crew of ${blog.movieTitle} are listed on the movie page on The Cinema Verse.` },
         { q: `What is ${blog.movieTitle} box office collection?`,      a: `Day-wise box office collection of ${blog.movieTitle} is tracked on The Cinema Verse's box office page.` },
         { q: `Where can I watch songs from ${blog.movieTitle}?`,       a: `All songs from ${blog.movieTitle} with YouTube videos are on The Cinema Verse.` },
       ]
     : [
-        { q: "What is The Cinema Verse?",                                     a: "The Cinema Verse is Odisha's complete Indian cinema encyclopedia — movies, actors, songs, box office and news." },
+        { q: "What is The Cinema Verse?",                                     a: `The Cinema Verse is the complete ${seo.adjective} cinema encyclopedia — movies, actors, songs, box office and news.` },
         { q: "What kind of articles does The Cinema Verse publish?",          a: "Movie reviews, top 10 lists, actor spotlights, box office reports and entertainment news." },
         { q: "How can I find reviews for a specific movie?",      a: "Search for the movie on The Cinema Verse's blog or visit the movie's dedicated page for ratings and articles." },
       ];
@@ -803,8 +811,8 @@ export default async function BlogPage({ params }: { params: { slug: string } })
         <div className="bp-sidebar-hd">📖 About The Cinema Verse</div>
         <div className="bp-sidebar-body" style={{ paddingTop: 10 }}>
           <div style={{ fontSize: ".72rem", color: "rgba(255,255,255,.38)", lineHeight: 1.8, margin: "0 0 10px" }}>
-            The Cinema Verse is Odisha&apos;s complete Indian cinema database — covering{" "}
-            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>Indian movies</Link>,
+            The Cinema Verse is the complete {seo.adjective} cinema database — covering{" "}
+            <Link href="/movies" style={{ color: "rgba(201,151,58,.8)", textDecoration: "none" }}>{seo.adjective} movies</Link>,
             {" "}actors, songs, box office and news.
             {blog.movieTitle && (
               <>{" "}Explore all{" "}
@@ -847,7 +855,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
               {blog.author || "The Cinema Verse Editorial Team"}
             </div>
             <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.3)", marginTop: 2 }}>
-              Specialists in Indian cinema coverage
+              Specialists in {seo.adjective} cinema coverage
             </div>
             {blog.createdAt && (
               <div style={{ fontSize: ".62rem", color: "rgba(255,255,255,.22)", marginTop: 4 }}>
@@ -879,7 +887,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
       {/* ★ NEW — server-rendered article for crawlers */}
       <ArticleSSRPreview blog={blog} />
       <BlogDetailClient slug={params.slug} initialData={blog} sidebarContent={sidebarContent} />
-      <SeoInterlinks blog={blog} movie={movie} />
+      <SeoInterlinks blog={blog} movie={movie} seo={seo} />
       <RecentBlogs blogs={recentBlogs} />
     </>
   );

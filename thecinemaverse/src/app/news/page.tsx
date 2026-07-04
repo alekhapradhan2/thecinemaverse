@@ -3,18 +3,30 @@ import Image from "next/image";
 import { connectDB } from "@/lib/db";
 import News from "@/models/News";
 import { buildMeta } from "@/lib/seo";
+import { getLangMeta } from "@/lib/seo";
+import { resolveLanguage } from "@/lib/languages";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Calendar, Newspaper } from "lucide-react";
 
 export const revalidate = 600;
 
-export const metadata: Metadata = buildMeta({
-  title: "Hindi Film News – Latest Indian Updates",
-  description:
-    "Stay updated with the latest news from Indian film industry (Indian). Get breaking news, film announcements, actor interviews, and box office updates.",
-  keywords: ["film news", "Indian news", "Indian cinema news", "movie updates"],
-  url: "/news",
-});
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}): Promise<Metadata> {
+  const activeLang = resolveLanguage(searchParams?.lang);
+  const langMeta = getLangMeta(activeLang);
+
+  return buildMeta({
+    title: `${langMeta.adj} Film News – Latest ${langMeta.industry} Updates`,
+    description:
+      `Stay updated with the latest news from ${langMeta.industry} (${langMeta.adj}). Get breaking news, film announcements, actor interviews, and box office updates.`,
+    keywords: ["film news", `${langMeta.adj.toLowerCase()} news`, `${langMeta.industry.toLowerCase()} news`, "movie updates"],
+    url: "/news",
+    activeLang,
+  });
+}
 
 async function getNews(page = 1) {
   await connectDB();
@@ -33,22 +45,24 @@ async function getNews(page = 1) {
 export default async function NewsPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: { page?: string, lang?: string };
 }) {
+  const activeLang = resolveLanguage(searchParams?.lang);
+  const langMeta = getLangMeta(activeLang);
   const { news, total } = await getNews(Number(searchParams.page) || 1);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       <SectionHeader
-        title="Hindi Film News"
-        subtitle="Latest updates from Indian"
+        title={`${langMeta.adj} Film News`}
+        subtitle={`Latest updates from ${langMeta.industry}`}
       />
 
       <div className="mb-8 p-5 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <p className="text-gray-400 text-sm leading-relaxed">
-          Get the latest news and updates from the Indian film industry. From new movie announcements and casting
+          Get the latest news and updates from the {langMeta.industry} film industry. From new movie announcements and casting
           news to box office results and celebrity interviews — The Cinema Verse keeps you connected with everything
-          happening in Indian.
+          happening in {langMeta.adj} cinema.
         </p>
       </div>
 

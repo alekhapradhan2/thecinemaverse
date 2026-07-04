@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "../styles/globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -28,6 +28,14 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
   icons: { icon: "/favicon.ico" },
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  publisher: SITE_NAME,
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0F0F10",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

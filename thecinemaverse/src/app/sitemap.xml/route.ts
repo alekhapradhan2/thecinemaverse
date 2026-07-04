@@ -19,7 +19,7 @@ import Movie         from "@/models/Movie";
 import Cast          from "@/models/Cast";
 import Blog          from "@/models/Blog";
 import News          from "@/models/News";
-import { LANGUAGES } from "@/lib/languages";
+import { LANGUAGES, DEFAULT_LANGUAGE } from "@/lib/languages";
 
 // ★ Hardcoded to non-www canonical — must exactly match the origin this
 //   sitemap is served from. Do NOT use SITE_URL from @/lib/seo if that
@@ -104,7 +104,7 @@ export async function GET() {
     corePages.forEach(([p, f, pr]) => {
       const char = p.includes("?") ? "&" : "?";
       // We lower priority slightly for non-default language to ensure canonical hierarchy
-      const langPriority = lang.key === "Indian" ? pr : (parseFloat(pr) * 0.9).toFixed(2);
+      const langPriority = lang.key === DEFAULT_LANGUAGE.key ? pr : (parseFloat(pr) * 0.9).toFixed(2);
       entries.push(urlEntry(`${CANONICAL_ORIGIN}${p}${char}lang=${lang.key}`, today, f, langPriority));
     });
   });
@@ -118,7 +118,7 @@ export async function GET() {
     const baseUrl = `${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`;
     entries.push(urlEntry(baseUrl, today, "weekly", "0.75"));
     LANGUAGES.forEach(lang => {
-      const p = lang.key === "Indian" ? "0.75" : "0.65";
+      const p = lang.key === DEFAULT_LANGUAGE.key ? "0.75" : "0.65";
       entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, "weekly", p));
     });
   });
@@ -167,7 +167,7 @@ export async function GET() {
     
     entries.push(urlEntry(baseUrl, today, freq, pri));
     LANGUAGES.forEach(lang => {
-      const p = lang.key === "Indian" ? pri : (parseFloat(pri) * 0.9).toFixed(2);
+      const p = lang.key === DEFAULT_LANGUAGE.key ? pri : (parseFloat(pri) * 0.9).toFixed(2);
       entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, freq, p));
     });
   }
@@ -178,7 +178,7 @@ export async function GET() {
     const baseUrl = `${CANONICAL_ORIGIN}/box-office`;
     entries.push(urlEntry(`${baseUrl}?year=${yr}`, today, "weekly", "0.75"));
     LANGUAGES.forEach(lang => {
-      const p = lang.key === "Indian" ? "0.75" : "0.65";
+      const p = lang.key === DEFAULT_LANGUAGE.key ? "0.75" : "0.65";
       entries.push(urlEntry(`${baseUrl}?year=${yr}&lang=${lang.key}`, today, "weekly", p));
     });
   }

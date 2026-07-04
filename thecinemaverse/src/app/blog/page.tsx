@@ -12,6 +12,7 @@ import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogSearch } from "@/components/blog/BlogSearch";
 import { BlogPagination } from "@/components/blog/BlogPagination";
 import { Search, BookOpen, TrendingUp, Star, Eye, Flame } from "lucide-react";
+import { resolveLanguage, getLangSeo } from "@/lib/languages";
 
 export const revalidate = 600;
 
@@ -29,8 +30,10 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { page?: string; q?: string; category?: string };
+  searchParams: { page?: string; q?: string; category?: string; lang?: string };
 }): Promise<Metadata> {
+  const langConfig = resolveLanguage(searchParams.lang || "hindi");
+  const seo = getLangSeo(langConfig);
   const page       = parseInt(searchParams.page || "1", 10);
   const query      = searchParams.q || "";
   const category   = searchParams.category || "";
@@ -42,6 +45,11 @@ export async function generateMetadata({
   const total      = await Blog.countDocuments(filter);
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 
+  // Add dbValue filter
+  if (langConfig.dbValue) {
+    filter.language = { $regex: new RegExp(`^${langConfig.dbValue}$`, "i") };
+  }
+
   const pageLabel = page > 1 ? ` — Page ${page}` : "";
   const catLabel  = category ? ` | ${category}` : "";
 
@@ -49,13 +57,13 @@ export async function generateMetadata({
     ? `Search: "${query}" | The Cinema Verse Blog`
     : category
     ? `${category} Articles${pageLabel} | The Cinema Verse Blog`
-    : `Indian Blog${catLabel}${pageLabel} | Hindi Cinema News, Reviews & Guides`;
+    : `${seo.adjective} Blog${catLabel}${pageLabel} | ${seo.news}, Reviews & Guides`;
 
   const description = category && CATEGORY_DESCRIPTIONS[category]
     ? CATEGORY_DESCRIPTIONS[category]
     : query
-    ? `Search results for "${query}" on the The Cinema Verse Blog — Indian cinema news, reviews, and guides.`
-    : "Explore the latest Indian blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of Indian cinema. Updated weekly.";
+    ? `Search results for "${query}" on the The Cinema Verse Blog — ${seo.adjective} cinema news, reviews, and guides.`
+    : `Explore the latest ${seo.adjective} blog posts — in-depth movie reviews, actor profiles, top 10 lists, song guides, and behind-the-scenes coverage of ${seo.industry}. Updated weekly.`;
 
   const canonical = category
     ? `https://thecinemaverses.in/blog?category=${encodeURIComponent(category)}${page > 1 ? `&page=${page}` : ""}`
@@ -87,10 +95,10 @@ export async function generateMetadata({
     },
     robots: query ? { index: false, follow: true } : { index: true, follow: true },
     keywords: [
-      "Indian blog", "Indian cinema news", "movie reviews", "Indian updates",
-      "Indian film industry", "Indian actor profiles", "Indian songs guide",
-      "Indian box office blog", "Indian top 10", "Indian cinema 2026",
-      ...(category ? [category, `${category} movies`, `Indian ${category.toLowerCase()}`] : []),
+      `${seo.adjective.toLowerCase()} blog`, `${seo.adjective.toLowerCase()} cinema news`, "movie reviews", `${seo.adjective.toLowerCase()} updates`,
+      `${seo.industry} film industry`, `${seo.adjective.toLowerCase()} actor profiles`, `${seo.adjective.toLowerCase()} songs guide`,
+      `${seo.adjective.toLowerCase()} box office blog`, `${seo.adjective.toLowerCase()} top 10`, `${seo.adjective.toLowerCase()} cinema 2026`,
+      ...(category ? [category, `${category} movies`, `${seo.adjective.toLowerCase()} ${category.toLowerCase()}`] : []),
     ],
     openGraph: {
       title,
@@ -98,8 +106,8 @@ export async function generateMetadata({
       url:      canonical,
       siteName: "The Cinema Verse",
       type:     "website",
-      locale:   "en_IN",
-      images: [{ url: "https://thecinemaverses.in/og-blog.jpg", width: 1200, height: 630, alt: "The Cinema Verse Blog — Hindi Cinema News & Reviews" }],
+      locale:   seo.locale,
+      images: [{ url: "https://thecinemaverses.in/og-blog.jpg", width: 1200, height: 630, alt: `The Cinema Verse Blog — ${seo.news} & Reviews` }],
     },
     twitter: {
       card:        "summary_large_image",
@@ -117,16 +125,18 @@ function BlogSchema({
   blogs,
   mostRecentDate,
   isHomePage,
+  seo,
 }: {
   blogs: any[];
   mostRecentDate: string;
-  isHomePage: boolean;    // ← NEW: only emit WebSite schema on the root /blog page
+  isHomePage: boolean;
+  seo: any;
 }) {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
     name: "The Cinema Verse Blog",
-    description: "News, reviews, and guides about Indian — the Indian-language film industry based in Bhubaneswar, Odisha.",
+    description: `News, reviews, and guides about ${seo.industry} — the ${seo.adjective}-language film industry.`,
     url: "https://thecinemaverses.in/blog",
     dateModified: mostRecentDate,
     publisher: {
@@ -141,20 +151,19 @@ function BlogSchema({
         addressCountry: "IN",
       },
     },
-    inLanguage: ["en", "or"],
+    inLanguage: [seo.locale.split("-")[0], "en"],
     genre: "Entertainment",
     about: {
       "@type": "Thing",
-      name: "Indian",
-      description: "The Indian-language film industry",
-      sameAs: "https://en.wikipedia.org/wiki/Indian_cinema",
+      name: seo.industry,
+      description: `The ${seo.adjective}-language film industry`,
     },
   };
 
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Latest Indian Blog Posts",
+    name: `Latest ${seo.adjective} Blog Posts`,
     numberOfItems: blogs.length,
     itemListElement: blogs.slice(0, 10).map((b: any, i: number) => ({
       "@type": "ListItem",
@@ -206,20 +215,26 @@ interface SearchParams {
   page?: string;
   q?: string;
   category?: string;
+  lang?: string;
 }
 
 async function getBlogs({
   page = 1,
   query = "",
   category = "",
+  lang = "hindi",
 }: {
   page: number;
   query: string;
   category: string;
+  lang: string;
 }) {
   await connectDB();
-
+  const langConfig = resolveLanguage(lang);
   const filter: Record<string, any> = { published: true };
+  if (langConfig.dbValue) {
+    filter.language = { $regex: new RegExp(`^${langConfig.dbValue}$`, "i") };
+  }
 
   if (query.trim()) {
     filter.$or = [
@@ -320,10 +335,13 @@ export default async function BlogPage({
   const page     = Math.max(1, parseInt(searchParams.page || "1", 10));
   const query    = searchParams.q       || "";
   const category = searchParams.category || "";
+  const lang     = searchParams.lang     || "hindi";
+  const langConfig = resolveLanguage(lang);
+  const seo = getLangSeo(langConfig);
 
   const [{ blogs, total, totalPages }, categories, featured, stats, popularTags, totalViews, mostPopular] =
     await Promise.all([
-      getBlogs({ page, query, category }),
+      getBlogs({ page, query, category, lang }),
       getCategories(),
       query || category ? Promise.resolve([]) : getFeaturedBlogs(),
       getBlogStats(),
@@ -350,7 +368,7 @@ export default async function BlogPage({
 
   return (
     <>
-      <BlogSchema blogs={blogs} mostRecentDate={mostRecentDate} isHomePage={isHomePage} />
+      <BlogSchema blogs={blogs} mostRecentDate={mostRecentDate} isHomePage={isHomePage} seo={seo} />
 
       <main className="min-h-screen bg-[#0a0a0a] text-white">
 
@@ -420,16 +438,16 @@ export default async function BlogPage({
                   ) : query ? (
                     <>Search <span className="text-brand-400">Results</span></>
                   ) : (
-                    <>Indian <span className="text-brand-400">Blog</span></>
+                    <>{seo.adjective} <span className="text-brand-400">Blog</span></>
                   )}
                 </h1>
                 <p className="text-gray-400 text-base md:text-lg max-w-2xl leading-relaxed">
                   {category && CATEGORY_DESCRIPTIONS[category]
                     ? CATEGORY_DESCRIPTIONS[category]
                     : query
-                    ? `Showing results for "${query}" across all Indian cinema articles.`
+                    ? `Showing results for "${query}" across all ${seo.adjective} cinema articles.`
                     : <>In-depth movie reviews, actor profiles, top lists, song breakdowns and news
-                      from <strong className="text-gray-300 font-medium">Indian cinema</strong> — updated every week.</>
+                      from <strong className="text-gray-300 font-medium">{seo.industry}</strong> — updated every week.</>
                   }
                 </p>
 
@@ -737,22 +755,21 @@ export default async function BlogPage({
                     id="about-blog-heading"
                     className="text-xl font-bold text-white mb-4"
                   >
-                    About the The Cinema Verse Blog
+                    About the {seo.industry} Blog
                   </h2>
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
                       The <strong className="text-gray-300">The Cinema Verse Blog</strong> is your definitive guide to{" "}
-                      <strong className="text-gray-300">Indian cinema</strong>, popularly known as{" "}
-                      <strong className="text-gray-300">Indian</strong>. We cover everything from blockbuster
+                      <strong className="text-gray-300">{seo.adjective} cinema</strong>, popularly known as{" "}
+                      <strong className="text-gray-300">{seo.industry}</strong>. We cover everything from blockbuster
                       movie releases to indie films, from celebrated actors to emerging talent shaping the
-                      future of India's Indian film industry.
+                      future of the {seo.industry} film industry.
                     </p>
                     <p>
                       Our <strong className="text-gray-300">movie reviews</strong> give you honest, spoiler-aware
                       breakdowns of the latest films. Our{" "}
                       <strong className="text-gray-300">actor spotlights</strong> go deep into the careers and
-                       filmographies of Indian stars like Shah Rukh Khan, Deepika Padukone, Ranveer
-                      Singh, and many more.
+                       filmographies of {seo.adjective} stars.
                     </p>
                   </div>
 
@@ -776,15 +793,15 @@ export default async function BlogPage({
                   <h3 className="text-base font-bold text-white mb-4">What You'll Find Here</h3>
                   <div className="space-y-3 text-gray-400 text-sm leading-relaxed">
                     <p>
-                      Looking for the best Indian songs? Our{" "}
+                      Looking for the best {seo.adjective} songs? Our{" "}
                       <strong className="text-gray-300">song guides and top 10 lists</strong> curate the finest
-                      music from decades of Indian — from classical devotional numbers to modern romantic
+                      music from decades of {seo.industry} — from classical devotional numbers to modern romantic
                       hits and high-energy dance numbers.
                     </p>
                     <p>
                       Bookmark this page and return every week for fresh{" "}
-                      <strong className="text-gray-300">Indian news, reviews, and analysis</strong> — all
-                      written by passionate fans and experts of Indian cinema culture.
+                      <strong className="text-gray-300">{seo.adjective} news, reviews, and analysis</strong> — all
+                      written by passionate fans and experts of {seo.adjective} cinema culture.
                     </p>
                   </div>
 
@@ -797,7 +814,7 @@ export default async function BlogPage({
                       { label: "Movie Reviews",   href: "/blog?category=Reviews" },
                       { label: "Actor Profiles",  href: "/blog?category=Actor" },
                       { label: "Top Lists",       href: "/blog?category=Top+Lists" },
-                      { label: "Indian Songs",      href: "/blog?category=Songs" },
+                      { label: `${seo.adjective} Songs`,      href: "/blog?category=Songs" },
                     ].map((link) => (
                       <a
                         key={link.href}

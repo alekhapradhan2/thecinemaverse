@@ -48,22 +48,21 @@ const GENRES   = ["Action", "Romance", "Drama", "Comedy", "Thriller", "Horror", 
 const VERDICTS = ["Hit", "Superhit", "Blockbuster", "Average", "Flop", "Upcoming"];
 
 const GENRE_META: Record<string, { emoji: string; desc: string; color: string }> = {
-  Action:     { emoji: "⚔️",  desc: "High-octane bollywood action films",        color: "from-red-500/20 to-brand-500/10"   },
-  Romance:    { emoji: "❤️",  desc: "Romantic bollywood love stories",        color: "from-pink-500/20 to-rose-500/10"    },
-  Drama:      { emoji: "🎭",  desc: "Emotional bollywood drama films",            color: "from-purple-500/20 to-violet-500/10"},
-  Comedy:     { emoji: "😄",  desc: "Fun bollywood comedy movies",                color: "from-yellow-500/20 to-amber-500/10" },
-  Thriller:   { emoji: "🔍",  desc: "Suspenseful bollywood thrillers",            color: "from-cyan-500/20 to-sky-500/10"     },
-  Horror:     { emoji: "👻",  desc: "Scary bollywood horror films",               color: "from-gray-700/40 to-zinc-800/10"    },
-  Devotional: { emoji: "🪔",  desc: "Spiritual & devotional hindi films",     color: "from-amber-500/20 to-yellow-400/10" },
-  Family:     { emoji: "👨‍👩‍👧",  desc: "Family entertainer hindi movies",       color: "from-green-500/20 to-emerald-500/10"},
-  Historical: { emoji: "🏛️",  desc: "Historical bollywood period films",          color: "from-stone-500/20 to-slate-500/10"  },
+  Action:     { emoji: "⚔️",  desc: "High-octane action films",        color: "from-red-500/20 to-brand-500/10"   },
+  Romance:    { emoji: "❤️",  desc: "Romantic love stories",        color: "from-pink-500/20 to-rose-500/10"    },
+  Drama:      { emoji: "🎭",  desc: "Emotional drama films",            color: "from-purple-500/20 to-violet-500/10"},
+  Comedy:     { emoji: "😄",  desc: "Fun comedy movies",                color: "from-yellow-500/20 to-amber-500/10" },
+  Thriller:   { emoji: "🔍",  desc: "Suspenseful thrillers",            color: "from-cyan-500/20 to-sky-500/10"     },
+  Horror:     { emoji: "👻",  desc: "Scary horror films",               color: "from-gray-700/40 to-zinc-800/10"    },
+  Devotional: { emoji: "🪔",  desc: "Spiritual & devotional films",     color: "from-amber-500/20 to-yellow-400/10" },
+  Family:     { emoji: "👨‍👩‍👧",  desc: "Family entertainer movies",       color: "from-green-500/20 to-emerald-500/10"},
+  Historical: { emoji: "🏛️",  desc: "Historical period films",          color: "from-stone-500/20 to-slate-500/10"  },
 };
 
-const bollywood_FILM_FACTS = [
-  { icon: Film,     stat: "1936",  label: "First Hindi Film",   note: "Sita Bibaha — the first ever bollywood feature film" },
-  { icon: Globe,    stat: "40–60", label: "Films Per Year",    note: "bollywood produces 40–60 hindi films annually" },
+const getFilmFacts = (lang: any, total: number) => [
+  { icon: Globe,    stat: "Multi-regional", label: "Films Database",    note: `Comprehensive coverage of ${lang.industry} and Indian cinema` },
   { icon: Users,    stat: "1000+", label: "Cast & Crew",       note: "Actors, directors & technicians in our database" },
-  { icon: Calendar, stat: "85+",   label: "Years of Cinema",   note: "hindi cinema has a rich heritage of over 85 years" },
+  { icon: Calendar, stat: "Updated",   label: "Daily",   note: `Regularly updated with new ${lang.short.toLowerCase()} releases` },
 ];
 
 const VERDICT_TABS = [
@@ -156,7 +155,7 @@ export default async function MoviesPage({
               </div>
               <p className="text-gray-400 text-sm md:text-base max-w-xl leading-relaxed">
                 {genre
-                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from ${activeLang.industry}`}. Discover the best ${genre.toLowerCase()} ${lang ? activeLang.short.toLowerCase() : "hindi"} movies with cast, box office and reviews.`
+                  ? `${GENRE_META[genre]?.desc || `Browse ${genre} films from ${activeLang.industry}`}. Discover the best ${genre.toLowerCase()} ${activeLang.short.toLowerCase()} movies with cast, box office and reviews.`
                   : verdict === "Upcoming"
                     ? `All confirmed upcoming ${activeLang.short.toLowerCase()} movies with release dates, cast details and trailers. Stay ahead of every new ${activeLang.industry} release.`
                     : `The most complete ${activeLang.industry} film database — browse every ${activeLang.short.toLowerCase()} movie with cast, songs, box office collection, trailers and reviews.`}
@@ -266,9 +265,9 @@ export default async function MoviesPage({
                 </div>
                 <div>
                   <h2 id="upcoming-heading" className="font-display text-lg font-bold text-white">
-                    Upcoming Hindi Movies 2026
+                    Upcoming {activeLang.short} Movies 2026
                   </h2>
-                  <p className="text-xs text-gray-500 mt-0.5">Confirmed & announced bollywood releases</p>
+                  <p className="text-xs text-gray-500 mt-0.5">Confirmed & announced {s.industry.toLowerCase()} releases</p>
                 </div>
               </div>
               <Link
@@ -292,12 +291,12 @@ export default async function MoviesPage({
               <div className="w-1 h-6 bg-brand-500 rounded-full" aria-hidden="true" />
               <h2 className="font-display text-xl font-bold text-white">
                 {verdict === "Upcoming"
-                  ? "All Upcoming Hindi Films"
+                  ? `All Upcoming ${activeLang.short} Films`
                   : verdict === "Blockbuster"
-                    ? "bollywood Blockbusters"
+                    ? `${activeLang.short} Blockbusters`
                     : genre
-                      ? `${genre} Hindi Movies`
-                      : "Latest Hindi Movies"}
+                      ? `${genre} ${activeLang.short} Movies`
+                      : `Latest ${activeLang.short} Movies`}
               </h2>
             </div>
             <p className="text-sm text-gray-500">
@@ -323,7 +322,7 @@ export default async function MoviesPage({
             <div className="text-center py-20 bg-[#111] border border-[#1f1f1f] rounded-2xl">
               <Film className="w-12 h-12 text-gray-700 mx-auto mb-4" />
               <h3 className="text-white font-bold text-lg mb-2">No movies found</h3>
-              <p className="text-gray-500 text-sm mb-6">Try a different filter or browse all hindi films.</p>
+              <p className="text-gray-500 text-sm mb-6">Try a different filter or browse all {activeLang.short.toLowerCase()} films.</p>
               <Link href="/movies" className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 text-sm font-semibold transition-colors">
                 View all movies <ChevronRight className="w-4 h-4" />
               </Link>
@@ -343,7 +342,7 @@ export default async function MoviesPage({
           <div className="flex items-center gap-2 mb-5">
             <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 id="genre-browse-heading" className="font-display text-xl font-bold text-white">
-              Browse Hindi Movies by Genre
+              Browse {activeLang.short} Movies by Genre
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -379,27 +378,27 @@ export default async function MoviesPage({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                icon: TrendingUp, href: "/box-office",
-                title: "bollywood Box Office Collection",
-                desc: "Day-wise net and gross collection for every hindi film — opening day figures, total earnings and verdict breakdowns.",
+                icon: TrendingUp, href: lang ? `/box-office?lang=${lang}` : "/box-office",
+                title: `${activeLang.short} Box Office Collection`,
+                desc: `Day-wise net and gross collection for every ${activeLang.short.toLowerCase()} film — opening day figures, total earnings and verdict breakdowns.`,
                 cta: "View Box Office",
               },
               {
-                icon: Users, href: "/cast",
-                title: "bollywood Cast & Crew Profiles",
-                desc: "Detailed profiles of bollywood actors, actresses, directors, producers and music directors with complete filmographies.",
+                icon: Users, href: lang ? `/cast?lang=${lang}` : "/cast",
+                title: `${activeLang.short} Cast & Crew Profiles`,
+                desc: `Detailed profiles of ${activeLang.short.toLowerCase()} actors, actresses, directors, producers and music directors with complete filmographies.`,
                 cta: "Browse Cast",
               },
               {
-                icon: Mic2, href: "/songs",
-                title: "Hindi Film Songs & Lyrics",
-                desc: "Every song from every hindi film — YouTube videos, lyrics, singer credits and music director information.",
+                icon: Mic2, href: lang ? `/songs?lang=${lang}` : "/songs",
+                title: `${activeLang.short} Film Songs & Lyrics`,
+                desc: `Every song from every ${activeLang.short.toLowerCase()} film — YouTube videos, lyrics, singer credits and music director information.`,
                 cta: "Find Songs",
               },
               {
                 icon: BookOpen, href: "/blog",
-                title: "Hindi Film Reviews & Blog",
-                desc: "In-depth reviews, top 10 lists, actor spotlights, behind-the-scenes stories and opinion pieces about bollywood.",
+                title: `${activeLang.short} Film Reviews & Blog`,
+                desc: `In-depth reviews, top 10 lists, actor spotlights, behind-the-scenes stories and opinion pieces about ${s.industry}.`,
                 cta: "Read Blog",
               },
             ].map(({ icon: Icon, href, title, desc, cta }) => (
@@ -437,60 +436,43 @@ export default async function MoviesPage({
           <div className="flex items-center gap-2 mb-6">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 id="about-bollywood-heading" className="font-display text-xl md:text-2xl font-bold text-white">
-              About Hindi Cinema — The bollywood Film Industry
+              About {s.industry}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                <strong className="text-white">bollywood</strong> is the popular name for the{" "}
-                <strong className="text-white">bollywood language film industry</strong>, based in Bhubaneswar,
-                the capital of Odisha, India. It is one of India's oldest regional film industries,
-                with its roots tracing back to <strong className="text-white">1936</strong> when{" "}
-                <em>Sita Bibaha</em> became the first bollywood feature film ever produced.
+                The <strong className="text-white">{s.industry}</strong> is one of the most vibrant film industries in India. 
+                Producing highly entertaining movies across genres like action, romance, drama, comedy, and thriller, 
+                <strong className="text-white"> {activeLang.short} films</strong> are deeply connected to the culture and everyday life of millions.
               </p>
               <p>
-                Today, Bollywood produces between <strong className="text-white">300 to 400 Hindi films every year</strong>,
-                spanning genres like action, romance, drama, comedy, devotional, thriller and historical.
-                The industry is deeply connected to India's culture — featuring stories rooted in
-                traditions, mythology, folklore, and the everyday life of millions.
+                The industry continues to grow with modern blockbusters regularly breaking box office records.
+                The Cinema Verse tracks every aspect of <strong className="text-white">{s.industry}</strong> — from
+                day-wise box office collection to complete cast and crew details, song lyrics, YouTube trailers, and audience reviews.
               </p>
               <p>
-                Some of the biggest <strong className="text-white">Hindi movie stars</strong> include{", "}
-                <strong className="text-white">Shah Rukh Khan</strong>, the reigning king of Bollywood,
-                alongside <strong className="text-white">Salman Khan</strong>,{", "}
-                <strong className="text-white">Aamir Khan</strong>,{", "}
-                <strong className="text-white">Deepika Padukone</strong>,{", "}
-                <strong className="text-white">Ranveer Singh</strong>, and{", "}
-                <strong className="text-white">Alia Bhatt</strong>.
+                Our database currently features <strong className="text-white">{total}+ {activeLang.short.toLowerCase()} films</strong>, making it the most
+                comprehensive {activeLang.short.toLowerCase()} movie database available online.
               </p>
             </div>
             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
               <p>
-                The <strong className="text-white">box office performance</strong> of hindi films has grown
-                significantly over the past decade. Modern bollywood blockbusters regularly collect over
-                ₹1 crore in their opening week, with top hits like <em>Daman</em>, <em>Khusi</em>, and{" "}
-                <em>Love Station</em> setting new records for hindi cinema.
+                Whether you're looking for <strong className="text-white">new {activeLang.short.toLowerCase()} movies</strong> released
+                recently, classic films from the past, or upcoming releases — The Cinema Verse is
+                your one-stop destination for everything <strong className="text-white">{s.industry}</strong>.
               </p>
               <p>
-                The Cinema Verse tracks every aspect of hindi cinema — from{" "}
-                <strong className="text-white">day-wise box office collection</strong> to complete cast and
-                crew details, song lyrics, YouTube trailers, and audience reviews. Our database currently
-                features <strong className="text-white">{total}+ hindi films</strong>, making it the most
-                comprehensive hindi movie database available online.
-              </p>
-              <p>
-                Whether you're looking for <strong className="text-white">new hindi movies</strong> released
-                in 2025, classic hindi films from the 1990s, or upcoming bollywood releases — The Cinema Verse is
-                your one-stop destination for everything hindi cinema.
+                Use the filters above to explore {activeLang.short} movies by year, genre, or box office verdict. 
+                Stay tuned for regular updates, trailer releases, and in-depth movie information.
               </p>
             </div>
           </div>
 
           {/* Fact grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-[#1f1f1f]">
-            {bollywood_FILM_FACTS.map(({ icon: Icon, stat, label, note }) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-[#1f1f1f]">
+            {getFilmFacts(activeLang, total).map(({ icon: Icon, stat, label, note }) => (
               <div key={label} className="text-center">
                 <div className="w-9 h-9 bg-brand-500/10 rounded-xl flex items-center justify-center mx-auto mb-2">
                   <Icon className="w-4 h-4 text-brand-500" />
@@ -515,34 +497,30 @@ export default async function MoviesPage({
           <div className="flex items-center gap-2 mb-6">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 id="faq-heading" className="font-display text-xl md:text-2xl font-bold text-white">
-              Frequently Asked Questions — Hindi Movies
+              Frequently Asked Questions — {activeLang.short} Movies
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
             {[
               {
-                q: "Where can I find a complete list of hindi movies?",
-                a: "The Cinema Verse maintains the most complete database of bollywood (bollywood) films online. You can browse all hindi movies by genre, year, verdict, or alphabetically. Each movie page includes cast, songs, box office, synopsis and reviews.",
+                q: `Where can I find a complete list of ${activeLang.short.toLowerCase()} movies?`,
+                a: `The Cinema Verse maintains a complete database of ${s.industry} films online. You can browse all ${activeLang.short.toLowerCase()} movies by genre, year, verdict, or alphabetically. Each movie page includes cast, songs, box office, synopsis and reviews.`,
               },
               {
-                q: "What are the latest hindi movies of 2025?",
-                a: "The Cinema Verse regularly updates its database with the latest hindi films. Use the 'Latest' sort on this page to see the newest bollywood releases of 2025, complete with release dates, verdicts and box office figures.",
+                q: `What are the latest ${activeLang.short.toLowerCase()} movies?`,
+                a: `The Cinema Verse regularly updates its database with the latest ${activeLang.short.toLowerCase()} films. Use the 'Latest' sort on this page to see the newest ${s.industry} releases, complete with release dates, verdicts and box office figures.`,
               },
               {
-                q: "Which hindi movies are upcoming?",
-                a: "Click the 'Upcoming' tab at the top of this page to see all announced and confirmed upcoming hindi movies with expected release dates, cast announcements and official trailer links.",
+                q: `Which ${activeLang.short.toLowerCase()} movies are upcoming?`,
+                a: `Click the 'Upcoming' tab at the top of this page to see all announced and confirmed upcoming ${activeLang.short.toLowerCase()} movies with expected release dates, cast announcements and official trailer links.`,
               },
               {
-                q: "Which hindi movies are blockbusters?",
-                a: "Filter by 'Blockbuster' verdict on this page to see all hindi films that achieved blockbuster status. The Cinema Verse calculates verdicts based on box office performance relative to the film's budget and screen count.",
+                q: `Which ${activeLang.short.toLowerCase()} movies are blockbusters?`,
+                a: `Filter by 'Blockbuster' verdict on this page to see all ${activeLang.short.toLowerCase()} films that achieved blockbuster status. The Cinema Verse calculates verdicts based on box office performance relative to the film's budget and screen count.`,
               },
               {
-                q: "How can I watch hindi movies online?",
-                a: "Many hindi films are available on OTT platforms like Amazon Prime Video, Disney+ Hotstar, Zee5, and SunNXT. Each movie page on The Cinema Verse includes trailer links and OTT streaming information where available.",
-              },
-              {
-                q: "What genres are popular in bollywood?",
-                a: "hindi cinema is diverse — Action, Romance and Drama are the most popular genres. Devotional films set around the Jagannath Temple in Puri have a dedicated audience. Comedy and family entertainers also perform well at the bollywood box office.",
+                q: `How can I watch ${activeLang.short.toLowerCase()} movies online?`,
+                a: "Many films are available on OTT platforms like Amazon Prime Video, Disney+ Hotstar, Zee5, and SunNXT. Each movie page on The Cinema Verse includes trailer links and OTT streaming information where available.",
               },
             ].map(({ q, a }) => (
               <div
@@ -572,15 +550,15 @@ export default async function MoviesPage({
           <div className="flex items-center gap-2 mb-4">
             <div className="w-1 h-5 bg-brand-500 rounded-full" />
             <h2 id="year-nav-heading" className="font-display text-lg font-bold text-white">
-              Hindi Movies by Year
+              {activeLang.short} Movies by Year
             </h2>
           </div>
           <div className="flex flex-wrap gap-2">
             {Array.from({ length: new Date().getFullYear() - 2014 + 1 }, (_, i) => new Date().getFullYear() - i).map((yr) => (
               <Link
                 key={yr}
-                href={`/movies/year/${yr}`}
-                title={`hindi movies released in ${yr}`}
+                href={lang ? `/movies/year/${yr}?lang=${lang}` : `/movies/year/${yr}`}
+                title={`${activeLang.short.toLowerCase()} movies released in ${yr}`}
                 className="px-3.5 py-1.5 text-xs font-semibold rounded-lg border border-[#222] bg-[#111] text-gray-400 hover:border-brand-500/40 hover:text-brand-400 transition-all"
               >
                 {yr}

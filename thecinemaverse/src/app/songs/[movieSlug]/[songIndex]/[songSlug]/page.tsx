@@ -237,6 +237,7 @@ function SeoProseBlock({
   relatedBlogs: any[];
 }) {
   const langStr = movie.language || "Hindi";
+  const indStr  = langStr === "Hindi" ? "Bollywood" : langStr;
 
   return (
     <section
@@ -281,11 +282,11 @@ function SeoProseBlock({
         <div className="flex flex-wrap gap-2 mt-2">
           {year && (
             <Link href={`/songs/category/${year}`} className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
-              🎵 More bollywood Songs {year}
+              🎵 More {indStr} Songs {year}
             </Link>
           )}
           <Link href="/songs/category/latest" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
-            🆕 Latest bollywood Songs
+            🆕 Latest {indStr} Songs
           </Link>
           <Link href="/songs/category/trending" className="text-xs text-brand-400/70 hover:text-brand-400 bg-brand-500/8 border border-brand-500/15 px-2.5 py-1 rounded-full transition-colors">
             🔥 Trending Songs

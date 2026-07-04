@@ -1023,35 +1023,34 @@ export default async function HomePage({
           </section>
         )}
 
-        {/* ══ SEO RICH CONTENT — About bollywood ══ */}
+        {/* ══ SEO RICH CONTENT — About Indian Cinema ══ */}
         <section
-          aria-label="About hindi cinema bollywood"
+          aria-label="About Indian cinema"
           className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-12"
         >
           <div className="max-w-4xl">
             <div className="flex items-center gap-2 mb-4">
               <Award className="w-5 h-5 text-brand-500" />
-              <span className="text-brand-500 text-sm font-semibold uppercase tracking-widest">About bollywood</span>
+              <span className="text-brand-500 text-sm font-semibold uppercase tracking-widest">About Indian Cinema</span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              Celebrating the Rich Heritage of Hindi Cinema
+              Celebrating the Rich Heritage of Indian Cinema
             </h2>
-            <div className="prose-bollywood space-y-4">
+            <div className="prose-cinema space-y-4">
               <p>
-                Hindi cinema, fondly known as <strong>Bollywood</strong>, is one of the largest and most influential
+                Indian cinema is one of the largest and most influential
                 film industries in the world. With roots tracing back to 1913 when the silent masterpiece{" "}
-                <em>Raja Harishchandra</em> was released, Hindi cinema has evolved over more than a century into a global
+                <em>Raja Harishchandra</em> was released, Indian cinema has evolved over more than a century into a global
                 powerhouse that captivates millions of viewers worldwide.
               </p>
               <p>
-                The Hindi film industry is headquartered in <strong>Mumbai</strong>, Maharashtra (formerly Bombay),
-                producing hundreds of films annually. Stars like <strong>Shah Rukh Khan</strong>,{" "}
-                <strong>Amitabh Bachchan</strong>, <strong>Deepika Padukone</strong>, and{" "}
-                <strong>Aamir Khan</strong> have become global icons drawing massive box office numbers across the globe.
+                The Indian film industry produces films in numerous languages across various regions,
+                releasing thousands of films annually. Stars across various industries
+                have become global icons drawing massive box office numbers across the globe.
               </p>
               <p>
-                What makes Hindi cinema unique is its iconic blend of drama, romance, action, and spectacular musical sequences.
-                <strong>The Cinema Verse</strong> is your complete destination for Hindi movie
+                What makes Indian cinema unique is its iconic blend of drama, romance, action, and spectacular musical sequences.
+                <strong>The Cinema Verse</strong> is your complete destination for movie
                 reviews, cast details, box office collections, songs, trailers and in-depth blog articles.
               </p>
             </div>
@@ -1067,10 +1066,10 @@ export default async function HomePage({
         <section aria-label="What you can find on The Cinema Verse">
           <div className="text-center mb-6 sm:mb-10">
             <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-white">
-              Everything About <span className="text-brand-500">Hindi Cinema</span> in One Place
+              Everything About <span className="text-brand-500">Indian Cinema</span> in One Place
             </h2>
             <p className="text-gray-400 text-sm mt-2 max-w-xl mx-auto">
-              The Cinema Verse is the most complete hindi film database covering movies, music, cast and box office.
+              The Cinema Verse is the most complete film database covering movies, music, cast and box office.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
@@ -1078,37 +1077,37 @@ export default async function HomePage({
               {
                 icon: TrendingUp, color: "orange",
                 title: "Box Office Tracking",
-                desc: "Accurate opening day, first week and total collection data for every hindi film. Day-wise box office numbers updated regularly.",
+                desc: "Accurate opening day, first week and total collection data for films. Day-wise box office numbers updated regularly.",
                 href: "/movies",
               },
               {
                 icon: Star, color: "yellow",
                 title: "Cast & Crew Profiles",
-                desc: "Detailed biographies of bollywood actors, directors, producers and film professionals with their complete filmography.",
+                desc: "Detailed biographies of actors, directors, producers and film professionals with their complete filmography.",
                 href: "/cast",
               },
               {
                 icon: Music, color: "green",
                 title: "Songs & Music",
-                desc: "Every song from every hindi film — with YouTube videos, lyrics, singer and music director credits.",
+                desc: "Every song from films — with YouTube videos, lyrics, singer and music director credits.",
                 href: "/songs",
               },
               {
                 icon: BookOpen, color: "blue",
                 title: "In-Depth Blog Articles",
-                desc: "Expert reviews, cast spotlights, top 10 lists, behind-the-scenes stories and opinion pieces about bollywood.",
+                desc: "Expert reviews, cast spotlights, top 10 lists, behind-the-scenes stories and opinion pieces.",
                 href: "/blog",
               },
               {
                 icon: Mic2, color: "purple",
-                title: "Hindi Film Reviews",
-                desc: "Read and write honest public reviews for any hindi movie. Rating system helps you decide what to watch next.",
+                title: "Film Reviews",
+                desc: "Read and write honest public reviews for any movie. Rating system helps you decide what to watch next.",
                 href: "/movies",
               },
               {
                 icon: Trophy, color: "orange",
                 title: "Verdicts & Ratings",
-                desc: "Blockbuster, Super Hit, Hit, Average, Flop — clear verdicts for every released hindi film based on box office performance.",
+                desc: "Blockbuster, Super Hit, Hit, Average, Flop — clear verdicts for released films based on box office performance.",
                 href: "/movies",
               },
             ].map(({ icon: Icon, title, desc, href }) => (
@@ -1128,38 +1127,38 @@ export default async function HomePage({
         </section>
 
         {/* ══ FAQ — AdSense / SEO section ══ */}
-        <section aria-label="Frequently asked questions about hindi cinema" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-10">
+        <section aria-label="Frequently asked questions about Indian cinema" className="bg-[#111] border border-[#1f1f1f] rounded-2xl p-5 sm:p-8 md:p-10">
           <div className="flex items-center gap-2 mb-5 sm:mb-8">
             <div className="w-1 h-6 bg-brand-500 rounded-full" />
             <h2 className="font-display text-lg sm:text-2xl font-bold text-white">
-              Frequently Asked Questions — Hindi Cinema
+              Frequently Asked Questions — Indian Cinema
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {[
               {
-                q: "What is Bollywood?",
-                a: "Bollywood is the popular term for the Hindi-language film industry based in Mumbai, Maharashtra. It is one of the largest centers of film production in the world, producing hundreds of films every year.",
+                q: "What is Indian Cinema?",
+                a: "Indian cinema is a vast and diverse industry comprising various regional film industries, producing thousands of films every year in multiple languages.",
               },
               {
-                q: "Who are the top actors in Hindi cinema?",
-                a: "Popular Bollywood actors include legends like Amitabh Bachchan and Shah Rukh Khan, along with stars like Salman Khan, Aamir Khan, Ranbir Kapoor, Deepika Padukone, and Alia Bhatt.",
+                q: `Who are the top actors in ${s.adj} cinema?`,
+                a: `Popular actors span across various industries, including legends and stars from ${s.industry} and beyond.`,
               },
               {
-                q: "Where can I read Hindi movie reviews?",
-                a: "The Cinema Verse publishes in-depth Hindi movie reviews, audience ratings, box office analysis, and cast spotlights. Visit our Blog section for the latest articles.",
+                q: "Where can I read movie reviews?",
+                a: "The Cinema Verse publishes in-depth movie reviews, audience ratings, box office analysis, and cast spotlights. Visit our Blog section for the latest articles.",
               },
               {
-                q: "What is the box office collection of recent Hindi films?",
-                a: "The Cinema Verse tracks day-wise net and gross box office collection for all major Hindi films. Visit the Box Office section for updated figures.",
+                q: "What is the box office collection of recent films?",
+                a: "The Cinema Verse tracks day-wise net and gross box office collection for major films. Visit the Box Office section for updated figures.",
               },
               {
-                q: "How can I find songs from a Hindi movie?",
-                a: "Every Hindi film's song list with YouTube videos, lyrics, singers, lyricists, and music directors is available on The Cinema Verse's Songs section.",
+                q: "How can I find songs from a movie?",
+                a: "Every film's song list with YouTube videos, lyrics, singers, lyricists, and music directors is available on The Cinema Verse's Songs section.",
               },
               {
-                q: "What does 'Blockbuster', 'Hit' and 'Flop' mean for Hindi films?",
-                a: "These verdicts are based on a film's box office performance relative to its budget and screen count. The Cinema Verse displays the final verdict for each released Hindi film on its movie page.",
+                q: "What does 'Blockbuster', 'Hit' and 'Flop' mean?",
+                a: "These verdicts are based on a film's box office performance relative to its budget and screen count. The Cinema Verse displays the final verdict for each released film on its movie page.",
               },
             ].map(({ q, a }) => (
               <div key={q} className="border-b border-[#1f1f1f] pb-5 last:border-0">
@@ -1179,10 +1178,10 @@ export default async function HomePage({
             style={{ backgroundImage: "radial-gradient(circle at 50% 50%, #f97316 0%, transparent 70%)" }} />
           <div className="relative z-10">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3">
-              Your Gateway to <span className="text-brand-400">bollywood</span>
+              Your Gateway to <span className="text-brand-400">{s.industry}</span>
             </h2>
             <p className="text-gray-300 text-sm sm:text-base max-w-xl mx-auto mb-5 sm:mb-8">
-              Explore the complete world of hindi cinema — from classic films to today's blockbusters,
+              Explore the complete world of {s.adj.toLowerCase()} cinema — from classic films to today's blockbusters,
               from song lyrics to box office collections.
             </p>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
@@ -1196,7 +1195,7 @@ export default async function HomePage({
                 <Users className="w-4 h-4" /> Cast Profiles
               </Link>
               <Link href="/songs" className="btn-outline inline-flex items-center gap-2">
-                <Music className="w-4 h-4" /> bollywood Songs
+                <Music className="w-4 h-4" /> {s.industry} Songs
               </Link>
             </div>
           </div>

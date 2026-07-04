@@ -182,7 +182,7 @@ export function SongCard({ song, onClick }: SongCardProps) {
           {thumb ? (
             <Image
               src={thumb}
-              alt={song.title || "bollywood Song"}
+              alt={song.title || "Song"}
               fill
               className="sc-thumb-img"
               sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 200px"

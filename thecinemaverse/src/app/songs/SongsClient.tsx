@@ -276,7 +276,7 @@ function SongCard({ song }: { song: Song }) {
           {thumb ? (
             <Image
               src={thumb}
-              alt={song.title || "bollywood Song"}
+              alt={song.title || "Song"}
               fill
               sizes="(max-width: 480px) 50vw, (max-width: 768px) 33vw, 25vw"
             />
@@ -374,6 +374,7 @@ export function SongsClient({
   const router     = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const activeLang = resolveLanguage(searchParams.get("lang") || undefined);
 
   const [searchInput, setSearchInput] = useState(active.q || "");
 
@@ -441,7 +442,7 @@ export function SongsClient({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-1 h-5 bg-brand-500 rounded-full" />
-          <h2 className="font-display text-lg sm:text-xl font-bold text-white">All bollywood Songs</h2>
+          <h2 className="font-display text-lg sm:text-xl font-bold text-white">All {activeLang.short} Songs</h2>
         </div>
         <p className="text-xs sm:text-sm text-gray-500">
           {total.toLocaleString()} songs
@@ -555,7 +556,7 @@ export function SongsClient({
             <p className="text-white font-bold text-base mb-1">No songs found</p>
             <p className="text-gray-500 text-sm">
               {active.q
-                ? `No bollywood songs found for "${active.q}"`
+                ? `No ${activeLang.short.toLowerCase()} songs found for "${active.q}"`
                 : "No songs match your current filters."}
             </p>
             <button
@@ -621,14 +622,14 @@ export function SongsClient({
       {/* SEO content block */}
       <div className="mt-2 p-4 sm:p-6 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <h3 className="font-display font-bold text-white text-sm sm:text-base mb-2 sm:mb-3">
-          {searchParams.get("lang") ? `${resolveLanguage(searchParams.get("lang") || "").short} Film Songs` : "Hindi Film Songs"} — Complete {searchParams.get("lang") ? (resolveLanguage(searchParams.get("lang") || "").short === "Hindi" ? "Bollywood" : resolveLanguage(searchParams.get("lang") || "").short) : "Bollywood"} Music Database
+          {activeLang.short} Film Songs — Complete {activeLang.industry} Music Database
         </h3>
         <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
           The Cinema Verse features the most extensive collection of{" "}
-          <strong className="text-gray-300">{searchParams.get("lang") ? resolveLanguage(searchParams.get("lang") || "").short.toLowerCase() : "hindi"} film songs</strong> available online. From timeless
+          <strong className="text-gray-300">{activeLang.short.toLowerCase()} film songs</strong> available online. From timeless
           classics by legendary singers to the latest{" "}
-          <strong className="text-gray-300">new {searchParams.get("lang") ? (resolveLanguage(searchParams.get("lang") || "").short === "Hindi" ? "bollywood" : resolveLanguage(searchParams.get("lang") || "").short.toLowerCase()) : "bollywood"} songs 2026</strong>, every track is catalogued
-          with full credits — singer, music director, lyricist and the original {searchParams.get("lang") ? resolveLanguage(searchParams.get("lang") || "").short.toLowerCase() : "hindi"} movie. Use the
+          <strong className="text-gray-300">new {activeLang.short.toLowerCase()} songs {new Date().getFullYear()}</strong>, every track is catalogued
+          with full credits — singer, music director, lyricist and the original {activeLang.short.toLowerCase()} movie. Use the
           search above to find any song across our entire database, or filter by your favourite singer
           or music director.
         </p>

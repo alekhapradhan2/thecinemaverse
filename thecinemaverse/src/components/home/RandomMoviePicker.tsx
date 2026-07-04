@@ -99,7 +99,7 @@ export default function RandomMoviePicker({
           </div>
           <h2 className="text-lg sm:text-xl font-black text-white leading-tight">Feeling Lucky?</h2>
           <p className="text-gray-500 text-xs mt-0.5">
-            We'll pick a random hindi film — recent ones get priority.
+            We'll pick a random film — recent ones get priority.
           </p>
         </div>
 

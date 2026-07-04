@@ -416,7 +416,7 @@ function ShareModal({
       ctx.letterSpacing = "0px";
       ctx.fillStyle = "rgba(245,158,11,0.45)";
       ctx.font = "10.5px 'Georgia', serif";
-      ctx.fillText("Your Hindi Cinema Universe", WM_X, LOGO_Y + 40);
+      ctx.fillText("Your Indian Cinema Universe", WM_X, LOGO_Y + 40);
 
       // MY REVIEW badge (right)
       ctx.font = "bold 9.5px 'Georgia', serif";
@@ -574,7 +574,7 @@ ry += lines.length * lineHeight + 12;
       ctx.fillStyle = "rgba(245,158,11,0.38)";
       ctx.font = "11.5px 'Georgia', serif";
       ctx.textAlign = "center";
-      ctx.fillText("thecinemaverses.in  ·  Your Hindi Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
+      ctx.fillText("thecinemaverse.in  ·  Your Indian Cinema Universe", CARD_W / 2, curY + FOT_H / 2 + 5);
       ctx.textAlign = "left";
 
       // ── Export PNG ──
@@ -661,7 +661,7 @@ ry += lines.length * lineHeight + 12;
                 color: "rgba(245,158,11,.45)",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-              }}>Your Hindi Cinema Universe</div>
+              }}>Your Indian Cinema Universe</div>
             </div>
           </div>
 
@@ -801,10 +801,10 @@ ry += lines.length * lineHeight + 12;
           justifyContent: "space-between",
         }}>
           <div style={{ fontSize: "0.68rem", color: "rgba(245,158,11,.5)" }}>
-            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>thecinemaverses.in</strong>
+            🎬 <strong style={{ color: "rgba(245,158,11,.75)", letterSpacing: "0.05em" }}>thecinemaverse.in</strong>
           </div>
           <div style={{ fontSize: "0.6rem", color: "rgba(255,255,255,.2)", letterSpacing: "0.06em" }}>
-            hindi cinema UNIVERSE
+            Indian cinema UNIVERSE
           </div>
         </div>
 

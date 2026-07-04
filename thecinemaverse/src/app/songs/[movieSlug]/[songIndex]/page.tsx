@@ -62,7 +62,7 @@ export async function generateMetadata({
   if (!movie || !song) {
     return buildMeta({
       title: "Song Not Found – The Cinema Verse",
-      description: "The requested bollywood song could not be found.",
+      description: "The requested song could not be found.",
       url: `/songs/${params.movieSlug}/${params.songIndex}`,
     });
   }

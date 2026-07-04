@@ -51,8 +51,8 @@ export const LANGUAGES: LanguageConfig[] = [
   },
   // -- Future languages - uncomment & fill dbValue to activate -------------
   // { key: "tamil",     label: "Tamil",     short: "Tamil",     industry: "Kollywood",     adjective: "Tamil",     dbValue: "Tamil",    locale: "ta-IN", country: "IN", flag: "IN" },
-  // { key: "telugu",    label: "Telugu",    short: "Telugu",    industry: "Tollywood",     adjective: "Telugu",    dbValue: "Telugu",   locale: "te-IN", country: "IN", flag: "IN" },
-  // { key: "malayalam", label: "Malayalam", short: "Malayalam", industry: "Mollywood",     adjective: "Malayalam", dbValue: "Malayalam",locale: "ml-IN", country: "IN", flag: "IN" },
+  { key: "telugu",    label: "Telugu",    short: "Telugu",    industry: "Tollywood",     adjective: "Telugu",    dbValue: "Telugu",   locale: "te-IN", country: "IN", flag: "IN" },
+  { key: "malayalam", label: "Malayalam", short: "Malayalam", industry: "Mollywood",     adjective: "Malayalam", dbValue: "Malayalam",locale: "ml-IN", country: "IN", flag: "IN" },
   // { key: "kannada",   label: "Kannada",   short: "Kannada",   industry: "Sandalwood",    adjective: "Kannada",   dbValue: "Kannada",  locale: "kn-IN", country: "IN", flag: "IN" },
   // { key: "marathi",   label: "Marathi",   short: "Marathi",   industry: "Marathi Cinema",adjective: "Marathi",   dbValue: "Marathi",  locale: "mr-IN", country: "IN", flag: "IN" },
   // { key: "punjabi",   label: "Punjabi",   short: "Punjabi",   industry: "Punjabi Cinema",adjective: "Punjabi",   dbValue: "Punjabi",  locale: "pa-IN", country: "IN", flag: "IN" },

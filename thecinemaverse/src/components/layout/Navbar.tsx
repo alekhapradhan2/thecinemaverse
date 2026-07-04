@@ -2,6 +2,7 @@
 // components/Navbar.tsx
 
 import Link from "next/link";
+import { LocalizedLink } from "@/components/ui/LocalizedLink";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef, useCallback, useTransition } from "react";
 import {
@@ -572,7 +573,7 @@ function BoxOfficeYearDropdown({ onClose }: { onClose: () => void }) {
         </div>
         <div>
           <p className="text-xs font-bold text-white tracking-wide">Box Office by Year</p>
-          <p className="text-[10px] text-gray-500 mt-0.5">hindi film collections, year-wise</p>
+          <p className="text-[10px] text-gray-500 mt-0.5">film collections, year-wise</p>
         </div>
       </div>
 
@@ -827,14 +828,14 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo ──────────────────────────────────────────────────────── */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="The Cinema Verse — Home">
+          <LocalizedLink href="/" className="flex items-center gap-2.5 group shrink-0" aria-label="The Cinema Verse — Home">
             <div className="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center group-hover:bg-brand-600 transition-colors">
               <Film className="w-5 h-5 text-white" aria-hidden="true" />
             </div>
             <span className="font-bold text-[1.2rem] text-white tracking-wide select-none">
               The Cinema <span className="text-brand-500">Verse</span>
             </span>
-          </Link>
+          </LocalizedLink>
 
           {/* ── Desktop Nav ───────────────────────────────────────────────── */}
           <nav className="hidden md:flex items-center gap-0.5" aria-label="Main navigation">
@@ -848,7 +849,7 @@ export function Navbar() {
                     onMouseEnter={handleMoviesMouseEnter}
                     onMouseLeave={handleMoviesMouseLeave}
                   >
-                    <Link
+                    <LocalizedLink
                       href={link.href}
                       aria-current={pathname?.startsWith(link.href) ? "page" : undefined}
                       aria-haspopup="true"
@@ -867,7 +868,7 @@ export function Navbar() {
                           moviesDropOpen ? "rotate-90 text-brand-400" : "rotate-0",
                         )}
                       />
-                    </Link>
+                    </LocalizedLink>
                     {moviesDropOpen && (
                       <MoviesYearDropdown
                         onClose={() => setMoviesDropOpen(false)}
@@ -888,7 +889,7 @@ export function Navbar() {
                     onMouseEnter={handleBoMouseEnter}
                     onMouseLeave={handleBoMouseLeave}
                   >
-                    <Link
+                    <LocalizedLink
                       href={link.href}
                       aria-current={pathname?.startsWith(link.href) ? "page" : undefined}
                       aria-haspopup="true"
@@ -907,7 +908,7 @@ export function Navbar() {
                           boDropOpen ? "rotate-90 text-brand-400" : "rotate-0",
                         )}
                       />
-                    </Link>
+                    </LocalizedLink>
                     {boDropOpen && (
                       <BoxOfficeYearDropdown onClose={() => setBoDropOpen(false)} />
                     )}
@@ -916,7 +917,7 @@ export function Navbar() {
               }
 
               return (
-                <Link
+                <LocalizedLink
                   key={link.href}
                   href={link.href}
                   aria-current={pathname?.startsWith(link.href) ? "page" : undefined}
@@ -928,7 +929,7 @@ export function Navbar() {
                   )}
                 >
                   {link.label}
-                </Link>
+                </LocalizedLink>
               );
             })}
           </nav>
@@ -1111,24 +1112,24 @@ export function Navbar() {
                         </p>
                         <div className="grid grid-cols-4 gap-1.5">
                           {MOVIE_YEARS.map((yr) => (
-                            <Link
+                            <LocalizedLink
                               key={yr}
                               href={`/movies/year/${yr}?lang=${mobileNavLang}`}
                               onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
                               className="flex items-center justify-center py-2 rounded-lg bg-white/[0.04] border border-white/[0.07] hover:bg-brand-500/15 hover:border-brand-500/30 text-xs font-semibold text-gray-400 hover:text-brand-400 transition-all"
                             >
                               {yr}
-                            </Link>
+                            </LocalizedLink>
                           ))}
                         </div>
-                        <Link
+                        <LocalizedLink
                           href={`/movies?lang=${mobileNavLang}`}
                           onClick={() => { setMenuOpen(false); setMobileYearsOpen(false); }}
                           className="flex items-center justify-center gap-1.5 mt-2 py-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
                         >
                           <Film className="w-3 h-3" />
                           All {LANGUAGES.find(l => l.key === mobileNavLang)?.short} Movies
-                        </Link>
+                        </LocalizedLink>
                       </div>
                     )}
                   </div>
@@ -1160,7 +1161,7 @@ export function Navbar() {
                         </p>
                         <div className="grid grid-cols-4 gap-1.5">
                           {BOX_OFFICE_YEARS.map((yr) => (
-                            <Link
+                            <LocalizedLink
                               key={yr}
                               href={yr === _currentYear ? "/box-office" : `/box-office?year=${yr}`}
                               onClick={() => { setMenuOpen(false); setMobileBoOpen(false); }}
@@ -1172,7 +1173,7 @@ export function Navbar() {
                               )}
                             >
                               {yr}
-                            </Link>
+                            </LocalizedLink>
                           ))}
                         </div>
                         {/* All-time + full list */}
@@ -1184,14 +1185,14 @@ export function Navbar() {
                           >
                             👑 All-Time Top Grossers
                           </a>
-                          <Link
+                          <LocalizedLink
                             href="/box-office"
                             onClick={() => { setMenuOpen(false); setMobileBoOpen(false); }}
                             className="flex items-center justify-center gap-1.5 py-2 rounded-lg bg-brand-500/10 border border-brand-500/20 text-xs font-semibold text-brand-400 hover:bg-brand-500/20 transition-all"
                           >
                             <TrendingUp className="w-3 h-3" />
                             All Box Office Data
-                          </Link>
+                          </LocalizedLink>
                         </div>
                       </div>
                     )}
@@ -1200,7 +1201,7 @@ export function Navbar() {
               }
 
               return (
-                <Link
+                <LocalizedLink
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
@@ -1213,7 +1214,7 @@ export function Navbar() {
                   )}
                 >
                   {link.label}
-                </Link>
+                </LocalizedLink>
               );
             })}
           </div>

@@ -272,7 +272,7 @@ export default async function SongsPage({
             <div className="flex items-center gap-2 bg-[#111] border border-[#1f1f1f] rounded-xl px-5 py-3 self-start md:self-auto">
               <Music className="w-4 h-4 text-brand-500" />
               <span className="text-2xl font-black text-white font-display">{total.toLocaleString()}</span>
-              <span className="text-xs text-gray-500 leading-tight">bollywood<br />songs</span>
+              <span className="text-xs text-gray-500 leading-tight">{lang.short.toLowerCase()}<br />songs</span>
             </div>
           </div>
         </div>
@@ -282,10 +282,10 @@ export default async function SongsPage({
 
         {/* ══ UPCOMING ══ */}
         {upcoming.length > 0 && !qFilter && (
-          <section aria-label="Upcoming bollywood songs 2026">
+          <section aria-label={`Upcoming ${lang.short.toLowerCase()} songs 2026`}>
             <div className="flex items-center gap-2 mb-5">
               <div className="w-1 h-5 bg-brand-500 rounded-full" />
-              <h2 className="font-display text-xl font-bold text-white">Upcoming bollywood Songs 2026</h2>
+              <h2 className="font-display text-xl font-bold text-white">Upcoming {s.industry} Songs 2026</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
               {upcoming.map((movie: any) => (
@@ -501,9 +501,9 @@ export default async function SongsPage({
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: Film,       href: "/movies",     title: `${lang.short} Movies`,    desc: `Complete database of ${lang.short.toLowerCase()} films with cast, synopsis, trailers and reviews.`,                      cta: "Browse Movies"   },
-              { icon: TrendingUp, href: "/box-office", title: "Box Office",     desc: `Day-wise net and gross collection figures for every ${lang.short.toLowerCase()} film currently running.`,               cta: "View Box Office" },
-              { icon: Star,       href: "/cast",       title: "Cast Profiles",  desc: `Detailed profiles of ${s.industry.toLowerCase()} actors, actresses and film professionals with full filmographies.`,    cta: "Browse Cast"     },
+              { icon: Film,       href: urlLang ? `/movies?lang=${urlLang}` : "/movies",     title: `${lang.short} Movies`,    desc: `Complete database of ${lang.short.toLowerCase()} films with cast, synopsis, trailers and reviews.`,                      cta: "Browse Movies"   },
+              { icon: TrendingUp, href: urlLang ? `/box-office?lang=${urlLang}` : "/box-office", title: "Box Office",     desc: `Day-wise net and gross collection figures for every ${lang.short.toLowerCase()} film currently running.`,               cta: "View Box Office" },
+              { icon: Star,       href: urlLang ? `/cast?lang=${urlLang}` : "/cast",       title: "Cast Profiles",  desc: `Detailed profiles of ${s.industry.toLowerCase()} actors, actresses and film professionals with full filmographies.`,    cta: "Browse Cast"     },
               { icon: Headphones, href: "/blog",       title: `${lang.short} Film Blog`, desc: `In-depth reviews, singer spotlights, top 10 song lists and ${s.industry.toLowerCase()} music opinion pieces.`,     cta: "Read Blog"       },
             ].map(({ icon: Icon, href, title, desc, cta }) => (
               <Link key={title} href={href}

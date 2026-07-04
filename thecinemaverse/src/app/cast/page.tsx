@@ -30,17 +30,20 @@ const ROLE_ICON: Record<string, string> = {
 };
 
 // SEO descriptions per role — boosts AdSense content quality signals
-const ROLE_SEO: Record<string, { title: string; description: string }> = {
-  Actor:           { title: "bollywood Actors",          description: "Browse complete profiles of hindi film actors starring in bollywood movies." },
-  Actress:         { title: "bollywood Actresses",        description: "Discover leading bollywood actresses and their filmographies in bollywood cinema." },
-  Director:        { title: "bollywood Directors",    description: "Explore hindi film directors who have shaped the story of bollywood." },
-  Singer:          { title: "bollywood Singers",          description: "Find bollywood playback singers and their hit songs from bollywood films." },
-  "Music Director":{ title: "Music Directors",       description: "Discover music directors behind the best hindi film soundtracks." },
-  Producer:        { title: "bollywood Producers",    description: "Browse producers who have backed hindi films and shaped the industry." },
-  Lyricist:        { title: "bollywood Lyricists",        description: "Find lyricists who wrote the memorable songs of hindi cinema." },
-  Cinematographer: { title: "Cinematographers",      description: "Explore the cinematographers behind the visual storytelling of bollywood." },
-  Choreographer:   { title: "Choreographers",        description: "Browse dance choreographers from hindi films and their career highlights." },
-  Editor:          { title: "Film Editors",          description: "Discover editors who brought hindi films to life in post-production." },
+const getRoleSeo = (type: string, lang: any) => {
+  const map: Record<string, { title: string; description: string }> = {
+    Actor:           { title: `${lang.adj} Actors`,          description: `Browse complete profiles of film actors starring in ${lang.adj} movies.` },
+    Actress:         { title: `${lang.adj} Actresses`,        description: `Discover leading actresses and their filmographies in ${lang.industry}.` },
+    Director:        { title: `${lang.adj} Directors`,    description: `Explore film directors who have shaped the story of ${lang.industry}.` },
+    Singer:          { title: `${lang.adj} Singers`,          description: `Find playback singers and their hit songs from ${lang.adj} films.` },
+    "Music Director":{ title: "Music Directors",       description: `Discover music directors behind the best ${lang.adj} film soundtracks.` },
+    Producer:        { title: `${lang.adj} Producers`,    description: `Browse producers who have backed ${lang.adj} films and shaped the industry.` },
+    Lyricist:        { title: `${lang.adj} Lyricists`,        description: `Find lyricists who wrote the memorable songs of ${lang.industry}.` },
+    Cinematographer: { title: "Cinematographers",      description: `Explore the cinematographers behind the visual storytelling of ${lang.industry}.` },
+    Choreographer:   { title: "Choreographers",        description: `Browse dance choreographers from ${lang.adj} films and their career highlights.` },
+    Editor:          { title: "Film Editors",          description: `Discover editors who brought ${lang.adj} films to life in post-production.` },
+  };
+  return map[type];
 };
 
 // ── Types ──────────────────────────────────────────────────────────────────────
@@ -73,14 +76,14 @@ export async function generateMetadata({
   const { type, lang } = searchParams;
   const activeLang = resolveLanguage(lang);
   const s = getLangMeta(activeLang);
-  const seo = type ? ROLE_SEO[type] : null;
+  const seo = type ? getRoleSeo(type, activeLang) : null;
 
   return buildMeta({
     title: seo
-      ? `${seo.title.replace("bollywood", s.adj).replace("Hindi", s.adj)} – ${s.industry} Directory | The Cinema Verse`
+      ? `${seo.title} – ${s.industry} Directory | The Cinema Verse`
       : `${s.actors}, Actresses & Crew – Complete ${s.industry} Cast Directory | The Cinema Verse`,
     description: seo
-      ? `${seo.description.replace(/bollywood/g, s.adj).replace(/hindi/gi, s.adj)} View complete filmographies, biographies and career highlights on The Cinema Verse.`
+      ? `${seo.description} View complete filmographies, biographies and career highlights on The Cinema Verse.`
       : `Explore the complete directory of ${s.adj.toLowerCase()} film actors, actresses, directors, singers and crew. Browse profiles with filmographies and career stats of ${s.industry} celebrities.`,
     url: searchParams.lang 
       ? `/cast?${type ? `type=${type}&` : ''}lang=${searchParams.lang}` 
@@ -284,8 +287,8 @@ export default async function CastPage({
 }) {
   const { type, lang } = searchParams;
   const data = await getPageData(type, lang);
-  const seo  = type ? ROLE_SEO[type] : null;
   const activeLang = resolveLanguage(lang);
+  const seo  = type ? getRoleSeo(type, activeLang) : null;
   const s = getLangMeta(activeLang);
 
   return (
@@ -355,7 +358,7 @@ export default async function CastPage({
 
                 <p className="text-zinc-400 text-sm max-w-xl leading-relaxed">
                   {seo
-                    ? seo.description.replace(/bollywood/g, s.adj).replace(/hindi/gi, s.adj)
+                    ? seo.description
                     : `Complete directory of ${s.adj.toLowerCase()} film actors, actresses, directors, singers and crew from ${s.industry}.`
                   }
                 </p>
@@ -465,19 +468,19 @@ export default async function CastPage({
               <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
                   <h2 id="about-cast-heading" className="text-lg font-bold text-white mb-3">
-                    About bollywood Cast &amp; Crew
+                    About {s.industry} Cast &amp; Crew
                   </h2>
                   <div className="space-y-3 text-zinc-400 text-sm leading-relaxed">
                     <p>
                       The Cinema Verse's <strong className="text-zinc-200">Cast &amp; Crew directory</strong> is the most comprehensive
-                      database of <strong className="text-zinc-200">hindi film artists</strong> on the internet. From legendary
-                      actors who defined bollywood's golden era to rising stars making their mark today, every profile is
+                      database of <strong className="text-zinc-200">{activeLang.short.toLowerCase()} film artists</strong> on the internet. From legendary
+                      actors who defined the industry's golden era to rising stars making their mark today, every profile is
                       backed with filmography data, career highlights, and biographical details.
                     </p>
                     <p>
-                      Whether you're looking for celebrated <strong className="text-zinc-200">Bollywood actors</strong> like
-                      Shah Rukh Khan and Salman Khan, iconic <strong className="text-zinc-200">Bollywood actresses</strong>{" "}
-                      like Deepika Padukone and Alia Bhatt, or the talented directors and music composers behind Bollywood's
+                      Whether you're looking for celebrated <strong className="text-zinc-200">{activeLang.short} actors</strong>
+                      or iconic <strong className="text-zinc-200">{activeLang.short} actresses</strong>, 
+                      along with the talented directors and music composers behind {s.industry}'s
                       biggest hits — you'll find them all here.
                     </p>
                   </div>
@@ -487,13 +490,13 @@ export default async function CastPage({
                   <h3 className="text-base font-bold text-white mb-3">Browse by Category</h3>
                   <div className="space-y-3 text-zinc-400 text-sm leading-relaxed">
                     <p>
-                      Use the role filters above to explore <strong className="text-zinc-200">bollywood directors</strong> who have
-                      shaped the art of bollywood storytelling, <strong className="text-zinc-200">playback singers</strong> behind
-                      your favourite bollywood songs, and the crew members working behind the scenes.
+                      Use the role filters above to explore <strong className="text-zinc-200">{activeLang.short.toLowerCase()} directors</strong> who have
+                      shaped the art of storytelling, <strong className="text-zinc-200">playback singers</strong> behind
+                      your favourite songs, and the crew members working behind the scenes.
                     </p>
                     <p>
                       Each profile includes complete movie listings, role details, and links to related films — making
-                      The Cinema Verse the go-to resource for everything about <strong className="text-zinc-200">hindi cinema's
+                      The Cinema Verse the go-to resource for everything about <strong className="text-zinc-200">{s.industry}'s
                       artists and technicians</strong>.
                     </p>
                   </div>
@@ -501,10 +504,10 @@ export default async function CastPage({
                   {/* Internal links */}
                   <div className="mt-4 flex flex-wrap gap-2">
                     {[
-                      { label: "bollywood Actors",    href: "/cast?type=Actor"    },
-                      { label: "bollywood Actresses", href: "/cast?type=Actress"  },
-                      { label: "Directors",      href: "/cast?type=Director" },
-                      { label: "Singers",        href: "/cast?type=Singer"   },
+                      { label: `${activeLang.short} Actors`,    href: lang ? `/cast?type=Actor&lang=${lang}` : "/cast?type=Actor"    },
+                      { label: `${activeLang.short} Actresses`, href: lang ? `/cast?type=Actress&lang=${lang}` : "/cast?type=Actress"  },
+                      { label: "Directors",      href: lang ? `/cast?type=Director&lang=${lang}` : "/cast?type=Director" },
+                      { label: "Singers",        href: lang ? `/cast?type=Singer&lang=${lang}` : "/cast?type=Singer"   },
                       { label: "Blog",           href: "/blog"               },
                     ].map((link) => (
                       <a
