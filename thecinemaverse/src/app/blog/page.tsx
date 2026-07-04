@@ -45,10 +45,7 @@ export async function generateMetadata({
   const total      = await Blog.countDocuments(filter);
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 
-  // Add dbValue filter
-  if (langConfig.dbValue) {
-    filter.language = { $regex: new RegExp(`^${langConfig.dbValue}$`, "i") };
-  }
+
 
   const pageLabel = page > 1 ? ` — Page ${page}` : "";
   const catLabel  = category ? ` | ${category}` : "";
@@ -232,9 +229,7 @@ async function getBlogs({
   await connectDB();
   const langConfig = resolveLanguage(lang);
   const filter: Record<string, any> = { published: true };
-  if (langConfig.dbValue) {
-    filter.language = { $regex: new RegExp(`^${langConfig.dbValue}$`, "i") };
-  }
+
 
   if (query.trim()) {
     filter.$or = [
