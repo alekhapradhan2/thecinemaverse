@@ -28,6 +28,8 @@ export async function connectDB() {
     cached.promise = mongoose
       .connect(MONGODB_URI, {
         bufferCommands: false,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 10000,
       })
       .then((m) => m);
   }
@@ -41,3 +43,4 @@ export async function connectDB() {
 
   return cached.conn;
 }
+
