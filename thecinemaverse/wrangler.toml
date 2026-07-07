@@ -23,4 +23,4 @@ NEXT_PUBLIC_SITE_NAME = "The Cinema Verse"
 # Required for Next.js ISR and Caching on Cloudflare
 [[kv_namespaces]]
 binding = "NEXT_CACHE"
-id = "PASTE_YOUR_KV_ID_HERE"
+id = "9811528d0a4d426a98f6bc9835468314"
