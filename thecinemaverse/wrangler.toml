@@ -10,3 +10,12 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 assets = { directory = ".open-next/assets", binding = "ASSETS" }
+
+# Hardcode the custom domain so it isn't wiped on deploy
+routes = [
+  { pattern = "thecinemaverses.in", custom_domain = true }
+]
+
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://thecinemaverses.in"
+NEXT_PUBLIC_SITE_NAME = "The Cinema Verse"
