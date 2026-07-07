@@ -15,6 +15,8 @@ export async function connectDB() {
     bufferCommands: false,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 10000,
+    maxPoolSize: 2,
+    minPoolSize: 0,
+    family: 4,
   });
 }
-
