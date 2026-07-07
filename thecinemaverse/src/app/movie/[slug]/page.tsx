@@ -141,12 +141,17 @@ function splitCastCrew(castList: any[]): { crew: any[]; cast: any[] } {
   const crew: any[] = [];
   const cast: any[] = [];
   for (const m of (castList || [])) {
-    const role = (m.role || m.type || "").toLowerCase().trim();
-    const isCrew = isCrewRole(m.role) || isCrewRole(m.type);
-    // Check if this person is ALSO an actor (actor-producer, actor-director etc.)
-    const actingKeywords = ["actor", "actress", "lead", "hero", "heroine", "supporting", "cameo", "special appearance"];
-    const isActor = actingKeywords.some(kw => role.includes(kw));
+    let isCrew = isCrewRole(m.role) || isCrewRole(m.type);
+    
+    const actingKeywords = ["actor", "actress", "lead", "hero", "heroine", "supporting", "cameo", "special appearance", "cast", "villain", "comedian", "child artist"];
+    const r = (m.role || "").toLowerCase() + " " + (m.type || "").toLowerCase();
+    const isActor = actingKeywords.some(kw => r.includes(kw));
 
+    if (!isActor && m.type && (m.type.toLowerCase() === "other" || m.type.toLowerCase() === "crew")) {
+      isCrew = true;
+    }
+
+    // Show in crew if they have any crew role
     if (isCrew) crew.push(m);
     // Show in cast if: purely an actor, OR an actor who also has a crew role
     if (!isCrew || isActor) cast.push(m);
