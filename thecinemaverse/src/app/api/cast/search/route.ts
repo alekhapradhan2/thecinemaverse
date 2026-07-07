@@ -2,6 +2,7 @@
 // Place this file at: app/api/cast/search/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
+
 import { connectDB } from "@/lib/db";
 import Cast from "@/models/Cast";
 

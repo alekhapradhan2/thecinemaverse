@@ -1,7 +1,10 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import { getLanguageFilter } from "@/lib/languages";
+
 
 export async function GET(req: NextRequest) {
   try {

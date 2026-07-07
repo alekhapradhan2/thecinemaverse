@@ -1,0 +1,12 @@
+# Cloudflare Workers configuration for The Cinemaverse
+# Using @opennextjs/cloudflare (OpenNext) adapter — recommended by Cloudflare
+# https://opennext.js.org/cloudflare
+
+name = "thecinemaverse"
+main = ".open-next/worker.js"
+compatibility_date = "2024-09-23"
+
+# nodejs_compat is REQUIRED for Mongoose / MongoDB Atlas connections
+compatibility_flags = ["nodejs_compat"]
+
+assets = { directory = ".open-next/assets", binding = "ASSETS" }

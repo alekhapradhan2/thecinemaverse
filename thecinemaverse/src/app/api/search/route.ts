@@ -1,8 +1,11 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import Cast from "@/models/Cast";
 import Blog from "@/models/Blog";
+
 import { getLanguageFilter } from "@/lib/languages";
 
 // ─── Regex builders ───────────────────────────────────────────────────────────

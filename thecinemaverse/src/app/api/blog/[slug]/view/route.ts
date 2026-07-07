@@ -12,9 +12,12 @@
 // POST to return 400 "Missing slug" — which caused the view count to
 // never increment (stuck at 0 forever).
 
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
+
 
 export async function POST(
   _req: NextRequest,

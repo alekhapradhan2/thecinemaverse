@@ -1,6 +1,9 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Cast from "@/models/Cast";
+
 
 export async function GET(req: NextRequest) {
   try {

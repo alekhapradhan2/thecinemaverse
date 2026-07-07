@@ -1,10 +1,14 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDB();
+    const { id } = await params;
     const { type } = await req.json();
     if (type !== "yes" && type !== "no")
       return NextResponse.json({ error: "Invalid type" }, { status: 400 });
@@ -13,7 +17,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       ? { $inc: { interestedYes: 1 } }
       : { $inc: { interestedNo: 1 } };
 
-    const movie = await Movie.findByIdAndUpdate(params.id, update, { new: true })
+    const movie = await Movie.findByIdAndUpdate(id, update, { new: true })
       .select("interestedYes interestedNo").lean() as any;
 
     if (!movie) return NextResponse.json({ error: "Not found" }, { status: 404 });

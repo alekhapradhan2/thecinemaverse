@@ -1,6 +1,9 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
+
 
 export async function GET(req: NextRequest) {
   try {

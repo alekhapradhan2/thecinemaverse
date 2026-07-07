@@ -1,16 +1,19 @@
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Cast from "@/models/Cast";
 import Movie from "@/models/Movie";
 
+
 function isOid(s: string) {
   return /^[a-f0-9]{24}$/i.test(s);
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDB();
-    const param = params.id;
+    const { id: param } = await params;
     let castMember: any = null;
 
     if (isOid(param)) {

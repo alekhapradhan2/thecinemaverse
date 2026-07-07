@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    instrumentationHook: true, // remove if you're on Next.js 15+
-  },
+  // Required by @opennextjs/cloudflare
+  output: "standalone",
 
   images: {
     unoptimized: true,
@@ -14,10 +13,6 @@ const nextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy:
       "default-src 'self'; script-src 'none'; sandbox;",
-  },
-
-  eslint: {
-    ignoreDuringBuilds: true,
   },
 
   async redirects() {

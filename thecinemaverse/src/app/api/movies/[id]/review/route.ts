@@ -1,15 +1,19 @@
+export const runtime = 'nodejs';
+
 // app/api/movies/[id]/review/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache"; // FIX: import for on-demand ISR
 import { connectDB } from "@/lib/db";
+
 import Movie from "@/models/Movie";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
+    const { id } = await params;
     const { user, rating, text } = await req.json();
 
     if (!text?.trim())
@@ -29,7 +33,7 @@ export async function POST(
     };
 
     const movie = (await Movie.findByIdAndUpdate(
-      params.id,
+      id,
       { $push: { reviews: review } },
       { new: true }
     )

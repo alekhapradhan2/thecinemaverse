@@ -1,7 +1,6 @@
-// thecinemaverse/instrumentation.ts
+// instrumentation.ts
+// Keep-alive was only needed on Render (free tier sleeps after inactivity).
+// Cloudflare Pages runs on-demand and never suspends — no keep-alive needed.
 export async function register() {
-  if (process.env.NEXT_RUNTIME === 'nodejs') {
-    const { startKeepAlive } = await import('./src/lib/keep-alive');
-    startKeepAlive();
-  }
-}
+  // No-op on Cloudflare Pages
+}

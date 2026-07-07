@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "node scripts/seed.js"
+    "seed": "node scripts/seed.js",
+    "build:worker": "next build && npx @opennextjs/cloudflare build",
+    "preview": "npm run build:worker && wrangler dev",
+    "deploy": "npm run build:worker && wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.13",
@@ -15,7 +18,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.396.0",
     "mongoose": "^8.24.0",
-    "next": "^14.2.5",
+    "next": "^16.0.0",
     "postcss": "^8.4.39",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -24,11 +27,14 @@
     "tailwindcss": "^3.4.4"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1",
+    "@opennextjs/cloudflare": "^1.20.1",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "wrangler": "^3.114.17"
   }
 }
