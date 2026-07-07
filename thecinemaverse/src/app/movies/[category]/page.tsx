@@ -159,18 +159,19 @@ blockbuster: {
 }
 
 // ─── Metadata — uses your existing buildMeta helper ──────────────────────────
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: { category: string };
-  searchParams: { lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ category: string }>;
+    searchParams: Promise<{ lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const activeLang = resolveLanguage(searchParams?.lang);
   const langMeta = getLangMeta(activeLang);
   const cfgMap = getCategoryConfig(langMeta.adj, langMeta.industry, activeLang.key);
   const cfg = cfgMap[params.category];
-  
+
   if (!cfg) return {};
   return buildMeta({
     title:       cfg.metaTitle,
@@ -267,18 +268,19 @@ function MovieCard({ movie }: { movie: MovieDoc }) {
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-export default async function MovieCategoryPage({
-  params,
-  searchParams,
-}: {
-  params: { category: string };
-  searchParams: { lang?: string };
-}) {
+export default async function MovieCategoryPage(
+  props: {
+    params: Promise<{ category: string }>;
+    searchParams: Promise<{ lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const activeLang = resolveLanguage(searchParams?.lang);
   const langMeta = getLangMeta(activeLang);
   const cfgMap = getCategoryConfig(langMeta.adj, langMeta.industry, activeLang.key);
   const cfg = cfgMap[params.category];
-  
+
   if (!cfg) notFound();
 
   const movies = await getMovies(params.category);

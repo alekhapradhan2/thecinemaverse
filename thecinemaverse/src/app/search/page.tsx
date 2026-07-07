@@ -10,7 +10,8 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-export async function generateMetadata({ searchParams }: { searchParams: { q?: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { searchParams: Promise<{ q?: string }> }): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   return buildMeta({
     title: searchParams.q ? `Search results for "${searchParams.q}"` : "Search Indian Movies, Actors & More",
     description: "Search The Cinema Verse's database of Indian movies, actors, directors, songs, and blog articles.",
@@ -35,7 +36,8 @@ async function doSearch(q: string) {
   return { movies, cast, blogs };
 }
 
-export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
+export default async function SearchPage(props: { searchParams: Promise<{ q?: string }> }) {
+  const searchParams = await props.searchParams;
   const q = searchParams.q?.trim() || "";
   const results = q ? await doSearch(q) : { movies: [], cast: [], blogs: [] };
   const total = results.movies.length + results.cast.length + results.blogs.length;

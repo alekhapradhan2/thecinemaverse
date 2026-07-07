@@ -21,11 +21,12 @@ import {
 export const revalidate = 600;
 
 // Dynamic metadata — reflects active language
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { lang?: string; genre?: string; verdict?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<{ lang?: string; genre?: string; verdict?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const lang = resolveLanguage(searchParams.lang);
   const s    = getLangMeta(lang);
   return buildMeta({
@@ -78,11 +79,12 @@ const VERDICT_TABS = [
 /* ─── CONSTANTS ──────────────────────────────────────────── */
 
 /* ─── PAGE ───────────────────────────────────────────────── */
-export default async function MoviesPage({
-  searchParams,
-}: {
-  searchParams: { genre?: string; verdict?: string; sort?: string; page?: string; lang?: string };
-}) {
+export default async function MoviesPage(
+  props: {
+    searchParams: Promise<{ genre?: string; verdict?: string; sort?: string; page?: string; lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const { genre, verdict, sort, page, lang } = searchParams;
   const activeLang = resolveLanguage(lang);
   const s          = getLangMeta(activeLang);

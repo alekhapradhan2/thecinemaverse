@@ -132,11 +132,12 @@ function getMisspellings(title: string, lang: string): string[] {
   return result;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { movieSlug: string; songIndex: string; songSlug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ movieSlug: string; songIndex: string; songSlug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const movie = await getMovieWithSongs(params.movieSlug);
   const idx   = parseInt(params.songIndex, 10) || 0;
   const song  = movie?.media?.songs?.[idx];
@@ -296,7 +297,6 @@ function SeoProseBlock({
           </Link>
         </div>
       </div>
-
       {/* ── ★ NEW: Related Blog Posts for this movie ── */}
       {relatedBlogs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-6">
@@ -313,13 +313,13 @@ function SeoProseBlock({
                 >
                   {b.coverImage ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    (<img
                       src={b.coverImage}
                       alt={b.title}
                       width={58}
                       height={38}
                       className="w-[58px] h-[38px] object-cover rounded flex-shrink-0 border border-[#222]"
-                    />
+                    />)
                   ) : (
                     <div className="w-[58px] h-[38px] flex-shrink-0 bg-[#1a1a1a] rounded border border-[#222] flex items-center justify-center text-lg">
                       📝
@@ -345,7 +345,6 @@ function SeoProseBlock({
           </Link>
         </div>
       )}
-
       {/* ── Other songs in this album ── */}
       {otherSongs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5">
@@ -372,11 +371,12 @@ function SeoProseBlock({
 }
 
 // ─── Page ─────────────────────────────────────────────────────
-export default async function SongDetailSlugPage({
-  params,
-}: {
-  params: { movieSlug: string; songIndex: string; songSlug: string };
-}) {
+export default async function SongDetailSlugPage(
+  props: {
+    params: Promise<{ movieSlug: string; songIndex: string; songSlug: string }>;
+  }
+) {
+  const params = await props.params;
   const movie = await getMovieWithSongs(params.movieSlug);
   const idx   = parseInt(params.songIndex, 10) || 0;
 

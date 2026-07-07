@@ -68,11 +68,12 @@ function serialise(docs: any[]): PlainPerson[] {
 
 // ── Metadata ───────────────────────────────────────────────────────────────────
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { type?: string; lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<{ type?: string; lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const { type, lang } = searchParams;
   const activeLang = resolveLanguage(lang);
   const s = getLangMeta(activeLang);
@@ -227,7 +228,6 @@ function CastSection({
           </Link>
         )}
       </div>
-
       {/* Horizontal scroll row */}
       <div className="max-w-7xl mx-auto">
       <div
@@ -280,11 +280,12 @@ function CastSchema({ type, total, activeLang }: { type?: string; total: number;
 
 // ── Page ───────────────────────────────────────────────────────────────────────
 
-export default async function CastPage({
-  searchParams,
-}: {
-  searchParams: { type?: string; lang?: string };
-}) {
+export default async function CastPage(
+  props: {
+    searchParams: Promise<{ type?: string; lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const { type, lang } = searchParams;
   const data = await getPageData(type, lang);
   const activeLang = resolveLanguage(lang);
@@ -294,7 +295,6 @@ export default async function CastPage({
   return (
     <>
       <CastSchema type={type} total={data.total} activeLang={activeLang} />
-
       <main className="min-h-screen bg-[#0a0a0a] text-white">
 
         {/* ── HERO HEADER ───────────────────────────────────────────── */}
@@ -418,45 +418,41 @@ export default async function CastPage({
 
           {data.mode === "filtered" ? (
             // Filtered grid view
-            data.cast.length === 0 ? (
-              <div className="text-center py-24 px-4">
-                <div className="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-4 text-3xl">
-                  👤
-                </div>
-                <p className="text-zinc-400 text-lg font-semibold mb-1">No {type}s found</p>
-                <p className="text-zinc-600 text-sm mb-4">We couldn't find any {type}s in our database.</p>
-                <Link
-                  href="/cast"
-                  className="inline-block text-xs font-bold px-4 py-2 rounded-lg border border-brand-900 text-brand-400 hover:bg-brand-950 transition-colors no-underline"
-                >
-                  Browse All Cast
-                </Link>
+            (data.cast.length === 0 ? (<div className="text-center py-24 px-4">
+              <div className="w-16 h-16 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center mx-auto mb-4 text-3xl">
+                👤
               </div>
-            ) : (
-              <section className="max-w-7xl mx-auto px-4 sm:px-6" aria-labelledby="filtered-heading">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 id="filtered-heading" className="text-sm font-black text-white">
-                    {ROLE_ICON[type!]} All {type}s
-                  </h2>
-                  <span className="text-xs text-zinc-500">{data.total} profiles</span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-                  {data.cast.map((p, i) => (
-                    <CastCard key={p._id} person={p} priority={i < 8} />
-                  ))}
-                </div>
-              </section>
-            )
+              <p className="text-zinc-400 text-lg font-semibold mb-1">No {type}s found</p>
+              <p className="text-zinc-600 text-sm mb-4">We couldn't find any {type}s in our database.</p>
+              <Link
+                href="/cast"
+                className="inline-block text-xs font-bold px-4 py-2 rounded-lg border border-brand-900 text-brand-400 hover:bg-brand-950 transition-colors no-underline"
+              >
+                Browse All Cast
+              </Link>
+            </div>) : (<section className="max-w-7xl mx-auto px-4 sm:px-6" aria-labelledby="filtered-heading">
+              <div className="flex items-center justify-between mb-4">
+                <h2 id="filtered-heading" className="text-sm font-black text-white">
+                  {ROLE_ICON[type!]} All {type}s
+                </h2>
+                <span className="text-xs text-zinc-500">{data.total} profiles</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                {data.cast.map((p, i) => (
+                  <CastCard key={p._id} person={p} priority={i < 8} />
+                ))}
+              </div>
+            </section>))
           ) : (
             // Trending home view with sections
-            <>
+            (<>
               <CastSection title="⭐ Top Stars"          tag="Popular"  people={data.topStars}  viewAllHref="/cast?type=Actor"    isFirst />
               <CastSection title="🎬 Directors"                         people={data.directors} viewAllHref="/cast?type=Director"         />
               <CastSection title="🏆 Veteran Artists"    tag="5+ Films" people={data.veterans}                                            />
               <CastSection title="🎵 Music &amp; Songs"                 people={data.musicians} viewAllHref="/cast?type=Singer"           />
               <CastSection title="🌟 Rising Talents"     tag="New"      people={data.risingNew}                                           />
               <CastSection title="🎥 Crew &amp; Production"             people={data.crew}      viewAllHref="/cast?type=Producer"         />
-            </>
+            </>)
           )}
 
           {/* ── SEO CONTENT SECTION ─────────────────────────────────── */}

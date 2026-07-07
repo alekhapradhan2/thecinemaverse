@@ -33,13 +33,14 @@ export async function generateStaticParams() {
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params:       { year: string };
-  searchParams: { lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ year: string }>;
+    searchParams: Promise<{ lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const year = Number(params.year);
   const lang = resolveLanguage(searchParams.lang);
   const s    = getLangMeta(lang);
@@ -293,13 +294,14 @@ function formatReleaseDate(dateStr: string, isTBA?: boolean): string {
 }
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
-export default async function MoviesByYearPage({
-  params,
-  searchParams,
-}: {
-  params:       { year: string };
-  searchParams: { lang?: string };
-}) {
+export default async function MoviesByYearPage(
+  props: {
+    params: Promise<{ year: string }>;
+    searchParams: Promise<{ lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const year       = Number(params.year);
   const lang       = searchParams.lang;
   const activeLang = resolveLanguage(lang);

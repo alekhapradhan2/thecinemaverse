@@ -142,7 +142,9 @@ async function getSongs(category: string, langId?: string): Promise<SongDoc[]> {
 }
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
-export async function generateMetadata({ params, searchParams }: any): Promise<Metadata> {
+export async function generateMetadata(props: any): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const lang = resolveLanguage(searchParams?.lang || "");
   const indStr = lang.short === "Hindi" ? "Bollywood" : lang.short;
   const cfg = getCategoryConfig(indStr, lang.short)[params.category];
@@ -217,7 +219,9 @@ function SongCard({ song }: { song: SongDoc }) {
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default async function SongCategoryPage({ params, searchParams }: any) {
+export default async function SongCategoryPage(props: any) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const lang = resolveLanguage(searchParams?.lang || "");
   const indStr = lang.short === "Hindi" ? "Bollywood" : lang.short;
   const cfg = getCategoryConfig(indStr, lang.short)[params.category];

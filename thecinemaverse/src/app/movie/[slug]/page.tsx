@@ -288,7 +288,8 @@ function getMisspellings(title: string): string[] {
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const movie = await getMovie(params.slug);
   if (!movie) return { robots: { index: false, follow: false } };
   if (!movie.title?.trim()) return { robots: { index: false, follow: false } };
@@ -593,7 +594,8 @@ function StatChip({ label, value, accent = false }: { label: string; value: stri
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────
-export default async function MovieDetailPage({ params }: { params: { slug: string } }) {
+export default async function MovieDetailPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const movie = await getMovie(params.slug);
   if (!movie) notFound();
   if (!movie.title?.trim()) notFound();
@@ -717,7 +719,6 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
         <script key={i} type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(sd) }} />
       ))}
-
       {/* ══ HERO — banner + info all in one block, mobile-first ══ */}
       <div className="relative w-full bg-[#0a0a0a]">
 
@@ -1013,7 +1014,6 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
 
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
         {/* ══ MAIN CONTENT GRID ══ */}
@@ -1725,8 +1725,8 @@ export default async function MovieDetailPage({ params }: { params: { slug: stri
                         className="group flex gap-3 bg-[#0d0d0d] border border-[#1a1a1a] hover:border-brand-500/30 rounded-xl p-3 transition-all">
                         {b.coverImage ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={b.coverImage} alt={b.title}
-                            className="w-16 h-11 object-cover rounded-lg flex-shrink-0 border border-[#222]" />
+                          (<img src={b.coverImage} alt={b.title}
+                            className="w-16 h-11 object-cover rounded-lg flex-shrink-0 border border-[#222]" />)
                         ) : (
                           <div className="w-16 h-11 flex-shrink-0 bg-[#1a1a1a] rounded-lg border border-[#222] flex items-center justify-center">
                             <FileText className="w-4 h-4 text-gray-600" />

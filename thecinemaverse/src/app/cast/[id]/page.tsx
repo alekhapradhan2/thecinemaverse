@@ -109,7 +109,8 @@ function getDerivedRoles(person: any, movies: any[]): string[] {
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const person = await getCastMember(params.id);
   if (!person) return { robots: { index: false, follow: false } };
 
@@ -234,7 +235,8 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
-export default async function CastDetailPage({ params }: { params: { id: string } }) {
+export default async function CastDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const person = await getCastMember(params.id);
   if (!person) notFound();
   if (!person.name?.trim()) notFound();
@@ -371,7 +373,6 @@ export default async function CastDetailPage({ params }: { params: { id: string 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
-
       {/* ══ CINEMATIC HERO ══ */}
       {/*
         MOBILE  (<640px): text top-left, photo floats top-right, stats below full-width
@@ -650,7 +651,6 @@ export default async function CastDetailPage({ params }: { params: { id: string 
           </div>
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
 
         {/* Breadcrumb */}

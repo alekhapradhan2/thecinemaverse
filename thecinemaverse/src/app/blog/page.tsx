@@ -27,11 +27,12 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   "Top Lists":    "Curated top 10 lists covering the best of Indian — movies, songs, actors, and more.",
 };
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { page?: string; q?: string; category?: string; lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<{ page?: string; q?: string; category?: string; lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const langConfig = resolveLanguage(searchParams.lang || "hindi");
   const seo = getLangSeo(langConfig);
   const page       = parseInt(searchParams.page || "1", 10);
@@ -322,11 +323,12 @@ async function getBlogStats() {
 
 // ── PAGE COMPONENT ────────────────────────────────────────────────────────────
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
+export default async function BlogPage(
+  props: {
+    searchParams: Promise<SearchParams>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const page     = Math.max(1, parseInt(searchParams.page || "1", 10));
   const query    = searchParams.q       || "";
   const category = searchParams.category || "";

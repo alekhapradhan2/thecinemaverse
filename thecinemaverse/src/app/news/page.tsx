@@ -10,11 +10,12 @@ import { Calendar, Newspaper } from "lucide-react";
 
 export const revalidate = 600;
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<{ lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const activeLang = resolveLanguage(searchParams?.lang);
   const langMeta = getLangMeta(activeLang);
 
@@ -42,11 +43,12 @@ async function getNews(page = 1) {
   return { news, total };
 }
 
-export default async function NewsPage({
-  searchParams,
-}: {
-  searchParams: { page?: string, lang?: string };
-}) {
+export default async function NewsPage(
+  props: {
+    searchParams: Promise<{ page?: string, lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const activeLang = resolveLanguage(searchParams?.lang);
   const langMeta = getLangMeta(activeLang);
   const { news, total } = await getNews(Number(searchParams.page) || 1);
@@ -57,7 +59,6 @@ export default async function NewsPage({
         title={`${langMeta.adj} Film News`}
         subtitle={`Latest updates from ${langMeta.industry}`}
       />
-
       <div className="mb-8 p-5 bg-[#111] border border-[#1f1f1f] rounded-xl">
         <p className="text-gray-400 text-sm leading-relaxed">
           Get the latest news and updates from the {langMeta.industry} film industry. From new movie announcements and casting
@@ -65,7 +66,6 @@ export default async function NewsPage({
           happening in {langMeta.adj} cinema.
         </p>
       </div>
-
       {news.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {news.map((item: any, i: number) => (

@@ -50,11 +50,12 @@ async function getRelatedMovies(movie: MovieData): Promise<MovieData[]> {
   return JSON.parse(JSON.stringify(related)) as MovieData[];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { movieSlug: string; songIndex: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ movieSlug: string; songIndex: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const movie = await getMovieWithSongs(params.movieSlug);
   const idx   = parseInt(params.songIndex, 10) || 0;
   const song  = movie?.media?.songs?.[idx];
@@ -123,11 +124,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function SongDetailPage({
-  params,
-}: {
-  params: { movieSlug: string; songIndex: string };
-}) {
+export default async function SongDetailPage(
+  props: {
+    params: Promise<{ movieSlug: string; songIndex: string }>;
+  }
+) {
+  const params = await props.params;
   const movie = await getMovieWithSongs(params.movieSlug);
   const idx   = parseInt(params.songIndex, 10) || 0;
 

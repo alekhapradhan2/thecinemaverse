@@ -177,7 +177,8 @@ const GUIDES: Record<string, GuideConfig> = {
   },
 };
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const cfg = GUIDES[params.slug];
   if (!cfg) return {};
   return buildMeta({ title: cfg.metaTitle, description: cfg.metaDesc, keywords: cfg.keywords, url: `/blog/Indian-guides/${params.slug}` });
@@ -207,7 +208,8 @@ function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
   );
 }
 
-export default function IndianGuidePage({ params }: { params: { slug: string } }) {
+export default async function(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const cfg = GUIDES[params.slug];
   if (!cfg) notFound();
 

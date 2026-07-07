@@ -21,14 +21,15 @@ import { TRIVIA_EMOJIS } from "@/lib/trivia-constants";
 
 export const revalidate = 600;
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { lang?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<{ lang?: string }>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const lang = resolveLanguage(searchParams?.lang);
   const s = getLangMeta(lang);
-  
+
   return buildMeta({
     title: `${SITE_NAME} – #1 ${s.industry} Movie Database | ${lang.short} Films, Songs & Box Office`,
     description:
@@ -337,11 +338,12 @@ const BLOG_CATEGORIES = [
   { label: "Industry News",   href: "/blog?cat=Industry+News",   emoji: "📰" },
 ];
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: { lang?: string };
-}) {
+export default async function HomePage(
+  props: {
+    searchParams: Promise<{ lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const lang       = searchParams?.lang;
   const activeLang = resolveLanguage(lang);
   const s          = getLangMeta(activeLang);

@@ -14,9 +14,8 @@ export const revalidate = 600;
 
 /* ─── Dynamic metadata ──────────────────────────────────────────────────────── */
 
-export async function generateMetadata(
-  { searchParams }: { searchParams: { year?: string; lang?: string } }
-): Promise<Metadata> {
+export async function generateMetadata(props: { searchParams: Promise<{ year?: string; lang?: string }> }): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const year = searchParams?.year ? parseInt(searchParams.year, 10) : new Date().getFullYear();
   const lang = resolveLanguage(searchParams?.lang);
   const isCurrentYear = year === new Date().getFullYear();
@@ -159,11 +158,12 @@ async function getBoxOfficeBlogs() {
 
 /* ─── Page ──────────────────────────────────────────────────────────────────── */
 
-export default async function BoxOfficePage({
-  searchParams,
-}: {
-  searchParams: { year?: string; lang?: string };
-}) {
+export default async function BoxOfficePage(
+  props: {
+    searchParams: Promise<{ year?: string; lang?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const currentYear = new Date().getFullYear();
   const selectedYear = searchParams?.year
     ? parseInt(searchParams.year, 10)
@@ -194,13 +194,13 @@ export default async function BoxOfficePage({
     : enrichedAll;
 
   // Available years (for tabs)
- const availableYears = [
-  ...new Set<number>(
-    enriched
-      .map((m: any) => m.year)
-      .filter(Boolean)
-  ),
-].sort((a, b) => b - a);
+  const availableYears = [
+   ...new Set<number>(
+     enriched
+       .map((m: any) => m.year)
+       .filter(Boolean)
+   ),
+ ].sort((a, b) => b - a);
 
   // Movies for selected year
   const yearMovies = enriched.filter((m: any) => m.year === selectedYear);
@@ -415,7 +415,6 @@ export default async function BoxOfficePage({
       {blogListJsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListJsonLd) }} />
       )}
-
       <div className="min-h-screen bg-[#080808] text-white">
 
         {/* ── Header ── */}
@@ -877,7 +876,6 @@ export default async function BoxOfficePage({
                         — {group.items.length} film{group.items.length !== 1 ? "s" : ""}
                       </span>
                     </h3>
-
                     {/* Desktop column headers — only first group */}
                     {gi === 0 && (
                       <div className="hidden sm:flex items-center gap-2 px-2 py-1.5
@@ -892,7 +890,6 @@ export default async function BoxOfficePage({
                         <span className="w-4" />
                       </div>
                     )}
-
                     <div className="divide-y divide-[#141414]">
                       {group.items.map((m: any, idx: number) => {
                         const slug          = movieSlug(m);

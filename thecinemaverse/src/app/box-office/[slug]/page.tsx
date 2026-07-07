@@ -175,11 +175,12 @@ async function getCompetingMovies(currentSlug: string, releaseDate?: string, lim
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const slug  = params?.slug;
   const movie = await getMovieBySlug(slug);
   if (!movie) return { robots: { index: false, follow: false } };
@@ -330,11 +331,12 @@ export async function generateMetadata({
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export default async function BoxOfficePage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function BoxOfficePage(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+) {
+  const params = await props.params;
   const slug  = params?.slug;
   const movie = await getMovieBySlug(slug);
   if (!movie) notFound();

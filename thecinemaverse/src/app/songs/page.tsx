@@ -15,11 +15,12 @@ export const revalidate = 600;
 const PAGE_SIZE = 24;
 
 // ── SEO Metadata ──────────────────────────────────────────────────────────────
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Record<string, string | undefined>;
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    searchParams: Promise<Record<string, string | undefined>>;
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const { singer, year, q, lang: urlLang } = searchParams || {};
   const lang = resolveLanguage(urlLang);
   const s = getLangMeta(lang);
@@ -37,7 +38,7 @@ export async function generateMetadata({
     title       = `${s.songs} ${year} – Latest ${s.industry} Music | The Cinema Verse`;
     description = `Explore all ${s.industry.toLowerCase()} songs released in ${year}. Find the best ${s.industry.toLowerCase()} songs and music videos of ${year}.`;
   }
-  
+
   const queryStr = urlLang ? `?lang=${urlLang}` : "";
   const canonicalUrl = `https://thecinemaverses.in/songs${queryStr}`;
 
@@ -154,11 +155,12 @@ async function getSongs({
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 // ── Page ──────────────────────────────────────────────────────────────────────
-export default async function SongsPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | undefined>;
-}) {
+export default async function SongsPage(
+  props: {
+    searchParams: Promise<Record<string, string | undefined>>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const page          = Number(searchParams?.page) || 1;
   const singerFilter  = searchParams?.singer;
   const dirFilter     = searchParams?.musicDirector;

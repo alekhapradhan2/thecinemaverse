@@ -129,27 +129,28 @@ async function getRelatedBlogs(currentSlug: string, category?: string, language?
 }
 
 // ─── Metadata ─────────────────────────────────────────────────
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ slug: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const blog = await getBlog(params.slug);
   if (!blog) return { robots: { index: false, follow: false } };
 
   const langConfig = resolveLanguage(blog.language);
   const seo = getLangSeo(langConfig);
 
-// FIXED — uses seoTitle from BoxOfficePanel, falls back gracefully
-const title = blog.seoTitle || `${blog.title} | The Cinema Verse`;
+  // FIXED — uses seoTitle from BoxOfficePanel, falls back gracefully
+  const title = blog.seoTitle || `${blog.title} | The Cinema Verse`;
 
-// FIXED — uses seoDesc from BoxOfficePanel, falls back gracefully  
-const description = (
-  blog.seoDesc ||
-  blog.excerpt ||
-  blog.content?.replace(/<[^>]+>/g, "").slice(0, 155) ||
-  `Read ${blog.title} on The Cinema Verse...`
-);
+  // FIXED — uses seoDesc from BoxOfficePanel, falls back gracefully  
+  const description = (
+    blog.seoDesc ||
+    blog.excerpt ||
+    blog.content?.replace(/<[^>]+>/g, "").slice(0, 155) ||
+    `Read ${blog.title} on The Cinema Verse...`
+  );
   const image     = blog.coverImage || "https://thecinemaverses.in/default.jpg";
   const canonical = `https://thecinemaverses.in/blog/${blog.slug}`;
 
@@ -280,7 +281,6 @@ function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo
           </div>
         )}
       </div>
-
       {/* ── Related movie card ── */}
       {movie && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-5">
@@ -291,13 +291,13 @@ function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo
           <Link href={`/movie/${movie.slug}`} className="flex items-center gap-4 group">
             {movie.posterUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img
+              (<img
                 src={movie.posterUrl}
                 alt={`${movie.title} poster`}
                 width={64}
                 height={96}
                 className="w-16 h-24 object-cover rounded-lg border border-[#222] group-hover:border-brand-500/40 transition-colors"
-              />
+              />)
             ) : (
               <div className="w-16 h-24 bg-[#1a1a1a] rounded-lg border border-[#222] flex items-center justify-center text-2xl">
                 🎬
@@ -338,7 +338,6 @@ function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo
           </Link>
         </div>
       )}
-
       {/* ── Songs from this movie ── */}
       {songs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-5">
@@ -375,7 +374,7 @@ function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo
                   <div className="olly-sc-thumb">
                     {thumb ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={thumb} alt={s.title || "Song"} loading="lazy" />
+                      (<img src={thumb} alt={s.title || "Song"} loading="lazy" />)
                     ) : (
                       <div className="olly-sc-ph">
                         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style={{ color:"#2a2a2a" }}>
@@ -408,7 +407,6 @@ function SeoInterlinks({ blog, movie, seo }: { blog: any; movie: any | null; seo
           )}
         </div>
       )}
-
       {/* ── Site-wide discovery links ── */}
       <div className="bg-[#0a0a0a] border border-[#181818] rounded-xl p-5">
         <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
@@ -471,12 +469,12 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
             <div className="sm:w-48 sm:h-32 w-full h-44 flex-shrink-0 rounded-lg overflow-hidden border border-[#222] bg-[#1a1a1a]">
               {blogs[0].coverImage ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
+                (<img
                   src={blogs[0].coverImage}
                   alt={blogs[0].title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
-                />
+                />)
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-4xl opacity-30">📰</div>
               )}
@@ -514,12 +512,12 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
                   <div className="w-16 h-11 flex-shrink-0 rounded-md overflow-hidden border border-[#222] bg-[#1a1a1a]">
                     {b.coverImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      (<img
                         src={b.coverImage}
                         alt={b.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
-                      />
+                      />)
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-lg opacity-30">📰</div>
                     )}
@@ -549,7 +547,8 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
 }
 
 // ─── Page ─────────────────────────────────────────────────────
-export default async function BlogPage({ params }: { params: { slug: string } }) {
+export default async function BlogPage(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const blog = await getBlog(params.slug);
   if (!blog) notFound();
 
@@ -736,7 +735,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
               <div className="bp-rel-item">
                 {b.coverImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={b.coverImage} alt={b.title} className="bp-rel-thumb" loading="lazy" />
+                  (<img src={b.coverImage} alt={b.title} className="bp-rel-thumb" loading="lazy" />)
                 ) : (
                   <div className="bp-rel-ph">📰</div>
                 )}
@@ -878,7 +877,7 @@ export default async function BlogPage({ params }: { params: { slug: string } })
       {/* ★ Preload cover image for faster LCP */}
       {blog.coverImage && (
         // eslint-disable-next-line @next/next/no-page-custom-font
-        <link rel="preload" as="image" href={blog.coverImage} />
+        (<link rel="preload" as="image" href={blog.coverImage} />)
       )}
       <script
         type="application/ld+json"
