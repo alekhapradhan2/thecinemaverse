@@ -37,25 +37,7 @@ function toSlug(str?: string): string {
 
 // ─── Static params ─────────────────────────────────────────────
 export async function generateStaticParams() {
-  await connectDB();
-  const rows: { movieSlug: string; songIndex: string; songSlug: string }[] = [];
-  const movies = await (Movie as any)
-    .find({ "media.songs.0": { $exists: true } }, "slug media.songs.title")
-    .sort({ releaseDate: -1 })
-    .limit(5)
-    .lean();
-  for (const m of movies) {
-    const songs = m.media?.songs || [];
-    for (let i = 0; i < songs.length && rows.length < 20; i++) {
-      rows.push({
-        movieSlug: m.slug || String(m._id),
-        songIndex: String(i),
-        songSlug:  toSlug(songs[i]?.title) || String(i),
-      });
-    }
-    if (rows.length >= 20) break;
-  }
-  return rows;
+  return [];
 }
 
 // ─── Data fetching ─────────────────────────────────────────────

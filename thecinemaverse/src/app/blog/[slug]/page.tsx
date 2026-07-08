@@ -68,12 +68,7 @@ function ArticleSSRPreview({ blog }: { blog: any }) {
 
 // ─── Static params ─────────────────────────────────────────────
 export async function generateStaticParams() {
-  await connectDB();
-  const blogs = await Blog.find({ published: true }, "slug")
-    .sort({ createdAt: -1 })
-    .limit(10) // ★ Reduced to 10 to prevent build timeouts
-    .lean();
-  return blogs.map((b: any) => ({ slug: b.slug }));
+  return [];
 }
 
 // ─── Data helpers ──────────────────────────────────────────────
