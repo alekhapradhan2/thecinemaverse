@@ -359,7 +359,7 @@ export default async function BlogPage(
   const isHomePage   = !isFiltered && page === 1;   // ← used for WebSite schema guard
   const showFeatured = !isFiltered && featured.length > 0 && page === 1;
   const regularBlogs = showFeatured
-    ? blogs.filter((b) => !featured.find((f) => String(f._id) === String(b._id)))
+    ? (blogs as any[]).filter((b: any) => !(featured as any[]).find((f: any) => String(f._id) === String(b._id)))
     : blogs;
 
   // Related categories — all categories except the one currently active
