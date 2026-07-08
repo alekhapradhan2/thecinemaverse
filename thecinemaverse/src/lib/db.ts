@@ -33,12 +33,6 @@ export async function connectDB() {
   if (!cached.promise) {
     cached.promise = mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 10000,
-      maxIdleTimeMS: 10000, // Close idle connections aggressively to prevent Cloudflare silent drops
-      maxPoolSize: 2,
-      minPoolSize: 0,
-      family: 4,
     }).then((mongoose) => {
       return mongoose;
     });

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Required by @opennextjs/cloudflare
+  // Recommended for standard Docker deployments
   output: "standalone",
 
   images: {
