@@ -174,7 +174,7 @@ async function getPageData(type?: string, langKey?: string) {
         .sort({ name: 1 }).limit(SECTION_LIMIT).lean(),
       Cast.find({ type: { $in: ["Producer", "Cinematographer", "Choreographer", "Editor"] } }, proj)
         .sort({ name: 1 }).limit(SECTION_LIMIT).lean(),
-      Cast.countDocuments(),
+      Cast.estimatedDocumentCount(),
     ]);
 
   return {

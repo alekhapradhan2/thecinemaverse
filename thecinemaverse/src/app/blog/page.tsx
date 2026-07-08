@@ -256,10 +256,8 @@ async function getBlogs({
     .limit(POSTS_PER_PAGE)
     .lean();
 
-  const serialize = (obj: any) => JSON.parse(JSON.stringify(obj));
-
   return {
-    blogs: serialize(blogs),
+    blogs: blogs as any[],
     total,
     totalPages: Math.ceil(total / POSTS_PER_PAGE),
   };
@@ -278,8 +276,7 @@ async function getFeaturedBlogs() {
     .sort({ createdAt: -1 })
     .limit(2)
     .lean();
-  const serialize = (obj: any) => JSON.parse(JSON.stringify(obj));
-  return serialize(blogs);
+  return blogs as any[];
 }
 
 async function getPopularTags() {
@@ -310,8 +307,7 @@ async function getMostPopularPosts() {
     .sort({ views: -1 })
     .limit(5)
     .lean();
-  const serialize = (obj: any) => JSON.parse(JSON.stringify(obj));
-  return serialize(blogs);
+  return blogs as any[];
 }
 
 // ── STAT CARDS ────────────────────────────────────────────────────────────────
@@ -359,7 +355,7 @@ export default async function BlogPage(
   const isHomePage   = !isFiltered && page === 1;   // ← used for WebSite schema guard
   const showFeatured = !isFiltered && featured.length > 0 && page === 1;
   const regularBlogs = showFeatured
-    ? (blogs as any[]).filter((b: any) => !(featured as any[]).find((f: any) => String(f._id) === String(b._id)))
+    ? blogs.filter((b) => !featured.find((f) => String(f._id) === String(b._id)))
     : blogs;
 
   // Related categories — all categories except the one currently active
@@ -626,7 +622,7 @@ export default async function BlogPage(
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {(featured as any[]).map((b: any) => (
+                {featured.map((b) => (
                   <BlogCard key={String(b._id)} blog={b} variant="featured" />
                 ))}
               </div>
@@ -653,7 +649,7 @@ export default async function BlogPage(
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {(regularBlogs as any[]).map((b: any) => (
+                {regularBlogs.map((b) => (
                   <BlogCard key={String(b._id)} blog={b} variant="standard" />
                 ))}
               </div>
