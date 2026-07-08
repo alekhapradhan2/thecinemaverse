@@ -626,7 +626,7 @@ export default async function BlogPage(
                 </h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {featured.map((b) => (
+                {(featured as any[]).map((b: any) => (
                   <BlogCard key={String(b._id)} blog={b} variant="featured" />
                 ))}
               </div>
@@ -653,7 +653,7 @@ export default async function BlogPage(
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {regularBlogs.map((b) => (
+                {(regularBlogs as any[]).map((b: any) => (
                   <BlogCard key={String(b._id)} blog={b} variant="standard" />
                 ))}
               </div>
