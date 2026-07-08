@@ -46,7 +46,7 @@ function vs(v?: string) {
 // ─── Static params ────────────────────────────────────────────────────────────
 export async function generateStaticParams() {
   await connectDB();
-  const cast = await Cast.find({}, "_id").limit(50).lean();
+  const cast = await Cast.find({}, "_id").limit(10).lean();
   return cast.map((c: any) => ({ id: String(c._id) }));
 }
 
