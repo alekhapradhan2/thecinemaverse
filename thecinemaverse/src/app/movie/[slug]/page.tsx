@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Image from "next/image";
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
@@ -597,8 +598,8 @@ function StatChip({ label, value, accent = false }: { label: string; value: stri
 export default async function MovieDetailPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const movie = await getMovie(params.slug);
-  if (!movie) notFound();
-  if (!movie.title?.trim()) notFound();
+  if (!movie) return <NotFound />;
+  if (!movie.title?.trim()) return <NotFound />;
 
   const [related, blogs] = await Promise.all([getRelated(movie), getMovieBlogs(movie.title)]);
 

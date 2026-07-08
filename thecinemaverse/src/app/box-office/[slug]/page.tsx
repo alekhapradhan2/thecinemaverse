@@ -4,6 +4,7 @@
 
 import type { Metadata } from "next";
 import { notFound }       from "next/navigation";
+import NotFound           from "@/app/not-found";
 import { connectDB }      from "@/lib/db";
 import Movie              from "@/models/Movie";
 import Blog               from "@/models/Blog";
@@ -340,7 +341,7 @@ export default async function BoxOfficePage(
   const params = await props.params;
   const slug  = params?.slug;
   const movie = await getMovieBySlug(slug);
-  if (!movie) notFound();
+  if (!movie) return <NotFound />;
 
   const days       = (movie.boxOfficeDays || []).sort((a: any, b: any) => a.day - b.day);
   const totalNet   = days.reduce((s: number, d: any) => s + parseNum(d.net),   0);

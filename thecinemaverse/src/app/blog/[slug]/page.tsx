@@ -13,6 +13,7 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Blog from "@/models/Blog";
@@ -550,7 +551,7 @@ function RecentBlogs({ blogs }: { blogs: any[] }) {
 export default async function BlogPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const blog = await getBlog(params.slug);
-  if (!blog) notFound();
+  if (!blog) return <NotFound />;
 
   const langConfig = resolveLanguage(blog.language);
   const seo = getLangSeo(langConfig);

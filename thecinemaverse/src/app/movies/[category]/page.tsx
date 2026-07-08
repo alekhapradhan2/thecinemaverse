@@ -1,6 +1,7 @@
 // src/app/movies/[category]/page.tsx
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, Star, Calendar, TrendingUp } from "lucide-react";
@@ -281,7 +282,7 @@ export default async function MovieCategoryPage(
   const cfgMap = getCategoryConfig(langMeta.adj, langMeta.industry, activeLang.key);
   const cfg = cfgMap[params.category];
 
-  if (!cfg) notFound();
+  if (!cfg) return <NotFound />;
 
   const movies = await getMovies(params.category);
 

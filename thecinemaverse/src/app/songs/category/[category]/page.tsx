@@ -4,6 +4,7 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Image from "next/image";
 import Link from "next/link";
 import { Music, Play, TrendingUp } from "lucide-react";
@@ -225,7 +226,7 @@ export default async function SongCategoryPage(props: any) {
   const lang = resolveLanguage(searchParams?.lang || "");
   const indStr = lang.short === "Hindi" ? "Bollywood" : lang.short;
   const cfg = getCategoryConfig(indStr, lang.short)[params.category];
-  if (!cfg) notFound();
+  if (!cfg) return <NotFound />;
 
   const songs = await getSongs(params.category, lang.key);
 

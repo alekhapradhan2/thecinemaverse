@@ -5,6 +5,7 @@
 //
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Link from "next/link";
 import { BookOpen, ChevronRight } from "lucide-react";
 import { buildMeta } from "@/lib/seo";
@@ -211,7 +212,7 @@ function JsonLd({ slug, cfg }: { slug: string; cfg: GuideConfig }) {
 export default async function(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
   const cfg = GUIDES[params.slug];
-  if (!cfg) notFound();
+  if (!cfg) return <NotFound />;
 
   const otherGuides = Object.entries(GUIDES).filter(([s]) => s !== params.slug);
 

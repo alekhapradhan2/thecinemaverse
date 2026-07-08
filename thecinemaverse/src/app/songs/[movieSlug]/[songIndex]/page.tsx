@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import { buildMeta } from "@/lib/seo";
@@ -133,10 +134,10 @@ export default async function SongDetailPage(
   const movie = await getMovieWithSongs(params.movieSlug);
   const idx   = parseInt(params.songIndex, 10) || 0;
 
-  if (!movie || !movie.media?.songs?.length) notFound();
+  if (!movie || !movie.media?.songs?.length) return <NotFound />;
 
   const song = movie.media.songs[idx] ?? movie.media.songs[0];
-  if (!song) notFound();
+  if (!song) return <NotFound />;
 
   const relatedMovies = await getRelatedMovies(movie);
 

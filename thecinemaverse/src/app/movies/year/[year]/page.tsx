@@ -3,6 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import { connectDB } from "@/lib/db";
 import Movie from "@/models/Movie";
 import Cast from "@/models/Cast";
@@ -308,7 +309,7 @@ export default async function MoviesByYearPage(
   const s          = getLangMeta(activeLang);
 
   if (isNaN(year) || !VALID_YEARS.includes(year)) {
-    notFound();
+    return <NotFound />;
   }
 
   const movies  = await getMoviesByYear(year, lang);

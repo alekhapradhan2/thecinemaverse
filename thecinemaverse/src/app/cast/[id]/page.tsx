@@ -3,6 +3,7 @@
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import NotFound from "@/app/not-found";
 import Image from "next/image";
 import Link from "next/link";
 import { connectDB } from "@/lib/db";
@@ -238,8 +239,8 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
 export default async function CastDetailPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const person = await getCastMember(params.id);
-  if (!person) notFound();
-  if (!person.name?.trim()) notFound();
+  if (!person) return <NotFound />;
+  if (!person.name?.trim()) return <NotFound />;
 
   const movies   = (person.moviesList || []) as any[];
   const newsList = (person.newsList   || []) as any[];
