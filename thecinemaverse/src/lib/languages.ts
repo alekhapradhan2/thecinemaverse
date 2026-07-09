@@ -54,7 +54,7 @@ export const LANGUAGES: LanguageConfig[] = [
   { key: "telugu",    label: "Telugu",    short: "Telugu",    industry: "Tollywood",     adjective: "Telugu",    dbValue: "Telugu",   locale: "te-IN", country: "IN", flag: "IN" },
   { key: "malayalam", label: "Malayalam", short: "Malayalam", industry: "Mollywood",     adjective: "Malayalam", dbValue: "Malayalam",locale: "ml-IN", country: "IN", flag: "IN" },
   // { key: "kannada",   label: "Kannada",   short: "Kannada",   industry: "Sandalwood",    adjective: "Kannada",   dbValue: "Kannada",  locale: "kn-IN", country: "IN", flag: "IN" },
-  // { key: "marathi",   label: "Marathi",   short: "Marathi",   industry: "Marathi Cinema",adjective: "Marathi",   dbValue: "Marathi",  locale: "mr-IN", country: "IN", flag: "IN" },
+  { key: "marathi",   label: "Marathi",   short: "Marathi",   industry: "Marathi Cinema",adjective: "Marathi",   dbValue: "Marathi",  locale: "mr-IN", country: "IN", flag: "IN" },
   // { key: "punjabi",   label: "Punjabi",   short: "Punjabi",   industry: "Punjabi Cinema",adjective: "Punjabi",   dbValue: "Punjabi",  locale: "pa-IN", country: "IN", flag: "IN" },
   // { key: "odia",      label: "Odia",      short: "Odia",      industry: "Ollywood",      adjective: "Odia",      dbValue: "Odia",     locale: "or-IN", country: "IN", flag: "IN" },
   // { key: "gujarati",  label: "Gujarati",  short: "Gujarati",  industry: "Gujarati Cinema",adjective:"Gujarati",  dbValue: "Gujarati", locale: "gu-IN", country: "IN", flag: "IN" },
