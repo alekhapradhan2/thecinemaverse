@@ -257,7 +257,7 @@ async function getBlogs({
     .lean();
 
   return {
-    blogs: blogs as any[],
+    blogs: JSON.parse(JSON.stringify(blogs)) as any[],
     total,
     totalPages: Math.ceil(total / POSTS_PER_PAGE),
   };
@@ -276,7 +276,7 @@ async function getFeaturedBlogs() {
     .sort({ createdAt: -1 })
     .limit(2)
     .lean();
-  return blogs as any[];
+  return JSON.parse(JSON.stringify(blogs)) as any[];
 }
 
 async function getPopularTags() {
@@ -307,7 +307,7 @@ async function getMostPopularPosts() {
     .sort({ views: -1 })
     .limit(5)
     .lean();
-  return blogs as any[];
+  return JSON.parse(JSON.stringify(blogs)) as any[];
 }
 
 // ── STAT CARDS ────────────────────────────────────────────────────────────────
