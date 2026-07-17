@@ -28,9 +28,11 @@ export function buildMeta({
   type?: string;
   activeLang?: LanguageConfig;
 }) {
-  const ogImage = image || `${SITE_URL}/og-default.jpg`;
+  const baseUrl = SITE_URL.replace(/\/$/, "");
+  const cleanUrl = url ? url.replace(/^\//, "") : "";
+  const ogImage = image || `${baseUrl}/og-default.jpg`;
   
-  let canonical = url ? `${SITE_URL}${url}` : SITE_URL;
+  let canonical = url ? `${baseUrl}/${cleanUrl}` : baseUrl;
   if (activeLang && activeLang.key !== DEFAULT_LANGUAGE.key && !canonical.includes("lang=")) {
     canonical += canonical.includes("?") ? `&lang=${activeLang.key}` : `?lang=${activeLang.key}`;
   }
@@ -39,11 +41,11 @@ export function buildMeta({
   
   if (activeLang && url !== undefined) {
     alternates.languages = {};
-    alternates.languages["x-default"] = `${SITE_URL}${url}`;
+    alternates.languages["x-default"] = `${baseUrl}/${cleanUrl}`;
     LANGUAGES.forEach(lang => {
       const char = url.includes("?") ? "&" : "?";
       const langParam = lang.key === DEFAULT_LANGUAGE.key ? "" : `${char}lang=${lang.key}`;
-      alternates.languages[lang.locale] = `${SITE_URL}${url}${langParam}`;
+      alternates.languages[lang.locale] = `${baseUrl}/${cleanUrl}${langParam}`;
     });
   }
 
@@ -75,12 +77,13 @@ export function buildMeta({
 
 // JSON-LD structured data generators
 export function movieJsonLd(movie: any) {
+  const baseUrl = SITE_URL.replace(/\/$/, "");
   return {
     "@context": "https://schema.org",
     "@type": "Movie",
     name: movie.title,
     description: movie.synopsis,
-    url: `${SITE_URL}/movie/${movie.slug}`,
+    url: `${baseUrl}/movie/${movie.slug}`,
     image: movie.posterUrl || movie.thumbnailUrl,
     datePublished: movie.releaseDate,
     inLanguage: movie.language || DEFAULT_LANGUAGE.dbValue,
@@ -103,12 +106,13 @@ export function movieJsonLd(movie: any) {
 }
 
 export function articleJsonLd(blog: any) {
+  const baseUrl = SITE_URL.replace(/\/$/, "");
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: blog.title,
     description: blog.excerpt || blog.seoDesc,
-    url: `${SITE_URL}/blog/${blog.slug}`,
+    url: `${baseUrl}/blog/${blog.slug}`,
     image: blog.coverImage,
     inLanguage: blog.language || DEFAULT_LANGUAGE.dbValue,
     datePublished: blog.createdAt,
@@ -117,18 +121,19 @@ export function articleJsonLd(blog: any) {
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
+      logo: { "@type": "ImageObject", url: `${baseUrl}/logo.png` },
     },
   };
 }
 
 export function personJsonLd(cast: any) {
+  const baseUrl = SITE_URL.replace(/\/$/, "");
   return {
     "@context": "https://schema.org",
     "@type": "Person",
     name: cast.name,
     description: cast.bio,
-    url: `${SITE_URL}/cast/${cast._id}`,
+    url: `${baseUrl}/cast/${cast._id}`,
     image: cast.photo,
     jobTitle: cast.type || (cast.roles || []).join(", "),
     sameAs: [cast.website, cast.instagram].filter(Boolean),
@@ -136,15 +141,19 @@ export function personJsonLd(cast: any) {
 }
 
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
+  const baseUrl = SITE_URL.replace(/\/$/, "");
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: item.name,
-      item: `${SITE_URL}${item.url}`,
-    })),
+    itemListElement: items.map((item, i) => {
+      const cleanUrl = item.url ? item.url.replace(/^\//, "") : "";
+      return {
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        item: `${baseUrl}/${cleanUrl}`,
+      };
+    }),
   };
 }
 
