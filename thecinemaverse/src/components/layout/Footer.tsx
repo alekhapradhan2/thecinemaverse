@@ -187,7 +187,7 @@ const NAV_LINKS = {
     { label: "Movies",      href: "/movies"  },
     { label: "Songs",       href: "/songs"   },
     { label: "Cast & Crew", href: "/cast"    },
-    { label: "News",        href: "/news"    },
+    { label: "Box Office",  href: "/box-office" },
     { label: "Blog",        href: "/blog"    },
   ],
   Company: [
@@ -201,24 +201,25 @@ const NAV_LINKS = {
 
 const SEO_LINKS = {
   "Explore Movies & Songs": [
-    { label: "Movies 2026",        href: "/movies"                   },
-    { label: "Movies 2025",        href: "/movies"                   },
-    { label: "Movies 2024",        href: "/movies"                   },
-    { label: "Upcoming Movies",    href: "/movies"                   },
-    { label: "Latest Movies",      href: "/movies"                   },
-    { label: "Blockbuster Movies", href: "/movies"                   },
+    { label: "Movies 2026",        href: "/movies/year/2026"         },
+    { label: "Movies 2025",        href: "/movies/year/2025"         },
+    { label: "Movies 2024",        href: "/movies/year/2024"         },
+    { label: "Action Movies",      href: "/movies/genre/action"      },
+    { label: "Drama Movies",       href: "/movies/genre/drama"       },
+    { label: "Comedy Movies",      href: "/movies/genre/comedy"      },
+    { label: "Romance Movies",     href: "/movies/genre/romance"     },
+    { label: "Thriller Movies",    href: "/movies/genre/thriller"    },
     { label: "Songs 2026",         href: "/songs/category/2026"      },
     { label: "Latest Songs",       href: "/songs/category/latest"    },
-    { label: "Trending Songs",          href: "/songs/category/trending"  },
-    { label: "Old Hit Songs",           href: "/songs/category/classics"  },
-    { label: "Top Singers",             href: "/songs/category/singers"   },
+    { label: "Trending Songs",     href: "/songs/category/trending"  },
+    { label: "Old Hit Songs",      href: "/songs/category/classics"  },
   ],
   "Learn / Discover": [
-    { label: "Know About Movies",  href: "/blog"          },
-    { label: "History of Cinema",     href: "/blog"  },
-    { label: "Top 10 Movies",      href: "/blog"   },
-    { label: "Best Songs List",    href: "/blog"      },
-    { label: "Famous Actors",      href: "/blog"          },
+    { label: "Movie Reviews",      href: "/blog?category=Reviews"    },
+    { label: "Box Office Reports", href: "/box-office"               },
+    { label: "Actor Spotlights",   href: "/cast"                     },
+    { label: "Cinema Articles",    href: "/blog"                     },
+    { label: "Industry News",      href: "/blog?category=News"       },
   ],
 };
 
@@ -453,8 +454,8 @@ export async function Footer() {
                 hit songs
               </LocalizedLink>
               , and follow the latest{" "}
-              <LocalizedLink href="/news" className="text-gray-500 hover:text-brand-400 transition-colors">
-                movie news
+              <LocalizedLink href="/blog" className="text-gray-500 hover:text-brand-400 transition-colors">
+                movie articles
               </LocalizedLink>{" "}
               and announcements. We cover music directors, cinematographers, directors, and every creative
               talent shaping cinema today.

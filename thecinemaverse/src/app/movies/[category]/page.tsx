@@ -402,7 +402,7 @@ export default async function MovieCategoryPage(
                 { label: `${langMeta.adj} Songs 2026`,        href: "/songs/2026" },
                 { label: "Top Singers",            href: "/songs/singers" },
                 { label: "Cast & Crew",            href: "/cast" },
-                { label: `${langMeta.adj} News`,          href: "/news" },
+                { label: `${langMeta.adj} Articles`, href: "/blog" },
               ].map((l) => (
                 <Link
                   key={l.href}

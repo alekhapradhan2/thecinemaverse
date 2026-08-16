@@ -1,15 +1,5 @@
 // app/songs/[movieSlug]/[songIndex]/[songSlug]/page.tsx
-// SEO UPGRADE v2:
-//  1. generateStaticParams re-enabled
-//  2. Canonical locked to movie's own slug
-//  3. noindex on missing songs
-//  4. Richer title + description
-//  5. og:type "music.song"
-//  6. JSON-LD: MusicRecording + BreadcrumbList
-//  7. SEO prose block (server-rendered)
-//  8. ★ NEW: Cross-links to related blog posts for this movie
-//  9. ★ NEW: Keyword set targeting movie-name + song-name searches
-// 10. ★ NEW: Blog JSON-LD ItemList so Google sees blog links from song page
+// Song Detail Page — Rich SEO metadata, MusicRecording schema, Breadcrumbs, SSR prose block
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -60,7 +50,7 @@ async function getRelatedMovies(movie: MovieData): Promise<MovieData[]> {
   return JSON.parse(JSON.stringify(related)) as MovieData[];
 }
 
-/** ★ NEW: Fetch blog posts related to this movie */
+/** Fetch blog posts related to this movie */
 async function getRelatedBlogs(movie: MovieData): Promise<any[]> {
   await connectDB();
   const blogs = await (Blog as any)
@@ -80,41 +70,6 @@ async function getRelatedBlogs(movie: MovieData): Promise<any[]> {
 }
 
 // ─── Metadata ─────────────────────────────────────────────────
-
-// --- Fuzzy misspelling generator ---
-function getMisspellings(title: string, lang: string): string[] {
-  if (!title) return [];
-  const variants = new Set<string>();
-  const words = title.trim().split(/\s+/);
-  for (const word of words) {
-    if (word.length < 3) continue;
-    const w = word.toLowerCase();
-    variants.add(w.replace(/([aeiou])\1+/g, "$1"));
-    variants.add(w.replace(/([aeiou])(?!\1)/g, "$1$1"));
-    variants.add(w.slice(0, -1));
-    variants.add(w.replace(/a/g, "e"));
-    variants.add(w.replace(/a/g, "o"));
-    variants.add(w.replace(/e/g, "i"));
-    variants.add(w.replace(/u/g, "o"));
-    for (let i = 0; i < w.length - 1; i++) {
-      variants.add(w.slice(0, i) + w[i + 1] + w[i] + w.slice(i + 2));
-    }
-    variants.add(w.replace(/h/g, ""));
-    variants.add(w.replace(/([sc])([aeiou])/g, "$1h$2"));
-    variants.add(w.replace(/ph/g, "f"));
-    variants.add(w.replace(/f/g, "ph"));
-  }
-  const result: string[] = [];
-  variants.forEach((v) => {
-    if (v && v !== title.toLowerCase() && v.length > 2) {
-      result.push(v);
-      result.push(`${v} ${lang.toLowerCase()} movie`);
-      result.push(`${v} ${lang.toLowerCase()} film`);
-    }
-  });
-  return result;
-}
-
 export async function generateMetadata(
   props: {
     params: Promise<{ movieSlug: string; songIndex: string; songSlug: string }>;
@@ -139,8 +94,8 @@ export async function generateMetadata(
   const langStr = movie.language || "Hindi";
   const indStr  = langStr === "Hindi" ? "Bollywood" : langStr;
 
-  // ★ Rich title — song + singer + movie + year for long-tail capture
-  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | ${indStr} Song | The Cinema Verse`;
+  // NOTE: Do not append '| The Cinema Verse' here — layout.tsx auto-appends it.
+  const title = `${song.title}${singerStr} – ${movie.title}${year ? ` (${year})` : ""} | ${indStr} Song`;
 
   const descParts = [
     `Listen to "${song.title}"${singerStr} from the ${langStr.toLowerCase()} film "${movie.title}"${year ? ` (${year})` : ""}.`,
@@ -153,33 +108,26 @@ export async function generateMetadata(
   const stableSlug = toSlug(song.title) || String(idx);
   const canonical  = `https://thecinemaverses.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
-  // ★ Comprehensive keyword set — hit every variant someone might search
   const keywords = [
     song.title,
     `${song.title} lyrics`,
     `${song.title} ${indStr.toLowerCase()} song`,
     `${song.title} ${movie.title}`,
-    song.singer ? `${song.singer} songs`       : null,
-    song.singer ? `${song.singer} ${indStr.toLowerCase()} songs`  : null,
-    song.musicDirector ? `${song.musicDirector} music`      : null,
+    song.singer ? `${song.singer} songs` : null,
+    song.singer ? `${song.singer} ${indStr.toLowerCase()} songs` : null,
+    song.musicDirector ? `${song.musicDirector} music` : null,
     song.musicDirector ? `${song.musicDirector} ${indStr.toLowerCase()} music` : null,
     `${movie.title} songs`,
     `${movie.title} album`,
-    `${movie.title} songs download`,
     `${movie.title} ${langStr.toLowerCase()} movie songs`,
     movie.title,
     `${movie.title} ${langStr.toLowerCase()} movie`,
     `${movie.title} ${langStr.toLowerCase()} film`,
-    `${movie.title} review`,
-    `${indStr.toLowerCase()} song`,
     `${indStr.toLowerCase()} song`,
     `${langStr.toLowerCase()} film song`,
     `${langStr.toLowerCase()} movie song`,
     year ? `${indStr.toLowerCase()} songs ${year}` : null,
-    year ? `${indStr.toLowerCase()} songs ${year}` : null,
     ...(movie.genre || []).map((g: string) => `${g} ${langStr.toLowerCase()} film`),
-    ...getMisspellings(movie.title, langStr),
-    ...getMisspellings(song.title, langStr),
   ].filter(Boolean) as string[];
 
   return {
@@ -280,7 +228,7 @@ function SeoProseBlock({
           </Link>
         </div>
       </div>
-      {/* ── ★ NEW: Related Blog Posts for this movie ── */}
+      {/* ── Related Blog Posts for this movie ── */}
       {relatedBlogs.length > 0 && (
         <div className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 mb-6">
           <h2 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
@@ -370,7 +318,7 @@ export default async function SongDetailSlugPage(
 
   const [relatedMovies, relatedBlogs] = await Promise.all([
     getRelatedMovies(movie),
-    getRelatedBlogs(movie),   // ★ NEW
+    getRelatedBlogs(movie),
   ]);
 
   const year   = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : "";
@@ -397,7 +345,6 @@ export default async function SongDetailSlugPage(
         ...(thumb           && { "thumbnailUrl": thumb }),
         ...(song.ytId       && { "sameAs": `https://www.youtube.com/watch?v=${song.ytId}` }),
         "url": canonical,
-        // ★ Link song → movie for entity graph
         "inAlbum": {
           "@type": "MusicAlbum",
           "name": `${movie.title} Original Soundtrack`,
@@ -406,7 +353,6 @@ export default async function SongDetailSlugPage(
             "byArtist": { "@type": "Person", "name": song.musicDirector },
           }),
         },
-        // ★ Associate song with its film
         "associatedMedia": {
           "@type": "Movie",
           "name": movie.title,
@@ -422,7 +368,6 @@ export default async function SongDetailSlugPage(
           { "@type": "ListItem", "position": 4, "name": song.title,   "item": canonical },
         ],
       },
-      // ★ ItemList of related blog posts — helps Google link song → blogs
       ...(relatedBlogs.length > 0
         ? [{
             "@type": "ItemList",
@@ -455,7 +400,7 @@ export default async function SongDetailSlugPage(
         idx={idx}
         year={year}
         otherSongs={otherSongs}
-        relatedBlogs={relatedBlogs}   // ★ NEW
+        relatedBlogs={relatedBlogs}
       />
     </>
   );

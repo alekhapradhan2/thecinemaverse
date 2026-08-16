@@ -189,10 +189,10 @@ export async function generateMetadata(
   const langShort = lang.short;
   const indStr = langShort === "Hindi" ? "Bollywood" : langShort;
 
-  // SEO title: movie name first → highest relevance signal
+  // NOTE: Do not append '| The Cinema Verse' — layout.tsx template handles it
   const title = lastDay
-    ? `${movie.title} Box Office Collection Day ${lastDay} — ${fmtINR(totalNet)} Net | The Cinema Verse`
-    : `${movie.title} Box Office Collection | ${langShort} Film | The Cinema Verse`;
+    ? `${movie.title} Box Office Collection Day ${lastDay} — ${fmtINR(totalNet)} Net`
+    : `${movie.title} Box Office Collection | ${langShort} Film`;
 
   const description = totalNet
     ? `${movie.title}${year ? ` (${year})` : ""} box office: ₹ ${fmtINR(totalNet)} net, ${fmtINR(totalGross)} gross in ${lastDay} days. Day 1 collection: ${fmtINR(day1Net)}. Full day-wise ${indStr.toLowerCase()} box office data on The Cinema Verse.`

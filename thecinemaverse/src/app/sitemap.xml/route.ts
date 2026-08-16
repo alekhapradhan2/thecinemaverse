@@ -1,30 +1,29 @@
 // app/sitemap.xml/route.ts
-// ── What changed in this version ──────────────────────────────────────────────
-//  1. Cast URLs fixed to always use _id (route is /cast/[id], never slug)
-//  2. Genre pages added — /movies/genre/[genre] + /movies?genre= (10 genres)
-//  3. /movies/upcoming, /movies/latest, /movies/blockbuster added as statics
-//  4. News articles added from DB (/news/[slug])
-//  5. News model imported
-//  6. TODO items moved to "Evergreen guides" comment (upcoming/latest/blockbuster done)
-//  7. ★ Blog query now filters { published: true, indexed: { $ne: false } }
-//     so non-indexable day-wise box office articles are excluded from sitemap
-//  ✅ All previous fixes preserved (box-office, blog categories, song pages, priorities)
-//  ★ FIX: Replaced imported SITE_URL with hardcoded non-www canonical to resolve
-//     Google Search Console "URL not allowed" error (21191 instances).
-//     The sitemap is served from https://thecinemaverse.in — all URLs must match
-//     that origin exactly. www.thecinemaverse.in is a different origin in GSC.
+// ── Changelog ─────────────────────────────────────────────────────────────────
+// v5 — SEO Architecture Overhaul (2026-08)
+//  ✅ CRITICAL FIX: Removed all LANGUAGES.forEach ?lang= loops that were generating
+//     3,000+ duplicate URLs. ?lang= pages are filter pages (same content), not
+//     true language translations. Submitting them burns crawl budget on duplicates
+//     and sends conflicting signals about the canonical. Only canonical URLs are
+//     now in the sitemap.
+//  ✅ FIX: Removed /search from statics — /search is blocked in robots.txt.
+//     Submitting a blocked URL to the sitemap causes GSC "Submitted but blocked"
+//     errors and wastes crawl quota.
+//  ✅ FIX: Year range tightened to current year - 5 (was back to 2000).
+//     Pages from 2000-2020 get negligible crawl attention and dilute crawl budget
+//     for the high-value recent pages.
+//  ✅ FIX: Genre sitemap entries now use /movies/genre/[genre] (canonical).
+//     Previously also included /movies?genre= variants (blocked in robots.txt).
+//  ✅ All previous fixes preserved (box-office, blog categories, song pages).
 
 import { connectDB } from "@/lib/db";
 import Movie         from "@/models/Movie";
 import Cast          from "@/models/Cast";
 import Blog          from "@/models/Blog";
-import News          from "@/models/News";
-import { LANGUAGES, DEFAULT_LANGUAGE } from "@/lib/languages";
 
-// ★ Hardcoded to non-www canonical — must exactly match the origin this
-//   sitemap is served from. Do NOT use SITE_URL from @/lib/seo if that
-//   constant contains "www." — Google treats www and non-www as different
-//   origins and will reject all URLs in the sitemap with "URL not allowed".
+// Hardcoded to non-www canonical — must exactly match the origin this sitemap is
+// served from. Do NOT use SITE_URL from @/lib/seo — that may contain "www." and
+// Google treats www and non-www as different origins ("URL not allowed" error).
 const CANONICAL_ORIGIN = "https://thecinemaverses.in";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -71,59 +70,47 @@ export async function GET() {
   const today = new Date().toISOString().split("T")[0];
 
   // ── Static pages ──────────────────────────────────────────────────────────
+  // Only canonical, indexable pages. No blocked URLs. No ?lang= duplicates.
   const statics: [string, string, string][] = [
-    ["",                      "daily",   "1.0"],
-    ["/movies",               "daily",   "0.9"],
-    ["/movies/upcoming",      "daily",   "0.9"],
-    ["/movies/latest",        "daily",   "0.85"],
-    ["/movies/blockbuster",   "weekly",  "0.8"],
-    ["/box-office",           "daily",   "0.9"],
-    ["/songs",                "weekly",  "0.8"],
-    ["/cast",                 "weekly",  "0.8"],
-    ["/news",                 "daily",   "0.8"],
-    ["/blog",                 "daily",   "0.8"],
-    ["/about",                "monthly", "0.4"],
-    ["/contact",              "monthly", "0.4"],
-    ["/privacy",              "monthly", "0.3"],
-    ["/disclaimer",           "monthly", "0.3"],
-    ["/search",               "monthly", "0.3"],
+    ["",                    "daily",   "1.0"],
+    ["/movies",             "daily",   "0.9"],
+    ["/movies/upcoming",    "daily",   "0.9"],
+    ["/movies/latest",      "daily",   "0.85"],
+    ["/movies/blockbuster", "weekly",  "0.8"],
+    ["/box-office",         "daily",   "0.9"],
+    ["/songs",              "weekly",  "0.8"],
+    ["/cast",               "weekly",  "0.8"],
+    ["/blog",               "daily",   "0.8"],
+    ["/about",              "monthly", "0.4"],
+    ["/contact",            "monthly", "0.4"],
+    ["/privacy",            "monthly", "0.3"],
+    ["/disclaimer",         "monthly", "0.3"],
+    // NOTE: /search is intentionally excluded — it is blocked in robots.txt.
+    // Submitting blocked URLs to the sitemap causes GSC "Submitted but blocked" errors.
   ];
 
   const entries: string[] = [];
 
-  // Add the base URLs (which default to Indian/Indian)
   statics.forEach(([p, f, pr]) => {
     entries.push(urlEntry(`${CANONICAL_ORIGIN}${p}`, today, f, pr));
   });
 
-  // Add URLs for each supported language explicitly
-  LANGUAGES.forEach(lang => {
-    // Only generate lang params for core content pages, not /about, /contact, etc.
-    const corePages = statics.filter(([p]) => ["", "/movies", "/movies/upcoming", "/movies/latest", "/box-office", "/cast", "/songs", "/news"].includes(p));
-    
-    corePages.forEach(([p, f, pr]) => {
-      const char = p.includes("?") ? "&" : "?";
-      // We lower priority slightly for non-default language to ensure canonical hierarchy
-      const langPriority = lang.key === DEFAULT_LANGUAGE.key ? pr : (parseFloat(pr) * 0.9).toFixed(2);
-      entries.push(urlEntry(`${CANONICAL_ORIGIN}${p}${char}lang=${lang.key}`, today, f, langPriority));
-    });
-  });
-
   // ── Genre pages ────────────────────────────────────────────────────────────
+  // Canonical genre URL: /movies/genre/[genre] (NOT /movies?genre= which is blocked)
   const genres = [
     "Action", "Romance", "Comedy", "Drama", "Family",
     "Thriller", "Mythological", "Horror", "Social", "Devotional",
+    "Historical",
   ];
   genres.forEach((g) => {
-    const baseUrl = `${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`;
-    entries.push(urlEntry(baseUrl, today, "weekly", "0.75"));
-    LANGUAGES.forEach(lang => {
-      const p = lang.key === DEFAULT_LANGUAGE.key ? "0.75" : "0.65";
-      entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, "weekly", p));
-    });
+    entries.push(urlEntry(
+      `${CANONICAL_ORIGIN}/movies/genre/${encodeURIComponent(g.toLowerCase())}`,
+      today, "weekly", "0.75"
+    ));
   });
 
   // ── Blog category pages ────────────────────────────────────────────────────
+  // These use /blog?category= which is explicitly allowed in robots.txt.
   const blogCategories: [string, string, string][] = [
     ["Box Office", "daily",   "0.9"],
     ["Reviews",    "weekly",  "0.75"],
@@ -158,29 +145,24 @@ export async function GET() {
   });
 
   // ── Movies by year pages ───────────────────────────────────────────────────
-  const YEAR_START = 2000;
-  const YEAR_END   = new Date().getFullYear();
-  for (let yr = YEAR_END; yr >= YEAR_START; yr--) {
-    const freq = yr >= YEAR_END - 1 ? "daily"   : yr >= YEAR_END - 4 ? "monthly" : "yearly";
-    const pri  = yr >= YEAR_END - 1 ? "0.85"    : yr >= YEAR_END - 4 ? "0.75"    : "0.6";
-    const baseUrl = `${CANONICAL_ORIGIN}/movies/year/${yr}`;
-    
-    entries.push(urlEntry(baseUrl, today, freq, pri));
-    LANGUAGES.forEach(lang => {
-      const p = lang.key === DEFAULT_LANGUAGE.key ? pri : (parseFloat(pri) * 0.9).toFixed(2);
-      entries.push(urlEntry(`${baseUrl}?lang=${lang.key}`, today, freq, p));
-    });
+  // Limited to current year - 5. Pages older than 5 years receive negligible
+  // crawl and dilute budget for high-value current-year pages.
+  const CURRENT_YEAR = new Date().getFullYear();
+  const YEAR_START   = CURRENT_YEAR - 5;
+
+  for (let yr = CURRENT_YEAR; yr >= YEAR_START; yr--) {
+    const freq = yr >= CURRENT_YEAR     ? "daily"   : yr >= CURRENT_YEAR - 2 ? "monthly" : "yearly";
+    const pri  = yr >= CURRENT_YEAR     ? "0.85"    : yr >= CURRENT_YEAR - 2 ? "0.75"    : "0.6";
+    entries.push(urlEntry(`${CANONICAL_ORIGIN}/movies/year/${yr}`, today, freq, pri));
   }
 
   // ── Box office by year pages ───────────────────────────────────────────────
-  const BOX_OFFICE_YEAR_START = 2020;
-  for (let yr = YEAR_END - 1; yr >= BOX_OFFICE_YEAR_START; yr--) {
-    const baseUrl = `${CANONICAL_ORIGIN}/box-office`;
-    entries.push(urlEntry(`${baseUrl}?year=${yr}`, today, "weekly", "0.75"));
-    LANGUAGES.forEach(lang => {
-      const p = lang.key === DEFAULT_LANGUAGE.key ? "0.75" : "0.65";
-      entries.push(urlEntry(`${baseUrl}?year=${yr}&lang=${lang.key}`, today, "weekly", p));
-    });
+  const BOX_OFFICE_YEAR_START = CURRENT_YEAR - 5;
+  for (let yr = CURRENT_YEAR - 1; yr >= BOX_OFFICE_YEAR_START; yr--) {
+    entries.push(urlEntry(
+      `${CANONICAL_ORIGIN}/box-office?year=${yr}`,
+      today, "weekly", "0.75"
+    ));
   }
 
   try {
@@ -193,8 +175,8 @@ export async function GET() {
     ).lean() as any[];
 
     movies.forEach((m) => {
-      const movieSlug   = m.slug || String(m._id);
-      const lastmod     = safeDate(m.updatedAt ?? m.createdAt ?? m.releaseDate);
+      const movieSlug    = m.slug || String(m._id);
+      const lastmod      = safeDate(m.updatedAt ?? m.createdAt ?? m.releaseDate);
       const hasBoxOffice = m.boxOfficeDays?.length > 0;
 
       entries.push(urlEntry(
@@ -250,28 +232,9 @@ export async function GET() {
       entries.push(urlEntry(`${CANONICAL_ORIGIN}/blog/${b.slug}`, lastmod, freq, pri));
     });
 
-    // ── News articles ──────────────────────────────────────────────────────
-    const newsItems = await News.find(
-      {},
-      "slug _id updatedAt createdAt"
-    ).lean() as any[];
-
-    newsItems.forEach((n: any) => {
-      const newsSlug = n.slug?.trim() || String(n._id);
-      const lastmod  = safeDate(n.updatedAt ?? n.createdAt);
-      entries.push(urlEntry(`${CANONICAL_ORIGIN}/news/${newsSlug}`, lastmod, "weekly", "0.75"));
-    });
-
   } catch (err) {
     console.error("Sitemap generation error:", err);
   }
-
-  // ── Evergreen guide pages (add once created) ──────────────────────────────
-  //  /blog/Indian-guides/Indian-movies
-  //  /blog/Indian-guides/history-of-Indian
-  //  /blog/Indian-guides/top-10-Indian-movies
-  //  /blog/Indian-guides/best-Indian-songs
-  //  /blog/Indian-guides/Indian-actors
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

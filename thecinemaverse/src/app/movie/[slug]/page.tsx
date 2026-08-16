@@ -306,7 +306,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const isOttComing = !isTBA && !!ottDate && new Date(ottDate) > new Date();
   const ottFmtDate  = (ottDate && ottDate !== "TBA") ? new Date(ottDate).toLocaleDateString("en-IN",{day:"numeric",month:"long",year:"numeric"}) : "";
 
-  // Dynamic title: append OTT info when available
+  // Dynamic title: append OTT info when available (NOTE: Do not append '| The Cinema Verse' — layout.tsx template handles it)
   const ottTitleSuffix = ottPlatform
     ? isOttLive
       ? ` | Now on ${ottPlatform}`
@@ -316,7 +316,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
       ? ` | OTT Release Soon`
       : ""
     : "";
-  const title = `${movie.title}${yearStr} – Cast, Songs & Review${ottTitleSuffix} | The Cinema Verse`;
+  const title = `${movie.title}${yearStr} – Cast, Songs & Review${ottTitleSuffix}`;
 
   // Dynamic description: weave in OTT info
   const ottDescPart = ottPlatform
@@ -328,10 +328,11 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
       ? ` OTT release on ${ottPlatform} — date to be announced.`
       : ""
     : "";
+  const synopsisClean = movie.synopsis && !movie.synopsis.toLowerCase().startsWith("the following is") && !movie.synopsis.toLowerCase().includes("all rights reserved") ? movie.synopsis : "";
   const description = (
-    movie.synopsis
-      ? movie.synopsis.slice(0, 130) + ottDescPart
-      : `Complete info about film ${movie.title}${yearStr}${ottDescPart} Cast, songs, trailer, box office & reviews on The Cinema Verse.`
+    synopsisClean
+      ? synopsisClean.slice(0, 130) + ottDescPart
+      : `Complete info about ${movie.title}${yearStr}${ottDescPart}. Cast, songs, trailer, box office & reviews on The Cinema Verse.`
   ).slice(0, 160);
 
   const image     = movie.posterUrl || movie.thumbnailUrl || "https://thecinemaverses.in/default.jpg";
@@ -442,7 +443,6 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     movie.verdict ? `${movie.title} ${movie.verdict.toLowerCase()}` : null,
     ...(movie.genre || []).flatMap((g: string) => [`${g} film`, `${g} movie`, `Indian ${g} film ${year || ""}`.trim()]),
     ...(movie.cast || []).slice(0, 5).map((c: any) => c.name).filter(Boolean).flatMap((n: string) => [n, `${n} movie`, `${n} new movie`]),
-    ...getMisspellings(movie.title),
     // OTT keyword matrix
     ...ottKw,
   ].filter(Boolean) as string[];
@@ -595,6 +595,75 @@ function StatChip({ label, value, accent = false }: { label: string; value: stri
   );
 }
 
+function MovieSSRPreview({
+  movie,
+  year,
+  songs,
+}: {
+  movie: any;
+  year: string | number;
+  songs: any[];
+}) {
+  return (
+    <article
+      aria-hidden="true"
+      data-ssr-preview="true"
+      style={{
+        position: "absolute",
+        width: 1,
+        height: 1,
+        overflow: "hidden",
+        clip: "rect(0,0,0,0)",
+        whiteSpace: "nowrap",
+        border: 0,
+      }}
+    >
+      <h1>{movie.title}{year ? ` (${year})` : ""} – Movie Details, Cast, Review & Songs</h1>
+      {movie.synopsis && <p>{movie.synopsis}</p>}
+      {movie.story && <p>{movie.story}</p>}
+      {movie.review && <p>{movie.review}</p>}
+      {movie.director && <p>Director: {movie.director}</p>}
+      {movie.cast?.length > 0 && (
+        <div>
+          <h2>Cast & Characters</h2>
+          <ul>
+            {movie.cast.map((c: any, i: number) => (
+              <li key={i}>
+                <a href={`/cast/${c.castId || c._id || ""}`}>
+                  {c.name} {c.character ? `as ${c.character}` : ""}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {songs?.length > 0 && (
+        <div>
+          <h2>Soundtrack & Songs</h2>
+          <ul>
+            {songs.map((s: any, i: number) => (
+              <li key={i}>
+                <a href={`/songs/${movie.slug || movie._id}/${i}/${s.slug || String(i)}`}>
+                  {s.title} {s.singer ? `by ${s.singer}` : ""}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {movie.boxOffice && (
+        <div>
+          <h2>Box Office Collection</h2>
+          <p>Total Collection: {movie.boxOffice.total || "TBA"}</p>
+          <p>Opening Day: {movie.boxOffice.opening || "TBA"}</p>
+          <p>Verdict: {movie.verdict || "Upcoming"}</p>
+          <a href={`/box-office/${movie.slug || movie._id}`}>{movie.title} Box Office Report</a>
+        </div>
+      )}
+    </article>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────
 export default async function MovieDetailPage(props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
@@ -644,7 +713,15 @@ export default async function MovieDetailPage(props: { params: Promise<{ slug: s
     ...(movie.posterUrl || movie.thumbnailUrl ? { image: movie.posterUrl || movie.thumbnailUrl } : {}),
     ...(movie.synopsis ? { description: movie.synopsis.slice(0, 300) } : {}),
     ...(movie.releaseDate ? { datePublished: movie.releaseDate } : {}),
-    inLanguage: movie.language || "Indian",
+    inLanguage: (() => {
+      const langMap: Record<string, string> = {
+        Hindi: "hi", Bengali: "bn", Telugu: "te", Tamil: "ta",
+        Malayalam: "ml", Marathi: "mr", Kannada: "kn", Punjabi: "pa",
+        Odia: "or", Gujarati: "gu", Assamese: "as", Bhojpuri: "bho",
+        English: "en", Sanskrit: "sa",
+      };
+      return langMap[movie.language] || "hi";
+    })(),
     countryOfOrigin: { "@type": "Country", name: "India" },
     ...(movie.contentRating ? { contentRating: movie.contentRating } : {}),
     ...(movie.genre?.length ? { genre: movie.genre } : {}),
@@ -717,6 +794,7 @@ export default async function MovieDetailPage(props: { params: Promise<{ slug: s
 
   return (
     <>
+      <MovieSSRPreview movie={movie} year={year} songs={songs} />
       {structuredData.map((sd, i) => (
         <script key={i} type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(sd) }} />
@@ -770,7 +848,7 @@ export default async function MovieDetailPage(props: { params: Promise<{ slug: s
               {/* Genre + language badges */}
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {(movie.genre || []).map((g: string) => (
-                  <Link key={g} href={`/movies?genre=${g}`}>
+                  <Link key={g} href={`/movies/genre/${encodeURIComponent(g.toLowerCase())}`}>
                     <span className="text-[10px] sm:text-xs font-semibold px-2 sm:px-3 py-0.5 sm:py-1 bg-brand-950 border border-brand-900 text-brand-400 rounded-full hover:bg-brand-900 transition-colors">
                       {g}
                     </span>

@@ -137,8 +137,10 @@ export async function generateMetadata(
   const langConfig = resolveLanguage(blog.language);
   const seo = getLangSeo(langConfig);
 
-  // FIXED — uses seoTitle from BoxOfficePanel, falls back gracefully
-  const title = blog.seoTitle || `${blog.title} | The Cinema Verse`;
+  // NOTE: Do not append '| The Cinema Verse' — layout.tsx template handles it
+  const title = blog.seoTitle
+    ? blog.seoTitle.replace(/\s*\|\s*The Cinema Verse$/i, "").trim()
+    : blog.title;
 
   // FIXED — uses seoDesc from BoxOfficePanel, falls back gracefully  
   const description = (
@@ -661,7 +663,7 @@ export default async function BlogPage(props: { params: Promise<{ slug: string }
           { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://thecinemaverses.in/" },
           { "@type": "ListItem", "position": 2, "name": "Blog",  "item": "https://thecinemaverses.in/blog" },
           ...(blog.category
-            ? [{ "@type": "ListItem", "position": 3, "name": blog.category, "item": `https://thecinemaverses.in/blog/category/${toSlug(blog.category)}` }]
+            ? [{ "@type": "ListItem", "position": 3, "name": blog.category, "item": `https://thecinemaverses.in/blog?category=${encodeURIComponent(blog.category)}` }]
             : []),
           { "@type": "ListItem", "position": blog.category ? 4 : 3, "name": blog.title, "item": `https://thecinemaverses.in/blog/${blog.slug}` },
         ],

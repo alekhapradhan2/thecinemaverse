@@ -19,10 +19,11 @@ export async function generateMetadata(props: { searchParams: Promise<{ year?: s
   const year = searchParams?.year ? parseInt(searchParams.year, 10) : new Date().getFullYear();
   const lang = resolveLanguage(searchParams?.lang);
   const isCurrentYear = year === new Date().getFullYear();
-  const adj  = lang.adjective;
+  const adj = lang.adjective;
+  // NOTE: Do not append '| The Cinema Verse' — layout.tsx template handles it
   const title = isCurrentYear
-    ? `${adj} Box Office Collection ${year} | The Cinema Verse`
-    : `${adj} Box Office Collection ${year} | ${adj} Hit Flop List | The Cinema Verse`;
+    ? `${adj} Box Office Collection ${year}`
+    : `${adj} Box Office Collection ${year} | ${adj} Hit Flop List`;
   const description = isCurrentYear
     ? `Complete ${adj} box office collection report ${year}. Day-wise net and gross earnings for all latest ${lang.short.toLowerCase()} movies — updated daily on The Cinema Verse.`
     : `${adj} box office collection ${year} — all movies, hit & flop verdict, day-wise net and gross earnings. Complete ${lang.industry} ${year} trade report on The Cinema Verse.`;

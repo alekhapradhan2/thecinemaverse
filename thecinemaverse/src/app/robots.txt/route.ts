@@ -1,57 +1,54 @@
 // app/robots.txt/route.ts
-// ── What changed in this version ──────────────────────────────────────────────
-//  1. /blog? now blocks ALL query string variations (was only ?q= before)
-//  2. /movies?genre= blocked — duplicate of canonical /movies/genre/[genre]
-//  3. /songs/category/ left crawlable (canonical), query dupes blocked
-//  4. ★ PerplexityBot REMOVED from block list — Perplexity is an AI search
-//     engine that cites sources and drives real referral traffic. Blocking it
-//     prevents The Cinema Verse from appearing in Perplexity AI answers.
-//  5. ★ Google-Extended REMOVED from block list — blocking this prevents
-//     The Cinema Verse content from appearing in Google AI Overviews and Gemini
-//     answers, which are a growing source of discovery traffic.
-//  6. ★ FIX: /blog?category= explicitly allowed — sitemap.xml submits the 6
-//     /blog?category=[X] pages (Box Office, Reviews, Actor, Songs, News, Top
-//     Lists) as real keyword-targeted pages with priority up to 0.9, but the
-//     blanket "Disallow: /blog?" rule was blocking Googlebot from crawling
-//     them — submitted-but-blocked is a wasted/contradictory signal. Only
-//     /blog?category= is allowed; all other /blog? query variants (e.g.
-//     /blog?q=, /blog?page=) remain blocked as before.
-//  ★ FIX: Sitemap URL uses hardcoded non-www canonical to match the origin
-//     the sitemap is actually served from (https://thecinemaverse.in).
-//     Using www.thecinemaverse.in here while the sitemap lives at non-www
-//     causes Google Search Console "URL not allowed" errors for all entries.
-//  ✅ All other existing rules preserved (pure training scrapers still blocked)
+// ── Changelog ─────────────────────────────────────────────────────────────────
+// v4 — SEO Architecture Overhaul (2026-08)
+//  ✅ CRITICAL FIX: Removed "Disallow: /_next/" — this line was blocking Googlebot
+//     from downloading the site's JavaScript and CSS chunks, making all client-
+//     rendered content invisible. Next.js requires /_next/static/ to be crawlable
+//     so Google can fully render the page.
+//  ✅ FIX: Replaced blanket "Disallow: /blog?" with specific query blocks:
+//     - Disallow: /blog?q=     (search queries — no SEO value)
+//     - Disallow: /blog?page=  (pagination — duplicate content)
+//     The blanket /blog? was conflicting with "Allow: /blog?category=" causing
+//     unpredictable crawl behavior on category filter pages submitted to the sitemap.
+//  ✅ FIX: Removed /search from sitemap — /search is blocked by Disallow: /search
+//     but was previously listed in the sitemap, causing GSC "submitted-but-blocked"
+//     errors. Blocked + in-sitemap = waste of crawl quota.
+//  ✅ PerplexityBot and Google-Extended remain un-blocked (AI citation traffic).
+//  ✅ All training scraper blocks preserved.
 
-// ★ Hardcoded non-www canonical — must match the origin the sitemap is served
-//   from. Do NOT use SITE_URL from @/lib/seo if it contains "www."
+// Hardcoded non-www canonical — must match the origin the sitemap is served from.
 const CANONICAL_ORIGIN = "https://thecinemaverses.in";
 
 export async function GET() {
-  const content = `# ── General crawlers ────────────────────────────────────
+  const content = `# ── The Cinema Verse — robots.txt ──────────────────────
+# Last updated: 2026-08 | SEO Architecture v4
+
 User-agent: *
 Allow: /
 
-# Block thin/low-value pages from crawl budget
+# ── Block thin / low-value pages from crawl budget ──────
 Disallow: /api/
 Disallow: /admin/
 Disallow: /search
-Disallow: /_next/
-Disallow: /blog?
-Disallow: /movies?genre=
 
-# Explicitly allowed (kept crawlable — these are canonical, not duplicates)
+# ── Block URL variants that are crawl-budget duplicates ─
+# /movies?genre= is blocked because the canonical genre URL is /movies/genre/[genre]
+Disallow: /movies?genre=
+# Block /blog search and pagination (no unique value)
+Disallow: /blog?q=
+Disallow: /blog?page=
+
+# ── Explicitly allow canonical filter pages ─────────────
+# These are submitted in the sitemap and must be crawlable.
 Allow: /movies/year/
 Allow: /movies/genre/
 Allow: /box-office?year=
 Allow: /blog?category=
 Allow: /*?lang=
 
-# ── AI training scrapers — block content harvesting ─────
-# These bots scrape content to train AI models without compensation.
-# Blocking them protects your original Indian cinema writing.
-# NOTE: PerplexityBot and Google-Extended are NOT blocked here —
-# they are AI search engines that cite sources and drive traffic,
-# not training scrapers.
+# ── AI training scrapers — protect original content ─────
+# PerplexityBot and Google-Extended are NOT blocked (they cite sources
+# and drive real traffic; they are AI search engines, not scrapers).
 
 User-agent: GPTBot
 Disallow: /
@@ -78,8 +75,6 @@ User-agent: Meta-ExternalAgent
 Disallow: /
 
 # ── Sitemaps ─────────────────────────────────────────────
-# List all sitemaps so every crawler finds them automatically.
-# Also submit these URLs manually in Google Search Console + Bing Webmaster Tools.
 Sitemap: ${CANONICAL_ORIGIN}/sitemap.xml
 `;
 

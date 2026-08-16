@@ -1,21 +1,20 @@
-// app/terms-and-conditions/page.tsx
-// Static page — no data fetching required.
+// src/app/terms-and-conditions/page.tsx
+// Comprehensive Terms & Conditions compliant with Google AdSense and publisher network guidelines
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Film, ChevronRight, Shield, Eye, FileText, AlertCircle, Scale, Mail } from "lucide-react";
+import { Film, ChevronRight, Shield, Eye, FileText, AlertCircle, Scale, Mail, Cookie } from "lucide-react";
 
-// ── SEO Metadata ──────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
-  title: "Terms & Conditions | The Cinema Verse — Indian Cinema Encyclopedia",
+  title: "Terms & Conditions | The Cinema Verse",
   description:
-    "Read the Terms and Conditions for using The Cinema Verse, the most complete online encyclopedia for Indian movies. We do not collect any personal user data.",
+    "Read the Terms and Conditions for using The Cinema Verse, the online encyclopedia for Indian movies, songs, cast profiles, reviews, and box office information.",
   keywords: [
     "terms and conditions",
-    "privacy policy",
-    "indian movie website terms",
-    "the cinema verse terms policy",
-    "no data collection policy",
+    "the cinema verse terms",
+    "user agreement",
+    "movie database terms",
+    "privacy and terms",
   ],
   alternates: {
     canonical: "https://thecinemaverses.in/terms-and-conditions",
@@ -23,43 +22,42 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Terms & Conditions | The Cinema Verse",
     description:
-      "Our Terms & Conditions are simple: use the site freely, we respect your privacy and collect no personal data.",
+      "Terms & Conditions governing the use of The Cinema Verse encyclopedia, editorial content, and services.",
     url: "https://thecinemaverses.in/terms-and-conditions",
     siteName: "The Cinema Verse",
     type: "website",
   },
 };
 
-// ── Section data ──────────────────────────────────────────────────────────────
 const sections = [
   {
     id: "acceptance",
     icon: FileText,
     title: "1. Acceptance of Terms",
     content: [
-      "By accessing and using The Cinema Verse (thecinemaverse.com), you agree to be bound by these Terms and Conditions. If you do not agree to any part of these terms, please discontinue using the website.",
-      "These terms apply to all visitors, users, and anyone else who accesses or uses The Cinema Verse. We may update these terms from time to time; continued use of the site after changes constitutes your acceptance of the new terms.",
+      "By accessing and browsing The Cinema Verse (thecinemaverses.in), you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions and our Privacy Policy. If you do not agree with any part of these terms, please discontinue use of the website.",
+      "These terms apply to all visitors, users, and others who access or use our services. We reserve the right to revise or modify these terms at any time; your continued use of the website following any changes signifies your acceptance of the updated terms.",
     ],
   },
   {
-    id: "no-data-collection",
-    icon: Shield,
-    title: "2. No Personal Data Collection",
+    id: "privacy-and-cookies",
+    icon: Cookie,
+    title: "2. Privacy, Cookies & Third-Party Advertising",
     highlight: true,
     content: [
-      "The Cinema Verse does not collect, store, process, or share any personal data from its users. We do not require you to create an account, log in, or provide any personal information to browse or use this website.",
-      "We do not use tracking cookies, analytics that identify individuals, advertising trackers, or any technology designed to collect personal information. You can enjoy the full content of The Cinema Verse completely anonymously.",
-      "Any technical data that may be processed by our hosting infrastructure (such as server logs) is used solely for security and operational purposes and is not used to identify or profile individual users.",
+      "The Cinema Verse respects user privacy. We do not require you to create an account or provide sensitive personal data to access our publicly accessible encyclopedia entries, reviews, box office tracking, or song databases.",
+      "To fund and support the continuous maintenance and free availability of our database, The Cinema Verse partners with third-party advertising networks, including Google AdSense. Third-party vendors, including Google, use cookies (such as the DART cookie) to serve ads based on a user's prior visits to our website or other websites on the Internet.",
+      "Users can manage their cookie preferences or opt out of personalized advertising by visiting Google's Ads Settings (https://adssettings.google.com) or the Network Advertising Initiative opt-out page (https://www.aboutads.info/choices/). Please review our Privacy Policy for full details.",
     ],
   },
   {
     id: "content-use",
     icon: Eye,
-    title: "3. Use of Content",
+    title: "3. Use of Content & Fair Use",
     content: [
-      "All content on The Cinema Verse — including movie information, cast profiles, song listings, articles, reviews, and editorial text — is provided for informational and entertainment purposes only.",
-      "You may read, share, and link to content on The Cinema Verse for personal, non-commercial purposes. You may not reproduce, republish, scrape, or redistribute our content in bulk or for commercial purposes without prior written permission.",
-      "Movie posters, promotional images, and other media displayed on this site remain the property of their respective studios, distributors, and copyright holders. They are used here for editorial and encyclopedic purposes under fair use principles.",
+      "All text, editorial reviews, curated compilations, rankings, box office estimates, and analyses published on The Cinema Verse are authored for informational, educational, and entertainment purposes.",
+      "You are welcome to read, share, and reference our content for personal, non-commercial use with appropriate attribution. Systematic extraction, automated scraping, bulk republishing, or commercial reproduction of our database or written articles without prior written permission is prohibited.",
+      "Movie posters, promotional trailers, song thumbnails, and still images displayed on this site are the intellectual property of their respective copyright holders, studios, and music labels. They are displayed under fair use doctrine for the purposes of commentary, critique, news reporting, and encyclopedic reference.",
     ],
   },
   {
@@ -67,74 +65,69 @@ const sections = [
     icon: Scale,
     title: "4. Intellectual Property",
     content: [
-      "The The Cinema Verse name, logo, design, and original written content are the intellectual property of The Cinema Verse and may not be used without permission.",
-      "Movie titles, actor names, song titles, and other factual information about films are not subject to copyright and are provided as factual reference. Reviews and editorial opinions expressed on this site are original works authored by The Cinema Verse.",
-      "If you believe any content on The Cinema Verse infringes your copyright, please contact us at the email below and we will respond promptly.",
+      "The The Cinema Verse name, logos, original branding, web architecture, and proprietary editorial articles are protected by applicable intellectual property laws.",
+      "Factual film metadata (such as release dates, director names, track listings, and cast members) are compiled as public factual references. Editorial verdicts, in-depth film retrospectives, and original reviews remain the intellectual property of The Cinema Verse and its contributing authors.",
+      "If you believe any content on The Cinema Verse infringes upon your copyright, please reach out through our contact page or email alekhpradhan3305@gmail.com with relevant details for immediate review and resolution.",
     ],
   },
   {
     id: "accuracy",
     icon: AlertCircle,
-    title: "5. Accuracy & Disclaimers",
+    title: "5. Information Accuracy & Box Office Disclaimer",
     content: [
-      "The Cinema Verse strives to provide accurate, up-to-date information about Indian cinema. However, we cannot guarantee the completeness or accuracy of all information, especially for historical films or rapidly changing box office data.",
-      "Box office figures, ratings, and verdicts are based on publicly available information and editorial judgment. They should not be taken as financial advice or definitive commercial assessments.",
-      "External links on this site point to third-party websites. The Cinema Verse is not responsible for the content, accuracy, or privacy practices of any linked websites.",
+      "While we endeavor to provide the most accurate and up-to-date information regarding Indian cinema, we make no express or implied warranties regarding the completeness or absolute accuracy of all historical records, cast listings, or box office figures.",
+      "Box office collections, theatrical verdicts, and revenue projections published on this website are estimates synthesized from industry reports, trade analysts, and public data. They should not be considered certified commercial financial audits or investment advice.",
+      "The Cinema Verse contains links to third-party platforms (such as YouTube for music videos and trailers). We do not control or endorse external websites and are not responsible for their content or operational policies.",
     ],
   },
   {
     id: "conduct",
     icon: FileText,
-    title: "6. Acceptable Use",
+    title: "6. Acceptable Use Policy",
     content: [
-      "You agree to use The Cinema Verse only for lawful purposes. You must not use the site in any way that could damage, disable, or impair the website or interfere with other users.",
-      "Automated scraping, crawling, or bulk downloading of content without prior written permission is prohibited. Reasonable crawling by search engine bots for indexing purposes is permitted.",
-      "Any attempt to gain unauthorised access to our systems, inject malicious code, or interfere with the normal operation of the site is strictly prohibited and may be reported to relevant authorities.",
+      "You agree to use The Cinema Verse solely for lawful purposes. You must not attempt to interfere with the proper working of the site, compromise security, inject harmful code, or place an unreasonable load on our hosting infrastructure.",
+      "Legitimate search engine crawlers and indexing bots are welcomed for public discovery in compliance with our robots.txt directives.",
     ],
   },
   {
     id: "changes",
     icon: AlertCircle,
-    title: "7. Changes to These Terms",
+    title: "7. Modifications & Governing Law",
     content: [
-      "We reserve the right to modify these Terms and Conditions at any time. Changes will be effective immediately upon posting to this page with an updated revision date.",
-      "We encourage you to review these terms periodically. Your continued use of The Cinema Verse after any changes are posted constitutes your acceptance of the new terms.",
+      "We reserve the right to amend these Terms and Conditions at our discretion. Any modifications take effect immediately upon publication on this page with the updated revision date.",
+      "These terms shall be governed by and interpreted in accordance with the laws of India, subject to the jurisdiction of the competent courts of Odisha, India.",
     ],
   },
   {
     id: "contact",
     icon: Mail,
-    title: "8. Contact Us",
+    title: "8. Contact & Inquiries",
     content: [
-      "If you have any questions, concerns, or requests regarding these Terms and Conditions, please reach out to us. We are happy to clarify anything and will respond as quickly as possible.",
+      "If you have questions, feedback, or legal inquiries regarding these Terms and Conditions, please contact us through our official channels.",
     ],
     cta: true,
   },
 ];
 
-// ── Page ───────────────────────────────────────────────────────────────────────
 export default function TermsAndConditionsPage() {
-  const lastUpdated = "May 3, 2025";
+  const lastUpdated = "June 16, 2026";
 
   return (
-    <main className="bg-[#0a0a0a] min-h-screen text-white">
-
+    <main className="bg-[#0a0a0a] min-h-screen text-white pb-20">
+      
       {/* ── Hero ── */}
       <div className="relative overflow-hidden border-b border-[#1c1c1c]">
-        {/* Ambient glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           aria-hidden="true"
           style={{
-            background:
-              "radial-gradient(ellipse 60% 40% at 50% -10%, rgba(249,115,22,0.10) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse 60% 40% at 50% -10%, rgba(249,115,22,0.10) 0%, transparent 70%)",
           }}
         />
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12 sm:pt-20 sm:pb-16 relative">
-          {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
-            <ol className="flex items-center gap-1.5 text-[11px] text-gray-600 flex-wrap">
+            <ol className="flex items-center gap-1.5 text-[11px] text-gray-500 flex-wrap">
               <li>
                 <Link href="/" className="hover:text-brand-400 transition-colors flex items-center gap-1">
                   <Film className="w-3 h-3" aria-hidden="true" />
@@ -144,75 +137,42 @@ export default function TermsAndConditionsPage() {
               <li aria-hidden="true">
                 <ChevronRight className="w-3 h-3 text-gray-700" />
               </li>
-              <li className="text-gray-500">Terms &amp; Conditions</li>
+              <li className="text-gray-400">Terms &amp; Conditions</li>
             </ol>
           </nav>
 
-          {/* Title block */}
           <div className="flex items-start gap-4">
             <div
-              className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 rounded-xl flex items-center justify-center mt-1"
-              style={{ background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.20)" }}
+              className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 rounded-xl flex items-center justify-center mt-1 bg-brand-500/10 border border-brand-500/20 text-brand-400"
               aria-hidden="true"
             >
-              <Scale className="w-5 h-5 sm:w-6 sm:h-6 text-brand-400" />
+              <Scale className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
 
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.20em] text-brand-500 mb-2">
-                Legal
+                Legal Framework
               </p>
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
                 Terms &amp; Conditions
               </h1>
-              <p className="text-gray-500 text-sm mt-2">
-                Last updated: <time dateTime="2025-01-01">{lastUpdated}</time>
+              <p className="text-gray-400 text-sm mt-2">
+                Last updated: <time dateTime="2026-06-16">{lastUpdated}</time>
               </p>
             </div>
-          </div>
-
-          {/* Summary banner — no data collection highlight */}
-          <div
-            className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-3 rounded-xl px-4 py-3.5 sm:px-5 sm:py-4"
-            style={{
-              background: "rgba(34,197,94,0.06)",
-              border: "1px solid rgba(34,197,94,0.15)",
-            }}
-            role="note"
-            aria-label="Privacy highlight"
-          >
-            <div className="flex items-center gap-2.5 flex-shrink-0">
-              <div
-                className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: "rgba(34,197,94,0.12)" }}
-              >
-                <Shield className="w-3.5 h-3.5 text-green-400" aria-hidden="true" />
-              </div>
-              <span className="text-green-400 text-xs font-bold uppercase tracking-widest">
-                Privacy First
-              </span>
-            </div>
-            <p className="text-gray-400 text-[13px] leading-relaxed sm:ml-1">
-              <strong className="text-gray-300 font-medium">We do not collect any personal data.</strong>{" "}
-              No accounts, no tracking, no cookies that identify you. Browse The Cinema Verse freely and
-              anonymously.
-            </p>
           </div>
         </div>
       </div>
 
-      {/* ── Table of Contents (sticky sidebar on large screens) ── */}
+      {/* ── Table of Contents & Content ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
-
+          
           {/* Sidebar TOC */}
-          <aside
-            className="lg:w-52 xl:w-60 flex-shrink-0"
-            aria-label="Table of contents"
-          >
-            <div className="lg:sticky lg:top-6">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-600 mb-3">
-                Contents
+          <aside className="lg:w-52 xl:w-60 flex-shrink-0" aria-label="Table of contents">
+            <div className="lg:sticky lg:top-24">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-500 mb-3">
+                Sections
               </p>
               <nav>
                 <ol className="space-y-1">
@@ -220,7 +180,7 @@ export default function TermsAndConditionsPage() {
                     <li key={s.id}>
                       <a
                         href={`#${s.id}`}
-                        className="group flex items-center gap-2 text-[12px] text-gray-600 hover:text-brand-400 transition-colors py-1"
+                        className="group flex items-center gap-2 text-[12px] text-gray-500 hover:text-brand-400 transition-colors py-1"
                       >
                         <span
                           className="w-1 h-1 rounded-full bg-gray-700 group-hover:bg-brand-500 transition-colors flex-shrink-0"
@@ -233,21 +193,20 @@ export default function TermsAndConditionsPage() {
                 </ol>
               </nav>
 
-              {/* Quick links */}
               <div className="mt-8 pt-6 border-t border-[#1c1c1c] space-y-1.5">
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-700 mb-2">
-                  Also read
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-600 mb-2">
+                  Related Policies
                 </p>
                 <Link
                   href="/privacy"
-                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-brand-400 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] text-gray-500 hover:text-brand-400 transition-colors"
                 >
                   <ChevronRight className="w-2.5 h-2.5" aria-hidden="true" />
                   Privacy Policy
                 </Link>
                 <Link
                   href="/disclaimer"
-                  className="flex items-center gap-1.5 text-[12px] text-gray-600 hover:text-brand-400 transition-colors"
+                  className="flex items-center gap-1.5 text-[12px] text-gray-500 hover:text-brand-400 transition-colors"
                 >
                   <ChevronRight className="w-2.5 h-2.5" aria-hidden="true" />
                   Disclaimer
@@ -257,73 +216,39 @@ export default function TermsAndConditionsPage() {
           </aside>
 
           {/* Main content */}
-          <article
-            className="flex-1 min-w-0"
-            itemScope
-            itemType="https://schema.org/WebPage"
-          >
-            <meta itemProp="name" content="Terms and Conditions — The Cinema Verse" />
-            <meta
-              itemProp="description"
-              content="Terms and Conditions for The Cinema Verse, the Indian cinema encyclopedia. No personal data is collected from users."
-            />
-
+          <article className="flex-1 min-w-0">
             <div className="space-y-10 sm:space-y-12">
               {sections.map((section) => {
                 const Icon = section.icon;
                 return (
                   <section key={section.id} id={section.id} aria-labelledby={`heading-${section.id}`}>
-                    {/* Section header */}
                     <div className="flex items-center gap-3 mb-4">
                       <div
-                        className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{
-                          background: section.highlight
-                            ? "rgba(34,197,94,0.10)"
-                            : "rgba(249,115,22,0.08)",
-                          border: section.highlight
-                            ? "1px solid rgba(34,197,94,0.15)"
-                            : "1px solid rgba(249,115,22,0.12)",
-                        }}
+                        className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-brand-500/10 border border-brand-500/20 text-brand-400"
                         aria-hidden="true"
                       >
-                        <Icon
-                          className={`w-3.5 h-3.5 ${section.highlight ? "text-green-400" : "text-brand-400"}`}
-                        />
+                        <Icon className="w-3.5 h-3.5" />
                       </div>
-                      <h2
-                        id={`heading-${section.id}`}
-                        className="text-base sm:text-lg font-semibold text-white"
-                      >
+                      <h2 id={`heading-${section.id}`} className="text-base sm:text-lg font-semibold text-white">
                         {section.title}
                       </h2>
                     </div>
 
-                    {/* Divider */}
-                    <div
-                      className="h-px mb-5"
-                      style={{ background: "linear-gradient(to right, #1c1c1c 0%, transparent 100%)" }}
-                      aria-hidden="true"
-                    />
+                    <div className="h-px mb-5 bg-gradient-to-r from-[#222] to-transparent" aria-hidden="true" />
 
-                    {/* Paragraphs */}
                     <div className="space-y-3.5">
                       {section.content.map((para, idx) => (
-                        <p
-                          key={idx}
-                          className="text-[13px] sm:text-sm text-gray-500 leading-relaxed"
-                        >
+                        <p key={idx} className="text-[13px] sm:text-sm text-gray-400 leading-relaxed">
                           {para}
                         </p>
                       ))}
                     </div>
 
-                    {/* CTA for contact section */}
                     {section.cta && (
                       <div className="mt-5">
                         <Link
                           href="/contact"
-                          className="inline-flex items-center gap-2 text-[13px] font-medium text-brand-400 hover:text-brand-300 border border-brand-500/25 hover:border-brand-400/50 bg-brand-500/8 hover:bg-brand-500/12 px-4 py-2 rounded-lg transition-all duration-200"
+                          className="inline-flex items-center gap-2 text-[13px] font-medium text-brand-400 hover:text-brand-300 border border-brand-500/25 hover:border-brand-400/50 bg-brand-500/10 hover:bg-brand-500/20 px-4 py-2 rounded-xl transition-all"
                         >
                           <Mail className="w-3.5 h-3.5" aria-hidden="true" />
                           Contact Us
@@ -335,27 +260,17 @@ export default function TermsAndConditionsPage() {
               })}
             </div>
 
-            {/* Bottom note */}
-            <div
-              className="mt-12 sm:mt-14 rounded-xl px-5 py-4"
-              style={{ background: "#111", border: "1px solid #1c1c1c" }}
-            >
-              <p className="text-[12px] text-gray-600 leading-relaxed">
-                These Terms &amp; Conditions govern your use of{" "}
-                <strong className="text-gray-500">The Cinema Verse</strong> and constitute the entire
-                agreement between you and The Cinema Verse regarding your use of this website. By using
-                The Cinema Verse you acknowledge that you have read, understood, and agree to be bound by
-                these terms.
+            <div className="mt-12 sm:mt-14 rounded-2xl px-6 py-5 bg-[#111113] border border-[#1f1f22]">
+              <p className="text-[12px] text-gray-400 leading-relaxed">
+                These Terms &amp; Conditions constitute the entire agreement between you and <strong className="text-white">The Cinema Verse</strong> regarding your use of this website.
               </p>
-              <p className="text-[11px] text-gray-700 mt-2">
-                Last updated: <time dateTime="2025-01-01">{lastUpdated}</time> &nbsp;·&nbsp; The Cinema Verse,
-                Odisha, India
+              <p className="text-[11px] text-gray-500 mt-2">
+                The Cinema Verse • Bhubaneswar, Odisha, India • Contact: alekhpradhan3305@gmail.com
               </p>
             </div>
           </article>
         </div>
       </div>
-
     </main>
   );
 }

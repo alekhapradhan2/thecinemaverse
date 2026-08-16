@@ -9,7 +9,6 @@ import Link from "next/link";
 import { connectDB } from "@/lib/db";
 import Cast from "@/models/Cast";
 import Movie from "@/models/Movie";
-import News from "@/models/News";
 import Blog from "@/models/Blog";
 import { buildMeta } from "@/lib/seo";
 import { TransitionLink } from "@/components/ui/TransitionLink";
@@ -49,28 +48,24 @@ export async function generateStaticParams() {
   return [];
 }
 
-// ─── Data fetching ────────────────────────────────────────────────────────────
 async function getCastMember(id: string) {
   if (!/^[a-f0-9]{24}$/i.test(id)) return null;
   await connectDB();
   const member: any = await Cast.findById(id).lean();
   if (!member) return null;
-  const [movies, news, blogs] = await Promise.all([
+  const [movies, blogs] = await Promise.all([
     Movie.find(
       { "cast.castId": member._id },
       "title slug posterUrl thumbnailUrl releaseDate genre verdict imdbRating cast media"
     ).sort({ releaseDate: -1 }).lean(),
-    News.find({ castId: member._id }).sort({ createdAt: -1 }).limit(12).lean(),
     Blog.find(
       {
         $and: [
-          // Accept either approved:true OR status:"published" (handles both schema styles)
           { $or: [{ approved: true }, { status: "published" }] },
-          // Match by castIds array OR name in tags OR name in title (broad net)
           {
             $or: [
               { castIds: member._id },
-              { "castIds": String(member._id) },
+              { castIds: String(member._id) },
               { tags: { $regex: member.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" } },
               { title: { $regex: member.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" } },
             ],
@@ -80,10 +75,9 @@ async function getCastMember(id: string) {
       "title slug excerpt coverImage category tags createdAt readTime views"
     ).sort({ createdAt: -1 }).limit(9).lean(),
   ]);
-  return JSON.parse(JSON.stringify({ ...member, moviesList: movies, newsList: news, blogsList: blogs }));
+  return JSON.parse(JSON.stringify({ ...member, moviesList: movies, blogsList: blogs }));
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 function getDerivedRoles(person: any, movies: any[]): string[] {
   let roles = person.roles?.length ? person.roles.filter((r: string) => r.toLowerCase() !== "other") : [];
   if (roles.length === 0) {
@@ -107,7 +101,6 @@ function getDerivedRoles(person: any, movies: any[]): string[] {
   return roles;
 }
 
-// ─── Metadata ─────────────────────────────────────────────────────────────────
 export async function generateMetadata(props: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const params = await props.params;
   const person = await getCastMember(params.id);
@@ -116,16 +109,16 @@ export async function generateMetadata(props: { params: Promise<{ id: string }> 
   const movies   = (person.moviesList || []) as any[];
   const rolesArr = getDerivedRoles(person, movies);
   const roles    = rolesArr.join(", ");
-  const hits     = movies.filter((m: any) => ["Hit", "Super Hit", "Blockbuster"].includes(m.verdict));
   const debutYear = movies.length
     ? new Date(movies[movies.length - 1].releaseDate || Date.now()).getFullYear()
     : null;
   const genres = [...new Set(movies.flatMap((m: any) => m.genre || []))].slice(0, 3).join(", ");
 
-  const title = `${person.name} – Indian ${roles} | Biography, Movies & Career | The Cinema Verse`;
+  // NOTE: Do not append '| The Cinema Verse' here — layout.tsx auto-appends it.
+  const title = `${person.name} – Indian ${roles} | Biography, Movies & Career`;
   const description =
     person.bio?.slice(0, 155) ||
-    `${person.name} is a celebrated Indian ${roles.toLowerCase()} in Indian with ${movies.length} films${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
+    `${person.name} is a celebrated Indian ${roles.toLowerCase()} with ${movies.length} film${movies.length !== 1 ? "s" : ""}${debutYear ? `, active since ${debutYear}` : ""}. Discover their full biography, filmography, songs and career on The Cinema Verse.`;
   const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
 
   return {
@@ -233,6 +226,53 @@ function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value
   );
 }
 
+function PersonSSRPreview({
+  person,
+  roles,
+  movies,
+  bio,
+}: {
+  person: any;
+  roles: string;
+  movies: any[];
+  bio: string;
+}) {
+  return (
+    <article
+      aria-hidden="true"
+      data-ssr-preview="true"
+      style={{
+        position: "absolute",
+        width: 1,
+        height: 1,
+        overflow: "hidden",
+        clip: "rect(0,0,0,0)",
+        whiteSpace: "nowrap",
+        border: 0,
+      }}
+    >
+      <h1>{person.name} – Indian {roles}</h1>
+      <p>{bio}</p>
+      {person.dob && <p>Born: {person.dob}</p>}
+      {person.location && <p>Birth Place: {person.location}</p>}
+      {movies.length > 0 && (
+        <div>
+          <h2>Filmography & Movies</h2>
+          <ul>
+            {movies.map((m: any, i: number) => (
+              <li key={i}>
+                <a href={`/movie/${m.slug || m._id}`}>
+                  {m.title} {m.releaseDate ? `(${new Date(m.releaseDate).getFullYear()})` : ""}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </article>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default async function CastDetailPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -260,7 +300,7 @@ export default async function CastDetailPage(props: { params: Promise<{ id: stri
       coMap[k].count++;
     });
   });
-  const costars = Object.values(coMap).sort((a, b) => b.count - a.count).slice(0, 8);
+  const costars = Object.values(coMap).sort((a: any, b: any) => b.count - a.count).slice(0, 8);
 
   const gMap: Record<string, number> = {};
   movies.forEach((m: any) => (m.genre || []).forEach((g: string) => { gMap[g] = (gMap[g] || 0) + 1; }));
@@ -279,35 +319,26 @@ export default async function CastDetailPage(props: { params: Promise<{ id: stri
 
   const bio = generateRichBio(person, movies);
   const canonical = `https://thecinemaverses.in/cast/${String(person._id)}`;
+  const debutMovie = movies.length ? movies[movies.length - 1] : null;
 
-  const debutMovie  = movies.length ? movies[movies.length - 1] : null;
-
-  // Smart "latest": prefer an upcoming movie within the next 30 days;
-  // otherwise fall back to the most recently released movie.
   const now = new Date();
-  const soonThreshold = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days from now
-
-  // 1. Find the most recently released (past) movie
+  const soonThreshold = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
   const lastReleased = movies.find((m: any) => {
     if (!m.releaseDate) return false;
     return new Date(m.releaseDate) < now;
   }) ?? movies[0];
 
-  // 2. Find the nearest upcoming movie
   const upcomingMoviesSorted = movies
     .filter((m: any) => m.releaseDate && new Date(m.releaseDate) >= now)
     .sort((a: any, b: any) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime());
   const nextUpcoming = upcomingMoviesSorted[0] ?? null;
 
-  // 3. If the nearest upcoming movie is within 30 days, show it; otherwise show the last released
   let latestMovie = lastReleased;
   if (nextUpcoming && new Date(nextUpcoming.releaseDate) <= soonThreshold) {
     latestMovie = nextUpcoming;
   }
-
   const latestIsUpcoming = latestMovie && latestMovie.releaseDate && new Date(latestMovie.releaseDate) >= now;
 
-  // Career timeline by year
   const byYear: Record<string | number, any[]> = {};
   movies.forEach((m: any) => {
     const yr = m.releaseDate ? new Date(m.releaseDate).getFullYear() : "TBA";
@@ -318,11 +349,10 @@ export default async function CastDetailPage(props: { params: Promise<{ id: stri
     (b === "TBA" ? -1 : Number(b)) - (a === "TBA" ? -1 : Number(a))
   );
 
-  // Structured data
   const personLd = {
     "@context": "https://schema.org", "@type": "Person",
     name: person.name, image: person.photo || undefined,
-    description: person.bio || `Indian ${rolesStr} in Indian`,
+    description: person.bio || `Indian ${rolesStr}`,
     jobTitle: rolesStr,
     nationality: { "@type": "Country", name: "India" },
     birthDate: person.dob || undefined,
@@ -343,32 +373,20 @@ export default async function CastDetailPage(props: { params: Promise<{ id: stri
     ],
   };
   const faqLd = {
-    "@context": "https://schema.org", "@type": "FAQPage",
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: `How many films has ${person.name} acted in?`,
-        acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name} has been part of ${movies.length} film${movies.length !== 1 ? "s" : ""} in Indian, spanning genres such as ${genres || "drama, action and romance"}.`
-          : `${person.name} is associated with Indian, the Indian film industry.` },
-      },
-      {
-        "@type": "Question",
-        name: `What is ${person.name}'s most popular film?`,
-        acceptedAnswer: { "@type": "Answer", text: movies.length > 0
-          ? `${person.name}'s notable films include ${movies.slice(0, 3).map((m: any) => `"${m.title}"`).join(", ")}. Visit each movie page on The Cinema Verse for detailed cast, songs and review information.`
-          : `Check The Cinema Verse for the latest updates on ${person.name}'s filmography.` },
-      },
-      {
-        "@type": "Question",
-        name: `What is ${person.name}'s role in Indian cinema?`,
-        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in the Indian film industry.` },
+        name: `What is ${person.name}'s profession in Indian cinema?`,
+        acceptedAnswer: { "@type": "Answer", text: `${person.name} works as a ${rolesStr} in Indian films.` },
       },
     ],
   };
 
   return (
     <>
+      <PersonSSRPreview person={person} roles={rolesStr} movies={movies} bio={bio} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
@@ -1003,34 +1021,7 @@ export default async function CastDetailPage(props: { params: Promise<{ id: stri
               </section>
             )}
 
-            {/* ── Related News ── */}
-            {newsList.length > 0 && (
-              <section aria-label={`News about ${person.name}`}>
-                <SectionHeading icon={Newspaper} title="Related News" count={newsList.length} />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {newsList.slice(0, 6).map((n: any) => (
-                    <Link key={String(n._id)} href={`/news/${String(n._id)}`}
-                      className="group flex gap-3 bg-[#111] border border-[#1f1f1f] hover:border-brand-500/30 rounded-xl p-3 transition-all">
-                      <div className="relative w-20 h-14 flex-shrink-0 rounded-lg overflow-hidden bg-[#1a1a1a]">
-                        {n.imageUrl ? (
-                          <Image src={n.imageUrl} alt={n.title} fill className="object-cover" sizes="80px" />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center text-xl">📰</div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        {n.category && (
-                          <span className="text-[9px] font-bold text-brand-500 uppercase tracking-wider">{n.category}</span>
-                        )}
-                        <p className="text-xs font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-2 mt-0.5 leading-snug">{n.title}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ── Blogs & Articles ── */}
+                        {/* ── Blogs & Articles ── */}
             {blogsList.length > 0 && (
               <section aria-label={`Blog articles about ${person.name}`}>
                 <SectionHeading icon={Newspaper} title={`Blogs & Articles — ${person.name}`} count={blogsList.length} />

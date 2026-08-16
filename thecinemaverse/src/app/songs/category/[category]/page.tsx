@@ -301,7 +301,7 @@ export default async function SongCategoryPage(props: any) {
                 { label: "Upcoming Movies",    href: "/movies/upcoming" },
                 { label: "Blockbuster Movies", href: "/movies/blockbuster" },
                 { label: "Latest Movies",      href: "/movies/latest" },
-                { label: `${indStr} News`,      href: "/news" },
+                { label: `${indStr} Articles`, href: "/blog" },
                 { label: "Cast & Crew",        href: "/cast" },
                 { label: `Best ${indStr} Songs`,    href: `/blog/${indStr.toLowerCase()}-guides/best-${indStr.toLowerCase()}-songs` },
               ].map((l) => (

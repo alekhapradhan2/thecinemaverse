@@ -14,8 +14,17 @@ export async function generateStaticParams() {
   return [];
 }
 
-// Re-export for [songSlug]/page.tsx to import
 export type { MovieData, SongData };
+
+function toSlug(str?: string): string {
+  return (str || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
 async function getMovieWithSongs(movieSlug: string): Promise<MovieData | null> {
   await connectDB();
@@ -81,20 +90,20 @@ export async function generateMetadata(
     `${movie.title} songs`,
     `${movie.title} album`,
     `${indStr.toLowerCase()} song`,
-    `${indStr.toLowerCase()} song`,
     `${langStr.toLowerCase()} film song`,
     year && `${indStr.toLowerCase()} songs ${year}`,
     ...(movie.genre || []).map((g: string) => `${g} ${langStr.toLowerCase()} film`),
   ].filter(Boolean) as string[];
 
-  const url = `/songs/${movie.slug}/${idx}`;
+  const stableSlug = toSlug(song.title) || String(idx);
+  const canonical  = `https://thecinemaverses.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   return {
-    ...buildMeta({ title, description, keywords, url }),
+    ...buildMeta({ title, description, keywords, url: `/songs/${movie.slug}/${idx}/${stableSlug}` }),
     openGraph: {
       title,
       description,
-      url: `https://thecinemaverses.in${url}`,
+      url: canonical,
       type: "music.song",
       images: thumb ? [{ url: thumb, width: 1280, height: 720, alt: song.title }] : [],
     },
@@ -105,7 +114,7 @@ export async function generateMetadata(
       images: thumb ? [thumb] : [],
     },
     alternates: {
-      canonical: `https://thecinemaverses.in${url}`,
+      canonical,
     },
   };
 }
@@ -130,15 +139,16 @@ export default async function SongDetailPage(
     || (song.ytId ? `https://img.youtube.com/vi/${song.ytId}/hqdefault.jpg` : null)
     || movie.posterUrl;
   const year  = movie.releaseDate ? new Date(movie.releaseDate).getFullYear() : undefined;
-
   const langStr = movie.language || "Hindi";
+  const stableSlug = toSlug(song.title) || String(idx);
+  const canonical  = `https://thecinemaverses.in/songs/${movie.slug}/${idx}/${stableSlug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "MusicRecording",
-        "@id": `https://thecinemaverses.in/songs/${movie.slug}/${idx}#song`,
+        "@id": `${canonical}#song`,
         "name": song.title,
         "description": song.description || `${song.title} is a song from the ${langStr.toLowerCase()} film ${movie.title}${year ? ` (${year})` : ""}.`,
         ...(song.singer && { "byArtist": { "@type": "MusicGroup", "name": song.singer } }),
@@ -156,23 +166,12 @@ export default async function SongDetailPage(
         },
       },
       {
-        "@type": "MusicAlbum",
-        "name": `${movie.title} Original Soundtrack`,
-        "numTracks": movie.media.songs.length,
-        "track": movie.media.songs.map((s: any, i: number) => ({
-          "@type": "MusicRecording",
-          "name": s.title,
-          "url": `https://thecinemaverses.in/songs/${movie.slug}/${i}`,
-          ...(s.ytId && { "sameAs": `https://www.youtube.com/watch?v=${s.ytId}` }),
-        })),
-      },
-      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://thecinemaverses.in/" },
           { "@type": "ListItem", "position": 2, "name": "Songs",     "item": "https://thecinemaverses.in/songs" },
           { "@type": "ListItem", "position": 3, "name": movie.title, "item": `https://thecinemaverses.in/movie/${movie.slug}` },
-          { "@type": "ListItem", "position": 4, "name": song.title,  "item": `https://thecinemaverses.in/songs/${movie.slug}/${idx}` },
+          { "@type": "ListItem", "position": 4, "name": song.title,  "item": canonical },
         ],
       },
     ],
